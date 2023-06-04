@@ -1,0 +1,11 @@
+D:\Source\Verify\VerifyWebApp\VerifyLicenseV2\bin\Debug\VerifyLicenseV2.dll
+D:\Source\Verify\VerifyWebApp\VerifyLicenseV2\bin\Debug\VerifyLicenseV2.pdb
+D:\Source\Verify\VerifyWebApp\VerifyLicenseV2\obj\Debug\VerifyLicenseV2.csproj.CoreCompileInputs.cache
+D:\Source\Verify\VerifyWebApp\VerifyLicenseV2\obj\Debug\VerifyLicenseV2.dll
+D:\Source\Verify\VerifyWebApp\VerifyLicenseV2\obj\Debug\VerifyLicenseV2.pdb
+D:\Source\Verify\VerifyWebApp\VerifyLicenseV2\obj\Debug\VerifyLicenseV2.csprojResolveAssemblyReference.cache
+D:\Source\Verify\VerifyWebAppUIChanges\VerifyLicenseV2\bin\Debug\VerifyLicenseV2.dll
+D:\Source\Verify\VerifyWebAppUIChanges\VerifyLicenseV2\bin\Debug\VerifyLicenseV2.pdb
+D:\Source\Verify\VerifyWebAppUIChanges\VerifyLicenseV2\obj\Debug\VerifyLicenseV2.csproj.CoreCompileInputs.cache
+D:\Source\Verify\VerifyWebAppUIChanges\VerifyLicenseV2\obj\Debug\VerifyLicenseV2.dll
+D:\Source\Verify\VerifyWebAppUIChanges\VerifyLicenseV2\obj\Debug\VerifyLicenseV2.pdb
