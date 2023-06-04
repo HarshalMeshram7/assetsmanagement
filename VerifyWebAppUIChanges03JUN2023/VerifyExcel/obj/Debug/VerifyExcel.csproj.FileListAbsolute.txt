@@ -1,0 +1,13 @@
+D:\Source\Verify\VerifyWebApp\VerifyExcel\bin\Debug\VerifyExcel.dll
+D:\Source\Verify\VerifyWebApp\VerifyExcel\bin\Debug\VerifyExcel.pdb
+D:\Source\Verify\VerifyWebApp\VerifyExcel\bin\Debug\C1.C1Excel.4.dll
+D:\Source\Verify\VerifyWebApp\VerifyExcel\bin\Debug\C1.Win.Bitmap.4.dll
+D:\Source\Verify\VerifyWebApp\VerifyExcel\bin\Debug\C1.Win.C1DX.4.dll
+D:\Source\Verify\VerifyWebApp\VerifyExcel\bin\Debug\C1.Win.4.dll
+D:\Source\Verify\VerifyWebApp\VerifyExcel\bin\Debug\C1.C1Excel.4.xml
+D:\Source\Verify\VerifyWebApp\VerifyExcel\bin\Debug\C1.Win.Bitmap.4.xml
+D:\Source\Verify\VerifyWebApp\VerifyExcel\bin\Debug\C1.Win.C1DX.4.xml
+D:\Source\Verify\VerifyWebApp\VerifyExcel\obj\Debug\VerifyExcel.csproj.CoreCompileInputs.cache
+D:\Source\Verify\VerifyWebApp\VerifyExcel\obj\Debug\VerifyExcel.dll
+D:\Source\Verify\VerifyWebApp\VerifyExcel\obj\Debug\VerifyExcel.pdb
+D:\Source\Verify\VerifyWebApp\VerifyExcel\obj\Debug\VerifyExcel.dll.licenses

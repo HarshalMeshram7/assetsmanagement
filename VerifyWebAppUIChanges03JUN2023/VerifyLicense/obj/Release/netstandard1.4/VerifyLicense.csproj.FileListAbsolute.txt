@@ -1,0 +1,8 @@
+D:\Source\Verify\VerifyWebApp\VerifyLicense\bin\Release\netstandard1.4\VerifyLicense.deps.json
+D:\Source\Verify\VerifyWebApp\VerifyLicense\bin\Release\netstandard1.4\VerifyLicense.dll
+D:\Source\Verify\VerifyWebApp\VerifyLicense\bin\Release\netstandard1.4\VerifyLicense.pdb
+D:\Source\Verify\VerifyWebApp\VerifyLicense\obj\Release\netstandard1.4\VerifyLicense.csprojResolveAssemblyReference.cache
+D:\Source\Verify\VerifyWebApp\VerifyLicense\obj\Release\netstandard1.4\VerifyLicense.csproj.CoreCompileInputs.cache
+D:\Source\Verify\VerifyWebApp\VerifyLicense\obj\Release\netstandard1.4\VerifyLicense.AssemblyInfo.cs
+D:\Source\Verify\VerifyWebApp\VerifyLicense\obj\Release\netstandard1.4\VerifyLicense.dll
+D:\Source\Verify\VerifyWebApp\VerifyLicense\obj\Release\netstandard1.4\VerifyLicense.pdb

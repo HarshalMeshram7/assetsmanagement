@@ -1,0 +1,16 @@
+D:\Source\Verify\VerifyWebAppUIChanges\VerifyTest\bin\Debug\net462\NUnit3.TestAdapter.dll
+D:\Source\Verify\VerifyWebAppUIChanges\VerifyTest\bin\Debug\net462\NUnit3.TestAdapter.pdb
+D:\Source\Verify\VerifyWebAppUIChanges\VerifyTest\bin\Debug\net462\nunit.engine.dll
+D:\Source\Verify\VerifyWebAppUIChanges\VerifyTest\bin\Debug\net462\nunit.engine.api.dll
+D:\Source\Verify\VerifyWebAppUIChanges\VerifyTest\bin\Debug\net462\VerifyTest.dll
+D:\Source\Verify\VerifyWebAppUIChanges\VerifyTest\bin\Debug\net462\VerifyTest.pdb
+D:\Source\Verify\VerifyWebAppUIChanges\VerifyTest\bin\Debug\net462\Microsoft.VisualStudio.CodeCoverage.Shim.dll
+D:\Source\Verify\VerifyWebAppUIChanges\VerifyTest\bin\Debug\net462\nunit.framework.dll
+D:\Source\Verify\VerifyWebAppUIChanges\VerifyTest\obj\Debug\net462\VerifyTest.csproj.SuggestedBindingRedirects.cache
+D:\Source\Verify\VerifyWebAppUIChanges\VerifyTest\obj\Debug\net462\VerifyTest.GeneratedMSBuildEditorConfig.editorconfig
+D:\Source\Verify\VerifyWebAppUIChanges\VerifyTest\obj\Debug\net462\VerifyTest.AssemblyInfoInputs.cache
+D:\Source\Verify\VerifyWebAppUIChanges\VerifyTest\obj\Debug\net462\VerifyTest.AssemblyInfo.cs
+D:\Source\Verify\VerifyWebAppUIChanges\VerifyTest\obj\Debug\net462\VerifyTest.csproj.CoreCompileInputs.cache
+D:\Source\Verify\VerifyWebAppUIChanges\VerifyTest\obj\Debug\net462\VerifyTest.csproj.CopyComplete
+D:\Source\Verify\VerifyWebAppUIChanges\VerifyTest\obj\Debug\net462\VerifyTest.dll
+D:\Source\Verify\VerifyWebAppUIChanges\VerifyTest\obj\Debug\net462\VerifyTest.pdb
