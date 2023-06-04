@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "m6qGC+1/sJQGHHjtmlTHhLOWAXK5BokGqYmrKssdhNLZqvRW9dmPiAz7ZlkaIhDWOtqML/Ot1twR+ydHZkr5gg==",
+  "success": true,
+  "projectFilePath": "D:\\Source\\Verify\\VerifyWebAppUIChanges\\VerifyTest\\VerifyTest.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Mandar\\.nuget\\packages\\microsoft.codecoverage\\16.5.0\\microsoft.codecoverage.16.5.0.nupkg.sha512",
+    "C:\\Users\\Mandar\\.nuget\\packages\\microsoft.net.test.sdk\\16.5.0\\microsoft.net.test.sdk.16.5.0.nupkg.sha512",
+    "C:\\Users\\Mandar\\.nuget\\packages\\nunit\\3.12.0\\nunit.3.12.0.nupkg.sha512",
+    "C:\\Users\\Mandar\\.nuget\\packages\\nunit3testadapter\\3.16.1\\nunit3testadapter.3.16.1.nupkg.sha512"
+  ],
+  "logs": []
+}
