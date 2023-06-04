@@ -1,0 +1,290 @@
+﻿
+
+@{
+    ViewBag.Title = "AssetAttachment_Index";
+}
+
+<style>
+    #divspinner {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    #divspinner {
+        z-index: 10;
+    }
+
+    div.dataTables_filter {
+        width: 50%;
+        float: right;
+       /* text-align: right;*/
+    }
+</style>
+
+
+
+
+    @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frm1", name = "frm1" }))
+    {
+        @Html.AntiForgeryToken()
+    }
+
+
+
+    <div class="container-fluid py-4">
+        <div class="row my-1">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header pb-0">
+                        <div class="row">
+                            <div class="d-sm-flex justify-content-between hborder">
+                                <div class="htitle"> <b>Add Images</b></div>
+                            </div>
+                        </div>
+                    </div>
+                          <div class="card-body" id="divTableData">
+                        
+                                   <table class="table table-flush table-hover text-md" id="tblattachment">
+                                        <thead class="hcol text-uppercase" style="font-weight:bold">
+                                            <tr>
+                                                <td >
+                                                    Id
+                                                </td>
+                                                <td>
+                                                    AssetNo
+                                                </td>
+
+                                                <td align="left">
+                                                    AssetName
+                                                </td>
+                                                <td class="text-md">Group</td>
+                                                <td>
+                                                    AttachmentCount
+                                                </td>
+                                                <td class="text-xs" align="left">
+                                                    Upload Attachments
+                                                </td>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody style="font-weight:bold; color:black">
+                                          
+                                        </tbody>
+                                    </table>
+                            </div>
+                                <div id="divspinner">
+                                    <div class="col-md-12 text-center">
+                                        <b>Please Wait Loading ...</b>
+                                        <div class="fa-3x">
+                                            <i class="fa fa-spinner fa-spin"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                          
+                    </div>
+                    </div>
+                </div>
+                    
+                </div>
+                <div class="modal fade" tabindex="-1" role="dialog" id="divNew">
+                    <div class="modal-dialog modal-sm" role="document" id="divNewContent">
+
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+
+                <div class="modal fade" tabindex="-1" role="dialog" id="divEdit">
+                    <div class="modal-dialog modal-sm" role="document" id="divEditContent">
+
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+
+
+                
+
+
+                <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+                <script type="text/javascript">
+    $(document).ready(function () {
+        loadasset();
+       // $('#tblattachment').DataTable();
+    });
+
+    function loadasset() {
+        console.log('loadasset');
+
+        //$('#tbldepreciation').DataTable();
+
+        var ControllerURL = '@Url.Action("GetData", "Asset_Attachments")';
+
+        var table = $('#tblattachment')
+            .on('processing.dt', function (e, settings, processing) {
+                $('#divspinner').css('display', processing ? 'block' : 'none');
+            }).DataTable({
+                "destroy": true,
+                "serverSide": true,
+                "paging": true,
+                "info": false,
+                "searching": true,
+                "pagingType": 'numbers',
+                
+         "ajax": {
+             url: ControllerURL,
+             type: 'POST',
+             dataType:'json'
+         },
+        "columns": [
+             { "data": "ID", "autoWidth": true },
+             { "data": "AssetNo", "autoWidth": true },
+             { "data": "AssetName", "autoWidth": true },
+             { "data": "groupname", "autoWidth": true },
+             { "data": "Attachemntcount", "autoWidth": true },
+
+            {
+                "render": function (data, type, full, meta)
+                {
+                    return returnuploadButton(full.ID, full.AssetNo, full.AssetName);
+                }
+            },
+
+
+                ],
+                columnDefs: [
+                    {
+                        "targets": 0,
+                        "className": "text-xs",
+                        "width": "8%"
+
+                    },
+                    {
+                        "targets": 1,
+                        "className": "text-xs",
+                        "width": "10%"
+
+                    },
+                    {
+                        "targets": 2,
+                        "className": "text-xs",
+                        "width": "40%"
+
+                    },
+                    {
+                        "targets": 3,
+                        "className": "text-xs",
+                        "width": "15%"
+
+                    },
+                    {
+                        "targets": 4,
+                        "className": "text-xs",
+                        "width": "8%"
+
+                    },
+                    {
+                        "targets": 4,
+                        "className": "text-xs",
+                        "width": "8%"
+
+                    },
+              ]
+
+     });
+    }
+    function returnuploadButton(id,assetno,assetname) {
+        var strButton = "";
+        //strButton = id;
+        strButton = '<button type="button" class="btn modBtn btn-sm"';
+        strButton = strButton + 'aria-label="Left Align"';
+        strButton = strButton + 'onclick=uploadattachment(' + id +');>';
+        strButton = strButton + '<i class="fa fa-edit"></i></button>';
+
+
+        return strButton;
+    }
+    if (typeof jQuery !== 'undefined') {
+        console.log('jQuery Loaded');
+    }
+    else {
+        console.log('not loaded yet');
+    }
+
+        function opennewdialog() {
+
+            var url = '@Url.Action("Add","UOM")';
+            $.get(url, function (data) {
+                $("#divNewContent").html(data);
+                // alert(data);
+                $('#divNew').modal('show')
+            });
+        }
+
+        function EditUOM(id) {
+            var url = '@Url.Action("Edit","UOM")';
+            url = url + "/" + id;
+
+            $.get(url, function (data) {
+                $("#divEditContent").html(data);
+                $('#divEdit').modal('show')
+            });
+        }
+     function Delete(id)
+     {
+         var form = $('frm1');
+
+         var token = $('input[name="__RequestVerificationToken"]', form).val();
+         var headers = {};
+         headers['__RequestVerificationToken'] = token;
+         alert(token);
+
+
+         swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+            if (result == true) {
+                var returnURL='@Url.Action("Index", "UOM")';
+                var url = '@Url.Action("Delete", "UOM")';
+                url = url + "/" + id;
+                    $.ajax({
+                    type: 'POST',
+                    url: url,
+                    contentType: "application/json",
+                    success: function (res) {
+                        if (res == "Failed")
+                        {
+                            swal("Alert", "You Cannot Delete this Record", "warning");
+                        }
+                        else
+                        {
+                            swal({ title:  "Successfully Deleted!", icon: "success" }).then((result) => {
+                                if (result == true) {
+                                    window.location.reload();
+                                }
+                            });
+                         }
+                    },
+
+                    failure: function () { alert("Error"); }
+
+                 });
+            }
+        });
+
+        }
+
+     function uploadattachment(id,assetno,assetname)
+     {
+          var ControllerURL = '@Url.Action("UploadAttachments", "Asset_Attachments")';
+            ControllerURL = ControllerURL + "/" + id;
+            window.location.href = ControllerURL;
+
+
+         //$('#assetno').val(assetno);
+         //$('#assetname').val(assetname);
+         //$('#uploadattachmentmodal').modal('show');
+
+     }
+     function saveattachments()
+     {
+
+     }
+                </script>
+

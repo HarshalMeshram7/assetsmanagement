@@ -1,0 +1,233 @@
+﻿@model IEnumerable<VerifyWebApp.Models.Child_Asset_Attachment>
+
+@{
+    ViewBag.Title = "ImageGallery_Index";
+}
+<style type="text/css">
+    .table, .table table td {
+        border: 0px solid #ccc;
+    }
+
+        .table img {
+            height: 400px;
+            width: 400px;
+            cursor: pointer;
+        }
+
+    /*#dialog img {
+        height: 550px;
+        width: 575px;
+        cursor: pointer;
+    }*/
+</style>
+
+<div class="container-fluid py-4">
+    <div class="row my-1">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header pb-0">
+                    <div class="row justify-content-md-center title">
+                        <div class="row">
+                            <div class="d-sm-flex justify-content-between">
+                                <strong> <h4>Asset Gallery&nbsp;&nbsp;<label style="font-size:large">
+                                    (Images:@ViewBag.imagecount,Size:@ViewBag.filesize)</label></h4></strong>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+          
+             </div>
+               
+
+        <div class="card-body" id="divTableData">
+            
+                    <table class="table table-flush" id="tblattachment" align="center">
+                        <thead>
+                            <tr>
+                                <td class="col-auto" hidden>
+                                    Asset No
+                                </td>
+
+                                <td hidden>
+                                    Asset Name
+                                </td>
+                                <td hidden>
+                                    Source Event
+                                </td>
+                                <td hidden>
+                                    Image
+                                </td>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+        </div>
+    </div>
+ </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Image preview</h4>
+            </div>
+            <div class="modal-body">
+                <img src="" id="imagepreview" style="width: 400px; height: 264px;">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="dialog" style="display: none"></div>
+
+@*<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>*@
+
+@*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/themes/start/jquery-ui.css" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>*@
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        LoadImages();
+
+        //$('#tblattachment').DataTable({
+        //    "pageLength": 5,
+        //    "lengthChange": false
+        //});
+
+        //$("#dialog").dialog({
+        //    autoOpen: false,
+        //    modal: true,
+        //    height: 500,
+        //    width: 600,
+        //    title: "Image"
+        //});
+        //$("#tblattachment tbody tr:has(td)").find("td:eq(2)").click(function () {
+
+        //   // $('#imagepreview').val(this);
+        //    var imgsrc = document.getElementById("image").src;
+        //    alert(this.classList)
+        //    $('#imagemodal').modal('show');
+        //});
+
+    });
+
+
+    if (typeof jQuery !== 'undefined') {
+        console.log('jQuery Loaded');
+    }
+    else {
+        console.log('not loaded yet');
+    }
+
+    function getCard(assetname,assetno,imgdata) {
+
+        console.log('assetname' + assetname);
+
+        console.log('assetno' + assetno);
+
+        let card = document.createElement('div');
+        let eH4 = document.createElement('h4');
+        let eH5 = document.createElement('h5');
+        eH4.innerText = "Asset Name:" + assetname;
+        eH5.innerText = "Asset No:" + assetno;
+
+        let img = document.createElement('img');
+        img.align = 'center';
+        let str = "data:image / jpg; base64," + imgdata;
+        img.src = str ;
+
+        card.appendChild(eH4);
+        card.appendChild(eH5);
+        card.appendChild(img);
+
+        console.log(card.outerHTML);
+        return card.outerHTML;
+
+    }
+
+    function LoadImages() {
+        var ControllerURL = '@Url.Action("GetImageData", "ImageGallery")';
+          console.log(ControllerURL);
+
+          var table = $('#tblattachment')
+              .DataTable({
+                  "destroy": true,
+                  "proccessing": true,
+                  "pageLength": 3,
+                  "lengthChange": false,
+                  "pagingType": 'numbers',
+                  'language': {
+                      "loadingRecords": "&nbsp;",
+                      "processing": "Loading...",
+                      "decimal": ",",
+                      "thousands": "."
+                  },
+                  "serverSide": true,
+                  "filter": true,
+                  "ajax": {
+                      url: ControllerURL,
+                      type: 'POST',
+                  },
+
+                     "columns": [
+                         { "data": "assetno", "autoWidth": true },
+                         { "data": "assetname", "autoWidth": true },
+                         {
+                             "data": "assetname", "autoWidth": true
+                         },
+                         {
+                             "render": function (data, type, full, meta) {
+
+                                 return getCard(full.assetname, full.assetno, full.image_string);
+                                 //return returnDropdownButton(full.AssetNo);
+                                 //return "<img align=center alt='" + full.assetname + "'" + "src='data:image/jpg;base64," + full.image_string + "' />";
+                             }
+                         }
+                     ],
+                  "columnDefs": [
+                      {
+                          "targets": [0],
+                          "visible": false,
+                          "searchable": false
+                      },
+                      {
+                          "targets": [1],
+                          "visible": false
+                      },
+                      {
+                          "targets": [2],
+                          "visible": false
+                      },
+                      {
+                          "targets": [3],
+                          "visible": true,
+                          "className": 'dt-body-center'
+                      }
+
+                  ]
+
+                });
+
+    }
+
+
+
+
+</script>
+

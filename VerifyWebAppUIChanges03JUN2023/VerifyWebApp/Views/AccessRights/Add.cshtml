@@ -1,0 +1,308 @@
+﻿
+
+
+@{
+    ViewBag.Title = "Add";
+}
+
+<h2></h2>
+
+<div id="locationmodal" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Add</h4>
+            </div>
+            @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-body ">
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label for="praticesname">User<span style="color:#CC0000;">*</span></label>
+                            @Html.DropDownList("Userid", (SelectList)ViewBag.Username, "Select User", new { @class = "form-control", id = "Userid", @required = true })
+                            <div style="color:#CC0000;font-weight:400" id="locaerror"></div>
+                         
+                        </div>
+                    </div>
+
+                   
+
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label for="praticesname">Access Page <span style="color:#CC0000;">*</span></label>
+                            @Html.DropDownList("Controllername", (SelectList)ViewBag.controllername, "Select Access Page", new { @class = "form-control", id = "Controllername", @required = true })
+                            <div style="color:#CC0000;font-weight:400" id="locaerror"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-4">
+                            <input type="checkbox" id="index" />
+                            <label for="praticesname" id="lblindex">Main Page</label>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <input type="checkbox" id="add" />
+                            <label for="praticesname" id="lbladd">Add</label>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <input type="checkbox" id="edit" />
+                            <label for="praticesname" id="lbledit">Edit</label>
+                        </div>
+                    </div>
+                  
+
+               
+                    <div class="row">
+                        <div class="form-group col-lg-4">
+                            <input type="checkbox" id="delete"  />
+                            <label for="praticesname" id="lbldelete"> Delete</label>
+                            </div>
+                        <div class="form-group col-lg-4">
+                            <input type="checkbox" id="export"  />
+                            <label for="praticesname" id="lblexport">Export</label>
+                            </div>
+                        <div class="form-group col-lg-4">
+                            <input type="checkbox" id="import"  />
+                            <label for="praticesname" id="lblimport"> Import</label>
+                        </div>
+                        </div>
+                    
+
+                 
+                </div>
+                <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
+
+
+                <div class="modal-footer">
+                    @*<button type="button" class="btn btn-default" onclick="closeloc();">Close</button>*@
+                    <button type="submit" class="btn btn-primary" id="btnsave">Save</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var addflag = "no";
+    var editflag = "no";
+    var deleteflag = "no";
+    var exportflag = "no";
+    var importflag = "no";
+    var indexflag = "no";
+    
+    $(document).ready(function ($) {
+
+        $('#Controllername').change(function () {
+            var cname = $("#Controllername").val();
+            //if controller report or exportdata hide other fields and unhide index 
+            if (cname == "Reports" || cname =="ExportData") {
+                document.getElementById('add').hidden = true;
+                document.getElementById('edit').hidden = true;
+               
+                document.getElementById('import').hidden = true;
+                document.getElementById('delete').hidden = true;
+                document.getElementById('export').hidden = true;
+                document.getElementById('lbladd').hidden = true;
+                document.getElementById('lbledit').hidden = true;
+                document.getElementById('lblindex').hidden = false;
+                document.getElementById('index').hidden = false;
+                document.getElementById('lblimport').hidden = true;
+                document.getElementById('lblexport').hidden = true;
+                document.getElementById('lbldelete').hidden = true;
+             
+            }
+            else {
+                document.getElementById('add').hidden = false;
+                document.getElementById('edit').hidden = false;
+                document.getElementById('index').hidden = false;
+                document.getElementById('import').hidden = false;
+                document.getElementById('delete').hidden = false;
+                document.getElementById('export').hidden = false;
+                document.getElementById('lbladd').hidden = false;
+                document.getElementById('lbledit').hidden = false;
+                document.getElementById('lblindex').hidden = false;
+                document.getElementById('lblimport').hidden = false;
+                document.getElementById('lblexport').hidden = false;
+                document.getElementById('lbldelete').hidden = false;
+             
+            }
+      
+
+        });
+     
+
+        $('#index').change(function () {
+
+            if ($(this).is(':checked')) {
+                indexflag = "yes";
+               // alert(indexflag)
+            }
+            else {
+                indexflag = "no";
+               // alert(indexflag)
+            }
+
+        });
+        $('#add').change(function () {
+            if ($(this).is(':checked')) {
+                addflag = "yes";
+                //alert(addflag) 
+            }
+            else {
+                addflag = "no";
+                //alert(addflag) 
+            }
+
+        });
+        $('#edit').change(function () {
+            if ($(this).is(':checked')) {
+                editflag = "yes";
+
+            }
+            else {
+                editflag = "no";
+
+            }
+        });
+        $('#delete').change(function () {
+            if ($(this).is(':checked')) {
+                deleteflag = "yes";
+
+            }
+            else {
+                deleteflag = "no";
+
+            }
+        });
+        $('#import').change(function () {
+            if ($(this).is(':checked')) {
+                importflag = "yes";
+
+            }
+            else {
+                importflag = "no";
+
+            }
+        });
+        $('#export').change(function () {
+            if ($(this).is(':checked')) {
+                exportflag = "yes";
+
+            }
+            else {
+                exportflag = "no";
+
+            }
+        });
+        $("#frmNewEmp").submit(function (e) {
+
+            // console.log(postdata)
+            savedata()
+            e.preventDefault();
+            return false;
+
+        });
+
+    });
+
+
+
+    if (typeof jQuery !== 'undefined') {
+        console.log('jQuery Loaded');
+    }
+    else {
+        console.log('not loaded yet');
+    }
+
+    function savedata() {
+        var userid = $("#Userid").val();
+
+        var controllername = $("#Controllername").val();
+
+        var add;
+        var edit;
+        var Delete;
+        var exports;
+        var imports;
+        var index;
+        if (controllername == "Reports" || controllername == "ExportData") {
+             add = "no";
+             edit = "no";
+            Delete = "no";
+             exports = "no";
+             imports = "no";
+             index = indexflag;
+        }
+        else {
+             add = addflag;
+             edit = editflag;
+             Delete = deleteflag;
+             exports = exportflag;
+             imports = importflag;
+             index = indexflag;
+        } if (add == "no" && edit == "no" && Delete == "no" && index == "no" && imports == "no" && exports == "no") {
+
+            swal("Alert", "You have not selected any options for an page", "warning");
+        }
+        else {
+            var postdata = {
+                "ControllerName": controllername,
+                "Userid": userid,
+                "Add": add,
+                "Edit": edit,
+                "Delete": Delete,
+                "Export": exports,
+                "Import": imports,
+                "Index": index,
+
+            }
+            var form = $('#frmNewEmp');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
+            var headers = {};
+            headers['__RequestVerificationToken'] = token;
+
+            swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+                if (result == true) {
+
+                    var ControllerURL = '@Url.Action("Add", "AccessRights")';
+
+                    // alert(ControllerURL);
+                    var returnURL = '@Url.Action("Index", "AccessRights")';
+                    $.ajax({
+                        type: 'POST',
+                        url: ControllerURL,
+                        contentType: "application/json",
+                        headers: headers,
+                        data: JSON.stringify(postdata),
+                        success: function (res) {
+                       
+                          
+                            if (res.Data == "accessalreadygiven") {
+                              
+                                swal("Alert", "Access is already given to this user or page", "warning");
+                            }
+                            if (res.Data == "Failed") {
+                                swal("Alert", "You Cannot Add this Record", "warning");
+                            }
+                            else {
+                                swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
+                                    if (result == true) {
+                                        window.location.replace(returnURL);
+                                    }
+                                });
+                            }
+
+                        },
+
+                        failure: function () { alert("Error"); }
+
+                    });
+                }
+            });
+        }
+    }
+
+</script>

@@ -1,0 +1,149 @@
+﻿
+
+
+
+@{
+    ViewBag.Title = "RemoveDepreciation_Index";
+}
+
+
+<div id="allocationmodal" role="dialog" tabindex="-1" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lx">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title"> Remove IT Depreciation</h4>
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
+            </div>
+            @using (@Html.BeginForm(null, null, FormMethod.Get, new { id = "frmNewEmp", name = "frmNewEmp" }))
+            {
+                <div class="modal-body">
+
+
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label for="praticesname">FromDate:@ViewBag.Fromdate</label>
+
+                        </div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="form-group col-lg-6">
+
+
+                            <label for="praticesname">ToDate:@ViewBag.Todate</label>
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
+                    <button type="button" class="btn btn-primary" onclick="removedep();">Remove Depreciation</button>
+                </div>
+            }
+        </div><!-- /.modal-content -->
+    </div>
+</div>
+<script type="text/javascript">
+
+
+    $(document).ready(function ($) {
+        //voucherdate set to all other date
+        var checkdep = '@ViewBag.checkdepexists';
+        if (checkdep == "no") {
+            swal("Alert", "Depreciation is not calculated for any of the period", "warning");
+        }
+
+        @*$("#frmNewEmp").submit(function (e) {
+
+         //   remove('@ViewBag.Fromdate','@ViewBag.ToDate','@ViewBag.SubperiodId');
+            e.preventDefault();
+            return false;
+
+        });*@
+
+    });
+    if (typeof jQuery !== 'undefined') {
+        console.log('jQuery Loaded');
+    }
+    else {
+        console.log('not loaded yet');
+    }
+
+    function removedep()
+    {
+        var checkdep = '@ViewBag.checkdepexists';
+        if (checkdep == "no") {
+            swal("Alert", "Depreciation is not calculated for any of the period", "warning");
+            return;
+        }
+
+        var fromdate = '@ViewBag.Fromdate';
+        var todate = '@ViewBag.ToDate';
+        var subperiodid = '@ViewBag.SubperiodId';
+
+        @*var url = '@Url.Action("Removedepreciation", "RemoveDepreciation")';
+
+            url = url + "?fromdate="+fromdate+"&todate="+todate+"?id="+id;
+
+            window.location.href = url;*@
+        var data = JSON.stringify({
+            'fromdate': fromdate ,
+            'todate': todate ,
+            'subperiodid': subperiodid
+
+        });
+
+        swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true, showLoaderOnConfirm: true}).then((result) => {
+            if (result == true) {
+                var returnURL='@Url.Action("Index", "Home")';
+                var url = '@Url.Action("RemoveDepreciation", "ITDepreciation")';
+               // var url = '@Url.Action("Removedepreciation", "ITDepreciation")';
+
+               // url = url + "?fromdate=" + fromdate + "&todate=" + todate + "?subperiodid=" + subperiodid;
+
+                    $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data:data,
+                    contentType: "application/json",
+                    success: function (res) {
+                        console.log(res);
+                        if (res == "Failed")
+                        {
+                            swal("Alert", "You Cannot Delete this Record", "warning");
+                        }
+
+                        if(res =="Success")
+                        {
+                            swal({ title:  "Successfully removed!", icon: "success" }).then((result) => {
+                                if (result == true) {
+                                   // window.location.reload();
+                                    window.location = returnURL;
+
+
+                                }
+                            });
+                        }
+                        if (res.Data == "Periodlock") {
+                            swal("Alert", "You Cannot Delete this Record Subperiod is locked", "warning");
+                        }
+                        //Norecordsfound
+                        if (res.Data == "Norecordsfound") {
+                            swal("Alert", "No records found", "warning");
+                        }
+                    },
+
+                    failure: function () { alert("Error"); }
+
+                 });
+            }
+        });
+
+
+    }
+
+</script>

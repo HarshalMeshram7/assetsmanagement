@@ -1,0 +1,549 @@
+﻿
+@model IEnumerable<VerifyWebApp.Models.SubPeriod>
+
+
+
+@{
+    ViewBag.Title = "EditNew";
+}
+
+<style>
+    label span {
+        color: red;
+        font-size: 20px;
+    }
+</style>
+
+<div class="modal-content" id="mymodal">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Edit Period</h4>
+    </div>
+    @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+    {
+        <div class="modal-body" style="height: 400px; overflow: auto;">
+
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label for="praticesname">Start Date<span>*</span></label>
+
+                        <div class='input-group date' id='dtStartDate'>
+                            <input type='text' id="txtStartDate" class="form-control" required readonly />
+
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+
+                        </div>
+                        <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label for="praticesname">End Date<span>*</span></label>
+                        @*@Html.TextBoxFor(m => m.LeaveDate, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.LeaveDate, "", new { @class = "text-danger  " })*@
+                        <div class='input-group date' id='dtEndDate'>
+                            <input type='text' id="txtEndDate" class="form-control" required readonly />
+
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+
+                        </div>
+                        <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
+                        <div></div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-3">
+
+                    <br />
+                    <div class="form-group">
+
+                        <button type="button" class="btn btn-primary" id="btnAddSubPeiod" data-toggle="modal">Add Subperiod</button>
+                    </div>
+                </div>
+                <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label for="praticesname">&nbsp;&nbsp;&nbsp;SubPeriod List</label>
+
+                    <div class="col-lg-12">
+                        <table width="100%" class="table table-striped table-bordered table-hover" id="tblSubPeriod">
+                            <thead>
+                                <tr>
+
+                                    <td>
+                                        SrNo
+                                    </td>
+                                    <td>
+                                        Start Date
+                                    </td>
+                                    <td>End Date</td>
+
+                                    <td class="col-md-1" align="center">
+                                        Edit
+                                    </td>
+                                    <td class="col-md-1" align="center">
+                                        Delete
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Count() == 0)
+                {
+                                    <tr>
+                                        <td colspan="6">No Rows Found</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.Srno</td>
+
+                                            <td>@Html.DisplayFor(modelitem => item.str_fromdate)</td>
+
+                                            <td>@Html.DisplayFor(modelitem => item.str_todate)</td>
+
+
+                                            <td align="center">
+                                                <button type="button" class="btn btn-primary btn-sm"
+                                                        aria-label="Left Align"
+                                                        onclick="Editsubperiod(this, @item.Srno);">
+                                                    <i class="fa fa-edit"></i>Edit
+                                                </button>
+
+                                            </td>
+                                            <td align="center">
+                                                <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" onclick="deletesubperiod(this);">
+                                                    <i class="fa fa-remove"></i>Delete
+                                                </button>
+
+                                            </td>
+                                        </tr>
+
+
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" id="btnSave">Save</button>
+        </div>
+    }
+</div><!-- /.modal-content -->
+
+<div id="subperiodmodal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-xl">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Add SubPeriod</h4>
+            </div>
+            <div class="modal-body ">
+                <div class="form-group col-lg-6">
+                    <label for="praticesname">Start Date<span>*</span></label>
+
+                    <div class='input-group date' id='dtspStartDate'>
+                        <input type='text' id="txtspStartDate" class="form-control" required />
+
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+
+                    </div>
+                    <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
+                </div>
+                <div class="form-group col-lg-6">
+                    <label for="praticesname">End Date<span>*</span></label>
+                    @*@Html.TextBoxFor(m => m.LeaveDate, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.LeaveDate, "", new { @class = "text-danger  " })*@
+                    <div class='input-group date' id='dtspEndDate'>
+                        <input type='text' id="txtspEndDate" class="form-control" required />
+
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+
+                    </div>
+                    <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
+                </div>
+
+
+                <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="closeaddperiod();">Close</button>
+                <button type="submit" class="btn btn-primary" onclick="addsubperiod();">Save</button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div id="editsubperiodmodal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-xl">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Add SubPeriod</h4>
+            </div>
+            <div class="modal-body ">
+                <div class="form-group col-lg-6">
+                    <label for="praticesname">Start Date<span>*</span></label>
+
+                    <div class='input-group date' id='dtedspStartDate'>
+                        <input type='text' id="txtedspStartDate" class="form-control" required />
+
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+
+                    </div>
+                    <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
+                </div>
+                <div class="form-group col-lg-6">
+                    <label for="praticesname">End Date<span>*</span></label>
+                    @*@Html.TextBoxFor(m => m.LeaveDate, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.LeaveDate, "", new { @class = "text-danger  " })*@
+                    <div class='input-group date' id='dtedspEndDate'>
+                        <input type='text' id="txtedspEndDate" class="form-control" required />
+
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+
+                    </div>
+                    <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
+                </div>
+
+
+                <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="closeeditsubperiod();">Close</button>
+                <button type="submit" class="btn btn-primary" onclick="editsubperiod();">Save</button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="~/Scripts/moment.js"></script>
+<link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+
+<script type="text/javascript">
+    var srnocnt = '@ViewBag.Srno';
+    alert(srnocnt);
+    console.log(srnocnt)
+    var editindex = 0;
+    $('#dtStartDate').datetimepicker({
+        format: 'DD/MM/YYYY',
+        icons:
+        {
+            next: 'fa fa-angle-right',
+            previous: 'fa fa-angle-left'
+        },
+
+    });
+    $('#dtEndDate').datetimepicker({
+        format: 'DD/MM/YYYY',
+        icons:
+        {
+            next: 'fa fa-angle-right',
+            previous: 'fa fa-angle-left'
+        },
+    });
+    $('#dtspStartDate').datetimepicker({
+        format: 'DD/MM/YYYY',
+        icons:
+        {
+            next: 'fa fa-angle-right',
+            previous: 'fa fa-angle-left'
+        },
+    });
+    $('#dtspEndDate').datetimepicker({
+        format: 'DD/MM/YYYY',
+        icons:
+        {
+            next: 'fa fa-angle-right',
+            previous: 'fa fa-angle-left'
+        },
+    });
+    $('#dtedspStartDate').datetimepicker({
+        format: 'DD/MM/YYYY',
+        icons:
+        {
+            next: 'fa fa-angle-right',
+            previous: 'fa fa-angle-left'
+        },
+    });
+    $('#dtedspEndDate').datetimepicker({
+        format: 'DD/MM/YYYY',
+        icons:
+        {
+            next: 'fa fa-angle-right',
+            previous: 'fa fa-angle-left'
+        },
+    });
+    var EndDateStatus = false;
+    var StartDateStatus = false;
+
+    $(document).ready(function () {
+        alert(srnocnt);
+
+        $("#txtStartDate").val('@ViewBag.StartDate');
+          $("#txtEndDate").val('@ViewBag.EndDate');
+
+              $("#btnAddSubPeiod").click(function () {
+
+
+                  var lastTr = $('#tblSubPeriod tr:last').find('td:eq(2)').html()
+
+                  if (lastTr != null) {
+                      //    alert(lastTr);
+                      if (lastTr == "End Date") {
+                          $("#txtspStartDate").val('@ViewBag.fromdate');
+                          $('#txtspEndDate').val("");
+                      }
+                      else {
+                          var myDate = moment(lastTr, "DD/MM/YYYY");
+                          var date = moment(myDate).add('1','day').format("DD/MM/YYYY");
+                          $('#txtspStartDate').val(date);
+                          document.getElementById('txtspStartDate').readOnly = true;
+                          $('#txtspEndDate').val("");
+                      }
+                  }
+
+
+
+                  $('#subperiodmodal').modal('show');
+
+
+              });
+        $("#startdateerror,#enddateerror").hide();
+
+
+    });
+
+    $("#frmNewEmp").submit(function (e) {
+
+        SaveData();
+        e.preventDefault();
+        return false;
+
+    });
+
+    function SaveData() {
+
+        // alert('Save');
+
+
+        var StartDate;
+        var EndDate;
+
+
+
+        StartDate = $('#txtStartDate').val();
+        EndDate = $('#txtEndDate').val();
+
+
+
+
+        if (StartDate == '') {
+            StartDateStatus = false;
+        }
+        else {
+            //$('#assignError').hide();
+            StartDateStatus = true;
+        }
+        if (EndDate == '') {
+            EndDateStatus = false;
+        }
+        else {
+            //$('#assignError').hide();
+            EndDateStatus = true;
+        }
+
+        if (StartDateStatus == true && EndDateStatus == true) {
+
+            $("#startdateerror,#enddateerror").hide();
+
+            var tbl = $('#tblSubPeriod tbody tr:has(td)').map(function (i, v) {
+                var $td = $('td', this);
+                var Tablestartdate = $td.eq(1).html();
+                var Tableenddate = $td.eq(2).html();
+                var Strstartdate = moment(Tablestartdate, "DD/MM/YYYY").format("YYYY/MM/DD");
+
+                var StrEnddate = moment(Tableenddate, "DD/MM/YYYY").format("YYYY/MM/DD");
+                return {
+                    FromDate: Strstartdate,
+                    ToDate: StrEnddate
+                }
+            }).get();
+            var Strstartdate = moment(StartDate,"DD/MM/YYYY").format("YYYY/MM/DD");
+
+            var StrEnddate = moment(EndDate, "DD/MM/YYYY").format("YYYY/MM/DD");
+
+            var postdata =
+                {
+                    "FromDate": Strstartdate,
+                    "ToDate": StrEnddate,
+                    "PeriodViewModellist": tbl
+                };
+
+            swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+                if (result == true) {
+
+                    var ControllerURL = '@Url.Action("AddNew", "Period")';
+
+                    // alert(ControllerURL);
+                    var returnURL = '@Url.Action("Index", "Period")';
+                    $.ajax({
+                        type: 'POST',
+                        url: ControllerURL,
+                        contentType: "application/json",
+                        data: JSON.stringify(postdata),
+                        success: function (res) {
+                            if (res == "Failed") {
+                                swal("Alert", "You Cannot Add this Record", "warning");
+                            }
+                            else {
+                                swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
+                                    if (result == true) {
+                                        window.location.replace(returnURL);
+                                    }
+                                });
+                            }
+
+                        },
+
+                        failure: function () { alert("Error"); }
+
+                    });
+                }
+            });
+                    // window.location.replace(returnURL);
+          }
+
+        else {
+            if (StartDateStatus == true && EndDateStatus == false ) {
+                $('#enddateerror').show();
+                $('#startdateerror').hide();
+
+            } else if (EndDateStatus == true && StartDateStatus == false ) {
+                $('#enddateerror').hide();
+
+                $('#startdateerror').show();
+            } else {
+                $('#enddateerror').show();
+
+                $('#startdateerror').show();
+
+            }
+
+            return false;
+        }
+    }
+    function closeaddperiod()
+    {
+        $('#subperiodmodal').modal('hide');
+    }
+    function closeeditsubperiod() {
+        $('#editsubperiodmodal').modal('hide');
+    }
+
+    function addsubperiod()
+    {
+      // alert("test");
+
+
+       // $('#myModal').modal('hide');
+        if ($("#txtspStartDate").val() != null &&
+            $("#txtspEndDate").val() != '') {
+
+            SubperiodAddtotable();
+
+
+            $("#txtEndDate").focus();
+            $('#subperiodmodal').modal('hide');
+
+        }
+    }
+
+    function SubperiodAddtotable()
+    {
+
+
+        var startdate = $("#txtspStartDate").val();
+        var enddate = $("#txtspEndDate").val();
+        $('#tblSubPeriod').last().append('<tr><td>' + srnocnt + '</td><td>' + startdate + '</td>'
+            + '<td>' + enddate+'</td ><td> <button type="button" class="btn btn-primary btn-sm"'
+                                       +' aria-label="Left Align"'
+            + 'onclick="Editsubperiod(this,'+ srnocnt+');">'
+            + '  <i class="fa fa-edit"></i>Edit</button></td><td> <button type="button" class="btn btn-primary btn-sm"'
+            + ' aria-label="Left Align"'
+            + 'onclick="deletesubperiod(this);">'
+            + '  <i class="fa fa-edit"></i>Delete   </button></td></tr > ');
+
+        srnocnt++;
+    }
+    function deletesubperiod(obj)
+    {
+        $(obj).parent().parent().remove();
+    }
+    function Editsubperiod(id,editcnt) {
+        //$(id).parent();
+        editindex = editcnt;
+        var tr = $(id).parent().parent();
+        var startDate = $(tr).find("td").eq(1).html();
+        var endDate = $(tr).find("td").eq(2).html();
+        $("#txtedspStartDate").val(startDate);
+        $('#txtedspEndDate').val(endDate);
+
+        $('#editsubperiodmodal').modal('show');
+    }
+
+    function editsubperiod() {
+
+        if ($("#txtedspStartDate").val() != null &&
+            $("#txtedspEndDate").val() != '') {
+            Subperiodedittable();
+            $('#editsubperiodmodal').modal('hide');
+
+        }
+    }
+    function Subperiodedittable()
+    {
+        var startdate = $("#txtedspStartDate").val();
+        var enddate = $("#txtedspEndDate").val();
+        var tbl = $('#tblSubPeriod tbody tr:has(td)').each(function () {
+            var srno = $(this).find("td").eq(0).html();
+            if (srno == editindex) {
+                //alert('check');
+                $(this).find("td").eq(1).html(startdate);
+                $(this).find("td").eq(2).html(enddate);
+            }
+        })
+
+    }
+</script>

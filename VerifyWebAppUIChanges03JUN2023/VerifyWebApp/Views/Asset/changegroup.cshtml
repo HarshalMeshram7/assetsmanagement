@@ -1,0 +1,405 @@
+﻿
+@{
+    ViewBag.Title = "Change Group";
+}
+
+<style>
+    label span {
+        color: red;
+        font-size: 20px;
+    }
+</style>
+
+<div class="modal-content" id="mymodal">
+    <div class="modal-header">
+      
+        <h4 class="modal-title">Change Group</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+    @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body" style="height: 400px; overflow: auto;">
+            <div class="row">
+                <div class="form-group col-lg-4">
+                    <label for="praticesname" style="font-style:inherit">Asset No: @ViewBag.assetno</label>
+                </div>
+                <div class="form-group col-lg-4" >
+                    <label for="praticesname" style="font-style:inherit">Asset Name: @ViewBag.assetname</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-lg-6">
+                    <label for="praticesname">Group A<span style="color:#CC0000;">*</span></label>
+                    @Html.DropDownList("txtgrpA", (SelectList)ViewBag.agrouplist, "Select Group", new { @class = "form-control", id = "txtgrpA", @required = true })
+                    <div style="color:#CC0000;font-weight:400" id="locaerror"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-6">
+                    <label for="praticesname">Group B</label>
+                    @*@Html.DropDownList("txtgrpB", (SelectList)ViewBag.bgrouplist, "Select Group", new { @class = "form-control", id = "txtgrpB" })*@
+                    <select id="txtgrpB" name="txtgrpB" class="form-control"></select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-6">
+                    <label for="praticesname">Group C</label>
+                    @*@Html.DropDownList("txtgrpC", (SelectList)ViewBag.cgrouplist, "Select Group", new { @class = "form-control", id = "txtgrpC" })*@
+                    <select id="txtgrpC" name="txtgrpC" class="form-control"></select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-6">
+                    <label for="praticesname">Group D</label>
+                    @*@Html.DropDownList("txtgrpD", (SelectList)ViewBag.dgrouplist, "Select Group", new { @class = "form-control", id = "txtgrpD" })*@
+                    <select id="txtgrpD" name="txtgrpD" class="form-control"></select>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" id="btnSave">Save</button>
+        </div>
+    }
+</div><!-- /.modal-content -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function ($) {
+          var lock ='@ViewBag.Lock';
+        checklock(lock)
+
+       
+        $("#frmNewEmp").submit(function (e) {
+
+            SaveData();
+            e.preventDefault();
+            return false;
+
+        });
+        function checklock(lock) {
+            if (lock == "Depalreadycalculated") {
+                hidechangegroupfields();
+                swal("Alert", "Depreciation is calculated you cannot edit this asset", "warning");
+               
+
+
+            }
+            if (lock == "Periodlock") {
+                hidechangegroupfields();
+                swal("Alert", "Period is locked ,you cannot edit this asset", "warning");
+               
+            }
+            if (lock == "Nolock") {
+
+            }
+
+        }
+        var grpa = '@ViewBag.agroupid';
+        var grpb = '@ViewBag.bgroupid';
+
+        var grpc = '@ViewBag.cgroupid';
+        var grpd = '@ViewBag.dgroupid';
+
+        getinitgrpb(grpa,grpb, grpc,grpd)
+
+        ///onlocation a select load location b dropdown
+        $('#txtgrpA').change(function () {
+
+            var index = $("#txtgrpA option:selected").val();
+
+
+            //  $('#txtassetno').val(index);
+            getgroupb(index);
+        });
+
+        $('#txtgrpB').change(function () {
+
+            var index = $("#txtgrpB option:selected").val();
+
+
+            // $('#txtassetno').val(index);
+            getgroupc(index);
+        });
+        $('#txtgrpC').change(function () {
+
+            var index = $("#txtgrpC option:selected").val();
+
+
+            // $('#txtassetno').val(index);
+            getgroupd(index);
+        });
+
+
+
+
+
+
+    });
+
+
+
+
+    function getinitgrpb(grpa, grpb, grpc, grpd) {
+        if (grpa == "") {
+            grpa = 0;
+
+                    var index = $("#txtgrpB option:selected").val(0);
+            }
+            else {
+                var ControllerURL = '@Url.Action("getgroupb", "Asset")';
+                var url = ControllerURL + "/" + grpa;
+                    var procemessage = "<option value='0'> Please wait...</option>";
+                    $("txtgrpB").html(procemessage).show();
+
+
+                    $.ajax({
+                        url: url,
+
+                        cache: false,
+                        type: "POST",
+                        success: function (data) {
+                            var markup = "<option value='0'>Select Group</option>";
+                            for (var x = 0; x < data.length; x++) {
+                                markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                            }
+                            $("#txtgrpB").html(markup).show();
+                            $("#txtgrpB ").val(grpb);
+                            $("#txtgrpA ").val(grpa);
+                            getinitgrpc(grpb, grpc, grpd);
+                        },
+                        error: function (reponse) {
+                            alert("error : " + reponse);
+                        }
+                    });
+                    }
+                    }
+    function getinitgrpc(grpb,grpc, grpd) {
+        if (grpb == "") {
+            grpb = 0;
+
+                    var index = $("#txtgrpC option:selected").val(0);
+            }
+            else {
+                var ControllerURL = '@Url.Action("getgroupc", "Asset")';
+                var url = ControllerURL + "/" + grpb;
+                         $.ajax({
+                        url: url,
+
+                        cache: false,
+                        type: "POST",
+                        success: function (data) {
+                            var markup = "<option value='0'>Select Group</option>";
+                            for (var x = 0; x < data.length; x++) {
+                                markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                            }
+                            $("#txtgrpC").html(markup).show();
+                            $("#txtgrpC").val(grpc);
+                            getinitgrpd(grpc, grpd);
+                        },
+                        error: function (reponse) {
+                            alert("error : " + reponse);
+                        }
+                    });
+                   }
+
+        }
+
+    function getinitgrpd(grpc, grpd) {
+        if (grpc == "") {
+            grpc = 0;
+
+                    var index = $("#txtgrpD option:selected").val(0);
+            }
+            else {
+                var ControllerURL = '@Url.Action("getgroupd", "Asset")';
+                var url = ControllerURL + "/" + grpc;
+                         $.ajax({
+                        url: url,
+
+                        cache: false,
+                        type: "POST",
+                        success: function (data) {
+                            var markup = "<option value='0'>Select Group</option>";
+                            for (var x = 0; x < data.length; x++) {
+                                markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                            }
+                            $("#txtgrpD").html(markup).show();
+                            $("#txtgrpD").val(grpd);
+
+                        },
+                        error: function (reponse) {
+                            alert("error : " + reponse);
+                        }
+                    });
+                   }
+
+    }
+
+    function getgroupb(grpa) {
+        if (grpa == "") {
+            grpa = 0;
+
+                    var index = $("#txtgrpB option:selected").val(0);
+            }
+            else {
+                var ControllerURL = '@Url.Action("getgroupb", "Asset")';
+                var url = ControllerURL + "/" + grpa;
+                    var procemessage = "<option value='0'> Please wait...</option>";
+                    $("txtgrpB").html(procemessage).show();
+
+
+                    $.ajax({
+                        url: url,
+
+                        cache: false,
+                        type: "POST",
+                        success: function (data) {
+                            var markup = "<option value='0'>Select Group</option>";
+                            for (var x = 0; x < data.length; x++) {
+                                markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                            }
+                            $("#txtgrpB").html(markup).show();
+
+
+
+                        },
+                        error: function (reponse) {
+                            alert("error : " + reponse);
+                        }
+                    });
+                    }
+    }
+     function getgroupc(grpb) {
+        if (grpb == "") {
+            grpb = 0;
+
+                    var index = $("#txtgrpC option:selected").val(0);
+            }
+            else {
+                var ControllerURL = '@Url.Action("getgroupc", "Asset")';
+                var url = ControllerURL + "/" + grpb;
+                    var procemessage = "<option value='0'> Please wait...</option>";
+                    $("txtgrpB").html(procemessage).show();
+
+
+                    $.ajax({
+                        url: url,
+
+                        cache: false,
+                        type: "POST",
+                        success: function (data) {
+                            var markup = "<option value='0'>Select Group</option>";
+                            for (var x = 0; x < data.length; x++) {
+                                markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                            }
+                            $("#txtgrpC").html(markup).show();
+
+
+
+                        },
+                        error: function (reponse) {
+                            alert("error : " + reponse);
+                        }
+                    });
+                    }
+           }
+     function getgroupd(grpc) {
+         if (grpc == "") {
+             grpc = 0;
+
+             var index = $("#txtgrpD option:selected").val(0);
+         }
+         else {
+             var ControllerURL = '@Url.Action("getgroupd", "Asset")';
+             var url = ControllerURL + "/" + grpc;
+             var procemessage = "<option value='0'> Please wait...</option>";
+             $("txtgrpB").html(procemessage).show();
+
+
+             $.ajax({
+                 url: url,
+
+                 cache: false,
+                 type: "POST",
+                 success: function (data) {
+                     var markup = "<option value='0'>Select Group</option>";
+                     for (var x = 0; x < data.length; x++) {
+                         markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                     }
+                     $("#txtgrpD").html(markup).show();
+
+
+
+                 },
+                 error: function (reponse) {
+                     alert("error : " + reponse);
+                 }
+             });
+         }
+
+     }
+
+
+
+
+      function SaveData() {
+          var ID = @ViewBag.assetid;
+          var agrp =$('#txtgrpA').val();
+          var bgrp = $('#txtgrpB').val();
+          var cgrp = $('#txtgrpC').val();
+          var dgrp = $('#txtgrpD').val();
+         // alert(ID + "   " + agrp)
+
+          var postdata =
+              {
+                  "ID": ID,
+                  "AGroupID": agrp,
+                  "BGroupID": bgrp,
+                  "CGroupID": cgrp,
+                  "DGroupID": dgrp
+              };
+          var form = $('#frmNewEmp');
+          var token = $('input[name="__RequestVerificationToken"]', form).val();
+          var headers = {};
+          headers['__RequestVerificationToken'] = token;
+            swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+                if (result == true) {
+
+                    var ControllerURL = '@Url.Action("changegroup_post", "Asset")';
+
+                    // alert(ControllerURL);
+                    var returnURL = '@Url.Action("Index", "Asset")';
+                    $.ajax({
+                        type: 'POST',
+                        url: ControllerURL,
+                        contentType: "application/json",
+                        headers: headers,
+                        data: JSON.stringify(postdata),
+                        success: function (res) {
+                            if (res == "Failed") {
+                                swal("Alert", "You Cannot Add this Record", "warning");
+                            }
+                            else {
+                                swal({ title: "Successfully Changed Group!", icon: "success" }).then((result) => {
+                                    if (result == true) {
+                                        window.location.replace(returnURL);
+                                    }
+                                });
+                            }
+
+                        },
+
+                        failure: function () { alert("Error"); }
+
+                    });
+                }
+            });
+
+      }
+
+</script>

@@ -1,0 +1,296 @@
+﻿@model VerifyWebApp.Models.Supplier
+@{
+    ViewBag.Title = "Add";
+}
+
+<div class="modal-content">
+    <div class="card">
+        <div class="modal-header hborder">
+            <h4 class="modal-title htitle">Create New Supplier</h4>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+        {
+            @Html.AntiForgeryToken();
+            <div class="card-body">
+                @Html.ValidationSummary(true)
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label for="SupplierName">Supplier Name<span>*</span></label>
+                            @Html.TextBoxFor(m => m.SupplierName, new { @class = "form-control form-control-sm", required = "required" })
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="SupplierCode">Code<span></span></label>
+                            @Html.TextBoxFor(m => m.SupplierCode, new { @class = "form-control form-control-sm" })
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="Address">Address Line 1<span></span></label>
+                            @Html.TextBoxFor(m => m.Address, new { @class = "form-control form-control-sm" })
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="Address">Address Line 2<span></span></label>
+                            @Html.TextBoxFor(m => m.Address2, new { @class = "form-control form-control-sm" })
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="Address">Address Line 3<span></span></label>
+                            @Html.TextBoxFor(m => m.Address3, new { @class = "form-control form-control-sm" })
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="City">City<span></span></label>
+                            @Html.TextBoxFor(m => m.City, new { @class = "form-control form-control-sm" })
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="Mobile">Mobile No<span></span></label>
+                            @Html.TextBoxFor(m => m.MobileNo, new { @class = "form-control form-control-sm" })
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="EmailID">Email Id No<span></span></label>
+                            @Html.TextBoxFor(m => m.EmailID, new { @class = "form-control form-control-sm", @type = "email" })
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="ServiceTaxRegNo">Service Tax RegNo<span></span></label>
+                            @Html.TextBoxFor(m => m.ServiceTaxRegNo, new { @class = "form-control form-control-sm" })
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="VATRegNo">VAT Reg No<span></span></label>
+                            @Html.TextBoxFor(m => m.VATRegNo, new { @class = "form-control form-control-sm" })
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="GSTNo">GST No<span></span></label>
+                            @Html.TextBoxFor(m => m.GSTNo, new { @class = "form-control form-control-sm" })
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="PANNo">PAN No<span></span></label>
+                            @Html.TextBoxFor(m => m.PANNo, new { @class = "form-control form-control-sm" })
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="TANNo">TAN No<span></span></label>
+                            @Html.TextBoxFor(m => m.TANNo, new { @class = "form-control form-control-sm" })
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="ShopActLicence">ShopActLicence<span></span></label>
+                            @Html.TextBoxFor(m => m.ShopActLicence, new { @class = "form-control form-control-sm" })
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="ContactPerson">ContactPerson<span></span></label>
+                            @Html.TextBoxFor(m => m.ContactPerson, new { @class = "form-control form-control-sm" })
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="ExciseRegNo">Excise Reg No<span></span></label>
+                            @Html.TextBoxFor(m => m.ExciseRegNo, new { @class = "form-control form-control-sm" })
+
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="msemeRegNo">MsemeNo<span></span></label>
+                            @Html.TextBoxFor(m => m.Msemeno, new { @class = "form-control form-control-sm" })
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-md-2"><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
+            <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnSave">Save</button>
+                    <button type="button" class="btn btn-default" id="btnClose" onclick="btnCloseClick();" data-dismiss="modal">Close</button>
+            </div>
+        }
+    </div><!-- /.modal-content -->
+</div>
+    <script>
+    $(document).ready(function () {
+
+        /*
+        $("#frmNewEmp").submit(function (e) {
+            e.preventDefault();
+            SaveData();
+            return false;
+        });
+        */
+
+        $("#btnSave").click(function () {
+            SaveData();
+        });
+
+        
+    });
+
+    function btnCloseClick() {
+        console.log("btnClose click");
+        $('#divNew').modal('hide')
+    }
+
+
+   function SaveData() {
+        var result;
+
+        var SupplierName;
+        var SupplierCode;
+        var Address;
+        var Address2;
+        var Address3;
+        var City;
+        var MobileNo;
+        var EmailId;
+        var ShopActLicence;
+        var ContactPerson;
+        var ExciseRegNo;
+        var ServiceTaxRegNo;
+        var VATRegNo;
+        var GSTNo;
+        var PANNo;
+        var TANNo;
+
+
+        SupplierName = $('#SupplierName').val();
+        SupplierCode = $('#SupplierCode').val();
+        Address = $('#Address').val();
+        Address2 = $('#Address2').val();
+        Address3 = $('#Address3').val();
+        City = $('#City').val();
+        MobileNo = $('#MobileNo').val();
+        EmailId = $('#EmailID').val();
+        ShopActLicence = $('#ShopActLicence').val();
+        ContactPerson = $('#ContactPerson').val();
+
+        ExciseRegNo = $('#ExciseRegNo').val();
+        ServiceTaxRegNo = $('#ServiceTaxRegNo').val();
+        VATRegNo = $('#VATRegNo').val();
+        GSTNo = $('#GSTNo').val();
+        PANNo = $('#PANNo').val();
+        TANNo = $('#TANNo').val();
+        var msemeno = $('#Msemeno').val();
+
+            var postdata =
+                {
+                    "Msemeno": msemeno,
+                    "SupplierName": SupplierName,
+                    "SupplierCode": SupplierCode,
+                    "Address": Address,
+                    "Address2": Address2,
+                    "Address3": Address3,
+                    "City": City,
+                    "MobileNo": MobileNo,
+                    "EmailID": EmailId,
+                    "ShopActLicence": ShopActLicence,
+                    "ContactPerson": ContactPerson,
+
+                    "ExciseRegNo": ExciseRegNo,
+                    "ServiceTaxRegNo": ServiceTaxRegNo,
+                    "VATRegNo": VATRegNo,
+                    "GSTNo": GSTNo,
+                    "PANNo": PANNo,
+                    "TANNo": TANNo
+
+            };
+            //
+            var form = $('#frmNewEmp');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
+            var headers = {};
+            headers['__RequestVerificationToken'] = token;
+            swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+                if (result == true) {
+                     var ControllerURL = '@Url.Action("Add", "Supplier")';
+                    var returnURL = '@Url.Action("Index", "Supplier")';
+
+                $.ajax({
+                type: 'POST',
+                url: ControllerURL,
+                headers: headers,
+                contentType: "application/json",
+                data: JSON.stringify(postdata),
+
+                success: function (res) {
+
+                console.log(res);
+                if (res == "Failed") {
+                        swal("Alert", "You Cannot Add this Record", "warning");
+                }
+                else
+                {
+                    swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
+                    if (result == true) {
+                        window.location.replace(returnURL);
+                    }
+                });
+                }
+
+                },
+
+                failure: function () { alert("Error"); }
+
+                });
+                }
+                });
+                }
+    </script>
+
+

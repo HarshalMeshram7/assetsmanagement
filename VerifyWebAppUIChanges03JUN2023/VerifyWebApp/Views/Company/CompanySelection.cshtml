@@ -1,0 +1,225 @@
+﻿@model IEnumerable<VerifyWebApp.Models.Company>
+
+@{
+    ViewBag.Title = "Company_Selection";
+}
+
+@{
+    Layout = "~/Views/Shared/_LayoutSelectCompany.cshtml";
+}
+
+
+<!-- Card header -->
+@*<div class="card-body px-0 pb-0">*@
+@*<div class="table-responsive">
+    <table class="table table-flush" id="products-list">
+        <thead class="thead-light">
+
+            <tr>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2" style="color:black">Company Name</th>
+                <th></th>
+            </tr>
+
+        </thead>
+        <tbody>
+            @if (Model.Count() == 0)
+            {
+                <tr>
+                    <td colspan="2">No Rows Found</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td hidden>@Html.DisplayFor(modelitem => item.ID)</td>
+                        <td width="15" style="color:black">@Html.DisplayFor(modelitem => item.CompanyName)</td>
+
+
+                        <td width="15" align="left">
+                            <button type="button" class="btn btn-outline-success btn-sm"
+                                    aria-label="Left Align"
+                                    onclick="Selectcompany(@item.ID);">
+                                <i class="fa fa-check"></i>Select
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                }
+            }
+        </tbody>
+    </table>*@
+<div class="card" style="height:20rem">
+    <div class="card-header pb-0">
+        <div class="d-lg-flex" style="border-bottom-style:groove">
+            <div class="text-2xl">
+                <b>Select Company</b>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table" id="products-list">
+            <thead style="font-weight:bolder">
+                <tr>
+                    <th class="text-center text-uppercase text-secondary text-xs font-weight-bold ">Company Name</th>
+                    <th class="text-start text-uppercase text-secondary text-xs font-weight-bold ">Choose</th>
+                </tr>
+            </thead>
+            <tbody style="font-weight:bold;background-color:white">
+
+
+                @if (Model.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="2">No Rows Found</td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td hidden>@Html.DisplayFor(modelitem => item.ID)</td>
+                            <td class="text-md-center" width="15" style="color:black">@Html.DisplayFor(modelitem => item.CompanyName)</td>
+
+
+                            <td width="15" style="color:black">
+                                <button type="button" class="btn btn-outline-success btn-sm"
+                                        aria-label="Left Align"
+                                        onclick="Selectcompany(@item.ID);">
+                                    <i class="fa fa-check"></i> Select
+                                </button>
+
+                            </td>
+                        </tr>
+
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@*</div>
+            </div>
+        </div>
+    </div>
+        </div>*@
+
+@*</div>
+        </div>
+    </div>*@
+
+
+@*<style>
+
+    table {
+        border:1px solid;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        text-align: center;
+        padding: 8px;
+    }
+</style>*@
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        //$('#tblcompany').DataTable();
+        $('#tblcompany').DataTable({
+            "paging": false,
+            "ordering": false,
+            "info": false,
+            "filter":false
+        });
+    });
+    ////if admin then he can add company if user he cannot add company
+    var userlevel = "@ViewBag.userlevel";
+    if (userlevel == "Admin")
+    {
+        //btnaddcompany
+        document.getElementById("btnaddcompany").style.display = "block";
+    }
+    else {
+        document.getElementById("btnaddcompany").style.display = "none";
+    }
+/////////////////////////////////////////////////////////////////////////////////////////
+    if (typeof jQuery !== 'undefined') {
+        console.log('jQuery Loaded');
+    }
+    else {
+        console.log('not loaded yet');
+    }
+
+        @*function opennewdialog() {
+
+            var url = '@Url.Action("Add","Login")';
+            $.get(url, function (data) {
+                $("#divNewContent").html(data);
+                // alert(data);
+                $('#divNew').modal('show')
+            });
+        }*@
+
+    function Selectcompany(id) {
+            var url = '@Url.Action("Selectcompany","Company")';
+            url = url + "/" + id;
+            window.location.href = url;
+
+            //$.get(url, function (data) {
+            //    $("#divEditContent").html(data);
+            //    $('#divEdit').modal('show')
+            //});
+        }
+     function Delete(id)
+      {
+         swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+            if (result == true) {
+                var returnURL='@Url.Action("Index", "Login")';
+                var url = '@Url.Action("Delete", "Login")';
+                url = url + "/" + id;
+                    $.ajax({
+                    type: 'POST',
+                    url: url,
+                    contentType: "application/json",
+                    success: function (res) {
+                        if (res == "Failed")
+                        {
+                            swal("Alert", "You Cannot Delete this Record", "warning");
+                        }
+                        else
+                        {
+                            swal({ title:  "Successfully Deleted!", icon: "success" }).then((result) => {
+                                if (result == true) {
+                                    window.location.reload();
+                                }
+                            });
+                         }
+                    },
+
+                    failure: function () { alert("Error"); }
+
+                 });
+            }
+        });
+
+        }
+
+     function companypage() {
+         var url = '@Url.Action("Index","Company")';
+
+            window.location.href = url;
+     }
+     @*function loginpage() {
+         var url = '@Url.Action("Index","Login")';
+
+            window.location.href = url;
+     }*@
+</script>
+

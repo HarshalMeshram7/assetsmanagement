@@ -1,0 +1,897 @@
+﻿@model IEnumerable<VerifyWebApp.Models.SubLoan>
+@{
+                /**/
+
+                /**/
+
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                ViewBag.Title = "Edit";
+}
+
+
+@using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+{
+    
+    @Html.AntiForgeryToken();
+
+<div id="page-wrapper" class="container-fluid rounded page border shadow">
+    <div class="card">
+        <div class="card-header pb-0">
+            <div class="row">
+                <div class="d-sm-flex justify-content-between hborder">
+                    <div class="htitle"> <b>Edit Loan</b> </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="praticesname">From Date<span>*</span></label>
+
+                        <input id="stDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
+                        <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="praticesname">To Date<span>*</span></label>
+                        <input id="EndDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
+                        <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="praticesname">Loan taken from</label>
+
+                        <input id="BankName" class="form-control" required />
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="praticesname">Loan Period (No of years)</label>
+                        <input id="Year" class="form-control" required />
+
+                    </div>
+                </div>
+
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+
+                        <label for="praticesname">Amount</label>
+                        <input id="Amount" class="form-control" type="number" required />
+
+                    </div>
+
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+
+                        <label for="praticesname">Interest %</label>
+                        <input id="Percentage" type="number" required class="form-control" />
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    Assets List for Loan
+                </div>
+            </div>
+
+            
+            <div class="row">
+                <div class="col-lg-12 ">
+                    <button type="button" id="btnexport" value="New Practice"
+                            class="btn btn-sm xtraBtn pull-right m-1 order-2"
+                            onclick="assetexport();"  data-bs-toggle="tooltip" data-bs-placement="top" title="Export">
+                        <i class="fa fa-file-excel-o"></i>
+                    </button>
+
+                    <button type="button" id="btnimport" value="Upload"
+                            class="btn btn-sm xtraBtn pull-right  m-1 order-4"
+                            onclick="Importassetexcel();"  data-bs-toggle="tooltip" data-bs-placement="top" title="Import">
+                        <i class="fa fa-upload"></i>
+                    </button>
+                    <button type="button" value="New Practice"
+                            class="btn btn-sm addBtn pull-right m-1 order-1"
+                            id="btnAddSubloan"  data-bs-toggle="tooltip" data-bs-placement="top" title="Add New">
+                        <i class="fa fa-plus-square"></i>
+
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-responsive">
+                        <table width="100%" class="table table-hover text-uppercase text-xs" id="tblsubloan">
+                            <thead class="hcol" style="font-weight:bold">
+                                <tr>
+
+                                    <td>
+                                        SrNo
+                                    </td>
+                                    <td>
+                                        AssetNo
+                                    </td>
+                                    <td>Asset Description</td>
+
+                                    <td align="right">Asset Capitalised Amount</td>
+                                    <td align="center">
+                                        Edit
+                                    </td>
+                                    <td align="center">
+                                        Delete
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody style="font-weight:bold;color:black">
+                                @if (Model.Count() == 0)
+                                {
+
+                                }
+                                else
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.Srno</td>
+
+                                            <td>@Html.DisplayFor(modelitem => item.AssetNo)</td>
+
+                                            <td>@Html.DisplayFor(modelitem => item.AssetDescription)</td>
+                                            <td align="right">@Html.DisplayFor(modelitem => item.CapitalisedAmount)</td>
+
+                                            <td align="center">
+                                                <button type="button" class="btn modBtn btn-sm"
+                                                        aria-label="Left Align"
+                                                        onclick="Editsubloan(this,@item.Srno);">
+                                                    <i class="fa fa-edit"></i>
+                                                </button>
+
+                                            </td>
+                                            <td align="center">
+                                                <button type="button" class="btn delBtn btn-sm" aria-label="Left Align" onclick="deletesubloan(this);">
+                                                    <i class="fa fa-remove"></i>
+                                                </button>
+
+                                            </td>
+                                        </tr>
+
+
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+
+                        <button type="submit"
+                                class="btn saveBtn btn-sm" id="btnSave">
+                            Save
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    
+
+
+    <div id="subloanmodal" class="modal fade" role="dialog" style="height: 570px;">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Asset to Loan</h4>
+                </div>
+                <div class="modal-body ">
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label for="praticesname">Asset No<span>*</span></label>
+
+                            <div class='input-group dropdown' id='dtasset'>
+                                @Html.DropDownList("AssetNo", (SelectList)ViewBag.Assestlist, "Select AssetNo", new { @class = "form-control" })
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label for="praticesname">Asset Description<span>*</span></label>
+
+                            <input type='text' id="txtassetdesc" class="form-control" required readonly />
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label for="praticesname">Asset Capitalised Amount<span>*</span></label>
+
+                            <input type='text' id="txtassetamount" class="form-control" required readonly />
+
+                        </div>
+                    </div>
+                </div>
+                <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn saveBtn btn-sm" onclick="addasset();">Save</button>
+                    <button type="button" class="btn clBtn btn-sm" onclick="closeaddloan();">Close</button>
+               
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div id="editsubloanmodal" class="modal fade" role="dialog" style="height: 570px;">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h4 class="modal-title htitle">Edit SubLoan</h4>
+                </div>
+                <div class="modal-body ">
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label for="praticesname">Asset No<span>*</span></label>
+
+                            <div class='input-group dropdown' id='dtasset'>
+
+                                @Html.DropDownList("edAssetNo", (SelectList)ViewBag.Assestlist, "Select AssetNo", new { @class = "form-control" })
+
+
+                            </div>
+                            <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label for="praticesname">Asset Description<span>*</span></label>
+
+                            <input type='text' id="txtedassetdesc" class="form-control" required readonly />
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label for="praticesname">Asset Capitalised Amount<span>*</span></label>
+
+                            <input type='text' id="txtedassetamount" class="form-control" required readonly />
+
+                        </div>
+                    </div>
+                </div>
+                <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm saveBtn" onclick="editsubloan();">Save</button>
+                    <button type="button" class="btn btn-sm clBtn" onclick="closeeditloan();" data-dismiss="modal">Close</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="importmodal" class="modal fade" role="dialog" style="height: 570px;" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h4 class="modal-title">Import Sub loan  List</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                @*@using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))*@
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "frmupload" }))
+                {
+                    <div class="modal-body">
+
+                        @Html.ValidationSummary(true)
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="praticesname"><span>*</span>Select File to be uploaded </label>
+                                    @Html.TextBox("File", "", new { type = "file", id = "fileupload", name = "fileupload" })
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn saveBtn btn-sm" id="btnupload">Upload</button>
+                        <button type="button" class="btn clBtn btn-sm" data-dismiss="modal">Close</button>
+                        
+                        @*@ViewBag.Message*@
+
+                    </div>
+                }
+            </div><!-- /.modal-content -->
+        </div>
+    </div>
+    <div id="errorlist" class="modal fade" role="dialog" style="height: 670px;" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content" style="height:530px;width:900px;overflow:auto">
+                <div class="modal-header">
+
+                    <h4 class="modal-title">Error list</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body ">
+
+                    <div class="row" style="overflow:auto">
+                        <table width="100%" class=""table table-hover text-uppercase text-xs"" style="overflow:auto" id="errtbl">
+
+                            <thead class="hcol" style="font-weight:bold">
+                                <tr>
+
+                                    <td>Srno</td>
+                                    <td>Errors</td>
+                                </tr>
+                            </thead>
+                            <tbody style="font-weight:bold"></tbody>
+
+                        </table>
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" onclick="closeerrorlist();">Close</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" tabindex="-1" role="dialog" id="divUpload" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lx" role="document" id="divUploadContent">
+
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+<script type="text/javascript">
+    var srnocnt = '@ViewBag.Srno';
+
+        var editindex = 0;
+        /*
+    $('#dtStartDate').datetimepicker({
+        format: 'DD/MM/YYYY',
+        icons:
+        {
+            next: 'fa fa-angle-right',
+            previous: 'fa fa-angle-left'
+        },
+
+    });
+    $('#dtEndDate').datetimepicker({
+        format: 'DD/MM/YYYY',
+        icons:
+        {
+            next: 'fa fa-angle-right',
+            previous: 'fa fa-angle-left'
+        },
+    });
+    */
+
+    var EndDateStatus = false;
+    var StartDateStatus = false;
+
+    $(document).ready(function () {
+        InitUI();
+    });
+
+
+    function InitUI(){
+
+
+        var startdate = moment('@ViewBag.FromDate', 'DD/MM/YYYY').format('YYYY-MM-DD');
+        var enddate = moment('@ViewBag.ToDate', 'DD/MM/YYYY').format('YYYY-MM-DD');
+
+        console.log("startdate", startdate);
+
+        $('#stDate').val(startdate);
+        $('#EndDate').val(enddate);
+
+
+          $('#BankName').val('@ViewBag.BankName');
+          $('#Year').val('@ViewBag.Year');
+          $('#Amount').val('@ViewBag.Amount');
+          $('#Percentage').val('@ViewBag.Percent');
+
+          $("#btnAddSubloan").click(function () {
+              //--new code
+              $("#AssetNo").val(0);
+              $("#txtassetdesc").val('');
+              $("#txtassetamount").val('');
+
+
+              $('#subloanmodal').modal('show');
+
+
+              });
+                     $("#startdateerror,#enddateerror").hide();
+
+                     getAssetDetails();
+                     geteditAssetDetails();
+
+             //});
+
+
+
+    $("#frmNewEmp").submit(function (e) {
+
+        SaveData();
+        e.preventDefault();
+        return false;
+
+    });
+    }
+    function getAssetDetails() {
+                    $("[name='AssetNo']").change(function () {
+                        var assetno = $("#AssetNo").val();
+
+                        if (assetno == "") {
+                            $("#txtassetdesc").val("");
+                            $("#txtassetamount").val("");
+
+                        }
+                        else {
+                            var ControllerURL = '@Url.Action("getassetinfo", "Loan")';
+                            var url = ControllerURL + "/" + assetno;
+                            $.ajax({
+                                type: 'GET',
+                                url: url,
+
+                                contentType: "application/json",
+                                // data: JSON.stringify(getdata),
+                                success: function (result) {
+
+                                    $("#txtassetdesc").val(result.Data[0].AssetName);
+                                    $("#txtassetamount").val(result.Data[0].AmountCapitalised);
+
+                                },
+                                failure: function () { alert("Error"); }
+
+                            });
+                        }
+        });
+        }
+        function geteditAssetDetails() {
+
+             $("[name='edAssetNo']").change(function () {
+                        var assetno = $("#edAssetNo").val();
+
+                        if (assetno == "") {
+                            $("#txtedassetdesc").val("");
+                            $("#txtedassetamount").val("");
+
+                        }
+                        else {
+                            var ControllerURL = '@Url.Action("getassetinfo", "Loan")';
+                            var url = ControllerURL + "/" + assetno;
+                            $.ajax({
+                                type: 'GET',
+                                url: url,
+
+                                contentType: "application/json",
+                                // data: JSON.stringify(getdata),
+                                success: function (result) {
+
+                                    $("#txtedassetdesc").val(result.Data[0].AssetName);
+                                    $("#txtedassetamount").val(result.Data[0].AmountCapitalised);
+
+                                },
+                                failure: function () { alert("Error"); }
+
+                            });
+                        }
+                    });
+        }
+
+    function SaveData() {
+
+        // alert('Save');
+
+        var startdate = moment($("#stDate").val()).format('YYYY-MM-DD');
+        var enddate = moment($("#EndDate").val()).format('YYYY-MM-DD');
+
+
+
+
+
+        if (new Date(startdate) >= new Date(enddate)) {
+
+
+            swal("Alert", "To Date must be greater than From Date", "warning");
+            return;
+        }
+        else {
+            var StartDate;
+            var EndDate;
+            var BankName;
+            var Year;
+            var Amount;
+            var Percent;
+            var Editid = '@ViewBag.ID';
+
+            StartDate = startdate;
+            EndDate = enddate;
+            BankName = $('#BankName').val();
+            Year = $('#Year').val();
+            Amount = $('#Amount').val();
+            Percent = $('#Percentage').val();
+
+            if (StartDate == '') {
+                StartDateStatus = false;
+            }
+            else {
+                //$('#assignError').hide();
+                StartDateStatus = true;
+            }
+            if (EndDate == '') {
+                EndDateStatus = false;
+            }
+            else {
+                //$('#assignError').hide();
+                EndDateStatus = true;
+            }
+
+            if (StartDateStatus == true && EndDateStatus == true) {
+
+                $("#startdateerror,#enddateerror").hide();
+
+                var tbl = $('#tblsubloan tbody tr:has(td)').map(function (i, v) {
+                    var $td = $('td', this);
+                    var Tableassetno = $td.eq(1).html();
+                    var Tableassetdesc = $td.eq(2).html();
+                    var Tableassetamt = $td.eq(3).html();
+                    return {
+                        AssetNo: Tableassetno,
+                        AssetDescription: Tableassetdesc,
+                        CapitalisedAmount: Tableassetamt
+                    }
+                }).get();
+
+                var Strstartdate = moment(StartDate, "DD/MM/YYYY").format("YYYY/MM/DD");
+                var StrEnddate = moment(EndDate, "DD/MM/YYYY").format("YYYY/MM/DD");
+
+                var postdata =
+                    {
+                        "FromDate": startdate,
+                        "ToDate": enddate,
+                        "BankName": BankName,
+                        "Year": Year,
+                        "Amount": Amount,
+                        "Percent": Percent,
+                        "LoanViewModellist": tbl,
+                        "ID": Editid
+                   };
+
+                var form = $('#frmNewEmp');
+                var token = $('input[name="__RequestVerificationToken"]', form).val();
+                var headers = {};
+                headers['__RequestVerificationToken'] = token;
+                swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+                    if (result == true) {
+
+                        var ControllerURL = '@Url.Action("Edit", "Loan")';
+
+                        // alert(ControllerURL);
+                        var returnURL = '@Url.Action("Index", "Loan")';
+                        $.ajax({
+                            type: 'POST',
+                            url: ControllerURL,
+                            contentType: "application/json",
+                            headers: headers,
+                            data: JSON.stringify(postdata),
+                            success: function (res) {
+                                if (res == "Failed") {
+                                    swal("Alert", "You Cannot Add this Record", "warning");
+                                }
+                                else {
+                                    swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
+                                        if (result == true) {
+                                            window.location.replace(returnURL);
+                                        }
+                                    });
+                                }
+
+                            },
+
+                            failure: function () { alert("Error"); }
+
+                        });
+                    }
+                });
+                // window.location.replace(returnURL);
+            }
+
+            else {
+                if (StartDateStatus == true && EndDateStatus == false) {
+                    $('#enddateerror').show();
+                    $('#startdateerror').hide();
+
+                } else if (EndDateStatus == true && StartDateStatus == false) {
+                    $('#enddateerror').hide();
+
+                    $('#startdateerror').show();
+                } else {
+                    $('#enddateerror').show();
+
+                    $('#startdateerror').show();
+
+                }
+
+                return false;
+            }
+        }
+    }
+    function closeaddloan()
+    {
+        $('#subloanmodal').modal('hide');
+    }
+    function closeeditloan() {
+        $('#editsubloanmodal').modal('hide');
+    }
+
+    function addasset()
+    {
+
+       // $('#myModal').modal('hide');
+        if ($("#AssetNo").val() != '' &&
+            $("#txtassetdesc").val() != '' && $("#txtassetamount").val() != '') {
+
+            AddAssettotable();
+
+
+            $("#txtEndDate").focus();
+            $('#subloanmodal').modal('hide');
+
+        }
+    }
+
+    function AddAssettotable()
+    {
+
+
+         var assetno = $("#AssetNo").val();
+         var assetdesc = $("#txtassetdesc").val();
+         var assetamt = $("#txtassetamount").val()
+                    $('#tblsubloan').last().append('<tr><td>' + srnocnt + '</td><td>' + assetno + '</td>'
+                        + '<td>' + assetdesc + '</td ><td align="right">' + assetamt +'</td><td align="center"> <button type="button" class="btn btn-primary btn-sm"'
+                                       +' aria-label="Left Align"'
+            + 'onclick="Editsubloan(this,' + srnocnt+');">'
+                        + '  <i class="fa fa-edit"></i>Edit</button></td><td align="center"> <button type="button" class="btn btn-danger btn-sm"'
+                        + ' aria-label="Center Align"'
+            + 'onclick="deletesubloan(this);">'
+            + '  <i class="fa fa-remove"></i>Delete   </button></td></tr > ');
+
+        srnocnt++;
+    }
+    function deletesubloan(obj)
+    {
+        swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+            if (result == true) {
+                $(obj).parent().parent().remove();
+                srnocnt - 1;
+            }
+        });
+    }
+    function Editsubloan(id,editcnt) {
+        //$(id).parent();
+        editindex = editcnt;
+        var tr = $(id).parent().parent();
+        var assetno = $(tr).find("td").eq(1).html();
+        var assetdesc = $(tr).find("td").eq(2).html();
+        var assetamt = $(tr).find("td").eq(3).html();
+                    //  $("#txtedassetno").val(assetno);
+                   // alert(assetno)
+
+
+                  // $("#edAssetNo").prop('selectedIndex', assetno);
+                    $("#edAssetNo").val(assetno);
+
+                   // $("#txtedassetno").prop('selectedIndex', assetno)
+        $('#txtedassetdesc').val(assetdesc);
+        $('#txtedassetamount').val(assetamt);
+        $('#editsubloanmodal').modal('show');
+    }
+
+    function editsubloan() {
+//alert("test")
+        if ($("#edAssetNo").val() != '' &&
+            $("#txtedassetdesc").val() != '' && $("#txtedassetamount").val() != '' ) {
+            Subloanedittable();
+            $('#editsubloanmodal').modal('hide');
+
+        }
+    }
+    function Subloanedittable()
+    {
+
+        var assetno = $("#edAssetNo").val();
+
+        var assetdesc = $("#txtedassetdesc").val();
+        var assetamt = $("#txtedassetamount").val();
+        //alert(assetno)
+        //alert(assetdesc)
+        //alert(assetamt)
+        var tbl = $('#tblsubloan tbody tr:has(td)').each(function () {
+            var srno = $(this).find("td").eq(0).html();
+            if (srno == editindex) {
+                //alert('check');
+                $(this).find("td").eq(1).html(assetno);
+                    $(this).find("td").eq(2).html(assetdesc);
+                    $(this).find("td").eq(3).html(assetamt);
+
+            }
+        })
+
+        }
+         function Importassetexcel() {
+            $('#importmodal').modal('show');
+        }
+        $('#btnupload').click(function (e) {
+
+            $('#frmupload').removeData('validator');
+            // $('#frmupload').removeData('unobtrusiveValidation');
+            $("#frmupload").each(function () { $.data($(this)[0], 'validator', false); }); //enable to display the error messages
+            //$.validator.unobtrusive.parse("#frmupload");
+
+
+
+            // uploadfile();
+
+
+            if (window.FormData !== undefined) {
+
+                // var uploadfile = $('#fileupload').val();
+                // alert(uploadfile);
+
+                var formData = new FormData();
+
+
+                //var file = $('#fileupload').get(0);
+                //formData.append("fileupload", file);
+                e.preventDefault();
+                var formData = new FormData();
+                var totalFiles = document.getElementById("fileupload").files.length;
+
+                var file = document.getElementById("fileupload").files[0];
+
+                formData.append("fileupload", file);
+                //  alert("nooffiles"+totalFiles);
+                // alert("file"+file);
+                //alert(totalFiles);
+                // alert(file);
+
+
+                swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+                    if (result == true) {
+                        var ControllerURL = '@Url.Action("UploadAsset", "Amc")';
+
+
+                        var returnURL = '@Url.Action("Index","Insurance")';
+
+                        $.ajax({
+                            type: 'POST',
+                            url: ControllerURL,
+                            contentType: false,
+                            processData: false,
+                            dataType: 'json',
+                            data: formData,
+                            success: function (res) {
+                                // alert(res)
+                                if (res == "Failed") {
+                                    swal("Alert", "You Cannot Upload this File", "warning");
+                                }
+                                else if (res == "nodata") {
+                                    swal("Alert", "NO Data in Excel", "warning");
+                                }
+                                else if (res == "Success") {
+
+                                    swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
+                                        if (result == true) {
+                                            window.location.replace(returnURL);
+                                        }
+                                    });
+                                }
+
+
+                                else {
+
+                                    result = res;
+                                    console.log(res.Data)
+                                  //alert(result.Data.data.length)
+                                  var addtable = "";
+                                    for (var i = 0; i< result.Data.data.length; i++){
+
+                                        addtable = $('#tblsubloan').last().append('<tr><td>' + srnocnt + '</td><td>' + result.Data.data[i].assetno + '</td>'
+                                            + '<td>' + result.Data.data[i].assetname + '</td ><td align="right">' + parseFloat(result.Data.data[i].amountcapcompany).toFixed(2) + '</td><td align="center"> <button type="button" class="btn btn-primary btn-sm"'
+                                            + ' aria-label="Left Align"'
+                                            + 'onclick="Editsubloan(this,' + srnocnt + ');">'
+                                            + '  <i class="fa fa-edit"></i>Edit</button></td ><td align="center"> <button type="button" class="btn btn-danger btn-sm"'
+                                            + ' aria-label="Center Align"'
+                                            + 'onclick="deletesubloan(this);">'
+                                            + '  <i class="fa fa-remove"></i>Delete   </button></td></tr > ');
+
+                                        srnocnt++;
+                                    }
+                                    $('#importmodal').modal('hide');
+                                   // showerrorlist(result);
+                                }
+
+                            },
+
+                            failure: function () { alert("Error"); }
+
+                        });
+                    }
+                });
+            }
+
+
+
+
+
+        });
+
+        @*function Importassetexcel() {
+
+             var url = '@Url.Action("ImportAssetExcel", "Amc")';
+
+
+            $.get(url, function (data) {
+                $("#divUploadContent").html(data);
+               // alert(data);
+                $('#divUpload').modal('show')
+            });
+        }*@
+         function showerrorlist(result) {
+        var srno = 1;
+
+        for (var i = 0; i < result.length; i++) {
+
+            $('#errtbl').last().append('<tr><td>' + srno + '</td><td>' + result[i] + '</td></tr>');
+            srno++
+        }
+
+        $('#errorlist').modal('show');
+
+    }
+    function closeerrorlist() {
+        $('#errorlist').modal('hide');
+         var returnURL = '@Url.Action("Index", "Amc")';
+        window.location.replace(returnURL);
+    }
+</script>
+
+}

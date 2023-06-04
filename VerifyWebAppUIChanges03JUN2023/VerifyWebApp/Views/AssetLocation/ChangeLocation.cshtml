@@ -1,0 +1,454 @@
+﻿
+@{
+    ViewBag.Title = "ChangeLocation";
+}
+
+<style>
+    #jstree {
+        width: 400px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    #normal_div {
+        margin-top: 10px;
+        width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        border: 1px solid blue;
+        white-space: nowrap;
+    }
+
+    .jstree-node > a {
+        /* 100% - (the width of the presentation node : the line - the left padding of the <a> node - the right padding of the <a> node)*/
+        width: calc(100% - (100px + 1px + 4px));
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+    .twitter-typeahead {
+        width: 100%;
+    }
+</style>
+
+<div class="container-fluid rounded page border shadow">
+    <div class="row border-bottom ">
+        <div class="col-md-6 my-1">
+
+           
+
+        </div>
+        <div class="col-md-6 my-1 pull-right">
+            <h6>Change Location of Assets</h6>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+
+@using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+}
+
+    <div class="row my-1">
+        <div class="col-lg-4 border border-success">
+            <div class="tree m-1">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div> </div>
+                    </div>
+                </div>
+                <div class="row" style=" overflow-y: scroll;max-height:initial;height:500px">
+
+                    <div class="col-md-12">
+                        <div id="jstree">
+                            <!-- in this example the tree is populated from inline HTML -->
+                            <ul>
+                                <li>
+                                    Root node 1
+                                    <ul>
+                                        <li id="child_node_1">Child node 1</li>
+                                        <li>Child node 2</li>
+                                    </ul>
+                                </li>
+                                <li style="margin-top:3px">Root node 2</li>
+                            </ul>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+                <form>
+                    <div class="form-row my-1 align-items-center">
+                        
+                            <label for="txtassetno" class="col-form-label-sm">Search Asset No </label>
+                            <div class="col">
+                                <input class="form-control form-control-sm" type="text" style="width:98%" id="txtassetno"
+                                       placeholder="Search using Asset No or Name">
+                            </div>
+                            <button type="button" id="btnclear"
+                                class="btn btn-sm btn-secondary align-self-center mx-auto m-0" 
+                                data-toggle="tooltip" data-placement="top" title="Clear Search"
+                                data-delay='{"show":"2000", "hide":"1500"}'>
+                            <i class="fa fa-times"></i>
+                            &nbsp;
+                        </button>
+
+                     </div>
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label id="lblassetno" class="col-form-label-sm">Asset No</label>
+                        </div>
+                        <div class="col-md-8">
+                            <label id="lblassetname" class="col-form-label-sm">Asset Name</label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label id="lbldtputtouse" class="col-form-label-sm">Date Put To Use: 01/01/2021 </label>
+                        </div>
+                        <div class="col-md-4">
+                            <label id="lblamtcap" class="col-form-label-sm">Amt Capt: 100000 </label>
+                        </div>
+                        <div class="col-md-4">
+                            <label id="lblassetsrno" class="col-form-label-sm">Sr No: </label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <label id="lblcurrentlocation" class="col-form-label-sm">Current Location: </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <label id="lbllocation" class="col-form-label-sm">Selected Location: </label>
+                        </div>
+                    </div>
+
+                    
+                        <div class="form-group row" style="">
+                            <div class="col-md-2">
+                                <label for="praticesname" class="col-form-label-sm">Eff Change Date :</label>
+                             </div>
+                            <div class="col-md-3">
+                                <div class='input-group date' id='dtEffChangeDate'>
+                                    <input type='text' id="txtchangedate" class="form-control form-control-sm" tabindex="10" pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})" />
+
+                                    <div class="input-group-addon">
+                                        <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                      </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12 justify-content-between">
+                                <button type="button" class="btn btn-primary" id="btnsave">	Save</button>
+                                <button type="button" class="btn btn-secondary" id="btncancel">	Cancel</button>
+                            </div>
+                        </div>
+</form>        
+            </div>
+           
+
+      
+
+    </div>
+ </div>
+<script>
+
+    let selectdAssetNo = "";
+    let selectedLocationID = "";
+    function getToken() {
+        var form = $('#frmNewEmp');
+        var token = $('input[name="__RequestVerificationToken"]', form).val();
+        var headers = {};
+        headers['__RequestVerificationToken'] = token;
+        return headers;
+    }
+
+    $(document).ready(function () {
+
+
+        $('#dtEffChangeDate').datetimepicker({
+            format: 'DD/MM/YYYY',
+            icons:
+            {
+                next: 'fa fa-angle-right',
+                previous: 'fa fa-angle-left'
+            },
+
+        });
+
+
+
+        // Defining the local dataset
+        //  var cars = ['Audi', 'BMW', 'Bugatti', 'Ferrari', 'Ford', 'Lamborghini', 'Mercedes Benz', 'Porsche', 'Rolls-Royce', 'Volkswagen'];
+        let baseURL = "@ViewBag.baseUrl";
+        //alert(baseURL);
+        console.log(baseURL);
+
+        $(".tt-hint").addClass("form-control");
+
+        InitTree();
+
+
+        $("#btnclear").click(function () {
+            console.log('clear');
+            clearscreen();
+        });
+
+
+        $("#btnsave").click(function () {
+            savelocation();
+        });
+
+        // 7 bind to events triggered on the tree
+        $('#jstree').on("changed.jstree", function (e, data) {
+            //console.log(data.selected);
+            var node = $('#jstree').jstree().get_selected(true)[0];
+            console.log("node:" + node.id);
+            selectedLocationID = node.id;
+            document.getElementById('lbllocation').innerHTML = 'Selected Locaton: ' + node.text;
+            //getParent(node);
+            var parry = $('#jstree').jstree().get_path(node);
+            let path = "";
+            if (parry) {
+                //console.log(parry);
+                path = parry.join(" - ");
+                //console.log(path);
+                document.getElementById('lbllocation').innerHTML = 'Change Location To: ' + '<b>' +path + '</b>';
+            }
+            //console.log($('#jstree').jstree().get_path(node));
+            /*
+            $.each(parray, function (i, item) {
+                console.log(item);
+            })
+            */
+
+        });
+
+        let map = {};
+
+        // Constructing the suggestion engine
+        /*
+        var cars = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.whitespace,
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+        });
+        */
+        let assetno = '';
+        let assetname = '';
+        let dtputtouse = '';
+        let amtcap = 0;
+        let srno = '';
+        let location = '';
+        $('#txtassetno').bind('typeahead:select', function (ev, suggestion) {
+            let item = map[suggestion];
+            console.log('Selection: ' + JSON.stringify(item));
+            if (item) {
+                assetname = item.assetname;
+                amtcap = item.amtcapitalized;
+                assetno = item.assetno;
+                dtputtouse = item.dtputtouse
+                srno = item.serialno
+                location = item.location
+                selectdAssetNo = assetno;
+
+                document.getElementById('lblassetno').innerHTML = 'AssetNo: ' + assetno;
+                document.getElementById('lblassetname').innerHTML = 'Asset Name: ' + assetname;
+                document.getElementById('lblamtcap').innerHTML = 'Amt Capitalized ' + amtcap.toLocaleString('en-IN');
+                document.getElementById('lbldtputtouse').innerHTML = 'Date Put To Use: ' + dtputtouse;
+                document.getElementById('lblassetsrno').innerHTML = 'Sr No: ' + srno;
+                document.getElementById('lblcurrentlocation').innerHTML = 'Current Location: ' + location;
+
+
+            }
+        });
+
+        // Initializing the typeahead
+        $('#txtassetno').typeahead({
+            hint: true,
+            highlight: true, /* Enable substring highlighting */
+            minLength: 2 /* Specify minimum characters required for showing suggestions */
+        },
+        {
+                limit: 12,
+                async: true,
+            source: function (query, processSync, processAsync) {
+
+                    let searchString = $('#txtassetno').val();
+                    console.log(searchString);
+                    let url = baseURL + "/api/getAsset?companyid=1&AssetNo=" + searchString;
+                    console.log(url);
+
+                    return $.ajax({
+                        url: url,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (data) {
+                            // in this example, json is simply an array of strings
+                            //console.log(data);
+                            items = [];
+
+                            let response = data;
+                            if (response.status == 'true') {
+                                let jsonData = JSON.parse(response.data);
+                               // console.log(jsonData.length);
+
+                                $.each(jsonData, function (i, item) {
+                                    var id = item.id;
+                                    var name = item.assetname;
+                                    var assetno_name = item.assetnoname
+                                    /*
+                                    map[name] = {
+                                        id: id,
+                                        name: name
+                                    };
+                                    */
+                                    map[assetno_name] = item;
+                                    items.push(assetno_name);
+                                });
+                               // console.log(items);
+                                return processAsync(items);
+
+                            }
+                           // return processAsync(json);
+                        }
+                    });
+            }
+        });
+
+   })// docu ready
+
+    function savelocation() {
+        // call to save api
+        console.log('call');
+
+        // todo validate
+        if (selectedLocationID.length == 0) {
+            alert("Please select New Location.");
+            return;
+        }
+        if (selectdAssetNo.length == 0) {
+            alert("Please select Asset.");
+            return;
+        }
+
+        let _temp = $("#txtchangedate").val();
+        if (_temp.length == 0) {
+            alert("Please select Change Date.");
+            return;
+        }
+
+        var _tempDate = moment($("#txtchangedate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+
+        let locationdata = {
+            "assetno": selectdAssetNo,
+            "str_locaname": selectedLocationID, ///selected location id
+            "str_date": _tempDate,
+        }
+        console.log(locationdata);
+
+        // post to URL
+
+        var ControllerURL = '@Url.Action("UpdateLocation", "AssetLocation")';
+        console.log(ControllerURL);
+                        $.ajax({
+                            type: 'POST',
+                            url: ControllerURL,
+                            contentType: "application/json",
+                            data: JSON.stringify(locationdata),
+                            success: function (res) {
+
+                                if(res=="Success")
+                                {
+                                    swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
+                                        if (result == true) {
+                                            window.location.replace(returnURL);
+                                        }
+                                    });
+                                }
+                                else {
+                                    swal("Alert",res, "warning");
+                                }
+
+                            },
+
+                            failure: function () { alert("Error"); }
+
+                        });
+
+
+    }
+    function InitTree() {
+        selectedLocationID = "";
+
+        var url = '@Url.Action("GetLocations", "Location")';
+        console.log(url);
+            $('#jstree').jstree({
+              'core': {
+                  'data': {
+                      "url": url,
+                      "headers": getToken(),
+                       "dataType": "json" // needed only if you do not supply JSON headers
+                  },
+                  'themes': {
+                      'name': 'proton',
+                      'responsive': true
+                  }
+                    }
+
+            });
+            $('#jstree').jstree("open_all");
+
+            $("#jstree").bind("hover_node.jstree", function (e, data) {
+
+                $("#" + data.node.id).prop("title", data.node.text);
+            });
+
+    }
+    function clearscreen() {
+
+
+        selectdAssetNo = "";
+        selectedLocationID = "";
+
+        $('#txtassetno').val('');
+
+        InitTree();
+
+        $('#lblassetno').text('AssetNo: ');
+        $('#lblassetname').text('Asset Name: ');
+        $('#lblamtcap').text('Amt Capitalized ');
+        $('#lbldtputtouse').text('Date Put To Use: ');
+        $('#lblassetsrno').text('Sr No: ');
+        $('#lblcurrentlocation').text('Current Location: ');
+
+        /*
+        document.getElementById('lblassetname').innerHTML = 'Asset Name: ' + assetname;
+        document.getElementById('lblamtcap').innerHTML = 'Amt Capitalized ' + amtcap.toLocaleString('en-IN');
+        document.getElementById('lbldtputtouse').innerHTML = 'Date Put To Use: ' + dtputtouse;
+        document.getElementById('lblassetsrno').innerHTML = 'Sr No: ' + srno;
+        document.getElementById('lblcurrentlocation').innerHTML = 'Current Location: ' + location;
+        */
+
+    }
+    function getParent(node) {
+        let parentname = '';
+        if (node) {
+            let parry = $('#jstree').jstree().get_path(node);
+            $.each(parray, function (i, item) {
+                console.log(item);
+
+            })
+        }
+    }
+</script>

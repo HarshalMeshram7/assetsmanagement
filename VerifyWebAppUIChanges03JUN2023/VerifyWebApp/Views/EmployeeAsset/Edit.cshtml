@@ -1,0 +1,243 @@
+﻿@model VerifyWebApp.Models.EmployeeAsset
+@{
+    ViewBag.Title = "Edit";
+}
+<div class="modal-content">
+    <div class="modal-header">
+
+        <h4 class="modal-title">Edit Assign  Asset to Employee</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+    @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+            {@Html.AntiForgeryToken();
+        <div class="modal-body">
+
+            @Html.ValidationSummary(true)
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="Company">Asset: @ViewBag.assetname</label>
+                        
+                        @*@Html.DropDownList("AssetNo", (SelectList)ViewBag.Assestlist, "Select Asset", new { @class = "form-control", id = "AssetId",@readonly="readonly", @required = "required" })*@
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="Company">Employee Name: @ViewBag.employeename</label>
+                        @*@Html.DropDownList("str_employeeid", (SelectList)ViewBag.Emplist, "Select Employee", new { @class = "form-control", id = "str_employeeid", @readonly = "readonly", @required = "required" })*@
+                    </div>
+                </div>
+                </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label for="Company">Asset Identification No: @ViewBag.assetidentificationno</label>
+
+                    </div>
+
+                </div>
+                </div>
+                <div class="row">
+                <div class="col-lg-4">
+                    <label for="praticesname">Issue Date<span>*</span></label>
+                    <div class='input-group date' id='dtIssueDate'>
+                        <input type='date' id="IssueDate" class="form-control" required />
+
+
+                    </div>
+                </div>
+                    <div class="col-lg-4">
+                        <label for="praticesname">Asset return Date</label>
+                        <div class='input-group date' id='dtRDate'>
+                            <input type='date' id="RDate" class="form-control" />
+
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label for="Company">Asset return</label>
+
+                            @Html.CheckBox("AssetReceivedFlag", false)
+
+                        </div>
+                    </div>
+            </div>
+           
+
+
+            <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn saveBtn btn-sm" id="btnSave">Save</button>
+            <button type="button" class="btn clBtn btn-sm" id="btnClose"  onclick="closeEditModal();" data-dismiss="modal">Close</button>
+            
+        </div>
+    }
+</div><!-- /.modal-content -->
+
+
+
+<script type="text/javascript">
+
+
+
+    var assetreceivedflagstatus = "N";
+    var comparedateflag = "N"
+
+    $(document).ready(function ($) {
+
+        @*$("#AssetId").val('@Model.AssetId');*@
+        @*$("#str_employeeid").val('@Model.EmpId');*@
+
+
+
+        let _IssueDate = moment('@Model.str_IssueDate', 'DD/MM/YYYY').format('YYYY-MM-DD');
+        let _RDate = moment('@Model.str_RecievedDate', 'DD/MM/YYYY').format('YYYY-MM-DD');
+
+        $("#IssueDate").val(_IssueDate);
+
+        $("#RDate").val(_RDate);
+
+
+        if ('@Model.AssetRecievedFlag' == "Y") {
+            $('#AssetReceivedFlag').prop("checked", true);
+        }
+        else {
+            $('#AssetReceivedFlag').prop("checked", false);
+        }
+        $('#AssetReceivedFlag').change(function () {
+            if ($(this).prop("checked")) {
+                assetreceivedflagstatus = "Y";
+
+            }
+            else {
+
+                assetreceivedflagstatus = "N";
+            }
+        });
+
+
+
+
+        //$("#frmNewEmp").submit(function (e) {
+
+        //    SaveData();
+        //    e.preventDefault();
+        //    return false;
+
+        //});
+
+
+        $("#btnSave").click(function () {
+            SaveData();
+        });
+
+
+    });
+
+    function comparedate() {
+
+        var recieveddate = $('#RDate').val();
+
+        if (recieveddate == "" || recieveddate == null) {
+            comparedateflag = "N";
+        }
+        else {
+            var issuedate = moment($("#IssueDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var rdate = moment($("#RDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+
+            if (new Date(issuedate) >= new Date(rdate)) {
+
+                comparedateflag = "Y";
+                swal("Alert", "Issue Date must be greater than Recieved Date", "warning");
+            }
+            else {
+                comparedateflag = "N";
+            }
+        }
+    }
+
+
+   function SaveData() {
+
+        var result;
+        var empid;
+
+        var assetno;
+        var issuedate;
+        var assetreceivedflag = assetreceivedflagstatus;
+
+        var rdate;
+
+
+        //alert('2');
+
+
+       
+       issuedate = moment($("#IssueDate").val()).format('YYYY-MM-DD');
+
+        if ($("#RDate").val() != "") {
+            rdate = moment($("#RDate").val()).format('YYYY-MM-DD');
+        }
+        else {
+            rdate = "";
+        }
+
+
+            var postdata =
+            {
+                    "RecievedDate": rdate,
+                    "IssueDate": issuedate,
+                    "AssetId": @Model.AssetId,
+                    "str_employeeid": @Model.EmpId,
+                    "AssetRecievedFlag": assetreceivedflag
+
+
+            };
+            //
+            console.log(postdata)
+            comparedate();
+            if (comparedateflag == "N") {
+                var form = $('#frmNewEmp');
+                var token = $('input[name="__RequestVerificationToken"]', form).val();
+                var headers = {};
+                headers['__RequestVerificationToken'] = token;
+                swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+                    if (result == true) {
+                        var ControllerURL = '@Url.Action("Edit", "EmployeeAsset")';
+
+
+                        var returnURL = '@Url.Action("Index", "EmployeeAsset")';
+
+                        $.ajax({
+                            type: 'POST',
+                            url: ControllerURL,
+                            contentType: "application/json",
+                            data: JSON.stringify(postdata),
+                            headers: headers,
+                            success: function (res) {
+                                if (res == "Failed") {
+                                    swal("Alert", "You Cannot Add this Record", "warning");
+                                }
+                                else {
+                                    swal({ title: "Successfully Edited!", icon: "success" }).then((result) => {
+                                        if (result == true) {
+                                            window.location.replace(returnURL);
+                                        }
+                                    });
+                                }
+
+                            },
+
+                            failure: function () { alert("Error"); }
+
+                        });
+                    }
+                });
+            }
+                }
+</script>
+
+
+

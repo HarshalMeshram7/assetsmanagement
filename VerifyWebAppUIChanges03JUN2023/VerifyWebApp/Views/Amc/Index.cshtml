@@ -1,0 +1,264 @@
+﻿@model IEnumerable<VerifyWebApp.Models.AMC>
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+ using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+{
+    @Html.AntiForgeryToken()
+}
+<div class="container-fluid">
+
+
+    <div class="row my-0">
+        <div class="card">
+            <div class="card-header pb-0">
+                <div class="row">
+                    <div class="d-sm-flex justify-content-between hborder" >
+                        <div class="htitle"> <b>AMC </b> </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row my-2" style="padding-left:10px">
+                <div class="col-md-12">
+                    <button type="button" id="btnnew" value="New Practice"
+                            class="btn btn-sm addBtn pull-right m-1 order-1"
+                            onclick="opennewdialog();" data-toggle="tooltip" data-placement="top" title="Add New">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
+
+                    <button type="button" id="btnexport" value="New Practice"
+                            class="btn btn-sm modBtn pull-right m-1 order-2"
+                            onclick="SupplierExport();" data-toggle="tooltip" data-placement="top" title="Export">
+                        <i class="fa fa-file-excel-o"></i>
+                    </button>
+
+                    <button type="button" id="btndownloadexcel" value="New Practice"
+                            class="btn btn-sm xtraBtn pull-right m-1 order-3"
+                            onclick="downloadexcel();" data-toggle="tooltip" data-placement="top" title="Download">
+                        <i class="fa fa-download"></i>
+                    </button>
+                    <button type="button" id="btnimport" value="Upload"
+                            class="btn btn-sm xtraBtn pull-right m-1 order-4"
+                            onclick="Importexcel();" data-toggle="tooltip" data-placement="top" title="Import">
+                        <i class="fa fa-upload"></i>
+                    </button>
+
+                </div>
+            </div>
+
+
+            <div class="card-body" id="divTableData">
+           
+                        <table class="table table-flush table-hover "
+                               style="width:100%" id="tblamc">
+                                <thead class="hcol">
+                                    <tr>
+                                        <td class="text-uppercase text-xs font-weight-bold " width="3%">
+                                            SrNo
+                                        </td>
+                                        <td class="text-uppercase text-xs font-weight-bold " width="4%">
+                                            Start Date
+                                        </td>
+                                        <td class="text-uppercase text-xs font-weight-bold " width="4%">
+                                            End Date
+                                        </td>
+                                        <td class="text-uppercase text-xs font-weight-bold " width="5%">
+                                            Send Reminder Mail to
+                                        </td>
+                                        <td class="text-uppercase text-xs font-weight-bold " width="5%">
+                                            Send Reminder Mail to(CC)
+                                        </td>
+                                        <td class="text-uppercase text-xs font-weight-bold " width="5%">
+                                            Amc Details
+                                        </td>
+                                        <!--
+    <td class="text-uppercase text-primary text-xs font-weight-bolder opacity-7" width="5%">
+        Remarks
+    </td>
+        -->
+                                        <td class="text-uppercase text-xs font-weight-bold text-center" width="5%">Action </td>
+
+                                        <!--
+    <td class="text-uppercase text-primary text-xs font-weight-bolder opacity-7" width="5%" align="center">
+        Edit
+    </td>
+    <td class="text-uppercase text-primary text-xs font-weight-bolder opacity-7" width="5%" align="center">
+        Delete
+    </td>
+        -->
+                                    </tr>
+                                </thead>
+                                <tbody style="font-weight:bold; color:black">
+                                    @if (Model.Count() == 0)
+                                    {
+                                        <tr>
+                                            <td colspan="8">No Rows Found</td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                <tr>
+                                    <td class="text-xs">@Html.DisplayFor(modelitem => item.Srno)</td>
+
+                                    <td class="text-xs">@Html.DisplayFor(modelitem => item.str_fromdate)</td>
+
+                                    <td class="text-xs">@Html.DisplayFor(modelitem => item.str_todate)</td>
+
+                                    <td class="text-xs">@Html.DisplayFor(modelitem => item.ReminderEMail)</td>
+                                    <td class="text-xs">@Html.DisplayFor(modelitem => item.Senderccemailid)</td>
+                                    <!--
+    <td class="text-xs">@Html.DisplayFor(modelitem => item.AMCDetails)</td>
+        -->
+                                    <td class="text-xs">@Html.DisplayFor(modelitem => item.Remarks)</td>
+
+                                    <td class="text-start text-xs">
+                                        <a href="javascript:;" class="mx-2"><i class="fas fa-eye " style="color:#229954"></i></a>
+                                        <a href="javascript:EditSupplier(@item.ID )" ; class="mx-2"><i class="fas fa-edit" style="color:#229954"></i></a>
+                                        <a href="javascript:Delete(@item.ID)" ; class="mx-2"><i class="fas fa-trash " style="color:red"></i></a>
+
+
+                                    </td>
+
+                                </tr>
+
+
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+
+                 
+
+            </div>
+
+            </div>
+
+        </div>
+    </div>
+
+            <div class="modal fade" tabindex="-1" role="dialog" id="divUpload" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog modal-xl" role="document" id="divUploadContent">
+
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+
+
+
+            
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#tblamc').DataTable({
+            pagingType:'numbers'
+        });
+
+    });
+
+
+    if (typeof jQuery !== 'undefined') {
+        console.log('jQuery Loaded');
+    }
+    else {
+        console.log('not loaded yet');
+    }
+
+    function opennewdialog() {
+
+        var url = '@Url.Action("AddNew","Amc")';
+        window.location = url;
+
+
+
+        }
+
+    function EditSupplier(id) {
+
+            var url = '@Url.Action("EditNew", "Amc")';
+            url = url + "/" + id;
+             window.location = url;
+
+         }
+
+
+     function Delete(id)
+     {
+         var form = $('#frmNewEmp');
+         var token = $('input[name="__RequestVerificationToken"]', form).val();
+         var headers = {};
+         headers['__RequestVerificationToken'] = token;
+         swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+            if (result == true) {
+                var returnURL='@Url.Action("Index", "Amc")';
+                var url = '@Url.Action("Delete", "Amc")';
+                url = url + "/" + id;
+                    $.ajax({
+                    type: 'POST',
+                    url: url,
+                    headers: headers,
+                    contentType: "application/json",
+                    success: function (res) {
+                        if (res == "Failed")
+                        {
+                            swal("Alert", "You Cannot Delete this Record", "warning");
+                        }
+                        else
+                        {
+                            swal({ title:  "Successfully Deleted!", icon: "success" }).then((result) => {
+                                if (result == true) {
+                                    window.location.reload();
+                                }
+                            });
+                         }
+                    },
+
+                    failure: function () { alert("Error"); }
+
+                 });
+            }
+        });
+
+        }
+
+
+     function AmcExport()
+     {
+
+         window.location.href = '@Url.Action("AmcExport", "Amc")';
+
+     }
+
+    function downloadexcel()
+     {
+
+         window.location.href = '@Url.Action("DownloadAmcExcel", "Amc")';
+
+     }
+     function Importexcel()
+     {
+           var url = '@Url.Action("ImportExcel", "Amc")';
+
+
+            $.get(url, function (data) {
+                $("#divUploadContent").html(data);
+               // alert(data);
+                $('#divUpload').modal('show')
+            });
+
+     }
+
+
+
+
+            </script>
+
+
+

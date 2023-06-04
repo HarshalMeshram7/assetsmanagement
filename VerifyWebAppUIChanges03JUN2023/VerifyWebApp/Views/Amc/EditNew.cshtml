@@ -1,0 +1,891 @@
+﻿@model IEnumerable<VerifyWebApp.Models.SubAmc>
+@{
+    ViewBag.Title = "EDIT";
+}
+
+<style>
+    label span {
+        color: red;
+        font-size: 20px;
+    }
+</style>
+
+
+
+@using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+{
+    @Html.AntiForgeryToken()
+
+
+
+<div class="container-fluid py-4">
+    <div class="row my-2">
+        <div class="card">
+            <div class="card-header pb-0">
+                <div class="row">
+                    <div class="d-sm-flex justify-content-between hborder">
+                        <div class="htitle"> <b>Edit AMC </b> </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body" id="divTableData">
+                <div class="pageconent">
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label for="praticesname" class="form-control-sm">From Date<span>*</span></label>
+
+                                <div class='input-group date' id='dtStartDate'>
+                                    <input type='date' id="txtStartDate" class="form-control form-control-sm" required />
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label for="praticesname" class="form-control-sm">To Date<span>*</span></label>
+
+                                <div class='input-group date' id='dtEndDate'>
+                                    <input type='date' id="txtEndDate" class="form-control form-control-sm" required />
+                                </div>
+                                
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label for="praticesname" class="form-control-sm">Send Reminder mail to</label>
+                                <div class='input-group date'>
+                                    <input id="Email" type="email" class="form-control form-control-sm" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label for="praticesname" class="form-control-sm">Send Reminder mail to(CC)</label>
+                                <div class='input-group date'>
+                                    <input id="CCEmail" type="email" class="form-control form-control-sm" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label for="praticesname" class="form-control-sm">Amc Details</label>
+                                <div class='input-group date'>
+                                    <textarea id="AmcDetails" class="form-control form-control-sm"> </textarea>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-3">
+                            <div class="form-group">
+
+                                <label for="praticesname" class="form-control-sm">Remark</label>
+                                <textarea id="Remark" class="form-control form-control-sm">
+                                 </textarea>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
+
+                    <div class="row">
+                        <div class="col-md-8">
+                           
+                                <button type="button" id="btnexport" value="New Practice"
+                                        class="btn btn-sm xtraBtn pull-right m-1 order-2"
+                                        onclick="assetexport();" data-bs-toggle="tooltip" data-bs-placement="top" title="Export">
+                                    <i class="fa fa-file-excel-o"></i>
+                                </button>
+
+                                <button type="button" id="btnimport" value="Upload"
+                                        class="btn btn-sm xtraBtn pull-right m-1 order-4"
+                                        onclick="Importassetexcel();" data-bs-toggle="tooltip" data-bs-placement="top" title="Import">
+                                    <i class="fa fa-upload"></i>
+                                </button>
+                                <button type="button" value="New Practice"
+                                        class="btn btn-sm addBtn pull-right m-1 order-1"
+                                        id="btnAddSubamc" data-bs-toggle="tooltip" data-bs-placement="top" title="Add New">
+                                    <i class="fa fa-plus-square"></i>
+                                
+                                </button>
+                      
+                        </div>
+
+
+                    </div>
+
+                    <label>Asset List</label>
+                    <div class="row">
+
+
+
+                        <div class="col-lg-12">
+                            <table class="table table-hover text-uppercase text-xs" id="tblSubamc">
+                                <thead class="hcol" style="font-weight:bold">
+                                    <tr>
+
+                                        <td>
+                                            SrNo
+                                        </td>
+                                        <td>
+                                            Asset No.
+                                        </td>
+                                        <td>Asset Description</td>
+
+                                        <td align="right">Asset Capitalised Amount</td>
+                                        <td align="center">
+                                            Edit
+                                        </td>
+                                        <td align="center">
+                                            Delete
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody style="font-weight:bold;color:black">
+                                    @if (Model.Count() == 0)
+                                    {
+
+                                    }
+                                    else
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td class="text-xs" >@item.Srno</td>
+
+                                                <td class="text-xs">@Html.DisplayFor(modelitem => item.AssetNo)</td>
+
+                                                <td class="text-xs">@Html.DisplayFor(modelitem => item.AssetDescription)</td>
+                                                <td class="text-xs" align="right">@Html.DisplayFor(modelitem => item.CapitalisedAmount)</td>
+
+                                                <td class="text-xs" align="center">
+                                                    <button type="button" class="btn addBtn btn-sm"
+                                                            aria-label="Left Align"
+                                                            onclick="Editsubamc(this,@item.Srno);">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+
+                                                </td>
+                                                <td class="text-xs" align="center">
+                                                    <button type="button" class="btn delBtn btn-sm" aria-label="Left Align" onclick="deletesubamc(this);">
+                                                        <i class="fa fa-remove"></i>
+                                                    </button>
+
+                                                </td>
+                                            </tr>
+
+
+                                        }
+                                    }
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="row my-2">
+                        <div class="col-md-12">
+                            <div class="pull-right">
+                                <button type="submit" class="btn saveBtn btn-sm" id="btnSave">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+         </div>
+    </div>
+
+
+   
+
+</div><!-- /.modal-content -->
+
+<div id="subamcmodal" class="modal fade" role="dialog" style="height: 570px;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header hborder">
+
+                <h4 class="modal-title htitle">Add Subamc</h4>
+            </div>
+            <div class="modal-body ">
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Asset No<span>*</span></label>
+
+                        <div class='input-group dropdown' id='dtasset'>
+
+                            @Html.DropDownList("AssetNo", (SelectList)ViewBag.Assestlist, "Select AssetNo", new { @class = "form-control" })
+
+
+                        </div>
+                        <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Asset Description<span>*</span></label>
+
+                        <input type='text' id="txtassetdesc" class="form-control" required readonly />
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Asset Capitalised Amount<span>*</span></label>
+
+                        <input type='text' style="text-align:right;" id="txtassetamount" class="form-control" required readonly />
+
+                    </div>
+                </div>
+            </div>
+            <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn saveBtn btn-sm" onclick="addasset();">Save</button>
+                <button type="button" class="btn clBtn btn-sm" onclick="closeaddamc();">Close</button>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="editsubamcmodal" class="modal fade" role="dialog" style="height: 570px;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header hborder">
+
+                <h4 class="modal-title htitle">Edit SubAmc</h4>
+            </div>
+            <div class="modal-body ">
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Asset No<span>*</span></label>
+
+                        <div class='input-group dropdown' id='dtasset'>
+
+                            @Html.DropDownList("edAssetNo", (SelectList)ViewBag.Assestlist, "Select AssetNo", new { @class = "form-control" })
+
+
+                        </div>
+                        <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Asset Description<span>*</span></label>
+
+                        <input type='text' id="txtedassetdesc" class="form-control" required readonly />
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Asset Capitalised Amount<span>*</span></label>
+
+                        <input type='text' style="text-align:right;" id="txtedassetamount" class="form-control" required readonly />
+
+                    </div>
+                </div>
+            </div>
+            <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn saveBtn btn-sm" onclick="editsubamc();">Save</button>
+                <button type="button" class="btn btn-sm clBtn" onclick="closeeditamc();">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="importmodal" class="modal fade" role="dialog" style="height: 570px;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title htitle">Import Amc List</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            @*@using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))*@
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "frmupload" }))
+            {
+                <div class="modal-body">
+
+                    @Html.ValidationSummary(true)
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="praticesname"><span>*</span>Select File to be uploaded </label>
+                                @Html.TextBox("File", "", new { type = "file", id = "fileupload", name = "fileupload" })
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn saveBtn btn-sm" id="btnupload">Upload</button>
+                    <button type="button" class="btn btn-sm clBtn" data-dismiss="modal">Close</button>
+                    
+                    @*@ViewBag.Message*@
+
+                </div>
+            }
+        </div><!-- /.modal-content -->
+    </div>
+</div>
+<div id="errorlist" class="modal fade" role="dialog" style="height: 670px;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content" style="height:530px;width:900px;overflow:auto">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Error list</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body ">
+
+                <div class="row" style="overflow:auto">
+                    <table width="100%" class="table table-hover text-uppercase text-xs" style="overflow:auto" id="errtbl">
+
+                        <thead class="hcol" style="font-weight:bold">
+                            <tr>
+
+                                <td>Srno</td>
+                                <td>Errors</td>
+                            </tr>
+                        </thead>
+                        <tbody style="font-weight:bold"></tbody>
+
+                    </table>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm clBtn" onclick="closeerrorlist();">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+     var srnocnt = '@ViewBag.Srno';
+
+    var editindex = 0;
+
+
+
+
+    var EndDateStatus = false;
+    var StartDateStatus = false;
+
+    $(document).ready(function () {
+
+        var startdate = moment('@ViewBag.FromDate', 'DD/MM/YYYY').format('YYYY-MM-DD');
+        var enddate = moment('@ViewBag.ToDate', 'DD/MM/YYYY').format('YYYY-MM-DD');
+
+
+        $('#txtStartDate').val(startdate);
+          $('#txtEndDate').val(enddate);
+          $('#Email').val('@ViewBag.Email');
+               $('#CCEmail').val('@ViewBag.Senderccemail');
+          $('#AmcDetails').val('@ViewBag.amcdetails');
+          $('#Remark').val('@ViewBag.remark');
+
+              $("#btnAddSubamc").click(function () {
+
+                  //$("#edAssetNo").val(0);
+                  //$("#txtedassetdesc").val('');
+                  //$("#txtedassetamount").val('');
+                  $("#AssetNo").val(0);
+                  $("#txtassetdesc").val('');
+                  $("#txtassetamount").val('');
+                  $('#subamcmodal').modal('show');
+
+
+              });
+                     $("#startdateerror,#enddateerror").hide();
+
+
+             });
+
+                    $("[name='AssetNo']").change(function () {
+                        var assetno = $("#AssetNo").val();
+
+                        if (assetno == "") {
+                            $("#txtassetdesc").val("");
+                            $("#txtassetamount").val("");
+
+                        }
+                        else {
+                            var ControllerURL = '@Url.Action("getassetinfo", "Insurance")';
+                            var url = ControllerURL + "/" + assetno;
+                            $.ajax({
+                                type: 'GET',
+                                url: url,
+
+                                contentType: "application/json",
+                                // data: JSON.stringify(getdata),
+                                success: function (result) {
+
+                                    $("#txtassetdesc").val(result.Data[0].AssetName);
+                                    $("#txtassetamount").val(result.Data[0].AmountCapitalised);
+
+                                },
+                                failure: function () { alert("Error"); }
+
+                            });
+                        }
+                    });
+                     $("[name='edAssetNo']").change(function () {
+                        var assetno = $("#edAssetNo").val();
+
+                        if (assetno == "") {
+                            $("#txtedassetdesc").val("");
+                            $("#txtedassetamount").val("");
+
+                        }
+                        else {
+                            var ControllerURL = '@Url.Action("getassetinfo", "Insurance")';
+                            var url = ControllerURL + "/" + assetno;
+                            $.ajax({
+                                type: 'GET',
+                                url: url,
+
+                                contentType: "application/json",
+                                // data: JSON.stringify(getdata),
+                                success: function (result) {
+
+                                    $("#txtedassetdesc").val(result.Data[0].AssetName);
+                                    $("#txtedassetamount").val(result.Data[0].AmountCapitalised);
+
+                                },
+                                failure: function () { alert("Error"); }
+
+                            });
+                        }
+                    });
+
+                     $("#frmNewEmp").submit(function (e) {
+
+                         SaveData();
+                         e.preventDefault();
+                         return false;
+
+                     });
+
+    function SaveData() {
+
+        // alert('Save');
+        var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
+        var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
+
+        if (new Date(startdate) >= new Date(enddate)) {
+
+
+            swal("Alert", "To Date must be greater than From Date", "warning");
+        }
+        else {
+
+                    var StartDate;
+                    var EndDate;
+                    var email;
+                    var ccemail;
+                    var amcdetails;
+                    var remark;
+        var Editid = '@ViewBag.ID';
+
+            //StartDate = $('#txtStartDate').val();
+            //EndDate = $('#txtEndDate').val();
+
+        email = $('#Email').val();
+            ccemail = $('#CCEmail').val();
+        amcdetails = $('#AmcDetails').val();
+         remark = $('#Remark').val();
+
+        if (StartDate == '') {
+            StartDateStatus = false;
+        }
+        else {
+            //$('#assignError').hide();
+            StartDateStatus = true;
+        }
+        if (EndDate == '') {
+            EndDateStatus = false;
+        }
+        else {
+            //$('#assignError').hide();
+            EndDateStatus = true;
+        }
+
+        if (StartDateStatus == true && EndDateStatus == true) {
+
+            $("#startdateerror,#enddateerror").hide();
+
+            var tbl = $('#tblSubamc tbody tr:has(td)').map(function (i, v) {
+                var $td = $('td', this);
+                var Tableassetno = $td.eq(1).html();
+                var Tableassetdesc = $td.eq(2).html();
+                var Tableassetamt = $td.eq(3).html();
+                return {
+                    AssetNo: Tableassetno,
+                    AssetDescription: Tableassetdesc,
+                    CapitalisedAmount: Tableassetamt
+                }
+            }).get();
+           // var Strstartdate = moment(StartDate, "DD/MM/YYYY").format("YYYY/MM/DD");
+           //var StrEnddate = moment(EndDate, "DD/MM/YYYY").format("YYYY/MM/DD");
+            //alert(tbl)
+
+            var postdata =
+                {
+                "FromDate": startdate,
+                "ToDate": enddate,
+                    "AmcDetails": amcdetails,
+                    "ReminderEMailID": email,
+                    "Senderccemailid": ccemail,
+                    "Remarks": remark,
+                    "AmcViewModellist": tbl,
+                    "ID": Editid
+                };
+            var form = $('#frmNewEmp');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
+            var headers = {};
+            headers['__RequestVerificationToken'] = token;
+            swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+                if (result == true) {
+
+                    var ControllerURL = '@Url.Action("Edit", "Amc")';
+
+                   // alert(ControllerURL);
+                    var returnURL = '@Url.Action("Index", "Amc")';
+                    $.ajax({
+                        type: 'POST',
+                        url: ControllerURL,
+                        contentType: "application/json",
+                        headers: headers,
+                        data: JSON.stringify(postdata),
+                        success: function (res) {
+                            if (res == "Failed") {
+                                swal("Alert", "You Cannot Add this Record", "warning");
+                            }
+                            else {
+                                swal({ title: "Successfully Edited!", icon: "success" }).then((result) => {
+                                    if (result == true) {
+                                        window.location.replace(returnURL);
+                                    }
+                                });
+                            }
+
+                        },
+
+                        failure: function () { alert("Error"); }
+
+                    });
+                }
+            });
+            // window.location.replace(returnURL);
+        }
+
+        else {
+
+            if (StartDateStatus == true && EndDateStatus == false) {
+
+             //   $('#enddateerror').show();
+               // $('#startdateerror').hide();
+
+            } else if (EndDateStatus == true && StartDateStatus == false) {
+                //$('#enddateerror').hide();
+
+                //$('#startdateerror').show();
+            } else {
+               // $('#enddateerror').show();
+
+                //$('#startdateerror').show();
+
+            }
+
+            return false;
+        }
+        }
+    }
+
+
+    function closeaddamc() {
+        $('#subamcmodal').modal('hide');
+    }
+
+    function closeeditamc() {
+        $('#editsubamcmodal').modal('hide');
+    }
+
+    function addasset()
+    {
+
+
+
+       // $('#myModal').modal('hide');
+        if ($("#AssetNo").val() != '' &&
+            $("#txtassetdesc").val() != '' && $("#txtassetamount").val() != '') {
+
+            AddAssettotable();
+
+
+            $("#txtEndDate").focus();
+            $('#subamcmodal').modal('hide');
+
+        }
+    }
+
+    function AddAssettotable()
+    {
+
+
+        var assetno = $("#AssetNo").val();
+        var assetdesc = $("#txtassetdesc").val();
+        var assetamt = parseFloat($("#txtassetamount").val()).toFixed(2);
+                    $('#tblSubamc').last().append('<tr><td>' + srnocnt + '</td><td>' + assetno + '</td>'
+                        + '<td>' + assetdesc + '</td ><td align="right">' + assetamt +'</td><td align="center"> <button type="button" class="btn addBtn btn-sm"'
+                                       +' aria-label="Left Align"'
+            + 'onclick="Editsubamc(this,' + srnocnt+');">'
+                        + '  <i class="fa fa-edit"></i>Edit</button></td><td align="center"> <button type="button" class="btn delBtn btn-sm"'
+                        + ' aria-label="Center Align"'
+            + 'onclick="deletesubamc(this);">'
+            + '  <i class="fa fa-remove"></i>Delete   </button></td></tr > ');
+
+        srnocnt++;
+    }
+    function deletesubamc(obj)
+    {
+        swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+            if (result == true) {
+                $(obj).parent().parent().remove();
+                srnocnt - 1;
+            }
+        });
+    }
+    function Editsubamc(id,editcnt) {
+        //$(id).parent();
+        editindex = editcnt;
+        var tr = $(id).parent().parent();
+        var assetno = $(tr).find("td").eq(1).html();
+        var assetdesc = $(tr).find("td").eq(2).html();
+        var assetamt = $(tr).find("td").eq(3).html();
+                    //  $("#txtedassetno").val(assetno);
+
+        $("#edAssetNo").val(assetno);
+
+               //    $("#edAssetNo").prop('selectedIndex', assetno);
+
+        $('#txtedassetdesc').val(assetdesc);
+        $('#txtedassetamount').val(assetamt);
+        $('#editsubamcmodal').modal('show');
+    }
+
+    function editsubamc() {
+
+        if ($("#edAssetNo").val() != '' &&
+            $("#txtedassetdesc").val() != '' && $("#txtedassetamount").val() != '') {
+           // alert("if")
+            Subamcedittable();
+            $('#editsubamcmodal').modal('hide');
+
+        }
+
+    }
+    function Subamcedittable()
+    {
+        var assetno = $("#edAssetNo").val();
+
+        var assetdesc = $("#txtedassetdesc").val(); //txtedassetdesc
+        var assetamt = $("#txtedassetamount").val();
+        var tbl = $('#tblSubamc tbody tr:has(td)').each(function () {
+            var srno = $(this).find("td").eq(0).html();
+            if (srno == editindex) {
+                //alert('check');
+                $(this).find("td").eq(1).html(assetno);
+                    $(this).find("td").eq(2).html(assetdesc);
+                    $(this).find("td").eq(3).html(assetamt);
+
+            }
+        })
+
+    }
+
+     function assetexport() {
+
+              window.location.href = '@Url.Action("Assetexport", "Amc")';
+
+
+        }
+        function Importassetexcel() {
+            $('#importmodal').modal('show');
+        }
+        $('#btnupload').click(function (e) {
+
+            $('#frmupload').removeData('validator');
+            // $('#frmupload').removeData('unobtrusiveValidation');
+            $("#frmupload").each(function () { $.data($(this)[0], 'validator', false); }); //enable to display the error messages
+            //$.validator.unobtrusive.parse("#frmupload");
+
+
+
+            // uploadfile();
+
+
+            if (window.FormData !== undefined) {
+
+                // var uploadfile = $('#fileupload').val();
+                // alert(uploadfile);
+
+                var formData = new FormData();
+
+
+                //var file = $('#fileupload').get(0);
+                //formData.append("fileupload", file);
+                e.preventDefault();
+                var formData = new FormData();
+                var totalFiles = document.getElementById("fileupload").files.length;
+
+                var file = document.getElementById("fileupload").files[0];
+
+                formData.append("fileupload", file);
+                //  alert("nooffiles"+totalFiles);
+                // alert("file"+file);
+                //alert(totalFiles);
+                // alert(file);
+
+
+                swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+                    if (result == true) {
+                        var ControllerURL = '@Url.Action("UploadAsset", "Amc")';
+
+
+                        var returnURL = '@Url.Action("Index","Amc")';
+
+                        $.ajax({
+                            type: 'POST',
+                            url: ControllerURL,
+                            contentType: false,
+                            processData: false,
+                            dataType: 'json',
+                            data: formData,
+                            success: function (res) {
+                                // alert(res)
+                                if (res == "Failed") {
+                                    swal("Alert", "You Cannot Upload this File", "warning");
+                                }
+                                else if (res == "nodata") {
+                                    swal("Alert", "NO Data in Excel", "warning");
+                                }
+                                else if (res == "Success") {
+
+                                    swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
+                                        if (result == true) {
+                                            window.location.replace(returnURL);
+                                        }
+                                    });
+                                }
+
+
+                                else {
+
+                                    result = res;
+                                    console.log(res.Data)
+                                  //alert(result.Data.data.length)
+                                  var addtable = "";
+                                    for (var i = 0; i< result.Data.data.length; i++){
+                                        addtable = $('#tblSubamc').last().append('<tr><td>' + srnocnt + '</td><td>' + result.Data.data[i].assetno + '</td>'
+                                            + '<td>' + result.Data.data[i].assetname + '</td ><td align="right">' + parseFloat(result.Data.data[i].amountcapcompany).toFixed(2) + '</td><td align="center"> <button type="button" class="btn addBtn btn-sm"'
+                                            + ' aria-label="Left Align"'
+                                            + 'onclick="Editsubamc(this,' + srnocnt + ');">'
+                                            + '  <i class="fa fa-edit"></i>Edit</button></td ><td align="center"> <button type="button" class="btn delBtn btn-sm"'
+                                            + ' aria-label="Center Align"'
+                                            + 'onclick="deletesubamc(this);">'
+                                            + '  <i class="fa fa-remove"></i>Delete   </button></td></tr > ');
+
+                                        srnocnt++;
+                                    }
+                                    $('#importmodal').modal('hide');
+                                   // showerrorlist(result);
+                                }
+
+                            },
+
+                            failure: function () { alert("Error"); }
+
+                        });
+                    }
+                });
+            }
+
+
+
+
+
+        });
+
+        @*function Importassetexcel() {
+
+             var url = '@Url.Action("ImportAssetExcel", "Amc")';
+
+
+            $.get(url, function (data) {
+                $("#divUploadContent").html(data);
+               // alert(data);
+                $('#divUpload').modal('show')
+            });
+        }*@
+         function showerrorlist(result) {
+        var srno = 1;
+
+        for (var i = 0; i < result.length; i++) {
+
+            $('#errtbl').last().append('<tr><td>' + srno + '</td><td>' + result[i] + '</td></tr>');
+            srno++
+        }
+
+        $('#errorlist').modal('show');
+
+    }
+    function closeerrorlist() {
+        $('#errorlist').modal('hide');
+         var returnURL = '@Url.Action("Index", "Amc")';
+        window.location.replace(returnURL);
+    }
+</script>
+
+}

@@ -1,0 +1,452 @@
+﻿<script type="text/javascript">
+    $(document).ready(function () {
+        $('#progressbar').modal('hide');
+
+        $('#Subperiodist').val('@ViewBag.sublastperiod');
+        loaddepriciation();
+
+    });
+
+
+    if (typeof jQuery !== 'undefined') {
+        console.log('jQuery Loaded');
+    }
+    else {
+        console.log('not loaded yet');
+    }
+
+    function loaddepriciation() {
+        console.log('loaddepriciation');
+
+        //$('#tbldepreciation').DataTable();
+        var subperiodid = $("#Subperiodist").val();
+        if (subperiodid == "") {
+            subperiodid = "0";
+        }
+        var ControllerURL = '@Url.Action("GetData", "Depreciation")?subpid=' + subperiodid;
+
+        var table = $('#tbldepreciation')
+            .on('processing.dt', function (e, settings, processing) {
+                $('#divspinner').css('display', processing ? 'block' : 'none');
+            }).DataTable({
+                 "destroy": true,
+                "serverSide": true,
+                "paging": true,
+                "info": false,
+                "searching": true,
+                "pagingType": 'numbers',
+                 "ajax": {
+                     url: ControllerURL,
+                    type: 'POST',
+                    dataType:'json'
+                },
+            "columns": [
+                 { "data": "ID", "autoWidth": true },
+                 { "data": "AssetNo", "autoWidth": true },
+                 { "data": "AssetName", "autoWidth": true },
+                 { "data": "str_FromDate", "autoWidth": true },
+                 { "data": "str_ToDate", "autoWidth": true },
+                 { "data": "TotalRate", render: $.fn.dataTable.render.number(',', '.', 2) , "autoWidth": true },
+                 { "data": "Amount", render: $.fn.dataTable.render.number(',', '.', 2) ,"autoWidth": true },
+                 { "data": "DepreciationMethod", "autoWidth": true,"align":"right" },
+                 { "data": "DepreciationDays", "autoWidth": true },
+                {
+                    "render": function (data, type, full, meta)
+                    {
+                        return returnEditButton(full.ID);
+                    }
+                },
+                {
+                    data: null, render: function (data, type, full, meta) {
+                        return returnDeleteButton(full.ID);
+                    }
+                },
+
+             ],
+                'columnDefs': [
+                    {
+                        "targets": 0,
+                        "className": "text-xs",
+                    },
+                    {
+                        "targets": 1,
+                        "className": "text-xs",
+                    },
+                    {
+                        "targets": 2,
+                        "className": "text-xs",
+                    },
+                    {
+                        "targets": 3,
+                        "className": "text-xs",
+                    },
+                    {
+                        "targets": 4,
+                        "className": "text-xs",
+                    },
+
+                    {
+                        "targets": 5,
+                        "className": "text-right text-xs",
+                    },
+                    {
+                        "targets": 6,
+                        "className": "text-right text-xs",
+                    }],
+         });
+        }
+
+    function returnDeleteButton(id) {
+        var strButton = "";
+        //strButton = id;
+        strButton = '<button type="button" class="btn btn-sm delBtn"';
+        strButton = strButton + 'aria-label="Left Align"';
+        strButton = strButton + 'onclick=Delete(' + id + ');>';
+        strButton = strButton + '<i class="fa fa-remove"></i></button>';
+
+
+        return strButton;
+
+    }
+
+    function returnEditButton(id) {
+        var strButton = "";
+        //strButton = id;
+        strButton = '<button type="button" class="btn modBtn btn-sm"';
+        strButton = strButton + 'aria-label="Left Align"';
+        strButton = strButton + 'onclick=EditDepreciation('+id+');>';
+        strButton = strButton + '<i class="fa fa-edit"></i></button>';
+
+
+        return strButton;
+    }
+
+    function opennewdialog() {
+
+
+          window.location.href ='@Url.Action("Add","Depreciation")';
+        }
+
+    function EditDepreciation(id) {
+
+
+            var url = '@Url.Action("EditNew", "Depreciation")';
+            url = url + "/" + id;
+
+            window.location.href = url;
+
+         }
+
+
+     function Delete(id)
+     {
+         var form = $('#frmNewEmp');
+         var token = $('input[name="__RequestVerificationToken"]', form).val();
+         var headers = {};
+         headers['__RequestVerificationToken'] = token;
+         swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+            if (result == true) {
+                var returnURL='@Url.Action("Index", "Depreciation")';
+                var url = '@Url.Action("Delete", "Depreciation")';
+                url = url + "/" + id;
+                    $.ajax({
+                    type: 'POST',
+                    url: url,
+                    headers: headers,
+                    contentType: "application/json",
+                    success: function (res) {
+                        if (res == "Failed")
+                        {
+                            swal("Alert", "You Cannot Delete this Record", "warning");
+                        }
+                        else
+                        {
+                            swal({ title:  "Successfully Deleted!", icon: "success" }).then((result) => {
+                                if (result == true) {
+                                    window.location.reload();
+                                }
+                            });
+                         }
+                    },
+
+                    failure: function () { alert("Error"); }
+
+                 });
+            }
+        });
+
+        }
+
+
+     function DepreciationExport()
+     {
+         var subperiodid = $("#Subperiodist").val();
+         if (subperiodid == "") {
+             subperiodid = "0";
+         }
+       //  window.location.href = '@Url.Action("DepreciationExport", "Depreciation")';
+              $('#progressbar').modal('show');
+              var ControllerURL = '@Url.Action("DepreciationExport", "Depreciation")?subperiodid=' + subperiodid;
+        var DownloadURL = '@Url.Action("Download", "Depreciation")';
+
+            $.ajax({
+                type: 'POST',
+                url: ControllerURL,
+                contentType: "application/json",
+                //data: JSON.stringify(data),
+
+
+                success: function (data) {
+                    var fileurl = DownloadURL + '?fileGuid=' + data.FileGuid
+                        + '&filename=' + data.FileName;
+                    $('#progressbar').modal('hide');
+                    //alert(fileurl);
+
+                    window.location = fileurl;
+                    $('#progressbar').modal('hide');
+
+                },
+                failure: function () { alert("Error"); }
+            });
+
+     }
+
+    function downloadexcel()
+     {
+
+         window.location.href = '@Url.Action("DownloadDepreciationExcel", "Depreciation")';
+
+     }
+     function Importexcel()
+     {
+           var url = '@Url.Action("ImportExcel", "Depreciation")';
+
+
+            $.get(url, function (data) {
+                $("#divUploadContent").html(data);
+               // alert(data);
+                $('#divUpload').modal('show')
+            });
+
+    }
+
+     function CalculateDepreciation()
+     {
+           var url = '@Url.Action("CalculateDepreciation", "Depreciation")';
+
+
+            $.get(url, function (data) {
+                $("#divUploadContent").html(data);
+               // alert(data);
+                $('#divUpload').modal('show')
+            });
+
+     }
+
+     @*function ShowDepreciation() {
+
+         var subperiodid = $("#Subperiod").val();
+         alert(subperiodid);
+         window.location.href = '@Url.Action("Index", "Depreciation")&subpid=' + subperiodid;
+     }*@
+
+
+</script>
+
+<style>
+
+    div.dataTables_processing {
+        z-index: 1;
+    }
+</style>
+
+
+
+
+@model IEnumerable<VerifyWebApp.Models.Depreciation>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container-fluid py-4">
+
+    <div class="row my-1">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header pb-0">
+                    <div class="row">
+                        <div class="d-sm-flex justify-content-between hborder">
+                            <div class="htitle"> <b>Depreciation - Company Law</b></div>
+                        </div>
+                    </div>
+                </div>
+                <div style="padding-left:20px; padding-top:10px">
+
+
+                    <button type="button" id="btnnew" value="New Practice"
+                            class="btn btn-sm addBtn pull-right m-1 order-1"
+                            onclick="opennewdialog();" data-bs-toggle="tooltip" data-bs-placement="top" title="Add New">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
+
+
+                    <button type="button" id="btnnew" value="New Practice"
+                            class="btn btn-sm delBtn pull-right m-1 order-1"
+                            onclick="CalculateDepreciation();" data-bs-toggle="tooltip" data-bs-placement="top" title="Depriciation">
+                        <i class="fa fa-calculator"></i>
+                    </button>
+                    <button type="button" id="btnexport" value="New Practice"
+                            class="btn btn-sm xtraBtn pull-right m-1 order-2"
+                            onclick="DepreciationExport();" data-bs-toggle="tooltip" data-bs-placement="top" title="Excel">
+                        <i class="fa fa-file-excel-o"></i>
+                    </button>
+                </div>
+
+
+
+
+
+                @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+                {
+                    @Html.AntiForgeryToken()}
+
+
+            <div class="card-body">
+
+             
+
+                <div class="row">
+                    <div class="col-md-4">
+
+                        <label for="praticesname " style="margin:5px">Filter</label>
+                        @Html.DropDownList("Subperiodist", (SelectList)ViewBag.Subperiod, "Select Period", new { @class = "form-control form-control-sm", id = "Subperiodist" })
+
+
+                    </div>
+
+
+                    <div class="col-md-3">
+                        <div style="margin:28px; padding-left:10px">
+                            <button type="button" id="btnshow" value="New Practice"
+                                    class="btn btn-sm addBtn "
+                                    onclick="loaddepriciation();">
+                                <i class="fa fa-filter" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                @using (Html.BeginForm("GetData", "Depreciation", FormMethod.Post))
+
+                {
+
+                }
+                <div class="row" style="padding-top:3px; display: block;overflow-x: auto;overflow-y:auto;white-space: nowrap;">
+                    <div id="divspinner">
+                        <div class="col-md-12 text-center">
+                            <b>Please Wait Loading ...</b>
+                            <div class="fa-2x">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <table width="50%" class="table table-hover text-xs" 
+                               id="tbldepreciation" >
+                            <thead class="hcol text-uppercase" style="font-weight:bold">
+                                <tr>
+                                    <td>
+                                        Sr No
+                                    </td>
+                                    <td>
+                                        Asset No
+                                    </td>
+                                    <td style="max-width:1px" >
+                                        AssetName
+                                    </td>
+                                    <td>
+                                        From Date
+                                    </td>
+                                    <td>
+                                        To Date
+                                    </td>
+                                    <td align="right">
+                                        Total Rate
+                                    </td>
+                                    <td align="right">
+                                        Amount
+                                    </td>
+                                    <td>
+                                        Method
+                                    </td>
+                                    <td>
+                                        Dep.Days
+                                    </td>
+
+                                    <td align="center">
+                                        Edit
+                                    </td>
+                                    <td align="center">
+                                        Delete
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody style="font-weight: bold; color: black"></tbody>
+                        </table>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+     </div>
+</div>
+              
+
+
+<div class="modal fade" tabindex="-1" role="dialog" id="divUpload">
+    <div class="modal-dialog modal-lg" role="document" id="divUploadContent">
+
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div id="progressbar" class="modal fade" role="dialog" style="height: auto;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lx">
+
+        <!-- Modal content-->
+        <div class="modal-content" style="height:auto;width:auto;overflow:auto">
+            <div class="modal-header">
+                <label style="color:red;text-align: center;">Loading........</label>
+
+            </div>
+            <div class="modal-body ">
+
+                <div class="row col-6" style="overflow:auto;align-content:center">
+                    <label style="color:darkred;text-align: center;">Please wait while we load your report........</label>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+        if (document.getElementById('Subperiodist')) {
+            var element = document.getElementById('Subperiodist');
+            const example = new Choices(element, {
+                searchEnabled: false,
+                itemSelectText:""
+            });
+        };
+
+     
+
+
+    });
+
+    
+
+</script>

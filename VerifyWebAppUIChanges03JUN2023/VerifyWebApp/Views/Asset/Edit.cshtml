@@ -1,0 +1,2761 @@
+﻿
+@model VerifyWebApp.ViewModel.AssetGroupViewmodel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<style>
+    .fa-edit:hover {
+        color: blueviolet;
+    }
+    .fa-remove:hover {
+        color: red;
+    }
+
+</style>
+
+
+@using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container-fluid py-3">
+        <div class="row my-1">
+            <div class="col-12">
+                <div class="card ">
+                    <div class="card-header pb-0">
+                        <div class="row">
+                            <div class="d-sm-flex justify-content-between hborder">
+                                <div class="htitle"> <b>Edit Asset </b> </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nav-wrapper position-relative end-0">
+                        <ul class="nav nav-pills nav-fill p-1">
+                            <li class="nav-item">
+
+
+                                <a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab"
+                                   href="#home" role="tab"
+                                   aria-controls="General" aria-selected="true">
+                                    <i class="fa fa-home text-sm me-2"></i>General Info
+                                </a>
+
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab"
+                                   href="#menu1" role="tab" aria-controls="Location" aria-selected="false">
+                                    <i class="fa fa-map-marker" text-sm me-2"></i> Location
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab"
+                                   href="#menu2" role="tab" aria-controls="Cost Center" aria-selected="false">
+                                    Cost Center
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                           
+                                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab"
+                                   href="#menu3" role="tab" aria-controls="Cost Center" aria-selected="false">
+                                    Insurance & AMC & Loan
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                          
+
+                                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab"
+                                   href="#menu5" role="tab" aria-controls="Cost Center" aria-selected="false">
+                                    Other  Info
+                                </a>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                    <div class="tab-content container-fluid my-1">
+                        <div class="tab-pane container active" id="home">
+                            <div class="container">
+                                <div class="row border border-success rounded my-2">
+                                    <div class="col-md-12">
+                                        <div class="row">
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">A Group</label>
+                                                    <input type='text' id="txtgroupnameA" readonly value="@ViewBag.AGroupName" class="form-control" tabindex="1" />
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">B Group</label>
+                                                    <input type='text' id="txtgroupnameB" readonly value="@ViewBag.BGroupName" class="form-control" tabindex="1" />
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">C Group</label>
+                                                    <input type='text' id="txtgroupnameC" readonly value="@ViewBag.CGroupName" class="form-control" tabindex="1" />
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">D Group</label>
+                                                    <input type='text' id="txtgroupnameD" readonly value="@ViewBag.DGroupName" class="form-control" tabindex="1" />
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    @Html.HiddenFor(m => m.ID)
+                                                    <label for="praticesname">Asset No</label>
+
+                                                    @Html.TextBoxFor(m => m.AssetNo, new { @class = "form-control form-control-sm", @tabindex = "1", id = "txtassetno" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="praticesname">Asset Identification no<span style="color:#CC0000;">*</span></label>
+                                                @Html.TextBoxFor(m => m.AssetIdentificationNo, new { @class = "form-control form-control-sm", @tabindex = "2", id = "assetidno" })
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="praticesname">Asset Name<span style="color:#CC0000;">*</span></label>
+
+                                                    @Html.TextBoxFor(m => m.AssetName, new { @class = "form-control form-control-sm", @tabindex = "3", required = "required", id = "assetname", @onblur = "setassetname()" })
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="col-md-6">
+                                                <label for="praticesname">Parent Asset Name</label>
+
+
+                                                @Html.DropDownList("Parent_AssetId", (SelectList)ViewBag.Assestlist, "Select AssetNo", new { @class = "form-control form-control-sm", id = "Parent_AssetId", @tabindex = "6", @onchange = "Enableiscomponentcheckbox();" })
+
+
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">VoucherNo</label>
+
+                                                    @Html.TextBoxFor(m => m.VoucherNo, new { @class = "form-control form-control-sm", @tabindex = "4", id = "txtvno" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">Voucher Date<span style="color:#CC0000;">*</span></label>
+
+                                                  
+
+                                                    @Html.TextBoxFor(m => m.str_VoucherDate, new
+                                               {
+                                                   @class = "form-control form-control-sm",
+                                                   @tabindex = "5",
+                                                   required = "required",
+                                                   type = "date",
+                                                    id = "txtVDate",
+                                                   @onblur = "validateopaccdepreciation()"
+                                               })
+
+                                                 
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">PoNo</label>
+
+                                                    @Html.TextBoxFor(m => m.PONo, new { @class = "form-control form-control-sm", @tabindex = "10", id = "txtpono" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">Po Date</label>
+
+                                                    <div class='input-group date' id='dtPoDate'>
+
+
+                                                        @Html.TextBoxFor(m => m.str_PODate, new { @class = "form-control form-control-sm", @tabindex = "11", type = "date", id = "txtPoDate" })
+                                                       
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">Receipt Date </label>
+
+                                                    <div class='input-group date' id='dtrecieptDate'>
+
+                                                        @Html.TextBoxFor(m => m.str_ReceiptDate, new { @class = "form-control form-control-sm", type = "date",  @tabindex = "12", id = "txtreceiptDate" })
+                                                     
+
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">Commisioning date</label>
+
+                                                    <div class='input-group date' id='dtcommDate'>
+
+                                                        @Html.TextBoxFor(m => m.str_CommissioningDate, new { @class = "form-control form-control-sm", type = "date",  @tabindex = "13", id = "txtcommDate" })
+                                                   
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">Date Put To Use  (Company Law)<span style="color:#CC0000;">*</span></label>
+
+                                                    <div class='input-group date' id='dtdpucomDate'>
+
+                                                        @Html.TextBoxFor(m => m.str_DtPutToUse, new { @class = "form-control form-control-sm", @tabindex = "8", type = "date", required = "required", id = "txtdpucomDate", @onblur = "dtputusevalidatewithvoucher()" })
+                                                      
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">Date Put To Use  (IT Law)<span style="color:#CC0000;">*</span></label>
+
+                                                    <div class='input-group date' id='dtdpuItDate'>
+
+                                                        @Html.TextBoxFor(m => m.str_DtPutToUseIT, new { @class = "form-control form-control-sm", type = "date", @tabindex = "9", id = "txtdpuItDate" })
+                                                     
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label for="praticesname" id="componentlabelid" hidden>Is component or not?&nbsp;</label>
+                                                    @Html.CheckBox("iscomponent", false, new { id = "iscomponent",  @hidden = "hidden" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">Bill No</label>
+                                                    @Html.TextBoxFor(m => m.BillNo, new { @class = "form-control form-control-sm", @tabindex = "14", id = "txtbillno" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">Bill Date</label>
+
+                                                    <div class='input-group date' id='dtbillDate'>
+
+                                                        @Html.TextBoxFor(m => m.str_BillDate, new { @class = "form-control form-control-sm", type = "date", @tabindex = "15", id = "txtbillDate" })
+                                                      
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">Quantity <span style="color:#CC0000;">*</span></label>
+
+                                                    @Html.TextBoxFor(m => m.Qty, new { @class = "form-control form-control-sm", @tabindex = "17", id = "txtqty", name = "txtqty" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">Uom</label>
+                                                    <div class='input-group dropdown ' id='dtuom' tabindex="18">
+
+                                                        @Html.DropDownList("UomId", (SelectList)ViewBag.uomlist, "Select Uom", new { @class = "form-control form-control-sm", id = "UomId" })
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">Supplier</label>
+                                                    <div class='input-group dropdown ' id='dtSupplier' tabindex="19">
+
+                                                        @Html.DropDownList("SupplierId", (SelectList)ViewBag.supplierlist, "Select Supplier", new { @class = "form-control form-control-sm", id = "SupplierId", @tabindex = "19" })
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <!--remarks-->
+                                            <div class="col-md-8">
+
+
+                                                <div class="form-group">
+                                                    <label for="praticesname">Remarks</label>
+
+                                                    @Html.TextAreaFor(m => m.Remarks, new { @class = "form-control form-control-sm", id = "txtremarks", name = "txtremarks" })
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                @*<div class="row">
+        <div class="col-md-3">*@
+                                <!--
+    <div class="form-group">
+        <label for="praticesname">Supplier Name</label>
+
+
+        @Html.DropDownList("SupplierId", (SelectList)ViewBag.supplierlist, "Select Supplier", new { @class = "form-control form-control-sm", id = "SupplierId", @tabindex = "20" })
+
+
+    </div>
+        -->
+                                @*</div>
+
+        </div>*@
+
+
+                                <div class="row border border-success rounded my-2">
+                                    <div class="col-md-6">
+                                        <div class="row my-1">
+                                            <div class="col"><label for="praticesname">Op Accumulated Depreciation<span style="color:#CC0000;">*</span></label></div>
+                                            <div class="col">@Html.TextBoxFor(m => m.OPAccDepreciation, new { @class = "form-control form-control-sm", @tabindex = "21", id = "opaccdepreciation", name = "opaccdepreciation", type = "number", @readonly = "true", step = ".01" })</div>
+                                        </div>
+
+                                        <div class="row my-1">
+                                            <div class="col">
+                                                <label for="praticesname">Normal Rate(A)</label>
+                                            </div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.NormalRatae, new { @class = "form-control form-control-sm", @tabindex = "23", id = "txtNRate", name = "txtNRate", type = "number", @onblur = "totalrate();", step = ".01" })@*//pattern="^\d*(\.\d{0,2})?$"*@
+                                            </div>
+
+                                        </div>
+                                        <div class="row my-1">
+
+                                            <div class="col">
+                                                <label for="praticesname">Additional Rate(A)</label>
+                                            </div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.AdditionalRate, new { @class = "form-control form-control-sm", @tabindex = "24", id = "txtARate", name = "txtARate", type = "number", @onblur = "totalrate();", step = ".01" })
+                                            </div>
+
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col">
+                                                <label for="praticesname">Total Rate(A)</label>
+                                            </div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.TotalRate, new { @class = "form-control form-control-sm", @tabindex = "25", @readonly = "readonly", id = "txtTRate", name = "txtTRate", type = "number", @onblur = "totalrate();", step = ".01" })
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"><label for="praticesname">Residual Value</label></div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.ResidualVal, new { @class = "form-control form-control-sm", @tabindex = "26", id = "txtresidual", name = "txtresidual", step = ".01" })
+                                            </div>
+                                        </div>
+
+                                        <div class="row my-1">
+
+
+
+
+                                            <div class="col"><label for="praticesname">Useful Life(in years)<span style="color:#CC0000;">*</span></label></div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.Usefullife, new { @class = "form-control form-control-sm", @tabindex = "27", id = "txtuseful", name = "txtuseful", type = "number", required = "required", @onblur = "generateexpirydate();" })
+                                            </div>
+
+                                        </div>
+                                        <div class="row my-1">
+
+
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col">
+                                                <label for="praticesname"> Asset life ends on</label>
+                                            </div>
+                                            <div class="col">
+                                                <div class='input-group date' id='dtExpDate'>
+
+                                                    @Html.TextBoxFor(m => m.str_Expirydate, new { @class = "form-control form-control-sm", type = "date",  @tabindex = "29", id = "txtExpDate", name = "txtExpDate", @onblur = "expiredatevalidatewithvoucher()" })
+                                                   
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <div class="row my-1">
+                                            <div class="col">
+                                                <label for="praticesname">Depreciation Method:</label>
+                                            </div>
+                                            <div class="col">
+                                                SLM @Html.RadioButton("DepreciationMethod", "SLM", new { id = "slm", @tabindex = "30", @checked = "true" })
+                                                WDV @Html.RadioButton("DepreciationMethod", "WDV", new { id = "wdv", @tabindex = "31" })
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row my-1">
+                                            <div class="col"> <label for="praticesname">Purchase A/c Name</label></div>
+                                            <div class="col"> @Html.DropDownList("txtPAccName", (SelectList)ViewBag.purchaselist, "Select Account", new { @class = "form-control form-control-sm ", @tabindex = "32", id = "txtPAccName" })</div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"><label for="praticesname">Depreciation A/c Name</label></div>
+                                            <div class="col">
+                                                @Html.DropDownList("txtDepAccName", (SelectList)ViewBag.depreciationlist, "Select Account", new { @class = "form-control form-control-sm", @tabindex = "33", id = "txtDepAccName" })
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col">
+                                                <label for="praticesname">Accumulated Dep. A/c Name</label>
+                                            </div>
+                                            <div class="col">
+                                                @Html.DropDownList("txtAccDepAccName", (SelectList)ViewBag.accumulatedlist, "Select Account", new { @class = "form-control form-control-sm", id = "txtAccDepAccName", @tabindex = "34" })
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"><label for="praticesname">IT Group</label></div>
+                                            <div class="col">
+                                                @Html.DropDownList("txtItgroupName", (SelectList)ViewBag.itgrouplist, "Select It group", new { @class = "form-control form-control-sm", id = "txtItgroupName", @tabindex = "35" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row border border-success rounded  my-2">
+                                    <!--
+        TODO     Section 3
+        -->
+                                    <div class="col-md-4">
+                                        <!-- COL 1-->
+                                        <div class="row my-1">
+                                            <div class="col">
+                                                <label for="praticesname">Gross Value<span style="color:#CC0000;">*</span></label>
+
+                                            </div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.GrossVal, new { @class = "form-control form-control-sm", @tabindex = "35", id = "txtgrossvalue", name = "txtgrossvalue", type = "number", @onblur = "totaladdition()", step = ".01" })
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col">  <label for="praticesname">Service Charges</label></div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.ServiceCharges, new { @class = "form-control form-control-sm", @tabindex = "36", id = "txtservicecharge", name = "txtservicecharge", type = "number", @onblur = "totaladdition()", step = ".01" })
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col">
+                                                <label for="praticesname">Other Expenses </label>
+                                            </div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.OtherExp, new { @class = "form-control form-control-sm", @tabindex = "37", id = "txtotherexpense", name = "txtotherexpense", type = "number", @onblur = "totaladdition()", step = ".01" })
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col">
+                                                <label for="praticesname">Custom Duty </label>
+                                            </div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.CustomDuty, new { @class = "form-control form-control-sm", @tabindex = "38", id = "txtcustomduty", name = "txtcustomduty", type = "number", @onblur = "totaladdition()", step = ".01" })
+
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+
+                                            <div class="col"><label for="praticesname">Excise Duty</label></div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.ExciseDuty, new { @class = "form-control form-control-sm", @tabindex = "39", id = "txtexciseduty", name = "txtexciseduty", type = "number", @onblur = "totaladdition()", step = ".01" })
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"><label for="praticesname">Service Tax</label></div>
+                                            <div class="col">  @Html.TextBoxFor(m => m.ServiceTax, new { @class = "form-control form-control-sm", @tabindex = "40", id = "txtservicetax", name = "txtservicetax", type = "number", @onblur = "totaladdition()", step = ".01" })</div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col">
+                                                <label for="praticesname">Any Other Duty</label>
+                                            </div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.AnyOtherDuty, new { @class = "form-control form-control-sm", @tabindex = "41", id = "txtanyotherduty", name = "txtanyotherduty", type = "number", @onblur = "totaladdition()", step = ".01" })
+
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"><label for="praticesname">Vat</label></div>
+                                            <div class="col">@Html.TextBoxFor(m => m.VAT, new { @class = "form-control form-control-sm", @tabindex = "42", id = "txtvat", name = "txtvat", type = "number", @onblur = "totaladdition()", step = ".01" })</div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"><label for="praticesname">CGST</label></div>
+                                            <div class="col">@Html.TextBoxFor(m => m.CGST, new { @class = "form-control form-control-sm", @tabindex = "43", id = "txtcgst", name = "txtcgst", type = "number", @onblur = "totaladdition()", step = ".01" })</div>
+                                        </div>
+                                        <div class="row my-1">
+
+                                            <div class="col">  <label for="praticesname">IGST</label></div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.IGST, new { @class = "form-control form-control-sm", @tabindex = "44", id = "txtigst", name = "txtigst", type = "number", @onblur = "totaladdition()", step = ".01" })
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"> <label for="praticesname">SGST</label></div>
+                                            <div class="col">     @Html.TextBoxFor(m => m.SGST, new { @class = "form-control form-control-sm", @tabindex = "45", id = "txtsgst", name = "txtsgst", type = "number", @onblur = "totaladdition()", step = ".01" })</div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"><label for="praticesname">CST</label></div>
+                                            <div class="col">@Html.TextBoxFor(m => m.CSt, new { @class = "form-control form-control-sm", @tabindex = "46", id = "txtcst", name = "txtcst", type = "number", @onblur = "totaladdition()", step = ".01" })</div>
+                                        </div>
+                                        <div class="row my-1">
+
+                                            <div class="col"> <label for="praticesname">Any Other Tax</label></div>
+                                            <div class="col">@Html.TextBoxFor(m => m.AnyOtherTax, new { @class = "form-control form-control-sm", @tabindex = "47", id = "txtanyothertax", name = "txtanyothertax", type = "number", @onblur = "totaladdition()", step = ".01" })</div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"><label for="praticesname">Total Addition(A)</label></div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.TotalAddition, new { @class = "form-control form-control-sm", @readonly = "readonly", @tabindex = "48", id = "txttotaladdition", name = "txttotaladdition", type = "number", @onblur = "totaladdition()", step = ".01" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <!-- COL 2-->
+                                        <div class="row my-1">
+                                            <div class="col"><label for="praticesname">Discount</label></div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.Discount, new { @class = "form-control form-control-sm", @tabindex = "49", id = "txtdiscount", name = "txtdiscount", type = "number", @onblur = "totaladdition()", step = ".01" })
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"><label for="praticesname">Rounding Off</label></div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.Roundingoff, new { @class = "form-control form-control-sm", @tabindex = "50", id = "txtroundoff", name = "txtroundoff", type = "number", @onblur = "totaladdition()", step = ".01" })
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+
+                                            <div class="col"><label for="praticesname">Total Deduction(B)</label></div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.TotDeduction, new { @class = "form-control form-control-sm", @tabindex = "51", id = "txttotaldeduction", name = "txttotaldeduction", type = "number", @onblur = "totaladdition()", step = ".01" })
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"><label for="praticesname">Invoice Amt(C=A-B)</label></div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.InvoiceAmt, new { @class = "form-control form-control-sm", @tabindex = "52", id = "txtinvoiceamt", name = "txtinvoiceamt", type = "number", @readonly = "readonly", @onblur = "totaladdition()", step = ".01" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <!-- COL 3 -->
+                                        <div class="row my-1">
+                                            <div class="col"><label for="praticesname">Duty Drawback</label></div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.DutyDrawback, new { @class = "form-control form-control-sm", @tabindex = "53", id = "txtdutydrawback", name = "txtdutydrawback", type = "number", @onblur = "totaladdition()", step = ".01" })
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+
+                                            <div class="col"> <label for="praticesname">Excise Credit</label></div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.ExciseCredit, new { @class = "form-control form-control-sm", @tabindex = "54", id = "txtexcisecredit", name = "txtexcisecredit", type = "number", @onblur = "totaladdition()", step = ".01" })
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col">  <label for="praticesname">Service Tax Credit</label></div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.ServiceTaxCredit, new { @class = "form-control form-control-sm", @tabindex = "55", id = "txtservicetaxcredit", name = "txtservicetaxcredit", type = "number", @onblur = "totaladdition()", step = ".01" })
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col">  <label for="praticesname">Any Other Duty Credit </label></div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.AnyOtherDutyCredit, new { @class = "form-control form-control-sm", @tabindex = "56", id = "txtanyotherdutycredit", name = "txtanyotherdutycredit", type = "number", @onblur = "totaladdition()", step = ".01" })
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"><label for="praticesname">Vat Credit</label></div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.VATCredit, new { @class = "form-control form-control-sm", @tabindex = "57", id = "txtvatcredit", name = "txtvatcredit", type = "number", @onblur = "totaladdition()", step = ".01" })
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+
+                                            <div class="col"> <label for="praticesname">CST Credit</label></div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.CSTCredit, new { @class = "form-control form-control-sm", @tabindex = "58", id = "txtcstcredit", name = "txtcstcredit", type = "number", @onblur = "totaladdition()", step = ".01" })
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col">
+                                                <label for="praticesname">Any Other Credit</label>
+                                            </div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.AnyOtherCredit, new { @class = "form-control form-control-sm", @tabindex = "60", id = "txtanyothercredit", name = "txtanyothercredit", type = "number", @onblur = "totaladdition()", step = ".01" })
+
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col">
+                                                <label for="praticesname">CGST Credit</label>
+                                            </div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.CGSTCredit, new { @class = "form-control form-control-sm", @tabindex = "61", id = "txtcgstcredit", name = "txtcgstcredit", type = "number", @onblur = "totaladdition()", step = ".01" })
+
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col">
+                                                <label for="praticesname">IGST Credit</label>
+                                            </div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.IGSTCredit, new { @class = "form-control form-control-sm", @tabindex = "61", id = "txtigstcredit", name = "txtigstcredit", type = "number", @onblur = "totaladdition()", step = ".01" })
+
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col">
+                                                <label for="praticesname">SGST Credit</label>
+                                            </div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.SGSTCredit, new { @class = "form-control form-control-sm", @tabindex = "62", id = "txtsgstcredit", name = "txtsgstcredit", type = "number", @onblur = "totaladdition()", step = ".01" })
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col">
+                                                <label for="praticesname">Total Credit(D)</label>
+                                            </div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.TotalCredit, new { @class = "form-control form-control-sm", @readonly = "readonly", @tabindex = "63", id = "txttotalcredit", name = "txttotalcredit", type = "number", @onblur = "totaladdition()", step = ".01" })
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col">
+                                                <label for="praticesname">Amt.To be Capitalised(E=C-D)</label>
+                                            </div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.AmountCapitalised, new { @class = "form-control form-control-sm", @readonly = "readonly", @tabindex = "64", id = "txtamttobecap", name = "txtamttobecap", type = "number", @onblur = "totaladdition()", step = ".01" })
+
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col">
+                                                <label for="praticesname">Amt.Capitalised(Company Law)</label>
+
+                                            </div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.AmountCapitalisedCompany, new
+                                           {
+                                               @class = "form-control form-control-sm",
+                                               @readonly = "readonly",
+                                               @tabindex = "65",
+                                               id = "txtamtcapcompanylaw",
+                                               name = "txtamtcapcompanylaw",
+                                               type = "number",
+                                               step = ".01"
+                                           })
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+
+                                            <div class="col"><label for="praticesname">Amt.Capitalised(Income Tax Law)</label></div>
+                                            <div class="col">
+                                                @Html.TextBoxFor(m => m.AmountCApitalisedIT, new { @class = "form-control form-control-sm", @readonly = "readonly", @tabindex = "66", id = "txtamtcapincometax", name = "txtamtcapincometax", type = "number", @onblur = "totaladdition()", step = ".01" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="tab-pane container fade" id="menu5">
+                            <div div class="container">
+                                <div class="row col-lg-12" style="margin-top: 10px;">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label for="praticesname">Asset N0</label>
+
+                                            <input type="number" class="form-control form-control-sm" id="txtotherinfoassetno" readonly />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+
+                                        <label for="praticesname"></label>
+                                        <label for="praticesname">Asset Name</label>
+                                        <input type="text" class="form-control form-control-sm" id="txtotherinfoassetname" readonly />
+
+                                    </div>
+                                </div>
+                                <div class="row col-lg-12" style="margin-top: 10px;">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="praticesname">Group:  @ViewBag.groupname</label>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="praticesname">Brand</label>
+
+                                            @Html.TextBoxFor(m => m.BrandName, new { @class = "form-control form-control-sm", id = "txtbrandname", name = "txtbrandname" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="praticesname">Product Serial no</label>
+
+                                            @Html.TextBoxFor(m => m.SrNo, new { @class = "form-control form-control-sm", id = "txtsrno", name = "txtsrno" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="praticesname">Model</label>
+
+                                            @Html.TextBoxFor(m => m.Model, new { @class = "form-control form-control-sm", id = "txtmodel", name = "txtmodel" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label for="praticesname">Yr.of Manufacturing</label>
+                                        @Html.TextBoxFor(m => m.YrofManufacturing, new { @class = "form-control form-control-sm", id = "txtYrMang", name = "txtYrMang", type = "number" })
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-2">
+
+                                        <div class="form-group">
+                                            <input type="checkbox" id="txtisimported" />
+                                            <label for="praticesname">Is Imported</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="praticesname">Currency</label>
+                                            @Html.TextBoxFor(m => m.Currency, new { @class = "form-control form-control-sm", id = "txtcurrency", name = "txtcurrency" })
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="praticesname">Value</label>
+
+                                            @Html.TextBoxFor(m => m.Values, new { @class = "form-control form-control-sm", id = "txtvalue", name = "txtvalue", type = "number", step = ".01" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--
+                <div class="row col-lg-12" style="margin-top: 10px;">
+                   <div class="row">
+        <div class="container border border-primary" style="margin:10px">
+
+            <label for="praticesname" style="color:crimson">&nbsp;&nbsp;Accessories/Component list received with Asset free of cost</label>
+            @*<div class="row" style="margin-top:10px;">*@
+
+
+                <button type="button" style="margin:10px" class="btn nBtn pull-right" id="btnAddassetfreeofcost" data-toggle="modal">Add</button>
+            @*</div>*@
+            <div class="col-lg-12">
+                <table width="100%" class="table table-hover text-uppercase text-xs" id="tblassetfreeofcost" style="overflow:auto">
+                    <thead class="hcol" style="font-weight:bold">
+                        <tr>
+
+                            <td>
+                                Srno
+                            </td>
+                            <td hidden>
+
+                                uomid
+                            </td>
+
+                            <td>
+                                Description of Accessories/Component
+                            </td>
+                            <td>
+                                Date
+                            </td>
+                            <td>
+                                Qty
+                            </td>
+                            <td>
+                                Uom
+                            </td>
+
+
+                            <td align="center">
+                                Edit
+                            </td>
+                            <td align="center">
+                                Delete
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody style="font-weight:bold">
+                        @if (Model.assetfreeofcostlist.Count() == 0)
+                        {
+                            <tr></tr>
+                        }
+                        else
+                        {
+                            foreach (var item in Model.assetfreeofcostlist)
+                            {
+                                <tr>
+                                    <td>@item.Srno</td>
+
+                                    <td hidden>@Html.DisplayFor(modelitem => item.Uom)</td>
+
+
+                                    <td>@item.Description</td>
+                                    <td>@item.str_date</td>
+                                    <td>@Html.DisplayFor(modelitem => item.Qty)</td>
+
+                                    <td>@Html.DisplayFor(modelitem => item.str_uomname)</td>
+
+                                    <td align="center">
+                                        <button type="button" class="btn modBtn btn-sm"
+                                                aria-label="Left Align"
+                                                onclick="Editassetf(this,@item.Srno);">
+                                            <i class="fa fa-edit" style="color:green"></i>
+                                        </button>
+
+                                    </td>
+                                    <td align="center">
+                                        <button type="button" class="btn delBtn btn-sm" aria-label="Left Align" onclick="deleteassetf(this);">
+                                            <i class="fa fa-remove" style="color:red"></i>
+                                        </button>
+
+                                    </td>
+                                </tr>
+
+
+                            }
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+                  </div>
+        -->
+                            </div>
+                        </div>
+                        <!-- Location tab -->
+                        <div class="tab-pane container fade" id="menu1">
+                            <div class="container">
+                                <div class="row my-2 p-2">
+                                    <div class="col-md-12">
+                                        <div class="row my-1">
+                                            <div class="col-md-12">
+                                                <div class="pull-right">
+                                                    <button type="button" class="btn btn-sm nBtn" id="btnAddloc"
+                                                            data-toggle="modal">
+                                                        Add Location
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="col-md-12">
+
+                                                <div class="col-md-12">
+                                                    <table class="table table-hover text-uppercase text-xs" id="tbllocation">
+                                                        <thead class="hcol" style="font-weight:bold">
+                                                            <tr>
+
+                                                                <td>
+                                                                    Srno
+                                                                </td>
+                                                                <td hidden>
+                                                                    locaid
+                                                                </td>
+                                                                <td hidden>
+                                                                    locbid
+                                                                </td>
+                                                                <td hidden>
+                                                                    loccid
+                                                                </td>
+                                                                <td>
+                                                                    Date
+                                                                </td>
+                                                                <td>
+                                                                    Main Location
+                                                                </td>
+                                                                <td>
+                                                                    Sub-Location
+                                                                </td>
+                                                                <td>
+                                                                    Sub Sub-Location
+                                                                </td>
+
+
+                                                                <td align="center">
+                                                                    Edit
+                                                                </td>
+                                                                <td align="center">
+                                                                    Delete
+                                                                </td>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody style="font-weight:bold">
+                                                            @if (Model.locationlist.Count() == 0)
+                                                            {
+                                                                <tr></tr>
+                                                            }
+                                                            else
+                                                            {
+                                                                foreach (var item in Model.locationlist)
+                                                                {
+                                                                    <tr>
+                                                                        <td class="text-xs">@item.Srno</td>
+
+                                                                        <td hidden>@Html.DisplayFor(modelitem => item.ALocID)</td>
+
+                                                                        <td hidden>@Html.DisplayFor(modelitem => item.BLocID)</td>
+                                                                        <td hidden>@Html.DisplayFor(modelitem => item.CLocID)</td>
+                                                                        <td class="text-xs">@item.str_date</td>
+
+                                                                        <td class="text-xs">@Html.DisplayFor(modelitem => item.str_locaname)</td>
+
+                                                                        <td class="text-xs">@Html.DisplayFor(modelitem => item.str_locbname)</td>
+                                                                        <td class="text-xs">@Html.DisplayFor(modelitem => item.str_loccname)</td>
+                                                                        <td align="center">
+                                                                            <span onclick="Editloc(this,@item.Srno);">   
+                                                                                <i class="fa fa-edit" style="color:green"></i>  
+                                                                            </span>
+
+                                                                        </td>
+                                                                        <td align="center">
+                                                                            <span onclick="deleteloc(this);"> <i class="fa fa-remove" style="color:red"></i>  </span>
+                                                                        </td>
+                                                                    </tr>
+
+
+                                                                }
+                                                            }
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- Cost Center History tab -->
+                        <div class="tab-pane container fade" id="menu2">
+                            <div class="container">
+                                <div class="row my-2 p-2">
+                                    <div class="col-md-12 my-1">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="pull-right">
+                                                    <button type="button" class="btn btn-sm nBtn" id="btnAddCC"
+                                                            data-toggle="modal">
+                                                        Add Cost Center
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+
+                                            <div class="col-md-12">
+                                                <table class="table table-hover text-uppercase text-xs" id="tblcostcenter">
+                                                    <thead class="hcol" style="font-weight:bold">
+                                                        <tr>
+
+                                                            <td>
+                                                                Srno
+                                                            </td>
+                                                            <td hidden>
+                                                                ccaid
+                                                            </td>
+                                                            <td hidden>
+                                                                ccbid
+                                                            </td>
+
+                                                            <td>
+                                                                Date
+                                                            </td>
+                                                            <td>
+                                                                Cost Center
+                                                            </td>
+                                                            <td>
+                                                                Sub-Cost Center
+                                                            </td>
+                                                            <td>
+                                                                Percentage
+                                                            </td>
+
+
+                                                            <td align="center">
+                                                                Edit
+                                                            </td>
+                                                            <td align="center">
+                                                                Delete
+                                                            </td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody style="font-weight:bold">
+                                                        @if (Model.costcenterlist.Count() == 0)
+                                                        {
+                                                            <tr></tr>
+                                                        }
+                                                        else
+                                                        {
+                                                            foreach (var item in Model.costcenterlist)
+                                                            {
+                                                                <tr>
+                                                                    <td class="text-xs">@item.Srno</td>
+
+                                                                    <td hidden>@Html.DisplayFor(modelitem => item.AcostcenterID)</td>
+
+                                                                    <td hidden>@Html.DisplayFor(modelitem => item.BcostcenterID)</td>
+
+                                                                    <td class="text-xs">@item.str_date</td>
+
+                                                                    <td class="text-xs">@Html.DisplayFor(modelitem => item.str_costcenteraname)</td>
+
+                                                                    <td class="text-xs">@Html.DisplayFor(modelitem => item.str_costcenterbname)</td>
+                                                                    <td class="text-xs">@Html.DisplayFor(modelitem => item.Percentage)</td>
+                                                                    <td align="center">
+                                                                     
+
+                                                                        <span onclick="Editcc(this,@item.Srno);">
+                                                                            <i class="fa fa-edit" style="color:green"></i>
+                                                                        </span>
+
+                                                                    </td>
+                                                                    <td align="center">
+                                                                     
+                                                                        <span onclick="deletecostcenter(this);">   <i class="fa fa-remove" style="color:red"></i>  </span>
+                                                                    </td>
+                                                                </tr>
+
+
+                                                            }
+                                                        }
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- Insurance AMC  -->
+                        <div class="tab-pane container fade" id="menu3">
+                            <div class="container">
+                                <div class="row  my-2 p-2">
+                                    <div class="col-md-12">
+                                        <div class="row ">
+                                            <div class="col-md-12">
+                                                <label for="praticesname">&nbsp;&nbsp;&nbsp;Insurance Details for Asset</label>
+
+                                                <div class="col-md-12">
+                                                    <table class="table table-hover text-uppercase text-xs" id="tbllocationview" style="overflow:auto">
+                                                        <thead class="hcol" style="font-weight:bold">
+                                                            <tr>
+
+                                                                <td>
+                                                                    Start Date
+                                                                </td>
+                                                                <td>
+                                                                    End Date
+                                                                </td>
+                                                                <td>
+                                                                    Policy Details
+                                                                </td>
+
+                                                                @*<td>
+                                                        Asset Description
+                                                    </td>
+                                                    <td align="right">
+                                                        Amount to be capitalised
+                                                    </td>*@
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody style="font-weight:bold">
+                                                            @if (Model.insurancelist.Count() == 0)
+                                                            {
+                                                                <tr>
+                                                                    <td colspan="3">No Rows Found</td>
+                                                                </tr>
+                                                            }
+                                                            else
+                                                            {
+                                                                foreach (var item in Model.insurancelist)
+                                                                {
+                                                                    <tr>
+                                                                        <td>@item.str_fromdate</td>
+
+                                                                        <td>@Html.DisplayFor(modelitem => item.str_todate)</td>
+
+                                                                        <td>@Html.DisplayFor(modelitem => item.policydetails)</td>
+
+
+                                                                    </tr>
+
+
+                                                                }
+                                                            }
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="col-md-12">
+                                                <label for="praticesname">&nbsp;&nbsp;&nbsp;AMC</label>
+
+                                                <div class="col-lg-12">
+                                                    <table width="100%" class="table table-hover text-uppercase text-xs" id="tblamcview" style="overflow:auto">
+                                                        <thead class="hcol" style="font-weight:bold">
+                                                            <tr>
+
+                                                                <td>
+                                                                    Start Date
+                                                                </td>
+                                                                <td>
+                                                                    End Date
+                                                                </td>
+
+                                                                <td>
+                                                                    Amc Details
+                                                                </td>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody style="font-weight:bold">
+                                                            @if (Model.amclist.Count() == 0)
+                                                            {
+                                                                <tr>
+                                                                    <td colspan="3">No Rows Found</td>
+                                                                </tr>
+                                                            }
+                                                            else
+                                                            {
+                                                                foreach (var item in Model.amclist)
+                                                                {
+                                                                    <tr>
+
+
+                                                                        <td>@Html.DisplayFor(modelitem => item.str_fromdate)</td>
+
+
+
+                                                                        <td>@Html.DisplayFor(modelitem => item.str_todate)</td>
+
+                                                                        <td>@Html.DisplayFor(modelitem => item.amcdetails)</td>
+
+
+                                                                    </tr>
+
+
+                                                                }
+                                                            }
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" style="height: 200px;overflow:auto">
+
+                                            <div class="col-md-12">
+                                                <label for="praticesname">&nbsp;&nbsp;&nbsp;Loan</label>
+
+                                                <div class="col-lg-12">
+                                                    <table width="100%" class="table table-hover text-uppercase text-xs" id="tblloanview">
+                                                        <thead class="hcol" style="font-weight:bold">
+                                                            <tr>
+
+                                                                <td>
+                                                                    Start Date
+                                                                </td>
+
+                                                                <td>
+                                                                    End Date
+                                                                </td>
+                                                                <td>
+                                                                    Loan taken from
+                                                                </td>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody style="font-weight:bold">
+                                                            @if (Model.loanlist.Count() == 0)
+                                                            {
+                                                                <tr>
+                                                                    <td colspan="3">No Rows Found</td>
+                                                                </tr>
+                                                            }
+                                                            else
+                                                            {
+                                                                foreach (var item in Model.loanlist)
+                                                                {
+                                                                    <tr>
+
+
+                                                                        <td>@Html.DisplayFor(modelitem => item.str_fromdate)</td>
+
+
+
+                                                                        <td>@Html.DisplayFor(modelitem => item.str_todate)</td>
+
+                                                                        <td>@Html.DisplayFor(modelitem => item.loandetails)</td>
+
+
+                                                                    </tr>
+
+
+                                                                }
+                                                            }
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="modal-footer">
+                                    <button type="submit" class="btn saveBtn btn-sm" id="btnsave">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                </div>
+        </div>
+ 
+}
+
+<div id="imagemodal" class="modal fade" role="dialog" style="height:600px;">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Add Image</h4>
+            </div>
+            <div class="modal-body ">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="praticesname"><span style="color:#CC0000;">*</span>Select File to be uploaded </label>
+                            <input type="file" id="fileUploader" required />
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <img id="preview" src="#" alt="your image" style="max-width:300px" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-sm saveBtn" onclick="saveattachment();">Save</button>
+            <button type="button" class="btn btn-sm clBtn" onclick="closeaddatt();">Close</button>
+
+        </div>
+    </div>
+</div>
+
+
+<div id="locationmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Add Location</h4>
+            </div>
+            <div class="modal-body ">
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname"> Date<span style="color:#CC0000;">*</span></label>
+
+                        <div class='input-group date' id='dtlocDate'>
+                            <input type='text' id="txtlocDate" class="form-control" required />
+
+                            <div class="input-group-addon">
+                                <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                            </div>
+
+                        </div>
+                        <div style="color:#CC0000;font-weight:400" id="locdateemerror"></div>
+                        <div style="color:#CC0000;font-weight:400" id="locdateerror">Date should be greater than voucher date</div>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Main Location <span style="color:#CC0000;">*</span></label>
+                        @Html.DropDownList("txtlocA", (SelectList)ViewBag.alocationlist, "Select Location", new { @class = "form-control", id = "txtlocA", @required = true })
+                        <div style="color:#CC0000;font-weight:400" id="locaerror"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Sub-Location </label>
+
+                        <select id="txtlocB" name="txtlocB" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Sub Sub-Location </label>
+                        <select id="txtlocC" name="txtlocC" class="form-control"></select>
+                    </div>
+                </div>
+            </div>
+            <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm saveBtn" onclick="saveloc();">Save</button>
+                <button type="button" class="btn btn-sm clBtn" onclick="closeloc();">Close</button>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<div id="editlocationmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Edit Location</h4>
+            </div>
+            <div class="modal-body ">
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname"> Date<span style="color:#CC0000;">*</span></label>
+
+                        <div class='input-group date' id='dteditlocDate'>
+                            <input type='text' id="txteditlocDate" class="form-control" required />
+
+                            <div class="input-group-addon">
+                                <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                            </div>
+                        </div>
+                        <div style="color:#CC0000;font-weight:400" id="editlocdateemerror"></div>
+                        <div style="color:#CC0000;font-weight:400" id="editlocdateerror">Date should be greater than voucher date</div>
+
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Main Location <span style="color:#CC0000;">*</span></label>
+                        @Html.DropDownList("txteditlocA", (SelectList)ViewBag.alocationlist, "Select Location", new { @class = "form-control", id = "txteditlocA", @required = true })
+                        <div style="color:#CC0000;font-weight:400" id="editlocaerror"></div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Sub-Location </label>
+
+                        <select id="txteditlocB" name="txteditlocB" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Sub Sub-Location </label>
+                        <select id="txteditlocC" name="txteditlocC" class="form-control"></select>
+                    </div>
+                </div>
+            </div>
+            <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm saveBtn" onclick="saveeditloc();">Save</button>
+                <button type="button" class="btn btn-sm clBtn" onclick="closeeditloc();">Close</button>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="ccmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Add Cost Center</h4>
+            </div>
+            <div class="modal-body ">
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname"> Date<span style="color:#CC0000;">*</span></label>
+
+                        <div class='input-group date' id='dtccDate'>
+                            <input type='text' id="txtccDate" class="form-control" required />
+
+                            <div class="input-group-addon">
+                                <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                            </div>
+
+                        </div>
+                        <div style="color:#CC0000;font-weight:400" id="ccdateemerror"></div>
+                        <div style="color:#CC0000;font-weight:400" id="ccdateerror">Date should be greater than voucher date</div>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Cost Center<span style="color:#CC0000;">*</span></label>
+                        @Html.DropDownList("txtccA", (SelectList)ViewBag.costalist, "Select Cost Center", new { @class = "form-control", id = "txtccA", @required = true })
+                        <div style="color:#CC0000;font-weight:400" id="ccaerror"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Sub-Cost Center</label>
+
+                        <select id="txtccB" name="txtccB" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Percentage<span style="color:#CC0000;">*</span></label>
+
+                        <input type="number" id="txtpercentage" name="txtpercentage" class="form-control" required />
+                        <div style="color:#CC0000;font-weight:400" id="ccpercentageerror"></div>
+                    </div>
+                </div>
+            </div>
+            <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm saveBtn" onclick="savecc();">Save</button>
+                <button type="button" class="btn btn-sm clBtn" onclick="closecc();">Close</button>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<div id="editccmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Edit Cost Center</h4>
+            </div>
+            <div class="modal-body ">
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname"> Date<span style="color:#CC0000;">*</span></label>
+
+                        <div class='input-group date' id='dteditccDate'>
+                            <input type='text' id="txteditccDate" class="form-control" required />
+
+                            <div class="input-group-addon">
+                                <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                            </div>
+
+                        </div>
+                        <div style="color:#CC0000;font-weight:400" id="editccdateemerror"></div>
+                        <div style="color:#CC0000;font-weight:400" id="editccdateerror">Date should be greater than voucher date</div>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Cost Center<span style="color:#CC0000;">*</span></label>
+                        @Html.DropDownList("txteditccA", (SelectList)ViewBag.costalist, "Select Cost center", new { @class = "form-control", id = "txteditccA", @required = true })
+                        <div style="color:#CC0000;font-weight:400" id="editccaerror"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Sub-Cost Center</label>
+
+                        <select id="txteditccB" name="txteditccB" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Percentage <span style="color:#CC0000;">*</span></label>
+                        <input type="number" id="txteditpercentage" name="txteditpercentage" class="form-control" required />
+                        <div style="color:#CC0000;font-weight:400" id="editccpercentageerror"></div>
+                    </div>
+                </div>
+            </div>
+            <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm saveBtn" onclick="saveeditcc();">Save</button>
+                <button type="button" class="btn btn-sm clBtn" onclick="closeeditcc();">Close</button>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="assetfreeofcostmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Add</h4>
+            </div>
+            <div class="modal-body ">
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname"> Date<span style="color:#CC0000;">*</span></label>
+
+                        <div class='input-group date' id='dtassetfDate'>
+                            <input type='text' id="txtassetfDate" class="form-control" required />
+
+                            <div class="input-group-addon">
+                                <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                            </div>
+
+                        </div>
+                        <div style="color:#CC0000;font-weight:400" id="assetfdateemerror"></div>
+                        <div style="color:#CC0000;font-weight:400" id="assetfdateerror">Date should be greater than voucher date</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Description<span style="color:#CC0000;">*</span></label>
+
+                        <input id="txtdescription" name="txtdescription" required class="form-control" />
+                        <div style="color:#CC0000;font-weight:400" id="assetfdescriptionerror"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Qty</label>
+                        <input type="number" id="txtassetfqty" value="0" name="txtassetfqty" class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Uom</label>
+                        @Html.DropDownList("txtassetfuom", (SelectList)ViewBag.uomlist, "Select Uom", new { @class = "form-control", id = "txtassetfuom" })
+
+                    </div>
+                </div>
+            </div>
+            <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm saveBtn" onclick="saveassetf();">Save</button>
+                <button type="button" class="btn btn-sm clBtn" onclick="closeassetf();">Close</button>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="editassetfreeofcostmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Edit</h4>
+            </div>
+            <div class="modal-body ">
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname"> Date<span style="color:#CC0000;">*</span></label>
+
+                        <div class='input-group date' id='dteditassetfDate'>
+                            <input type='text' id="txteditassetfDate" class="form-control" required />
+
+                            <div class="input-group-addon">
+                                <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                            </div>
+
+                        </div>
+                        <div style="color:#CC0000;font-weight:400" id="editassetfdateemerror"></div>
+                        <div style="color:#CC0000;font-weight:400" id="editassetfdateerror">Date should be greater than voucher date</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Description<span style="color:#CC0000;">*</span></label>
+
+                        <input id="txteditdescription" name="txteditdescription" required class="form-control" />
+                        <div style="color:#CC0000;font-weight:400" id="editassetfdescriptionerror"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Qty </label>
+                        <input type="number" id="txteditassetfqty" value="0" name="txteditassetfqty" class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Uom</label>
+                        @Html.DropDownList("txteditassetfuom", (SelectList)ViewBag.uomlist, "Select Uom", new { @class = "form-control", id = "txteditassetfuom" })
+
+                    </div>
+                </div>
+            </div>
+            <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm saveBtn" onclick="saveeditassetf();">Save</button>
+                <button type="button" class="btn btn-sm clBtn" onclick="closeeditassetf();">Close</button>
+                
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="errorlist" class="modal fade" role="dialog" style="height: 670px;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Error list</h4>
+            </div>
+            <div class="modal-body ">
+
+                <div class="row" style="overflow:auto">
+                    <table width="100%" class="table table-striped table-bordered table-hover" style="overflow:auto" id="errtbl">
+
+                        <thead>
+                            <tr>
+
+                                <td>Srno</td>
+                                <td>Errors</td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+
+                    </table>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm clBtn" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+
+            var srnocnt = 1;
+            var srnocccnt = 1;
+            var srnoassetfcnt = 1;
+            var isimportedflag = "no";
+            var editindex = 0;
+            var editccindex = 0;
+            var editassetfindex = 0;
+            var iscomponentflag = "no";
+
+            $(document).ready(function ($) {
+                //check whether there is lock or not
+                var lock ='@ViewBag.Lock';
+              // alert("result"+lock)
+                if (lock == "Depalreadycalculated")
+                {
+                    swal("Alert", "Depreciation is calculated you cannot edit this asset", "warning");
+                    $("#btnsave").prop('disabled', true);
+                }
+                if (lock == "Periodlock")
+                {
+                    swal("Alert", "Period is locked ,you cannot edit this asset", "warning");
+                    $("#btnsave").prop('disabled', true);
+                }
+                if (lock == "Nolock")
+                {
+
+                }
+
+
+
+                //setting dropdownlist
+                var itval = '@Model.ITGroupIDID';
+               // alert(itval)
+                var depval = '@Model.DepAccountId';
+                var purval = '@Model.AccountID';
+                var accval = '@Model.AccAccountID';
+                var uomval = '@Model.UOMNo';
+                var supp = '@Model.SupplierNo';
+                var parentassetno = '@Model.Parent_assetno';
+                $('#txtItgroupName').val(itval);
+                $('#txtAccDepAccName').val(accval);
+                $('#txtDepAccName').val(depval);
+                $('#txtPAccName').val(purval);
+                $('#UomId').val(uomval);
+                $('#SupplierId').val(supp);
+                if (parentassetno == "0") {
+                    $('#Parent_AssetId').val(0);
+                }
+                else {
+                    $('#Parent_AssetId').val(parentassetno);
+                }
+                ////////
+                //set assetno,assetname in differenttabs
+                var assetname = $('#assetname').val();
+                //var assetno = $('#txtaddno').val();
+                var assetno = '@Model.AssetNo';
+                $('#txtsatassetno').val(assetno);
+                $('#txtsatassetname').val(assetname);
+                $('#txtotherinfoassetno').val(assetno);
+                $('#txtotherinfoassetname').val(assetname);
+
+
+                //moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+
+
+                $("#txtVDate").val(moment('@Model.VoucherDate', "YYYY-MM-DD").format("DD/MM/YYYY");
+
+
+                ///
+                ////iscomponent checkd or not
+                if ('@Model.iscomponent' == "yes") {
+                    $("#iscomponent").prop("checked", true);
+
+                }
+                else {
+
+                    $("#iscomponent").prop("checked", false);
+                }
+
+
+                ////////
+                //errordate
+
+                $("#locdateerror,#editlocdateerror,#ccdateerror,#editccdateerror,#assetfdateerror,#editassetfdateerror").hide();
+                $('#locaerror,#locdateemeerror,#editlocaerror,#editlocdateemerror,#ccaerror,#ccdateemerror,#ccaerror,#ccpercentageerror,#editccaerror,#editccpercentageerror,#editccdateemerror,#editccaerror,' +
+                    +' #assetfdateemrror, #editassetfdateemerror, #assetfdescriptionerror, #editassetfdescriptionerror').hide();
+
+
+
+                /////date put to use less than voucher date warning
+                //$('input[id=txtdpucomDate]').on('keydown', function (evt) {
+                //    if (evt.key === 'Tab' || evt.key === 'Enter') {
+                //        evt.preventDefault();
+
+                //        var vdate = $('#txtVDate').val();
+                //        var voucherdate = moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+                //        var dtputuse = moment($("#txtdpucomDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+
+                //        if (new Date(dtputuse) <= new Date(voucherdate)) {
+
+                //            swal("Alert", "Date put to use is less than voucher date ", "warning");
+                //        }
+                //        else {
+
+
+                //        }
+                //    }
+                //});
+                //$('input[id=txtVDate]').on('keydown', function (evt) {
+                //    if (evt.key === 'Tab' || evt.key === 'Enter') {
+                //        evt.preventDefault();
+
+                //        var vdate = $('#txtVDate').val();
+                //        $('#txtdpucomDate').val(vdate)
+                //        $('#txtcommDate').val(vdate)
+                //        $('#txtbillDate').val(vdate)
+                //        $('#txtreceiptDate').val(vdate)
+                //        $('#txtPoDate').val(vdate)
+                //        $('#txtdpuItDate').val(vdate)
+                //    }
+                //         });
+                ///onlocation a select load location b dropdown
+
+                $('#txtlocA').change(function () {
+
+                    var index = $("#txtlocA option:selected").val();
+
+
+                    //  $('#txtassetno').val(index);
+                    getlocationb(index);
+                });
+
+                $('#txtlocB').change(function () {
+
+                    var index = $("#txtlocB option:selected").val();
+
+
+                    // $('#txtassetno').val(index);
+                    getlocationc(index);
+                });
+
+                ///on edit modal location a select load location b dropdown
+                $('#txteditlocA').change(function () {
+
+
+                    var index = $("#txteditlocA option:selected").val();
+
+
+                    //  $('#txtassetno').val(index);
+                    geteditlocationb(index);
+                });
+
+                $('#txteditlocB').change(function () {
+
+                    var index = $("#txteditlocB option:selected").val();
+
+
+                    // $('#txtassetno').val(index);
+                    geteditlocationc(index);
+                });
+
+
+                //////////////////////////////////////--------------costcenter----------------------/////////////////////
+                $('#txtccA').change(function () {
+
+                    var index = $("#txtccA option:selected").val();
+
+
+                    //  $('#txtassetno').val(index);
+                    getcostcenterb(index);
+                });
+
+                $('#txteditccA').change(function () {
+
+
+                    var index = $("#txteditccA option:selected").val();
+
+
+                    //  $('#txtassetno').val(index);
+                    geteditcostcenterb(index);
+                });
+
+                ////////////////////////////////////
+
+
+                ///image display
+                function readIMG(input) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+
+                        reader.onload = function (e) {
+                            $('#preview').attr('src', e.target.result);
+                        }
+
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                }
+
+                $("#fileUploader").change(function () {
+                    readIMG(this);
+                });
+
+
+
+                $("#btnAddattachment").click(function () {
+
+
+                    $('#imagemodal').modal('show');
+
+
+                });
+                $("#btnAddloc").click(function () {
+
+                    $("#txtlocA").val("");
+                    $("#txtlocB ").val("");
+                    $("#txtlocC ").val("");
+                    $("#txtlocDate").val("");
+                    $('#locationmodal').modal('show');
+
+                });
+
+                $("#btnAddCC").click(function () {
+
+                    $("#txtccA").val("");
+                    $("#txtccB").val("");
+                    $("#txtpercentage").val("")
+                    $("#txtccDate").val("");
+                    $('#ccmodal').modal('show');
+
+
+                });
+
+                $("#btnAddassetfreeofcost").click(function () {
+                    $("#txtassetfuom").val("");
+                    $("#txtassetfDate").val("")
+                    $("#txtdescription").val("");
+                    $("#txtassetfqty").val("");
+
+                    $('#assetfreeofcostmodal').modal('show');
+
+
+                });
+
+
+
+                ///for enable disable assetno or search by
+                //$("#txtassetno").prop("disabled", true);
+                $("#txtcurrency").prop("disabled", true);
+                $("#txtvalue").prop("disabled", true);
+                $('#checkflag').change(function () {
+                    if ($(this).prop("checked")) {
+                        $("#txtassetno").prop("disabled", false);
+                    }
+                    else {
+                        $("#txtassetno").prop("disabled", true);
+                    }
+                });
+                $('#txtisimported').change(function () {
+                    if ($(this).prop("checked")) {
+                        isimportedflag = "yes";
+                        $("#txtcurrency").prop("disabled", false);
+                        $("#txtvalue").prop("disabled", false);
+                    }
+                    else {
+                        $("#txtcurrency").prop("disabled", true);
+                        $("#txtvalue").prop("disabled", true);
+                        isimportedflag = "no";
+                    }
+                });
+
+                /////iscomponent checked set yes or unchecked set no
+                $('#iscomponent').change(function () {
+                    if ($(this).prop("checked")) {
+                        iscomponentflag = "yes";
+
+                    }
+                    else {
+
+                        iscomponentflag = "no";
+                    }
+                });
+
+
+                $("#frmNewEmp").submit(function (e) {
+
+                    SaveData();
+                    return false;
+
+                });
+
+            });
+
+            function generateexpirydate() {
+
+                var dateputuse = $("#txtdpucomDate").val();
+                var usefullife = $("#txtuseful").val();
+                dateputuse = moment(dateputuse, 'DD/MM/YYYY').format('YYYY-MM-DD');
+                var expirydate = moment(dateputuse, "YYYY-MM-DD").add('years', usefullife);
+
+                var formatteddate = moment(expirydate, "dddd-mmmm-dS-yyyy-h:MM:ss").format("DD/MM/YYYY");
+
+                $("#txtExpDate").val(formatteddate);
+
+
+
+            }
+
+
+
+
+    //check addition to be added or not based on amt caps
+        function checkadditionassettobeaddedornot() {
+
+
+            var amtcap = $("#txtamtcapcompanylaw").val();
+            var assetno = $("#Parent_AssetId").val();
+
+            if (amtcap != "" && assetno != "") {
+
+                var ControllerURL = '@Url.Action("checkadditionentry", "Asset")?amtcap=' + amtcap + '&assetno=' + assetno;
+                var returnURL = '@Url.Action("Index", "Asset")';
+                //var url = ControllerURL + "/" + vdate;
+                //  alert(ControllerURL)
+                $.ajax({
+                    url: ControllerURL,
+                    type: "GET",
+                    contentType: "application/json",
+                    success: function (res) {
+                      //  alert(res.Data)
+                        if (res.Data == "amtisgreater") {
+                            swal({ title: "Alert",text:"amt greater", icon: "warning", buttons: true,}).then((result) => {
+                                if (result == true) {
+
+                                }
+                                else {
+
+                                }
+                            });
+                        }
+                        else {
+
+                        }
+
+                        if (res.Data == "Noamtfound")
+                        {
+                            swal("Alert", "No Amount Capitalised found in corresponding asset", "warning");
+                        }
+
+                    },
+                    error: function (reponse) {
+                        alert("error : " + reponse);
+                    }
+                });
+            }
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+            function editassetfdate() {
+
+                var vdate = moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+                var adate = moment($("#txteditassetfDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+
+                if (new Date(vdate) > new Date(adate)) {
+                    //$("#editassetfdateerror").html(" * This Date must be greater than Voucher Date");
+                   // $("#editassetfdateerror").show();
+                    return true;
+                }
+                else {
+                    return false;
+                   // $("#editassetfdateerror").hide();
+                }
+            }
+
+
+
+            function assetfdate() {
+                var vdate = moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+                var adate = moment($("#txtassetfDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+
+                if (new Date(vdate) > new Date(adate)) {
+                   // $("#assetfdateerror").html(" * This Date must be greater than Voucher Date");
+                  //  $("#assetfdateerror").show();
+                    return true;
+                }
+                else {
+                    return false;
+                   // $("#assetfdateerror").hide();
+                }
+            }
+    ///////
+     ////////////////checking wheter period entry is there or not and opening accumulated depreciation textbox enable disable logic//////////
+                 function validateopaccdepreciation() {
+
+            /////checking if period is entered or not
+
+                     var vdate =  moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+           // alert(vdate);
+           // if (vdate != "01/Jan/0001 00:00:00" || vdate != null) {
+            if ( vdate != "") {
+                var ControllerURL = '@Url.Action("checkopeningaccumulateddepreciation", "Asset")';
+                var returnURL = '@Url.Action("Index", "Asset")';
+                //var url = ControllerURL + "/" + vdate;
+                //  alert(ControllerURL)
+                var data = { "strvdate": vdate}
+                $.ajax({
+                    url: ControllerURL,
+                    type: "GET",
+                    contentType: "application/json",
+                    data: data,
+                    success: function (res) {
+
+                        if (res.Data == "Yes") {
+                            // alert("if")
+                            document.getElementById('opaccdepreciation').readOnly = false;
+                            //$("#opaccdepreciation").prop("disable", false);
+                        }
+                        if (res.Data == "No") {
+                            document.getElementById('opaccdepreciation').readOnly = true;
+                            // $("#opaccdepreciation").prop("disable", true);
+                        }
+                        if (res.Data == "Noperiod") {
+                            swal({ title: "Period records not found, please enter period first to add asset!", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    window.location.replace(returnURL);
+                                }
+                                else {
+                                    document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+                    },
+                    error: function (reponse) {
+                        alert("error : " + reponse);
+                    }
+                });
+            }
+
+
+            var ControllerURL = '@Url.Action("checkperiod_itperiod_exits", "Asset")';
+                var returnURL = '@Url.Action("Index", "Asset")';
+
+                $.ajax({
+                    url: ControllerURL,
+                    type: "GET",
+                    contentType: "application/json",
+                    success: function (res) {
+                       // alert(res.Data)
+                        if (res.Data == "Noperiodexists") {
+                            swal({ title: "No period found please enter period master first to add asset", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    window.location.replace(returnURL);
+                                }
+                                else {
+                                    document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+
+                        else if (res.Data == "Noitperiodexists") {
+                            swal({
+                                title: "ItPeriod records not found,If you want Itperiod please  click outside dialgouebox and enter itperiod in master , or click on ok to ignore itperiod ", icon: "warning" }).then((result) => {
+                                    if (result == true) {
+                                        checkdatevalidation();
+                                 //   window.location.replace(returnURL);
+                                   // document.getElementById("txtVDate").focus();
+                                }
+                                else {
+                                    window.location.replace(returnURL);
+                                   // document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+                        else {
+                            checkdatevalidation();
+                        }
+                    },
+                    error: function (reponse) {
+                        alert("error : " + reponse);
+                    }
+                });
+
+
+        }
+        function checkdatevalidation() {
+            var vdate = moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            if (vdate != "") {
+               // var ControllerURL = '@Url.Action("Dateputtousevalidation", "Asset")?strvdate=' + vdate;
+                var ControllerURL = '@Url.Action("Dateputtousevalidation", "Asset")';
+                var data = {
+                    "strvdate": vdate
+                }
+                var returnURL = '@Url.Action("Index", "Asset")';
+                //var url = ControllerURL + "/" + vdate;
+                //  alert(ControllerURL)
+                $.ajax({
+                    url: ControllerURL,
+                    type: "GET",
+
+                    contentType: "application/json",
+                    data: data,
+                    success: function (res) {
+                      //  alert(res.Data)
+                        if (res.Data == "Yes") {
+                            swal({ title: "This period is locked you cannot add record", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    window.location.replace(returnURL);
+                                }
+                                else {
+                                    document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+                        if (res.Data == "No") {
+                            // alert("no")
+                            $('#txtdpucomDate').val($("#txtVDate").val())
+                            $('#txtcommDate').val($("#txtVDate").val())
+                            $('#txtbillDate').val($("#txtVDate").val())
+                            $('#txtreceiptDate').val($("#txtVDate").val())
+                            $('#txtPoDate').val($("#txtVDate").val())
+                            $('#txtdpuItDate').val($("#txtVDate").val())
+                        }
+                        if (res.Data == "Nosubperiod")
+                        {
+                            swal({ title: "No Sub period found  ", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    window.location.replace(returnURL);
+                                }
+                                else {
+                                    document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+                        if (res.Data == "Depalreadycalculated") {
+                            swal({ title: "Already Depriciation is calculated remove it to add this asset  ", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    window.location.replace(returnURL);
+                                }
+                                else {
+                                    document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+
+                    },
+                    error: function (reponse) {
+                        alert("error : " + reponse);
+                    }
+                });
+            }
+        }
+
+
+      /////Date put to use is less then voucher date warning
+            function dtputusevalidatewithvoucher() {
+                var voucherdate = moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+                var dtputuse = moment($("#txtdpucomDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+                if (voucherdate != "Invalid date" && dtputuse != "Invalid date") {
+                    if (new Date(dtputuse) < new Date(voucherdate)) {
+
+                        swal("Alert", "Date put to use is less than voucher date ", "warning");
+                        //  document.getElementById("txtdpucomDate").focus();
+                    }
+                    else { }
+                }
+                else {
+                    //  swal("Alert", "Please check if you have entered voucher date and date put use (Company) ", "warning");
+                    swal({ title: "Please check if you have entered voucher date and date put use (Company)", icon: "warning" }).then((result) => {
+                        if (result == true) {
+                            //window.location.replace(returnURL);
+                            //document.getElementById("txtdpucomDate").focus();
+                        }
+                        else {
+                           // document.getElementById("txtdpucomDate").focus();
+                        }
+                    });
+
+                }
+            }
+        ///// satutory expiry dateis less then voucher date warning
+            function expiredatevalidatewithvoucher() {
+                var voucherdate = moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+                var expirydate = moment($("#txtExpDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+                if (voucherdate != "Invalid date" && expirydate != "Invalid date") {
+                    if (new Date(expirydate) < new Date(voucherdate)) {
+
+                        swal("Alert", "Expiry date cannot be less than voucher date ", "warning");
+                        //  document.getElementById("txtdpucomDate").focus();
+                    }
+                    else {
+
+                    }
+                }
+            }
+                ////
+
+
+            function Enableiscomponentcheckbox()
+            {
+
+
+                document.getElementById('componentlabelid').hidden = false;
+
+                document.getElementById('iscomponent').hidden = false;
+
+               ///////////check usefulllife of parent and update it incomponentusefullife
+                var parentassetno = $("#Parent_AssetId").val();
+
+               // var url = '@Url.Action("GetUsefulife", "Asset")?parentassetno=' + parentassetno + "&vdate=" + voucherdate;
+                var url = '@Url.Action("GetUsefulife", "Asset")';
+                if ($("#txtVDate").val() == "") {
+
+                    swal("Alert", "To select parent asset please enter voucher date", "warning");
+                } else {
+                    var voucherdate = moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+                    var data = {
+                        "parentassetno": parentassetno,
+                        "vdate": voucherdate
+                    }
+                    if (parentassetno != "" && voucherdate != "") {
+                        $.ajax({
+                            url: url,
+                            type: "GET",
+                            data: data,
+                            contentType: "application/json",
+                            success: function (res) {
+                                // alert(res.Data)
+                                swal({ title: "Usefullife Alert", text: "", button: true, icon: "warning" }).then((result) => {
+                                    if (result == true) {
+                                        var usefulllife = res.Data;
+                                        $("#txtuseful").val(usefulllife);
+                                        var expirydate = moment(voucherdate, 'YYYY-MM-DD').add('years', usefulllife);
+                                        var formatteddate = moment(expirydate, "dddd-mmmm-dS-yyyy-h:MM:ss").format("DD/MM/YYYY");
+
+                                        $("#txtExpDate").val(formatteddate);;
+                                    }
+                                    else {
+
+                                    }
+                                });
+
+                            },
+                            error: function (reponse) {
+                                alert("error : " + reponse);
+                            }
+                        });
+                    }
+                }
+            }
+
+    ////////
+
+
+////////////////////////////////////////////////////--------locationHistory-Logic----///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////-------Add Location-Logic-------////////////////////////////////////////////////////////////////////////////////////////
+
+
+            function getlocationb(id) {
+            if (id == "") {
+                id = 0;
+
+                    var index = $("#txtlocB option:selected").val(0);
+            }
+            else {
+                var ControllerURL = '@Url.Action("getlocationb", "Asset")';
+                    var url = ControllerURL + "/" + id;
+                    var procemessage = "<option value='0'> Please wait...</option>";
+                    $("txtlocB").html(procemessage).show();
+
+
+                    $.ajax({
+                        url: url,
+
+                        cache: false,
+                        type: "POST",
+                        success: function (data) {
+                            var markup = "<option value='0'>Select Location</option>";
+                            for (var x = 0; x < data.length; x++) {
+                                markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                            }
+                            $("#txtlocB").html(markup).show();
+                        },
+                        error: function (reponse) {
+                            alert("error : " + reponse);
+                        }
+                    });
+                 }
+             }
+            function getlocationc(id) {
+            if (id == "") {
+                id = 0;
+
+                    var index = $("#txtlocC option:selected").val(0);
+            }
+            else {
+                var ControllerURL = '@Url.Action("getlocationc", "Asset")';
+                      var url = ControllerURL + "/" + id;
+                         $.ajax({
+                        url: url,
+
+                        cache: false,
+                        type: "POST",
+                        success: function (data) {
+                            var markup = "<option value='0'>Select Location</option>";
+                            for (var x = 0; x < data.length; x++) {
+                                markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                            }
+                            $("#txtlocC").html(markup).show();
+                        },
+                        error: function (reponse) {
+                            alert("error : " + reponse);
+                        }
+                    });
+                   }
+
+                    }
+/////////////////////////////////////////////////////////-------Add Location-Logic-End------////////////////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////-------Edit Location-Logic-------////////////////////////////////////////////////////////////////////////////////////////
+
+                      function geteditlocationb(id) {
+            if (id == "") {
+                id = 0;
+
+                    var index = $("#txteditlocB option:selected").val(0);
+            }
+            else {
+                var ControllerURL = '@Url.Action("getlocationb", "Asset")';
+                    var url = ControllerURL + "/" + id;
+                    var procemessage = "<option value='0'> Please wait...</option>";
+                    $("txteditlocB").html(procemessage).show();
+
+
+                    $.ajax({
+                        url: url,
+
+                        cache: false,
+                        type: "POST",
+                        success: function (data) {
+                            var markup = "<option value='0'>Select location</option>";
+                            for (var x = 0; x < data.length; x++) {
+                                markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                            }
+                            $("#txteditlocB").html(markup).show();
+                        },
+                        error: function (reponse) {
+                            alert("error : " + reponse);
+                        }
+                    });
+                    }
+                    }
+            function geteditlocationc(id) {
+            if (id == "") {
+                id = 0;
+
+                    var index = $("#txteditlocC option:selected").val(0);
+            }
+            else {
+                var ControllerURL = '@Url.Action("getlocationc", "Asset")';
+                      var url = ControllerURL + "/" + id;
+                         $.ajax({
+                        url: url,
+
+                        cache: false,
+                        type: "POST",
+                        success: function (data) {
+                            var markup = "<option value='0'>Select Location</option>";
+                            for (var x = 0; x < data.length; x++) {
+                                markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                            }
+                            $("#txteditlocC").html(markup).show();
+                        },
+                        error: function (reponse) {
+                            alert("error : " + reponse);
+                        }
+                    });
+                   }
+
+        }
+                     function geteditlocationb2(locaid,locbid,loccid) {
+                if (locaid == "") {
+                    locaid = 0;
+
+                    var index = $("#txteditlocB option:selected").val(0);
+            }
+            else {
+                var ControllerURL = '@Url.Action("getlocationb", "Asset")';
+                    var url = ControllerURL + "/" + locaid;
+                    var procemessage = "<option value='0'> Please wait...</option>";
+                    $("txteditlocB").html(procemessage).show();
+
+
+                    $.ajax({
+                        url: url,
+
+                        cache: false,
+                        type: "POST",
+                        success: function (data) {
+                            var markup = "<option value='0'>Select location</option>";
+                            for (var x = 0; x < data.length; x++) {
+                                markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                            }
+                            $("#txteditlocB").html(markup).show();
+                            $("#txteditlocB ").val(locbid);
+                            geteditlocationc2(locbid, loccid)
+                        },
+                        error: function (reponse) {
+                            alert("error : " + reponse);
+                        }
+                    });
+                    }
+                    }
+            function geteditlocationc2(locbid,loccid) {
+                if (locbid == "") {
+                    locbid = 0;
+
+                    var index = $("#txteditlocC option:selected").val(0);
+            }
+            else {
+                var ControllerURL = '@Url.Action("getlocationc", "Asset")';
+                    var url = ControllerURL + "/" + locbid;
+                         $.ajax({
+                        url: url,
+
+                        cache: false,
+                        type: "POST",
+                        success: function (data) {
+                            var markup = "<option value='0'>Select Location</option>";
+                            for (var x = 0; x < data.length; x++) {
+                                markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                            }
+                            $("#txteditlocC").html(markup).show();
+                            $("#txteditlocC").val(loccid);
+                        },
+                        error: function (reponse) {
+                            alert("error : " + reponse);
+                        }
+                    });
+                   }
+
+        }
+
+
+
+/////////////////////////////////////////////////////////-------Edit Location-Logic-End------////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////----------Loction-History-Logic-End-------//////////////////////////////////////////////////////////////////////////////////
+
+
+    ////////////////////////////////////////////////////--------Cost-Center History-Logic----///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////-------Add Cost-Center-Logic-------////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+            function getcostcenterb(id) {
+            if (id == "") {
+                id = 0;
+
+                    var index = $("#txtccB option:selected").val(0);
+            }
+            else {
+                var ControllerURL = '@Url.Action("getcostcenterb", "Asset")';
+                    var url = ControllerURL + "/" + id;
+                    var procemessage = "<option value='0'> Please wait...</option>";
+                    $("txtccB").html(procemessage).show();
+
+
+                    $.ajax({
+                        url: url,
+
+                        cache: false,
+                        type: "POST",
+                        success: function (data) {
+                            var markup = "<option value='0'>Select Cost Center</option>";
+                            for (var x = 0; x < data.length; x++) {
+                                markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                            }
+                            $("#txtccB").html(markup).show();
+                        },
+                        error: function (reponse) {
+                            alert("error : " + reponse);
+                        }
+                    });
+                    }
+                    }
+
+/////////////////////////////////////////////////////////-------Add costcenter-Logic-End------////////////////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////-------Edit costcenter-Logic-------////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+                      function geteditcostcenterb(id) {
+            if (id == "") {
+                id = 0;
+
+                    var index = $("#txteditccB option:selected").val(0);
+            }
+            else {
+                var ControllerURL = '@Url.Action("getcostcenterb", "Asset")';
+                    var url = ControllerURL + "/" + id;
+                    var procemessage = "<option value='0'> Please wait...</option>";
+                    $("txteditccB").html(procemessage).show();
+
+
+                    $.ajax({
+                        url: url,
+
+                        cache: false,
+                        type: "POST",
+                        success: function (data) {
+                            var markup = "<option value='0'>Select Cost Center</option>";
+                            for (var x = 0; x < data.length; x++) {
+                                markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                            }
+                            $("#txteditccB").html(markup).show();
+                        },
+                        error: function (reponse) {
+                            alert("error : " + reponse);
+                        }
+                    });
+                    }
+                    }
+
+                     function geteditcostcenterb2(ccaid,ccbid) {
+                if (ccaid == "") {
+                    ccaid = 0;
+
+                    var index = $("#txteditccB option:selected").val(0);
+            }
+            else {
+                var ControllerURL = '@Url.Action("getcostcenterb", "Asset")';
+                    var url = ControllerURL + "/" + ccaid;
+                    var procemessage = "<option value='0'> Please wait...</option>";
+                    $("txteditccB").html(procemessage).show();
+
+
+                    $.ajax({
+                        url: url,
+
+                        cache: false,
+                        type: "POST",
+                        success: function (data) {
+                            var markup = "<option value='0'>Select Cost Center</option>";
+                            for (var x = 0; x < data.length; x++) {
+                                markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                            }
+                            $("#txteditccB").html(markup).show();
+                            $("#txteditccB ").val(ccbid);
+
+                        },
+                        error: function (reponse) {
+                            alert("error : " + reponse);
+                        }
+                    });
+                    }
+                    }
+
+
+
+
+/////////////////////////////////////////////////////////-------Edit CostCenter-Logic-End------////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////----------CostCenter-History-Logic-End-------//////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////Accessories component history logic-------/////////////////////////////////////////////////////////////
+
+                     function closeassetf() {
+                         $('#assetfreeofcostmodal').modal('hide');
+                     }
+
+
+                     function deleteassetf(obj) {
+                         $(obj).parent().parent().remove();
+                     }
+
+
+
+
+</script>

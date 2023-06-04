@@ -1,0 +1,21 @@
+Create table tbldepreciationcalculation (
+		 ID int AUTO_INCREMENT,
+		 AssetID int ,
+         OpeningGross  decimal(18,2) default 0,
+         OpeningAccumalatedDep decimal(18,2) default 0,
+         DepRate decimal (18,2) default 0,
+         DepType varchar(20),
+         ResidualValue decimal (18,2) default 0,
+         AssetExpiryDate date,
+         DepTillFromDate  decimal(18,2) default 0, 
+         DisposedTillFromDate decimal(18,2) default 0,
+         DisposalType  varchar(20),
+         DisposalAmt  decimal(18,2) default 0 ,
+         DisposalDate  date ,
+         AssetAmt decimal(18,2) default 0 ,
+         FromDate  date,
+         ToDate   date,
+         NoOfDays  int,
+         DepreciationAmt  decimal(18,2) default 0,
+         PRIMARY KEY (`ID`)
+)

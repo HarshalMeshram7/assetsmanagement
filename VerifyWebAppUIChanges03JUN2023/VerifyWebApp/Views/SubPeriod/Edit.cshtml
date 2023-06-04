@@ -1,0 +1,229 @@
+﻿@model VerifyWebApp.Models.SubPeriod
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<style>
+    label span {
+        color: red;
+        font-size: 20px;
+    }
+</style>
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Edit SubPeriod</h4>
+    </div>
+    @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+    {
+        <div class="modal-body">
+
+
+            <div class="form-group">
+                <label for="praticesname">Start Date<span>*</span></label>
+
+                <div class='input-group date' id='dtStartDate'>
+                    <input type='text' id="txtStartDate" class="form-control" />
+
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+
+                </div>
+                <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
+            </div>
+            <div class="form-group">
+                <label for="praticesname">End Date<span>*</span></label>
+                @*@Html.TextBoxFor(m => m.LeaveDate, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.LeaveDate, "", new { @class = "text-danger  " })*@
+                <div class='input-group date' id='dtEndDate'>
+                    <input type='text' id="txtEndDate" class="form-control" />
+
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+
+                </div>
+                <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
+            </div>
+
+            <div class="form-group">
+              
+                @*@Html.TextBoxFor(m => m.LeaveDate, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.LeaveDate, "", new { @class = "text-danger  " })*@
+                
+                  @Html.TextBoxFor(m => m.PeriodID,  new { @class = "hidden" })
+
+                  
+                </div>
+          
+                <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
+            <label id="invaliddate" style="color:#CC0000;font-weight:400" class="text-danger error"></label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnSave">Save</button>
+            </div>
+        }
+    </div><!-- /.modal-content -->
+    <script src="~/Scripts/moment.js"></script>
+    <link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+
+    <script type="text/javascript">
+
+        $('#dtStartDate').datetimepicker({
+            format: 'DD/MM/YYYY',
+            icons:
+            {
+                next: 'fa fa-angle-right',
+                previous: 'fa fa-angle-left'
+            },
+
+        });
+        $('#dtEndDate').datetimepicker({
+            format: 'DD/MM/YYYY',
+            icons:
+            {
+                next: 'fa fa-angle-right',
+                previous: 'fa fa-angle-left'
+            },
+        });
+        var EndDateStatus = false;
+        var StartDateStatus = false;
+        $(document).ready(function () {
+            $("#txtStartDate").val('@Model.str_fromdate');
+            $("#txtEndDate").val('@Model.str_todate');
+         
+            $("#startdateerror,#enddateerror").hide();
+         
+            $("#invaliddate").hide();
+
+            $("#btnSave").click(function () {
+
+                var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+                var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+
+                if (new Date(startdate) > new Date(enddate)) {
+                    $("#invaliddate").html(" * To Date must be greater than From Date");
+                    $("#invaliddate").show();
+                }
+                else {
+
+                    $("#invaliddate").hide();
+                    alert("test");
+                    //  e.preventDefault();
+                    // loadEmpLeave();
+                    SaveData();
+
+
+                }
+
+
+
+            });
+
+
+        });
+
+       
+        function SaveData() {
+
+            // alert('Save');
+
+
+            var StartDate;
+            var EndDate;
+
+
+
+            StartDate = $('#txtStartDate').val();
+            EndDate = $('#txtEndDate').val();
+
+
+
+
+            if (StartDate == '') {
+                StartDateStatus = false;
+            }
+            else {
+                //$('#assignError').hide();
+                StartDateStatus = true;
+            }
+            if (EndDate == '') {
+                EndDateStatus = false;
+            }
+            else {
+                //$('#assignError').hide();
+                EndDateStatus = true;
+            }
+
+            if (StartDateStatus == true && EndDateStatus == true) {
+                alert("test");
+
+                $("#startdateerror,#enddateerror").hide();
+                alert("test");
+                var pid='@Model.PeriodID';
+                var postdata =
+                    {
+                        "FromDate": StartDate,
+                        "ToDate": EndDate,
+                        "PeriodID": pid,
+                    };
+
+                swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+                    if (result == true) {
+
+                        var ControllerURL = '@Url.Action("Edit", "SubPeriod")';
+
+                        // alert(ControllerURL);
+                        var returnURL = '@Url.Action("Index", "SubPeriod")?id=' + pid;
+                        $.ajax({
+                            type: 'POST',
+                            url: ControllerURL,
+                            contentType: "application/json",
+                            data: JSON.stringify(postdata),
+                            success: function (res) {
+                                if (res == "Failed") {
+                                    swal("Alert", "You Cannot Add this Record", "warning");
+                                }
+                                else {
+                                    swal({ title: "Successfully Edited!", icon: "success" }).then((result) => {
+                                        if (result == true) {
+                                            window.location.replace(returnURL);
+                                        }
+                                    });
+                                }
+
+                            },
+
+                            failure: function () { alert("Error"); }
+
+                        });
+                    }
+                });
+                        // window.location.replace(returnURL);
+                    }
+
+            else  if (StartDateStatus == true && EndDateStatus == false) {
+                    $('#enddateerror').show();
+                    $('#startdateerror').hide();
+
+            } else if (EndDateStatus == true && StartDateStatus == false ) {
+                    $('#enddateerror').hide();
+
+                    $('#startdateerror').show();
+                } else {
+                    $('#enddateerror').show();
+
+                    $('#startdateerror').show();
+
+                }
+
+                return false;
+          }
+        
+
+    </script>

@@ -1,0 +1,1533 @@
+﻿@{
+    ViewBag.Title = "AddNew";
+}
+
+
+@using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+{
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#home">General Info</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#menu1">Other Info</a>
+        </li>
+        @*<li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#menu2">Attached Documents</a>
+            </li>*@
+
+
+    </ul>
+
+    <div class="tab-content ">
+        <div class="tab-pane container active" id="home">
+            <div class="container-fluid" style="border: 12px solid #33669A ;border-radius: 10px;margin-top: 15px;
+                        margin-bottom: 15px;">
+                <div class="row col-lg-12" style="margin-top: 10px;">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="praticesname">Addition No</label>
+                            <input type='text' id="txtaddno" class="form-control" readonly tabindex="1" />
+
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <input type='checkbox' id="checkflag" tabindex="2" />
+                            <label for="praticesname">Asset no wise search</label>
+
+                        </div>
+
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="praticesname">Asset No<span style="color:#CC0000;">*</span></label>
+                            <input type='number' placeholder="Enter Assetno and press enter" id="txtassetno" class="form-control" tabindex="3" required onblur="validateassetdate()" />
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="praticesname">Asset Name<span style="color:#CC0000;">*</span></label>
+                            <div class='input-group dropdown ' id='dtasset' tabindex="4">
+
+                                @Html.DropDownList("AssetId", (SelectList)ViewBag.Assestlist, "Select AssetNo", new { @class = "form-control", id = "AssetId", @required = "required" })
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="praticesname">Add.Description<span style="color:#CC0000;">*</span></label>
+                            <input type='text' id="adddesc" class="form-control" tabindex="5" required />
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <label for="praticesname">VoucherNo</label>
+                            <input type='text' id="txtvno" name="txtvno" class="form-control" tabindex="6" />
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label for="praticesname">Voucher Date<span style="color:#CC0000;">*</span></label>
+
+                            @*<div class='input-group date' id='dtVDate'>
+                                    <input type='text' id="txtVDate" class="form-control" required tabindex="7" />
+
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+
+                                </div>*@
+                            <div class='input-group date' id='dtVDate'>
+                                <input type="text" class="form-control" tabindex="7" required id="txtVDate" onblur="validateassetdate()">
+                                <div class="input-group-addon">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label for="praticesname">Date Put To Use  (Company Law)<span style="color:#CC0000;">*</span></label>
+
+                            <div class='input-group date' id='dtdpucomDate'>
+                                <input type='text' id="txtdpucomDate" class="form-control" required tabindex="8" onblur="dtputusevalidatewithvoucher()" />
+
+                                <div class="input-group-addon">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label for="praticesname">Date Put To Use  (IT Law)<span style="color:#CC0000;">*</span></label>
+
+                            <div class='input-group date' id='dtdpuItDate'>
+                                <input type='text' id="txtdpuItDate" class="form-control" required tabindex="9" />
+
+                                <div class="input-group-addon">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <label for="praticesname">PoNo</label>
+                            <input type='text' id="txtpono" class="form-control" tabindex="10" />
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label for="praticesname">Po Date</label>
+
+                            <div class='input-group date' id='dtPoDate'>
+                                <input type='text' id="txtPoDate" class="form-control" required tabindex="11" />
+
+                                <div class="input-group-addon">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label for="praticesname">Receipt Date </label>
+
+                            <div class='input-group date' id='dtrecieptDate'>
+                                <input type='text' id="txtreceiptDate" class="form-control" tabindex="12" />
+
+                                <div class="input-group-addon">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label for="praticesname">Commisioning date</label>
+
+                            <div class='input-group date' id='dtcommDate'>
+                                <input type='text' id="txtcommDate" class="form-control" tabindex="13" />
+
+                                <div class="input-group-addon">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <label for="praticesname">Bill No</label>
+                            <input type='text' id="txtbillno" name="txtbillno" class="form-control" tabindex="14" />
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label for="praticesname">Bill Date</label>
+
+                            <div class='input-group date' id='dtbillDate'>
+                                <input type='text' id="txtbillDate" class="form-control" tabindex="15" />
+
+                                <div class="input-group-addon">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <label for="praticesname">Residual Value</label>
+                            <input type='text' id="txtresidual" name="txtresidual" class="form-control" tabindex="16" />
+
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <label for="praticesname">Quantity <span style="color:#CC0000;">*</span></label>
+                            <input type='text' id="txtqty" name="txtqty" value="1" class="form-control" tabindex="17" />
+
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <label for="praticesname">Uom</label>
+                            <div class='input-group dropdown ' id='dtuom' tabindex="18">
+
+                                @Html.DropDownList("UomId", (SelectList)ViewBag.uomlist, "Select Uom", new { @class = "form-control", id = "UomId" })
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="praticesname">Supplier Name</label>
+                            <div class='input-group dropdown ' id='dtsupplier' tabindex="19">
+
+                                @Html.DropDownList("SupplierId", (SelectList)ViewBag.supplierlist, "Select Supplier", new { @class = "form-control", id = "SupplierId" })
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container-fluid" style="border: 12px solid #4FA7DD;border-radius: 10px;margin-top: 15px;
+                             margin-bottom: 15px;">
+
+
+
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Gross Value<span style="color:#CC0000;">*</span></label>
+                                    <input type="number" tabindex="20" class="form-control" id="txtgrossvalue" required onblur="totaladdition()" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Discount</label>
+                                    <input type="number" tabindex="35" class="form-control" id="txtdiscount" onblur="totaladdition()" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Duty Drawback</label>
+                                    <input type="number" tabindex="38" class="form-control" id="txtdutydrawback" onblur="totaladdition()" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Service Charges</label>
+                                    <input type="number" tabindex="21" class="form-control" id="txtservicecharge" onblur="totaladdition()" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Rounding Off</label>
+                                    <input type="number" tabindex="36" class="form-control" id="txtroundoff" onblur="totaladdition()" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Excise Credit</label>
+                                    <input type="number" tabindex="39" class="form-control" id="txtexcisecredit" onblur="totaladdition()" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Other Expenses </label>
+                                    <input type="number" tabindex="22" class="form-control" id="txtotherexpense" onblur="totaladdition()" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Total Deduction(B)</label>
+                                    <input type="number" tabindex="36" class="form-control" id="txttotaldeduction" onblur="totaladdition()" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Service Tax Credit</label>
+                                    <input type="number" tabindex="40" class="form-control" id="txtservicetaxcredit" onblur="totaladdition()" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Custom Duty </label>
+                                    <input type="number" tabindex="23" class="form-control" id="txtcustomduty" onblur="totaladdition()" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Invoice Amt(C=A-B)</label>
+                                    <input type="number" tabindex="37" class="form-control" id="txtinvoiceamt" readonly onblur="totaladdition()" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Any Other Duty Credit </label>
+                                    <input type="number" tabindex="41" class="form-control" id="txtanyotherdutycredit" onblur="totaladdition()" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Excise Duty</label>
+                                    <input type="number" tabindex="24" class="form-control" id="txtexciseduty" onblur="totaladdition()" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Vat Credit</label>
+                                    <input type="number" tabindex="42" class="form-control" id="txtvatcredit" onblur="totaladdition()" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Service Tax</label>
+                                    <input type="number" tabindex="25" class="form-control" id="txtservicetax" onblur="totaladdition()" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">CST Credit</label>
+                                    <input type="number" tabindex="43" class="form-control" id="txtcstcredit" onblur="totaladdition()" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Any Other Duty</label>
+                                    <input type="number" tabindex="26" class="form-control" id="txtanyotherduty" onblur="totaladdition()" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">GST Credit</label>
+                                    <input type="number" tabindex="44" class="form-control" id="txtgstcredit" onblur="totaladdition()" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Vat</label>
+                                    <input type="number" tabindex="27" class="form-control" id="txtvat" onblur="totaladdition()" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Any Other Credit</label>
+                                    <input type="number" tabindex="45" class="form-control" id="txtanyothercredit" onblur="totaladdition()" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">CGST</label>
+                                    <input type="number" tabindex="28" class="form-control" id="txtcgst" onblur="totaladdition()" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">CGST Credit</label>
+                                    <input type="number" tabindex="46" class="form-control" id="txtcgstcredit" onblur="totaladdition()" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">IGST</label>
+                                    <input type="number" tabindex="29" class="form-control" id="txtigst" onblur="totaladdition()" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">IGST Credit</label>
+                                    <input type="number" tabindex="47" class="form-control" id="txtigstcredit" onblur="totaladdition()" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">SGST</label>
+                                    <input type="number" tabindex="30" class="form-control" id="txtsgst" onblur="totaladdition()" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">SGST Credit</label>
+                                    <input type="number" tabindex="48" class="form-control" id="txtsgstcredit" onblur="totaladdition()" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">CST</label>
+                                    <input type="number" tabindex="31" class="form-control" id="txtcst" onblur="totaladdition()" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Total Credit(D)</label>
+                                    <input type="number" tabindex="49" class="form-control" id="txttotalcredit" readonly onblur="totaladdition()" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">GST</label>
+                                    <input type="number" tabindex="32" class="form-control" id="txtgst" onblur="totaladdition()" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Amt.To be Capitalised(E=C-D)</label>
+                                    <input type="number" tabindex="50" class="form-control" id="txtamttobecap" readonly onblur="totaladdition()" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Any Other Tax</label>
+                                    <input type="number" tabindex="33" class="form-control" id="txtanyothertax" onblur="totaladdition()" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Amt.Capitalised(Company Law)</label>
+                                    <input type="number" tabindex="51" class="form-control" id="txtamtcapcompanylaw" readonly @*onblur="totaladdition()"*@ />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Total Addition(A)</label>
+                                    <input type="number" tabindex="34" class="form-control" id="txttotaladdition" readonly onblur="totaladdition()" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Amt.Capitalised(Income Tax Law)</label>
+                                    <input type="number" tabindex="52" class="form-control" id="txtamtcapincometax" readonly onblur="totaladdition()" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane container fade" id="menu1">
+            <div class="container-fluid" style="border: 12px solid #33669A ;border-radius: 10px;margin-top: 15px;
+                        margin-bottom: 15px;">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="praticesname">Brand</label>
+                            <input type="text" class="form-control" id="txtbrandname" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="praticesname">Srno</label>
+                            <input type="text" class="form-control" id="txtsrno" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="praticesname">Model</label>
+                            <input type="text" class="form-control" id="txtmodel" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="praticesname">Remarks</label>
+                            <input type="text" class="form-control" id="txtremarks" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-2">
+
+                        <div class="form-group">
+                            <input type="checkbox" id="txtisimported" />
+                            <label for="praticesname">Is Imported</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="praticesname">Currency</label>
+                            <input type="text" class="form-control" id="txtcurrency" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="praticesname">Value</label>
+                            <input type="number" class="form-control" id="txtvalue" />
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+     
+    </div>
+
+    <div class="row">
+        &nbsp;	&nbsp;	&nbsp;&nbsp;	&nbsp;	&nbsp;&nbsp;	&nbsp;	&nbsp; &nbsp;	&nbsp;	&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;	&nbsp;	&nbsp; &nbsp;	&nbsp;	&nbsp;&nbsp;	&nbsp;	&nbsp;&nbsp;	&nbsp;	&nbsp;
+        &nbsp;	&nbsp;	&nbsp;&nbsp;	&nbsp;	&nbsp;&nbsp;	&nbsp;	&nbsp;&nbsp;&nbsp;	&nbsp;	&nbsp;
+        &nbsp;	&nbsp;	&nbsp;&nbsp;	&nbsp;	&nbsp;	&nbsp;&nbsp;	&nbsp;	&nbsp;&nbsp;	&nbsp;
+        &nbsp;	&nbsp;	&nbsp;&nbsp;  &nbsp;	&nbsp;	&nbsp;&nbsp;	&nbsp;	&nbsp;&nbsp;
+        &nbsp;	&nbsp;	&nbsp;&nbsp;	&nbsp;	&nbsp;&nbsp;	&nbsp;	&nbsp;
+        &nbsp;	&nbsp;	&nbsp;&nbsp;	&nbsp;	&nbsp;&nbsp;	&nbsp;	&nbsp;
+        <button type="submit" class="btn btn-primary" id="btnsave">	Save</button>
+
+
+    </div>
+
+}
+
+
+<div id="errorlist" class="modal fade" role="dialog" style="height: 670px;">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Error list</h4>
+            </div>
+            <div class="modal-body ">
+
+                <div class="row" style="overflow:auto">
+                    <table width="100%" class="table table-striped table-bordered table-hover" style="overflow:auto" id="errtbl">
+
+                        <thead>
+                            <tr>
+
+                                <td>Srno</td>
+                                <td>Errors</td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+
+                    </table>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+        var isimportedflag;
+
+        $(document).ready(function ($) {
+            //voucherdate set to all other date
+            $("#txtaddno").val('@ViewBag.additionno');
+           // alert('@ViewBag.additionno')
+           // $('#dtVDate').datetimepicker({
+           //     format: 'DD/MM/YYYY'
+           //});
+            $('#dtVDate').datetimepicker({
+                format: 'DD/MM/YYYY',
+                icons:
+                {
+                    next: 'fa fa-angle-right',
+                    previous: 'fa fa-angle-left'
+                },
+            });
+           $('#dtdpucomDate').datetimepicker({
+               format: 'DD/MM/YYYY',
+               icons:
+               {
+                   next: 'fa fa-angle-right',
+                   previous: 'fa fa-angle-left'
+               },
+           });
+
+           $('#dtcommDate').datetimepicker({
+               format: 'DD/MM/YYYY',
+               icons:
+               {
+                   next: 'fa fa-angle-right',
+                   previous: 'fa fa-angle-left'
+               },
+           });
+           $('#dtbillDate').datetimepicker({
+               format: 'DD/MM/YYYY',
+               icons:
+               {
+                   next: 'fa fa-angle-right',
+                   previous: 'fa fa-angle-left'
+               },
+           });
+           $('#dtrecieptDate').datetimepicker({
+               format: 'DD/MM/YYYY',
+               icons:
+               {
+                   next: 'fa fa-angle-right',
+                   previous: 'fa fa-angle-left'
+               },
+           });
+           $('#dtPoDate').datetimepicker({
+               format: 'DD/MM/YYYY',
+               icons:
+               {
+                   next: 'fa fa-angle-right',
+                   previous: 'fa fa-angle-left'
+               },
+           });
+           $('#dtdpuItDate').datetimepicker({
+               format: 'DD/MM/YYYY',
+               icons:
+               {
+                   next: 'fa fa-angle-right',
+                   previous: 'fa fa-angle-left'
+               },
+           });
+           //$('input[id=txtVDate]').on('keydown', function (evt) {
+           //    if (evt.key === 'Tab' || evt.key === 'Enter') {
+           //        evt.preventDefault();
+
+           //        var vdate = $('#txtVDate').val();
+           //        $('#txtdpucomDate').val(vdate)
+           //        $('#txtcommDate').val(vdate)
+           //        $('#txtbillDate').val(vdate)
+           //        $('#txtreceiptDate').val(vdate)
+           //        $('#txtPoDate').val(vdate)
+           //        $('#txtdpuItDate').val(vdate)
+           //    }
+           //});
+
+           // ///check whether dtputtouse is less than vdate
+           //$('input[id=txtdpucomDate]').on('keydown', function (evt) {
+           //    if (evt.key === 'Tab' || evt.key === 'Enter') {
+           //        evt.preventDefault();
+
+
+           //        var voucherdate = moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+           //        var dtputuse = moment($("#txtdpucomDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+
+           //        if (new Date(dtputuse) <= new Date(voucherdate)) {
+
+           //            swal("Alert", "Date put to use is less than voucher date ", "warning");
+           //        }
+           //        else {
+
+
+           //        }
+           //    }
+           //});
+
+
+
+
+            ///image display
+            function readIMG(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#preview').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#fileUploader").change(function () {
+                readIMG(this);
+            });
+
+            $("#btnAddattachment").click(function () {
+
+
+                $('#imagemodal').modal('show');
+
+
+            });
+
+
+
+
+
+
+            ///for enable disable assetno or search by
+            $("#txtassetno").prop("disabled", true);
+            $("#txtcurrency").prop("disabled", true);
+            $("#txtvalue").prop("disabled", true);
+
+            $('#checkflag').change(function () {
+                if ($(this).prop("checked")) {
+                   // alert("checked")
+                    $("#txtassetno").prop("disabled", false);
+                }
+                else {
+                   // alert("checked")
+                    $("#txtassetno").prop("disabled", true);
+                }
+            });
+
+            $('#txtisimported').change(function () {
+                if ($(this).prop("checked")) {
+                    isimportedflag = "yes";
+                    $("#txtcurrency").prop("disabled", false);
+                    $("#txtvalue").prop("disabled", false);
+                }
+                else {
+                    $("#txtcurrency").prop("disabled", true);
+                    $("#txtvalue").prop("disabled", true);
+                    isimportedflag = "no";
+                }
+            });
+
+
+            //on assetno enter set assetname
+            $('#txtassetno').keypress(function () {
+
+                var assetno = $('#txtassetno').val();
+                $('#AssetId').val(assetno);
+               // getassetname(assetno);
+            });
+
+            $('#AssetId').change(function () {
+
+                var index = $("#AssetId option:selected").val();
+
+                $('#txtassetno').val(index);
+               // getassetname(assetno);
+            });
+            ////check additionasset to be added in asset or not based on 10%amtcap
+            $("#txtamttobecap").on('change', function () {
+           
+                alert("call");
+               // checkadditionassettobeaddedornot();
+            });
+            $("#frmNewEmp").submit(function (e) {
+
+                SaveData();
+               e.preventDefault();
+                return false;
+
+            });
+
+
+
+        });
+
+        //////////validate asset date with addition asset date////
+        function validateassetdate() {
+           // alert("test")
+            var vdate = $("#txtVDate").val();
+            //var date = moment(vdate, "DD/MM/YYYY").format("YYYY/MM/DD").toString();
+              /// var Strstartdate = moment(StartDate, "DD/MM/YYYY").format("YYYY/MM/DD");
+            var assetno = $("#txtassetno").val();
+            if (vdate != "" && assetno != "")
+            {
+                //alert(assetno)
+
+                var ControllerURL = '@Url.Action("validateassetdate", "AdditionAssets")';
+
+                var returnURL = '@Url.Action("Index", "AdditionAssets")';
+                var url = ControllerURL + "?strvdate=" + vdate + "&assetno="+assetno;
+                 // alert(url)
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    contentType: "application/json",
+                    success: function (res) {
+
+                        if (res.Data == "AssetYes") {
+                            swal({ title: "Addition of asset voucher date cannot be less date asset voucher date", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    document.getElementById("txtVDate").focus();
+                                }
+                                else {
+                                    document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+                        if (res.Data == "Noassetfound")
+                        {
+
+                        }
+                    },
+                    error: function (reponse) {
+                        alert("error : " + reponse);
+                    }
+                });
+            }
+             var ControllerURL = '@Url.Action("checkperiod_itperiod_exits", "AdditionAssets")';
+                var returnURL = '@Url.Action("Index", "AdditionAssets")';
+
+                $.ajax({
+                    url: ControllerURL,
+                    type: "GET",
+                    contentType: "application/json",
+                    success: function (res) {
+                       // alert(res.Data)
+                        if (res.Data == "Noperiodexists") {
+                            swal({ title: "No period found please enter period master first to add asset", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    window.location.replace(returnURL);
+                                }
+                                else {
+                                    document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+
+                        else if (res.Data == "Noitperiodexists") {
+                            swal({
+                                title: "ItPeriod records not found,If you want Itperiod please  click outside dialgouebox and enter itperiod in master , or click on ok to ignore itperiod ", icon: "warning" }).then((result) => {
+                                    if (result == true) {
+                                        checkdatevalidation();
+                                 //   window.location.replace(returnURL);
+                                   // document.getElementById("txtVDate").focus();
+                                }
+                                else {
+                                    window.location.replace(returnURL);
+                                   // document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+                        else {
+                            checkdatevalidation();
+                        }
+                    },
+                    error: function (reponse) {
+                        alert("error : " + reponse);
+                    }
+                });
+        }
+
+        /////check lockperiod and itperiod lock see above function for calls
+          function checkdatevalidation() {
+            var vdate = $("#txtVDate").val();
+            if (vdate != "") {
+                var ControllerURL = '@Url.Action("Dateputtousevalidation", "AdditionAssets")?strvdate=' + vdate;
+                var returnURL = '@Url.Action("Index", "AdditionAssets")';
+                //var url = ControllerURL + "/" + vdate;
+                //  alert(ControllerURL)
+                $.ajax({
+                    url: ControllerURL,
+                    type: "GET",
+                    contentType: "application/json",
+                    success: function (res) {
+                      //  alert(res.Data)
+                        if (res.Data == "Yes") {
+                            swal({ title: "This period is locked you cannot add record", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    window.location.replace(returnURL);
+                                }
+                                else {
+                                    document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+                        if (res.Data == "No") {
+                            // alert("no")
+                            $('#txtdpucomDate').val(vdate)
+                            $('#txtcommDate').val(vdate)
+                            $('#txtbillDate').val(vdate)
+                            $('#txtreceiptDate').val(vdate)
+                            $('#txtPoDate').val(vdate)
+                            $('#txtdpuItDate').val(vdate)
+                        }
+                        if (res.Data == "Nosubperiod") {
+                            swal({ title: "No Sub period found  ", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    window.location.replace(returnURL);
+                                }
+                                else {
+                                    document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+                        if (res.Data == "Depalreadycalculated") {
+                            swal({ title: "Already Depriciation is calculated remove it to add this asset  ", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    window.location.replace(returnURL);
+                                }
+                                else {
+                                    document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+
+                    },
+                    error: function (reponse) {
+                        alert("error : " + reponse);
+                    }
+                });
+            }
+        }
+
+
+            /////Date put to use is less then voucher date warning
+        function dtputusevalidatewithvoucher() {
+            var voucherdate = moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var dtputuse = moment($("#txtdpucomDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            if (voucherdate != "Invalid date" && dtputuse != "Invalid date") {
+                if (new Date(dtputuse) < new Date(voucherdate)) {
+
+                    swal("Alert", "Date put to use is less than voucher date ", "warning");
+                    //  document.getElementById("txtdpucomDate").focus();
+                }
+                else { }
+            }
+            else {
+                //  swal("Alert", "Please check if you have entered voucher date and date put use (Company) ", "warning");
+                swal({ title: "Please check if you have entered voucher date and date put use (Company)", icon: "warning" }).then((result) => {
+                    if (result == true) {
+                       // window.location.replace(returnURL);
+                        document.getElementById("txtdpucomDate").focus();
+                    }
+                    else {
+                        document.getElementById("txtdpucomDate").focus();
+                    }
+                });
+
+            }
+        }
+
+    //////check addition to be added or not based on amt caps
+        function checkadditionassettobeaddedornot() {
+
+
+            var amtcap = $("#txtamtcapcompanylaw").val();
+            var assetno = $("#txtassetno").val();
+
+            if (amtcap != "" && assetno != "") {
+                alert("test")
+                var ControllerURL = '@Url.Action("checkadditionentry", "AdditionAssets")?amtcap=' + amtcap+'&assetno=';
+                var returnURL = '@Url.Action("Index", "AdditionAssets")';
+                //var url = ControllerURL + "/" + vdate;
+                //  alert(ControllerURL)
+                $.ajax({
+                    url: ControllerURL,
+                    type: "GET",
+                    contentType: "application/json",
+                    success: function (res) {
+                      //  alert(res.Data)
+                        if (res.Data == "amtisgreater") {
+                            swal({ title: "Alert",text:"", icon: "warning", buttons: true,}).then((result) => {
+                                if (result == true) {
+                                    window.location.replace(returnURL);
+                                }
+                                else {
+                                   
+                                }
+                            });
+                        }
+                        else {
+
+                        }
+                       
+                        if (res.Data == "Noamtfound")
+                        {
+                            swal("Alert", "No Amount Capitalised found in corresponding asset", "warning");
+                        }
+
+                    },
+                    error: function (reponse) {
+                        alert("error : " + reponse);
+                    }
+                });
+            }
+
+            6
+        }
+
+
+        function totaladdition() {
+            var grossvalue = 0;
+            var servicecharge = 0;
+            var otherexpense = 0;
+            var customduty = 0;
+            var exciseduty = 0;
+            var servicetax = 0;
+            var vat = 0;
+            var anyotherduty = 0;
+            var cst = 0;
+            var gst = 0;
+            var anyothertax = 0;
+            var totaladdition = 0;
+            var discount = 0;
+            var roundoff = 0;
+            var totaldeduction = 0;
+            var invoiceamt = 0;
+
+
+            var dutydrawback = 0;
+            var excisecredit = 0;
+            var servicetaxcredit = 0;
+            var anyotherdutycredit = 0;
+
+            var vatcredit = 0;
+            var anyothercredit = 0;
+            var cstcredit = 0;
+            var gstcredit = 0;
+            var totalcredit = 0;
+            var amtcap = 0;
+            var amtcapcompanylaw = 0;
+            var amtcapincometax = 0;
+            //
+            var cgstcredit = 0;
+            var igstcredit = 0;
+            var sgstcredit = 0;
+            var cgst = 0;
+            var igst = 0;
+            var sgst = 0;
+            //
+
+            if ($("#txtigst").val() != "") {
+
+                igst = parseFloat($("#txtigst").val());
+
+            }
+            if ($('#txtsgst').val() != "") {
+                sgst = parseFloat($('#txtsgst').val());
+            }
+
+            if ($('#txtcgst').val() != "") {
+                cgst = parseFloat($('#txtcgst').val());
+            }
+            if ($("#txtigstcredit").val() != "") {
+
+                igstcredit = parseFloat($("#txtigstcredit").val());
+
+            }
+            if ($('#txtsgstcredit').val() != "") {
+                sgstcredit = parseFloat($('#txtsgstcredit').val());
+            }
+
+            if ($('#txtcgstcredit').val() != "") {
+                cgstcredit = parseFloat($('#txtcgstcredit').val());
+            }
+
+
+
+            ///
+            if ($("#txtgrossvalue").val() != "") {
+
+                grossvalue = parseFloat($("#txtgrossvalue").val());
+
+            }
+            if ($('#txtservicecharge').val() != "") {
+                servicecharge = parseFloat($('#txtservicecharge').val());
+            }
+
+            if ($('#txtotherexpense').val() != "") {
+                otherexpense = parseFloat($('#txtotherexpense').val());
+            }
+            if ($('#txtcustomduty').val() != "") {
+                customduty = parseFloat($('#txtcustomduty').val());
+            }
+            if ($('#txtexciseduty').val())
+            { exciseduty = parseFloat($('#txtexciseduty').val()); }
+
+            if ($('#txtservicetax').val() != "")
+            { servicetax = parseFloat($('#txtservicetax').val()); }
+
+            if ($('#txtvat').val() != "") { vat = parseFloat($('#txtvat').val()); }
+
+            if ($('#txtanyotherduty').val() != "") { anyotherduty = parseFloat($('#txtanyotherduty').val()); }
+
+            if ($('#txtcst').val() != "") { cst = parseFloat($('#txtcst').val()); }
+            if ($('#txtgst').val() != "") { gst = parseFloat($('#txtgst').val()); }
+            if ($('#txtanyothertax').val() != "") { anyothertax = parseFloat($('#txtanyothertax').val()); }
+
+            totaladdition = parseFloat(grossvalue + servicecharge + otherexpense + customduty + exciseduty + servicetax + vat + anyotherduty
+                + cst + gst + anyothertax+sgst+igst+cgst);
+
+            $('#txttotaladdition').val(totaladdition);
+
+            if ($('#txttotaladdition').val() != "") { totaladdition = parseFloat($('#txttotaladdition').val()); }
+            if ($('#txtdiscount').val() != "") { discount = parseFloat($('#txtdiscount').val()); }
+
+            if ($('#txtroundoff').val() != "") { roundoff = parseFloat($('#txtroundoff').val()); }
+
+            if ($('#txttotaldeduction').val() != "") { totaldeduction = parseFloat($('#txttotaldeduction').val()); }
+
+            invoiceamt = parseFloat(totaladdition - discount -totaldeduction - roundoff);
+            $('#txtinvoiceamt').val(invoiceamt);
+
+            if ($("#txtdutydrawback").val() != "") {
+
+                dutydrawback = parseFloat($("#txtdutydrawback").val());
+
+            }
+            if ($('#txtexcisecredit').val() != "") {
+                excisecredit = parseFloat($('#txtexcisecredit').val());
+            }
+
+            if ($('#txtservicetaxcredit').val() != "") {
+                servicetaxcredit = parseFloat($('#txtservicetaxcredit').val());
+            }
+            if ($('#txtvatcredit').val() != "") {
+                vatcredit = parseFloat($('#txtvatcredit').val());
+            }
+            if ($('#txtgstcredit').val())
+            { gstcredit = parseFloat($('#txtgstcredit').val()); }
+
+            if ($('#txtanyothercredit').val() != "")
+            { anyothercredit = parseFloat($('#txtanyothercredit').val()); }
+
+            if ($('#txtcstcredit').val() != "") { cstcredit = parseFloat($('#txtcstcredit').val()); }
+
+            if ($('#txtanyotherdutycredit').val() != "") { anyotherdutycredit = parseFloat($('#txtanyotherdutycredit').val()); }
+
+            totalcredit = parseFloat(dutydrawback + excisecredit + vatcredit + cstcredit + gstcredit+sgstcredit+ igstcredit + cgstcredit+ anyotherdutycredit
+                + anyothercredit + servicetaxcredit);
+
+            $("#txttotalcredit").val(totalcredit)
+            amtcap = parseFloat(invoiceamt - totalcredit);
+
+            $('#txtamttobecap').val(amtcap);
+            $('#txtamtcapcompanylaw').val(amtcap);
+            $('#txtamtcapincometax').val(amtcap);
+
+
+        }
+
+        function getassetname(id) {
+            if (id == "") {
+                id = 0;
+                $("#AssetId").prop('selectedIndex', id);
+             //   alert(" no assetno")
+            }
+            else {
+                var ControllerURL = '@Url.Action("getassetinfo", "AdditionAssets")';
+                      var url = ControllerURL + "/" + id;
+                        $.ajax({
+                                type: 'GET',
+                                url: url,
+                                contentType: "application/json",
+                                // data: JSON.stringify(getdata),
+                                success: function (result) {
+                                    console.log(result)
+                                    var ID = result.Data[0].ID;
+                                   // alert(ID)
+                                    $("#AssetId").prop('selectedIndex',ID);
+                                  //  $("#txtassetdesc").val(result.Data[0].Id);
+
+
+                                },
+                                failure: function () { alert("Error"); }
+
+                            });
+                   }
+
+        }
+        function validateform() {
+            var errorlist = [];
+            var AssetName = $("#AssetId option:selected").text()
+            var AdditionAssetName = $('#adddesc').val();
+            var AssetNo = $('#txtassetno').val();
+           // var VoucherNo = $('#txtvno').val();
+            var VoucherDate = $('#txtVDate').val();
+            var DtPutToUse = $('#txtdpucomDate').val();
+            var grossvalue = $("#txtgrossvalue").val();
+            var DtPutToUseIT = $('#txtdpuItDate').val();
+            var Qty = $('#txtqty').val();
+            if (grossvalue == "") {
+                errorlist.push("Gross value is not entered");
+            }
+            if (DtPutToUseIT == "") {
+                errorlist.push("Date put to use (IT)  not entered");
+            }
+
+            if (Qty == "") {
+                errorlist.push("Quantity  not entered");
+            }
+            if (AssetName == "")
+            {
+                errorlist.push("Asset Name is not entered");
+            }
+            if (AdditionAssetName == "") {
+                errorlist.push("Addition Asset Name is not entered");
+            }
+
+            if (AssetNo == "") {
+                errorlist.push("Asset No is not entered");
+            }
+            if (VoucherDate == "") {
+                errorlist.push("Voucher date is not entered");
+            }
+            if (DtPutToUse == "") {
+                errorlist.push("Date put to use company is not entered");
+            }
+           // alert(errorlist)
+            return errorlist;
+        }
+
+        function SaveData() {
+
+            var validateformz = validateform();
+           // alert(validateformz)
+            //var voucherdate = moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            //var dtputuse = moment($("#txtdpucomDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+
+            //if (new Date(dtputuse) <= new Date(voucherdate)) {
+
+            //    swal("Alert", "Date put to use is less than voucher date ", "warning");
+            //}
+            //else {
+            if (validateformz.length!=0)
+            {
+
+
+                var srno = 1;
+
+                for (var i = 0; i < validateformz.length; i++) {
+
+                    $('#errtbl').last().append('<tr><td>' + srno + '</td><td>' + validateformz[i] + '</td></tr>');
+                    srno++
+                }
+
+                $('#errorlist').modal('show');
+            }
+            else
+            {
+                var grossvalue = $("#txtgrossvalue").val();
+
+                var servicecharge = $('#txtservicecharge').val();
+                var otherexpense = $('#txtotherexpense').val();
+                var customduty = $('#txtcustomduty').val();
+                var exciseduty = $('#txtexciseduty').val();
+                var servicetax = $('#txtservicetax').val();;
+                var vat = $('#txtvat').val();;
+                var anyotherduty = $('#txtanyotherduty').val();;
+                var cst = $('#txtcst').val();;
+                var gst = $('#txtgst').val();
+                var anyothertax = $('#txtanyothertax').val();
+                var totaladdition = $('#txttotaladdition').val();
+                var discount = $('#txtdiscount').val();
+                var roundoff = $('#txtroundoff').val();
+                var totaldeduction = $('#txttotaldeduction').val();
+                var invoiceamt = $('#txtinvoiceamt').val();
+
+
+                var dutydrawback = $('#txtdutydrawback').val();
+                var excisecredit = $('#txtexcisecredit').val();
+                var servicetaxcredit = $('#txtservicetaxcredit').val();
+                var anyotherdutycredit = $('#txtanyotherdutycredit').val();
+
+                var vatcredit = $('#txtvatcredit').val();
+                var anyothercredit = $('#txtanyothercredit').val();
+                var cstcredit = $('#txtcstcredit').val();
+                var gstcredit = $('#txtgstcredit').val();
+                var totalcredit = $('#txttotalcredit').val();
+                var amtcap = $('#txtamttobecap').val();
+                var amtcapcompanylaw = $('#txtamtcapcompanylaw').val();
+                var amtcapincometax = $('#txtamtcapincometax').val();
+                var AssetNo = $('#txtassetno').val();
+                var ClientID = $('#txtxclientid').val();
+                var AssetName = $("#AssetId option:selected").text()
+                var AdditionAssetName = $('#adddesc').val();
+                var VoucherNo = $('#txtvno').val();
+                var VoucherDate = $('#txtVDate').val();
+                var PODate = $('#txtPoDate').val();
+                var ReceiptDate = $('#txtreceiptDate').val();
+                var CommissioningDate = $('#txtcommDate').val();
+                var BillDate = $('#txtbillDate').val();
+                var DtPutToUse = $('#txtdpucomDate').val();
+                var DtPutToUseIT = $('#txtdpuItDate').val();
+                var PONo = $('#txtpono').val();
+                var BillNo = $('#txtbillno').val();
+                var MRRNo = $('#txtmrrno').val();
+                var Qty = $('#txtqty').val();
+                var SupplierNo = $('#SupplierId').val();
+
+                var BrandName = $('#txtbrandname').val();
+                var SrNo = $('#txtsrno').val();
+                var Model = $('#txtmodel').val();
+                var Remarks = $('#txtremarks').val();
+                var IsImported = isimportedflag;
+                var Currency = $('#txtcurrency').val();
+                var Values = $('#txtvalue').val();
+                var cgstcredit = $('#txtcgstcredit').val();
+                var igstcredit = $('#txtigstcredit').val();
+                var sgstcredit = $('#txtsgstcredit').val();
+                var cgst = $('#txtcgst').val();
+                var igst = $('#txtigst').val();
+                var sgst = $('#txtsgst').val();
+                var uomno = $('#UomId').val();
+                // txtresidual
+                var residual = $('#txtresidual').val();
+                var additionno = $('#txtaddno').val();
+                   var additionno=@ViewBag.additionno;
+                var postdata =
+                    {
+                        "AdditionNo": @ViewBag.additionno,
+                        "Gst": gst,
+                        "GstCredit": gstcredit,
+                        "AssetNo": AssetNo,
+                        "uom": uomno,
+                        "AssetName": AssetName,
+                        "AdditionAssetName": AdditionAssetName,
+                        "VoucherNo": VoucherNo,
+                        "VoucherDate": VoucherDate,
+                        "PODate": PODate,
+                        "ReceiptDate": ReceiptDate,
+                        "CommissioningDate": CommissioningDate,
+                        "BillDate": BillDate,
+                        "DtPutToUse": DtPutToUse,
+                        "DtPutToUseIT": DtPutToUseIT,
+                        "PONo": PONo,
+                        "BillNo": BillNo,
+
+                        "Qty": Qty,
+                        "SupplierNo": SupplierNo,
+                        "BrandName": BrandName,
+                        "SrNo": SrNo,
+                        "Model": Model,
+                        "Remarks": Remarks,
+                        "IsImported": isimportedflag,
+                        "Currency": Currency,
+                        "Values": Values,
+                        "GrossVal": grossvalue,
+                        "ServiceCharges": servicecharge,
+                        "OtherExp": otherexpense,
+                        "CustomDuty": customduty,
+                        "ExciseDuty": exciseduty,
+                        "ServiceTax": servicetax,
+                        "AnyOtherDuty": anyotherduty,
+                        "VAT": vat,
+                        "CST": cst,
+                        "CGST": cgst,
+                        "SGST": sgst,
+                        "IGST": igst,
+                        "AnyOtherTax": anyothertax,
+                        "TotalAddition": totaladdition,
+                        "Discount": discount,
+                        "Roundingoff": roundoff,
+                        "TotDeduction": totaldeduction,
+                        "InvoiceAmt": invoiceamt,
+                        "IsImported": IsImported,
+                        "DutyDrawback": dutydrawback,
+                        "ExciseCredit": excisecredit,
+                        "ServiceTaxCredit": servicetaxcredit,
+                        "AnyOtherDutyCredit": anyotherdutycredit,
+                        "VATCredit": vatcredit,
+                        "CSTCredit": cstcredit,
+                        "CGSTCredit": cgstcredit,
+                        "SGSTCredit": sgstcredit,
+                        "IGSTCredit": igstcredit,
+                        "AnyOtherCredit": anyothercredit,
+                        "TotalCredit": totalcredit,
+                        "AmountCapitalised": amtcap,
+                        "AmountCapitalisedCompany": amtcapcompanylaw,
+                        "AmountCApitalisedIT": amtcapincometax,
+                        "ResidualVal": residual
+
+                    };
+
+                console.log(postdata)
+                swal({
+                    title: "Are You Sure?", text: "You won't be able to revert this!",
+                    icon: "warning", buttons: true, dangerMode: true
+                }).then((result) => {
+                    if (result == true) {
+
+                        var ControllerURL = '@Url.Action("AddNew", "AdditionAssets")';
+
+                       // alert(ControllerURL);
+                        var returnURL = '@Url.Action("Index", "AdditionAssets")';
+                        $.ajax({
+                            type: 'POST',
+                            url: ControllerURL,
+                            contentType: "application/json",
+                            data: JSON.stringify(postdata),
+                            success: function (res) {
+                                if (res == "Failed") {
+                                    swal("Alert", "You Cannot Add this Record", "warning");
+                                }
+                                else {
+                                    swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
+                                        if (result == true) {
+                                            window.location.replace(returnURL);
+                                        }
+                                    });
+                                }
+
+                            },
+
+                            failure: function () { alert("Error"); }
+
+                        });
+                    }
+                });
+            }
+        }
+       // }
+
+</script>

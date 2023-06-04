@@ -1,0 +1,140 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    ViewBag.Title = "FAR Report";
+}
+<div id="allocationmodal" role="dialog" tabindex="-1" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Fixed Assets Register Report </h4>
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
+            </div>
+            @using (@Html.BeginForm(null, null, FormMethod.Get, new { id = "frmNewEmp", name = "frmNewEmp" }))
+            {@Html.AntiForgeryToken();
+                <div class="modal-body">
+
+
+                    <div class="form-group">
+                        <label for="praticesname">Select As on Date<span style="color:#CC0000;">*</span></label>
+                        <div class='input-group date' id='dtasonDate'>
+                            <input type="text" class="form-control" required id="txtasonDate">
+                            <div class="input-group-addon">
+                                <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
+                </div>
+                <div class="modal-footer">
+                    @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
+                    <button type="submit" class="btn bg-gradient-primary" id="btngetreport">Get Report</button>
+                </div>
+            }
+        </div><!-- /.modal-content -->
+    </div>
+</div>
+<div id="progressbar" class="modal fade" role="dialog" style="height: auto;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lx">
+
+        <!-- Modal content-->
+        <div class="modal-content" style="height:auto;width:auto;overflow:auto">
+            <div class="modal-header">
+                <label style="color:red;text-align: center;">Please wait........</label>
+                
+            </div>
+            <div class="modal-body ">
+
+                <div class="row col-6" style="overflow:auto;align-content:center" >
+                   <label style="color:darkred;text-align: center;"> Report is in progress........</label>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+
+    $(document).ready(function ($) {
+       
+        //voucherdate set to all other date
+        $('#progressbar').modal('hide');
+        $('#dtasonDate').datetimepicker({
+            format: 'DD/MM/YYYY',
+            icons:
+            {
+                next: 'fa fa-angle-right',
+                previous: 'fa fa-angle-left'
+            },
+
+        });
+
+        $("#frmNewEmp").submit(function (e) {
+
+            var date = $("#txtasonDate").val();
+            getreport(date);
+            e.preventDefault();
+            return false;
+
+        });
+
+    });
+    if (typeof jQuery !== 'undefined') {
+        console.log('jQuery Loaded');
+    }
+    else {
+        console.log('not loaded yet');
+    }
+
+    function getreport(date) {
+
+
+        @*var url = '@Url.Action("GetFAReport", "FARReport")';
+            url = url + '?asondate=' + date;
+
+            window.location.href = url;*@
+        date = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var data = {
+            'Asondate': date
+           
+
+        };
+            $('#progressbar').modal('show');
+            var form = $('#frmNewEmp');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
+            var headers = {};
+            headers['__RequestVerificationToken'] = token;
+         var ControllerURL = '@Url.Action("GetFAReport", "FARReport")';
+        var DownloadURL = '@Url.Action("Download", "FARReport")';
+
+            $.ajax({
+                type: 'POST',
+                url: ControllerURL,
+                contentType: "application/json",
+                headers: headers,
+                data: JSON.stringify(data),
+             
+                    
+                success: function (data) {
+                    var fileurl = DownloadURL + '?fileGuid=' + data.FileGuid
+                        + '&filename=' + data.FileName;
+                    $('#progressbar').modal('hide');
+                    //alert(fileurl);
+                   
+                    window.location = fileurl;
+                    $('#progressbar').modal('hide');
+                },
+                failure: function () { alert("Error"); }
+            });
+
+
+    }
+
+</script>

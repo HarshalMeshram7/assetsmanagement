@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title -Verify</title>
+
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <!-- Nucleo Icons -->
+    <!-- <link href="~/Content/bootstrap.css" rel="stylesheet" /> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+    <link href="~/Content/assets/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="~/Content/assets/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <link href="~/Content/assets/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- CSS Files -->
+
+    <link id="pagestyle" href="~/Content/assets/css/argon-dashboard.css?v=2.0.5" rel="stylesheet" />
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+    <link rel="stylesheet" href=@Url.Content("~/Content/assets/jstree/proton/style.min.css") />
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" />
+    <!-- DatePicker-->
+    <link href="~/Content/assets/css/bootstrap-datetimepicker.css" rel="stylesheet" />
+
+
+</head>
+
+<body class="bg-gray-100">
+    <div class="min-height-300 position-absolute w-100"  style="background-color: #935757"></div>
+
+   
+    <main class="main-content border-radius-lg ">
+
+        
+        <nav class="navbar navbar-main navbar-expand-lg  px-0 mx-4 shadow-none border-radius-xl z-index-sticky " id="navbarBlur" data-scroll="false">
+            <div class="container-fluid py-1 px-3">
+
+
+                @if (ViewBag.LogonUser != null)
+                {
+
+                    <ul class="navbar-nav  justify-content-end">
+                        <li class="nav-item d-flex align-items-center">
+                            <a href=@Url.Action("logout", "Login")
+                               class="nav-link text-white font-weight-bold px-0" target="_blank">
+                                <i class="fa fa-user me-sm-1"></i>
+                                <span class="d-sm-inline d-none">Sign out</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                }
+                else
+                {
+                    <ul class="navbar-nav  justify-content-end">
+                        <li class="nav-item d-flex align-items-center">
+                            <a href=@Url.Action("Login", "Login")
+                               class="nav-link text-white font-weight-bold px-0" target="_blank">
+                                <i class="fa fa-user me-sm-1"></i>
+                                <span class="d-sm-inline d-none">Sign In</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                }
+
+            </div>
+        </nav>
+
+        <div class="container-fluid py-4">
+            @RenderBody()
+        </div>
+
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+    <!--   Core JS Files   -->
+    <script src="~/Content/assets/js/core/popper.min.js"></script>
+    <script src="~/Content/assets/js/core/bootstrap.min.js"></script>
+    <script src="~/Content/assets/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="~/Content/assets/js/plugins/smooth-scrollbar.min.js"></script>
+
+    <!--   <script src="~/Content/assets/js/plugins/flatpickr.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+
+
+    <!-- Kanban scripts -->
+    <!-- <script src="~/Content/assets/js/plugins/dragula/dragula.min.js"></script>
+     <script src="~/Content/assets/js/plugins/jkanban/jkanban.js"></script>
+        -->
+
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+
+
+    <script src="~/Content/assets/js/jstree.min.js"></script>
+
+    <script>
+        var win = navigator.platform.indexOf('Win') > -1;
+        if (win && document.querySelector('#sidenav-scrollbar')) {
+            var options = {
+                damping: '0.5'
+            }
+            Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+        }
+    </script>
+
+    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="~/Content/assets/js/argon-dashboard.min.js?v=2.0.5"></script>
+    <!--   <script src="~/Content/assets/js/bootstrap-datetimepicker.js"></script> -->
+    <!-- Tempus Dominus JavaScript -->
+    <script src="https://cdn.jsdelivr.net/gh/Eonasdan/tempus-dominus@master/dist/js/tempus-dominus.js"
+            crossorigin="anonymous"></script>
+
+    <!-- SWAL -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+    <script src="~/Content/assets/js/typeahead.js"></script>
+
+
+
+
+</body>
+</html>
+
+

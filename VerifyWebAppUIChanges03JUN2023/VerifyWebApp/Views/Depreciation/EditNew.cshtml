@@ -1,0 +1,373 @@
+﻿@model VerifyWebApp.Models.Depreciation
+@{
+    ViewBag.Title = "Editnew";
+}
+
+<div class="card">
+    <div class="card-header pb-0">
+
+        <div class="row">
+            <div class="d-sm-flex justify-content-between hborder">
+                <div class="htitle"> <b>Edit Depreciation</b></div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body" id="divTableData">
+
+        @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+        {@Html.AntiForgeryToken();
+        <div class="modal-body">
+
+            @Html.ValidationSummary(true)
+            <div class="row">
+                @*<div class="col-md-2">
+                        <div class="form-group">
+
+                            <label for="SupplierName">SrNo<span>*</span></label>
+                            @Html.TextBoxFor(m => m.ID, new { @class = "form-control", @required = "required" })
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                    </div>*@
+                <div class="col-sm-2">
+                    <!--
+                    <div class="form-group">
+
+                        @Html.HiddenFor(m => m.ID)
+                        <input type='checkbox' id="checkflag" tabindex="2" />
+                        <label for="praticesname">Asset no wise search</label>
+
+                    </div>
+                        -->
+
+
+</div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="praticesname">Asset No</label>
+                        <input type='number' placeholder="" readonly="readonly" id="txtassetno" class="form-control" tabindex="3" required />
+
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="praticesname">Asset Name<span>*</span></label>
+                        <div class='input-group dropdown ' id='dtasset' tabindex="4">
+
+                            <input type='text' placeholder="" readonly="readonly" id="txtassetname"
+                                   value="@ViewBag.AssetName"
+                                   class="form-control" tabindex="4" required />
+
+                            <!--
+                                @Html.DropDownList("AssetId", (SelectList)ViewBag.Assestlist, "Select AssetNo", new { @class = "form-control", id = "AssetId", @required = "required" })
+                               -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label for="praticesname">Depreciation Method</label>&nbsp;&nbsp;&nbsp;
+                        SLM @Html.RadioButton("DepreciationMethod", "SLM", new { id = "slm", @tabindex = "5", @checked = "checked" })
+                        WDV @Html.RadioButton("DepreciationMethod", "WDV", new { id = "wdv", @tabindex = "6" })
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="Address2">Normal Rate<span>*</span></label>
+                        @Html.TextBoxFor(m => m.NormalRate, new { @class = "form-control", id = "NormalRate", @tabindex = "7", @onblur = "totalrate(); ", type = "number", @required = "required" })
+
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="Address3">Additional Rate<span>*</span></label>
+                        @Html.TextBoxFor(m => m.AdditionRate, new { @class = "form-control", id = "AdditionalRate", @tabindex = "8", @onblur = "totalrate();", type = "number", required = "required" })
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="City">Total Rate<span>*</span></label>
+                        @Html.TextBoxFor(m => m.TotalRate, new { @class = "form-control", @readonly = "readonly", id = "TotalRate", @tabindex = "8", @onblur = "totalrate(); " })
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+            </div>
+
+            <div class="row">
+
+            </div>
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label for="praticesname">From Date<span>*</span></label>
+                        <input id="EndDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
+
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <label for="praticesname">To Date<span>*</span></label>
+                        <input id="EndDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="City">Depreciation Days<span>*</span></label>
+                        @Html.TextBoxFor(m => m.DepreciationDays, new { @class = "form-control", @tabindex = "11", type = "number", @required = "required" })
+
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="City">Amount<span>*</span></label>
+                        @Html.TextBoxFor(m => m.Amount, new { @class = "form-control", @tabindex = "12", type = "number", @required = "required" })
+
+                    </div>
+                </div>
+            </div>
+            <div class="row col-md-2">
+                <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
+            </div>
+
+
+
+
+            <div class="modal-footer">
+
+                <button type="submit" class="btn saveBtn btn-sm" id="btnSave">Save</button>
+
+            </div>
+
+
+       }
+    </div><!-- /.modal-content -->
+</div>
+<script>
+
+    $('#dtFromDate').datetimepicker({
+        format: 'DD/MM/YYYY',
+        icons:
+        {
+            next: 'fa fa-angle-right',
+            previous: 'fa fa-angle-left'
+        },
+
+    });
+    $('#dtToDate').datetimepicker({
+        format: 'DD/MM/YYYY',
+        icons:
+        {
+            next: 'fa fa-angle-right',
+            previous: 'fa fa-angle-left'
+        },
+    });
+    $(document).ready(function () {
+
+
+        $('#txtFromDate').val('@Model.str_FromDate');
+        $('#txtToDate').val('@Model.str_ToDate');
+
+
+        if ('@Model.DepreciationType'=="A")
+        {
+              swal("Alert", "Depreciation is calculated by auto mode you cannot edit it", "warning");
+              $("#btnSave").prop('disabled', true);
+          }
+          else {
+              $("#btnSave").prop('disabled', false);
+
+        }
+
+        var assetno = '@ViewBag.assetno';
+
+        $("#AssetId").prop('selectedIndex', '@ViewBag.assetno');
+        $('#txtassetno').val('@ViewBag.assetno')
+        if (assetno == "0") {
+            $('#AssetId').val(0);
+        }
+        else {
+          
+            $('#AssetId').val(assetno);
+        }
+        if ('@Model.DepreciationMethod' == "SLM") {
+            $("#slm").prop("checked", true);
+        }
+          if ('@Model.DepreciationMethod' == "WDV") {
+            $("#wdv").prop("checked", true);
+        }
+
+        $("#frmNewEmp").submit(function (e) {
+
+            SaveData();
+            e.preventDefault();
+            return false;
+
+        });;
+
+    });
+
+
+        function totalrate() {
+            var nrate = 0;
+            var arate = 0;
+            var trate = 0;
+            if ($("#NormalRate").val() != "") {
+
+                nrate = parseFloat($("#NormalRate").val());
+
+            }
+            if ($('#AdditionalRate').val() != "") {
+                arate = parseFloat($('#AdditionalRate').val());
+            }
+
+            trate = parseFloat(nrate + arate);
+            if (trate > 100) {
+                swal("Alert", "total rate must not exceed  than 100 !", "warning");
+                $("#NormalRate").val(0);
+                $('#AdditionalRate').val(0);
+                $('#TotalRate').val(0);
+
+            }
+            else {
+                $('#TotalRate').val(trate);
+            }
+
+        }
+
+
+    ///for enable disable assetno or search by
+    $("#txtassetno").prop("disabled", true);
+
+    $('#checkflag').change(function () {
+        if ($(this).prop("checked")) {
+            $("#txtassetno").prop("disabled", false);
+        }
+        else {
+            $("#txtassetno").prop("disabled", true);
+        }
+    });
+
+
+
+    //on assetno enter set assetname
+    $('#txtassetno').keypress(function () {
+
+        var assetno = $('#txtassetno').val();
+        $('#AssetId').val(assetno);
+        // getassetname(assetno);
+    });
+
+    $('#AssetId').change(function () {
+
+        var index = $("#AssetId option:selected").val();
+
+        $('#txtassetno').val(index);
+        // getassetname(assetno);
+    });
+
+   function SaveData() {
+       totalrate();
+
+        var result;
+
+        var AssetNo;
+        var AssetName;
+        var DepreciationMethod;
+        var NormalRate;
+        var AdditionalRate;
+        var TotalRate;
+        var FromDate;
+        var ToDate;
+        var DepreciationDays;
+        var Amount;
+
+
+
+        AssetNo = $("#AssetId").val();
+        AssetName = $('#AssetId option:selected').text();
+        DepreciationMethod = $("input[name='DepreciationMethod']:checked").val();
+        NormalRate = $('#NormalRate').val();
+        AdditionalRate = $('#AdditionalRate').val();
+        TotalRate = $('#TotalRate').val();
+     
+        FromDate = moment($("#txtFromDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+        ToDate = moment($("#txtToDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+        DepreciationDays = $('#DepreciationDays').val();
+        Amount = $('#Amount').val();
+       
+        var postdata =
+            {
+                "AssetNo": AssetNo,
+                "AssetName": AssetName,
+                "DepreciationMethod": DepreciationMethod,
+                "NormalRate": NormalRate,
+                "AdditionRate": AdditionalRate,
+                "TotalRate": TotalRate,
+                "FromDate": FromDate,
+                "ToDate": ToDate,
+                "DepreciationDays": DepreciationDays,
+                "Amount": Amount,
+                "ID":'@Model.ID'
+
+
+
+            };
+            //
+            var form = $('#frmNewEmp');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
+            var headers = {};
+            headers['__RequestVerificationToken'] = token;
+
+            swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+                if (result == true) {
+                 var ControllerURL = '@Url.Action("Edit", "Depreciation")';
+
+
+                var returnURL = '@Url.Action("Index", "Depreciation")';
+
+                $.ajax({
+                type: 'POST',
+                url: ControllerURL,
+                contentType: "application/json",
+                headers: headers,
+                data: JSON.stringify(postdata),
+                success: function (res) {
+                if (res == "Failed") {
+                swal("Alert", "You Cannot Add this Record", "warning");
+                }
+                else
+                {
+                swal({ title: "Successfully Edited!", icon: "success" }).then((result) => {
+                if (result == true) {
+                window.location.replace(returnURL);
+                }
+                });
+                }
+
+                },
+
+                failure: function () { alert("Error"); }
+
+                });
+                }
+                });
+                }
+</script>
+
+

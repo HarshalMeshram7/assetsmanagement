@@ -1,0 +1,482 @@
+﻿@model VerifyWebApp.Models.Depreciation
+@{
+    ViewBag.Title = "Add";
+}
+
+@using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="container-fluid py-4">
+
+    <div class="row my-1">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header pb-0">
+                    <div class="row">
+                        <div class="d-sm-flex justify-content-between hborder">
+                            <div class="htitle"> <b>Add Depreciation</b></div>
+                         
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    @Html.ValidationSummary(true)
+                    <div class="row my-2">
+                        <div class="col-md-1">
+                            <label for="txtAssetSearch">Search </label>
+                        </div>
+                        <div class="col-md-5">
+                            <input class="form-control form-control-sm mx-1" type="text" id="txtAssetSearch"
+                                   placeholder="Asset No / Name / Identification No / Sr No">
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" id="btnclearasset"
+                                    class="btn btn-sm xtraBtn"
+                                    data-toggle="tooltip" data-placement="top" title="Clear Search"
+                                    data-delay='{"show":"2000", "hide":"1500"}'>
+                                <i class="fa fa-times"></i>
+                                &nbsp;
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row my-1">
+                        <div class="col-md-12">
+                            <label class=" form-control-sm">Selected Asset</label>
+                            <table class="table table-hover text-uppercase text-xs">
+                                <thead class="hcol" style="font-weight:bold">
+                                    <tr>
+                                        <th class="opacity-7" scope="col">Asset No</th>
+                                        <th class="opacity-7" scope="col">Asset Name</th>
+                                        <th class="opacity-7" scope="col">Amt. Capitalized</th>
+                                        <th class="opacity-7" scope="col">Date Put to Use</th>
+                                        <th class="opacity-7" scope="col">Serial No</th>
+                                        <th class="opacity-7" scope="col">Asset identification NO</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="font-weight:bold">
+                                    <tr>
+
+                                        <td><label id="lblassetno" class="form-control-sm"></label></td>
+                                        <td><label id="lblassetname" class="form-control-sm"></label></td>
+                                        <td><label id="lblamt" class="form-control-sm"></label></td>
+                                        <td><label id="lbldtputtouse" class="form-control-sm"></label></td>
+                                        <td><label id="lblserialno" class="form-control-sm"></label></td>
+                                        <td><label id="lblassetidno" class="form-control-sm"></label></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="praticesname">Depreciation Method</label>
+
+                                <div class="form-check">
+                                    <input class="form-control-sm" type="radio" name="DepreciationMethod" id="wdv" value="WDV" checked>
+                                    <label class="form-control-sm" for="exampleRadios1">
+                                        WDV
+                                    </label>
+                                </div>
+
+
+                                <div class="form-check">
+                                    <input class="form-control-sm" type="radio" name="DepreciationMethod" id="slm" value="SLM" checked>
+                                    <label class="form-control-sm" for="exampleRadios1">
+                                        SLM
+                                    </label>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group-inline">
+                                <label for="Address2">Depreciation Rate<span>*</span></label>
+                                @Html.TextBoxFor(m => m.NormalRate, new
+                                {
+                                    @class = "form-control form-control-sm",
+                                    id = "NormalRate",
+                                    @tabindex = "7",
+                               @onblur = "totalrate(); ",
+                                    type = "any",
+                                    @required = "required"
+                                })
+
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group-inline">
+                                <label for="txtFromDate">From Date<span>*</span></label>
+
+                                <input type="date" class="form-control form-control-sm" id="txtFromDate" tabindex="9" required>
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="praticesname">To Date<span>*</span></label>
+                                <input type="date" class="form-control form-control-sm" id="txtToDate" tabindex="10" re>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="City" class=" form-control-sm">Depreciation Days<span>*</span></label>
+                                @Html.TextBoxFor(m => m.DepreciationDays, new { @class = "form-control form-control-sm", @tabindex = "11", type = "number", @required = "required" })
+
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="City" class="form-control-sm">Amount<span>*</span></label>
+                                @Html.TextBoxFor(m => m.Amount, new { @class = "form-control form-control-sm", @tabindex = "12", @required = "required" })
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-md-2">
+                        <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
+                    </div>
+
+
+
+
+                    <div class="modal-footer">
+
+                        <button type="submit" class="btn saveBtn btn-sm" id="btnSave">Save</button>
+                    </div>
+                </div>
+                </div>
+
+                           
+                        </div>
+            </div>
+        </div>
+
+
+}
+                        <script>
+
+    let _selectedAssetID = '';
+    let _selectedAssetNO = '';
+
+    $('#dtFromDate').datetimepicker({
+        format: 'DD/MM/YYYY',
+        icons:
+        {
+            next: 'fa fa-angle-right',
+            previous: 'fa fa-angle-left'
+        },
+
+    });
+    $('#dtToDate').datetimepicker({
+        format: 'DD/MM/YYYY',
+        icons:
+        {
+            next: 'fa fa-angle-right',
+            previous: 'fa fa-angle-left'
+        },
+    });
+    $(document).ready(function () {
+
+          let baseURL = "@ViewBag.baseUrl";
+        console.log(baseURL);
+        let companyid = "@ViewBag.companyid";
+
+        let assetmap = {};
+
+
+        $('#btnclearasset').click(function () {
+            console.log(' btnclearasset clicked')
+            clearAsset();
+        });
+
+
+
+
+
+        let id = "";
+        let assetno = "";
+        let assetname = "";
+        let amtcapitalized = "";
+        let dtputtouse = "";
+        let serialno = "";
+        let AssetIdentificationNo = "";
+        let depmethod = "";
+
+
+        $('#txtAssetSearch').bind('typeahead:select', function (ev, suggestion) {
+            let item = assetmap[suggestion];
+            console.log('Selection: ' + JSON.stringify(item));
+            if (item) {
+
+                let id = item.id;
+                _selectedAssetID = item.id;
+
+                _selectedAssetNO = item.assetno;
+                let assetno = item.assetno;
+                let assetname = item.assetname;
+                let amtcapitalized = item.amtcapitalized;
+                let dtputtouse = item.dtputtouse;
+                let serialno = item.serialno;
+                let AssetIdentificationNo = item.AssetIdentificationNo;
+                let depmethod = item.depmethod;
+
+                document.getElementById('lblassetno').innerHTML = assetno;
+                document.getElementById('lblassetname').innerHTML = assetname;
+                document.getElementById('lblamt').innerHTML = amtcapitalized;
+                document.getElementById('lbldtputtouse').innerHTML = dtputtouse;
+                document.getElementById('lblserialno').innerHTML = serialno;
+                document.getElementById('lblassetidno').innerHTML = AssetIdentificationNo;
+
+
+                if (depmethod == 'WDV') {
+                    $('#wdv').prop('checked', true);
+                } else if (depmethod == 'SLM') {
+                    $('#slm').prop('checked', true);
+                }
+
+
+
+            }
+        });
+
+        $('#txtAssetSearch').typeahead({
+            hint: true,
+            highlight: true, /* Enable substring highlighting */
+            minLength: 2 /* Specify minimum characters required for showing suggestions */
+        },
+            {
+                limit: 'Infinity',
+                async: true,
+                source: function (query, processSync, processAsync) {
+
+                    let searchString = $('#txtAssetSearch').val();
+                    console.log(searchString);
+                    let url = baseURL + "/api/searchAsset?companyid=" + companyid + "&searchString=" + searchString;
+                    console.log(url);
+
+                    return $.ajax({
+                        url: url,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (data) {
+                            // in this example, json is simply an array of strings
+                            console.log(data);
+                            items = [];
+
+                            let response = data;
+
+                            if (response.status == 'true') {
+                                let jsonData = JSON.parse(response.data);
+                                $.each(jsonData, function (i, item) {
+                                    var id = item.id;
+                                    var assetno = item.assetno;
+                                    var assetname = item.assetname;
+                                    var serialno = item.serialno;
+                                    var AssetIdentificationNo = item.AssetIdentificationNo;
+
+                                    let asset = assetno + "-" + assetname + "-" + AssetIdentificationNo + "-" + serialno;
+                                    /*
+                                    map[name] = {
+                                        id: id,
+                                        name: name
+                                    };
+                                    */
+                                    assetmap[asset] = item;
+                                    items.push(asset);
+                                });
+
+                                return processAsync(items);
+                            }
+
+                            // return processAsync(json);
+                        }
+                    });
+                }
+            });
+
+
+        $("#frmNewEmp").submit(function (e) {
+
+            SaveData();
+            e.preventDefault();
+            return false;
+
+        });;
+
+    });
+
+    function clearAsset() {
+        _selectedAssetID = '';
+        $('#txtAssetSearch').val('');
+        document.getElementById('lblassetno').innerHTML = '';
+        document.getElementById('lblassetname').innerHTML = '';
+        document.getElementById('lblamt').innerHTML = '';
+        document.getElementById('lbldtputtouse').innerHTML = '';
+        document.getElementById('lblserialno').innerHTML = '';
+        document.getElementById('lblassetidno').innerHTML = '';
+
+    }
+        function totalrate() {
+            var nrate = 0;
+            var arate = 0;
+            var trate = 0;
+            if ($("#NormalRate").val() != "") {
+
+                nrate = parseFloat($("#NormalRate").val());
+
+            }
+            if ($('#AdditionalRate').val() != "") {
+                arate = parseFloat($('#AdditionalRate').val());
+            }
+
+            trate = parseFloat(nrate + arate);
+            if (trate > 100) {
+                swal("Alert", "total rate must not exceed  than 100 !", "warning");
+                $("#NormalRate").val(0);
+                $('#AdditionalRate').val(0);
+                $('#TotalRate').val(0);
+
+            }
+            else {
+                $('#TotalRate').val(trate);
+            }
+
+        }
+
+
+    ///for enable disable assetno or search by
+    $("#txtassetno").prop("disabled", true);
+
+    $('#checkflag').change(function () {
+        if ($(this).prop("checked")) {
+            $("#txtassetno").prop("disabled", false);
+        }
+        else {
+            $("#txtassetno").prop("disabled", true);
+        }
+    });
+
+
+
+    //on assetno enter set assetname
+    $('#txtassetno').keypress(function () {
+
+        var assetno = $('#txtassetno').val();
+        $('#AssetId').val(assetno);
+        // getassetname(assetno);
+    });
+
+    $('#AssetId').change(function () {
+
+        var index = $("#AssetId option:selected").val();
+
+        $('#txtassetno').val(index);
+        // getassetname(assetno);
+    });
+
+   function SaveData() {
+       totalrate();
+
+        var result;
+       let AssetId;
+        var AssetNo;
+        var AssetName;
+        var DepreciationMethod;
+        var NormalRate;
+        var AdditionalRate;
+        var TotalRate;
+        var FromDate;
+        var ToDate;
+        var DepreciationDays;
+        var Amount;
+
+
+        AssetId = _selectedAssetID;
+        AssetNo = _selectedAssetNO    //$("#AssetId").val();
+        AssetName = $('#AssetId option:selected').text();
+        DepreciationMethod = $("input[name='DepreciationMethod']:checked").val();
+        NormalRate = $('#NormalRate').val();
+        AdditionalRate = 0;  ///$('#AdditionalRate').val();
+        TotalRate = NormalRate;//$('#TotalRate').val();
+        FromDate = moment($("#txtFromDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+        ToDate = moment($("#txtToDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+        DepreciationDays = $('#DepreciationDays').val();
+        Amount = $('#Amount').val();
+
+
+
+
+            var postdata =
+            {
+                    "AssetID": AssetId,
+                    "AssetNo": AssetNo,
+                    "AssetName": AssetName,
+                    "DepreciationMethod": DepreciationMethod,
+                    "NormalRate": NormalRate,
+                    "AdditionRate": AdditionalRate,
+                    "TotalRate": TotalRate,
+                    "FromDate": FromDate,
+                    "ToDate": ToDate,
+                    "DepreciationDays": DepreciationDays,
+                    "Amount": Amount
+
+
+
+            };
+            //
+
+            var form = $('#frmNewEmp');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
+            var headers = {};
+            headers['__RequestVerificationToken'] = token;
+            swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+                if (result == true) {
+                 var ControllerURL = '@Url.Action("Add", "Depreciation")';
+
+
+                var returnURL = '@Url.Action("Index", "Depreciation")';
+
+                $.ajax({
+                type: 'POST',
+                url: ControllerURL,
+                contentType: "application/json",
+                headers: headers,
+                data: JSON.stringify(postdata),
+                success: function (res) {
+                if (res == "Failed") {
+                swal("Alert", "You Cannot Add this Record", "warning");
+                }
+                else
+                {
+                swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
+                if (result == true) {
+                window.location.replace(returnURL);
+                }
+                });
+                }
+
+                },
+
+                failure: function () { alert("Error"); }
+
+                });
+                }
+                });
+                }
+                        </script>
+
+

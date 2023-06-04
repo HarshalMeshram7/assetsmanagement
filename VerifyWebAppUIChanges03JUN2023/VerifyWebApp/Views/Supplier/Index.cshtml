@@ -1,0 +1,442 @@
+﻿@model IEnumerable<VerifyWebApp.Models.Supplier>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+@using (@Html.BeginForm(null, null, FormMethod.Get, new { id = "frmNewEmp", name = "frmNewEmp" }))
+{@Html.AntiForgeryToken();
+}
+<div class="container-fluid">
+    <div class="row my-0">
+        <div class="card">
+            <div class="card-header pb-0">
+                <div class="row">
+                    <div class="row justify-content-md-center title hborder">
+                        <div class="htitle"><b>Suppliers</b></div>
+                    </div>
+                </div>
+
+                <div class="row" style="padding-top:10px;padding-left:20px">
+                    <div class="col-lg-12 ">
+                        <button type="button" id="btnnew" value="New Practice"
+                                class="btn addBtn btn-sm mb-0 btn-tooltip"
+                                data-bs-toggle="tooltip" data-bs-placement="top" title="Create New Supplier"
+                                onclick="opennewdialog();">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                        <button onclick="downloadexcel()" class="btn btn-sm xtraBtn mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Download Template" data-container="body" data-animation="true"><i class="fa fa-download" aria-hidden="true"></i></button>
+                        <button onclick="Importexcel()"  class="btn btn-sm xtraBtn mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Upload Supplier List" data-container="body" data-animation="true"><i class="fa fa-upload" aria-hidden="true"></i></button>
+                        <button onclick="SupplierExport();"
+                                class="btn btn-sm modBtn mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Export Supplier List" 
+                                data-container="body" data-animation="true"><i class="fa fa-file-excel-o" aria-hidden="true"></i></button>
+                    </div>
+
+
+                </div>
+
+
+
+
+
+                <div class="card-body" id="divTableData" style="padding-top:3px">
+                    <div class="row" style="padding-top:3px">
+                        <table class="table table-flush table-hover "
+                               style="width:100%" id="tblsupplier">
+                            <thead class="hcol">
+                                <tr>
+                                    <td class="text-uppercase font-weight-bolder" width="5%">
+                                        Supplier Code
+                                    </td>
+                                    <td class="text-uppercase font-weight-bolder " width="5%">
+                                        Supplier Name
+                                    </td>
+                                    <td class="text-uppercase font-weight-bolder " width="25%">
+                                        Address
+                                    </td>
+                                    <td class="text-uppercase font-weight-bolder " width="5%">
+                                        City
+                                    </td>
+                                    <td class="text-uppercase font-weight-bolder  text-end" width="15%">
+                                        Mobile
+                                    </td>
+                                    <td class="text-uppercase font-weight-bolder  text-end" width="15%">
+                                        Email
+                                    </td>
+                                    <td class="text-uppercase text-xs font-weight-bolder  text-center" width="5%">Action </td>
+
+                                </tr>
+                            </thead>
+                            <tbody style="font-weight: bold; color: black">
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div id="Edit_changegroup_modal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Actions</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row ">
+
+
+                    <button style="display:inline-block; margin-left:10px" type="button" class="btn btn-primary btn-md" id="btneditsupplier">
+                        Edit Supplier
+                    </button>
+
+
+                    <button style="display:inline-block ; margin-left:10px" type="button" class="btn btn-secondary btn-md" id="btnpreviewsupplier">
+                        Preview Supplier
+                    </button>
+                    <button style="display:inline-block; margin-left:10px" type="button" class="btn btn-danger btn-md" id="btndeletesupplier">
+                        Delete Supplier
+                    </button>
+
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-default" id="btnClose" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+
+
+<div class="modal fade" tabindex="-1" role="dialog" id="divNew">
+    <div class="modal-dialog  modal-lg" style="width:90%" role="document" id="divNewContent">
+
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" tabindex="-1" role="dialog" id="divEdit" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg" style="width:90%" role="document" id="divEditContent">
+
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" tabindex="-1" role="dialog" id="divUpload" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lx" role="document" id="divUploadContent">
+
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script type="text/javascript">
+
+
+    $(document).ready(function ()
+    {
+        var url = '@Url.Action("GetData", "Supplier")';
+        $("#tblsupplier").DataTable();
+    //    $("#tblsupplier").DataTable({
+    //        "processing": true, // for show progress bar
+    //        "serverSide": true, // for process server side
+    //        "filter": true, // this is for disable filter (search box)
+    //        "orderMulti": false, // for disable multiple column at once
+    //        "ajax": {
+    //            "url": url,
+    //            "type": "POST",
+    //            "datatype": "json"
+    //        },
+    //        "columns": [
+    //            { "data": "SupplierName", "name": "SupplierName", "autoWidth": true, "orderable": true},
+    //            { "data": "SupplierCode", "name": "SupplierCode", "autoWidth": true, "orderable": true },
+    //            { "data": "Address1", "name": "Address1", "autoWidth": true, "orderable": false },
+    //            { "data": "City", "name": "City", "autoWidth": true, "orderable": false },
+    //            { "data": "MobileNo", "name": "MobileNo", "autoWidth": true, "orderable": false },
+    //            { "data": "EmailID", "name": "EmailID", "autoWidth": true, "orderable": false }
+    //        ]
+    //    });
+
+        showsupplier();
+
+    });
+
+    if (typeof jQuery !== 'undefined') {
+        console.log('jQuery Loaded');
+    }
+    else {
+        console.log('not loaded yet');
+    }
+
+    function opennewdialog() {
+
+            var url = '@Url.Action("Add","Supplier")';
+            $.get(url, function (data) {
+                console.log("Add");
+                $("#divNewContent").html(data);
+                // alert(data);
+                $('#divNew').modal('show')
+            });
+        }
+
+        function IsJsonString(str) {
+            try {
+                JSON.parse(str);
+            } catch (e) {
+                return false;
+            }
+            return true;
+        }
+
+
+      function showsupplier(id)
+      {
+     
+        let searchby = '';
+        //searchby = $("#cboSearchBy").val();
+        //searchstring = $("#txtsearch").val();
+
+         var ControllerURL = '@Url.Action("GetData", "Supplier")';
+         console.log(ControllerURL);
+          var table = $('#tblsupplier')
+             .on('processing.dt', function (e, settings, processing) {
+             }).DataTable({
+                 "destroy": true,
+                 "paging": true,
+                 "info": false,
+                 "searching": false,
+                 "pagingType": 'numbers',
+                 "proccessing": true,
+                 'language': {
+                 "loadingRecords": "&nbsp;",
+                 "decimal": ",",
+                 "thousands": ","
+             },
+             "serverSide": true,
+             "filter": true,
+             "ajax": {
+
+                 url: ControllerURL,
+                 type: 'POST',
+                 "data": function (d) {
+                   //  d.id = id,
+                        // d.searchby = searchby,
+                         //d.searchstring = searchstring
+
+                 }
+             },
+
+             "columns": [
+                     { "data": "SupplierCode", "autoWidth": true },
+                     { "data": "SupplierName", "autoWidth": true },
+                     { "data": "Address", "autoWidth": true },
+                     { "data": "City", "autoWidth": true },
+                     { "data": "MobileNo", "autoWidth": true },
+                     { "data": "EmailID", "autoWidth": true },
+
+                      //{
+                      //    "data": "EmailID",
+                      //   render: $.fn.dataTable.render.number(',', '.', 2)
+                      //   , "autoWidth": true
+                      // }
+                     ],
+                 columnDefs:
+                 [
+                     {
+                         "targets": 0,
+                         "className": "text-xs",
+                         "width": "8%"
+
+                     },
+                     {
+                         "targets": 1,
+                         "className": "text-xs",
+                         "width": "20%"
+                     },
+                     {
+                         "targets": 2,
+                         "className": "text-xs text-wrap",
+                         "width": "30%"
+                     },
+                     {
+                         "targets": 3,
+                         "className": "text-xs",
+                         "width": "10%"
+                     },
+
+                     {
+                         "targets": 4,
+                         "className": "text-end text-xs",
+                         "width": "10%"
+                     },
+                     {
+                         "targets": 5,
+                         "className": "text-end text-xs",
+                         "width": "10%"
+                     },
+                     {
+                         "targets": 6,
+                         "className": "text-start text-xs",
+                         "width": "10%",
+                         "render": function (data, type, full, meta) {
+
+                             return returnDropdownButton(full.ID);
+                         }
+                     },
+
+                 ]
+
+            });
+
+
+      }
+
+            function returnDropdownButton(SupplierCode)
+            {
+               
+                console.log("SupplierCode" + SupplierCode)
+                let link = "";
+
+                let view_link = '<a href = "javascript:;"  class="mx-2" ><i class="fas fa-eye " style="color:#229954"></i></a >';
+                let edit_link = '<a href = "javascript:EditSupplier(' + SupplierCode + ')"; class="mx-2"><i class="fas fa-edit" style="color:#229954" ></i></a >';
+                let delete_link = '<a href = "javascript:Delete(' + SupplierCode +')"; class="mx-2" ><i class="fas fa-trash " style="color:red"></i></a >';
+
+                link = view_link + edit_link + delete_link;
+                return link;
+            }
+
+
+
+        function EditSupplier(id)
+        {
+            var url = '@Url.Action("Edit","Supplier")';
+            url = url + "/" + id;
+
+            $.get(url, function (res) {
+                console.log(res);
+                let check = IsJsonString(res);
+                console.log(check);
+                if (check) {
+                    let resp = JSON.parse(res);
+                    console.log(resp.status);
+                    if (resp) {
+                        console.log(resp);
+
+                        if (resp.status == 'False' && resp.data == 'NotAuthorized') {
+                            console.log('sw');
+                            swal({ title: "You dont have Access for this!", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    window.location.reload();
+                                }
+                            });
+                        }
+                    }
+                }
+                else {
+                    $("#divEditContent").html(res);
+                    $('#divEdit').modal('show')
+                }
+
+
+            });
+        }
+
+
+
+     function Delete(id)
+     {
+         debugger
+         var form = $('#frmNewEmp');
+         var token = $('input[name="__RequestVerificationToken"]', form).val();
+         var headers = {};
+         headers['__RequestVerificationToken'] = token;
+         swal({ title: "Are You Sure?", text: "", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+            if (result == true) {
+                var returnURL='@Url.Action("Index", "Supplier")';
+                var url = '@Url.Action("Delete", "Supplier")';
+                url = url + "/" + id;
+                    $.ajax({
+                    type: 'POST',
+                    url: url,
+                    headers: headers,
+                    contentType: "application/json",
+                        success: function (res) {
+                            console.log(res);
+                        if (res == "Failed")
+                        {
+                            swal("Alert", "You Cannot Delete this Record", "warning");
+                        }
+                        else
+                        {
+
+                            console.log(res);
+                            let resp = JSON.parse(res);
+                            console.log(resp.status);
+                            if (resp) {
+                                console.log(resp);
+
+                                if (resp.status == 'False' && resp.data == 'NotAuthorized') {
+                                    console.log('sw');
+                                    swal({ title: "You dont have Access for this!", icon: "warning" }).then((result) => {
+                                        if (result == true) {
+                                            window.location.reload();
+                                        }
+                                    });
+                                }
+                            }
+                        }
+
+                     },
+
+                      failure: function () { alert("Error"); }
+
+                    });
+            }
+         });
+
+     }
+
+     function SupplierExport()
+     {
+
+         window.location.href = '@Url.Action("SupplierExport", "Supplier")';
+
+     }
+     function downloadexcel()
+     {
+
+         window.location.href = '@Url.Action("DownloadSupplierExcel", "Supplier")';
+
+     }
+     function Importexcel()
+     {
+           var url = '@Url.Action("ImportExcel", "Supplier")';
+
+
+            $.get(url, function (data) {
+                $("#divUploadContent").html(data);
+               // alert(data);
+                $('#divUpload').modal('show')
+            });
+
+     }
+
+</script>
+

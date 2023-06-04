@@ -1,0 +1,249 @@
+﻿@model VerifyWebApp.Models.ITPeriod
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<style>
+    label span {
+        color: red;
+        font-size: 20px;
+    }
+</style>
+
+<div class="modal-content">
+    <div class="modal-header">
+        
+        <h4 class="modal-title htitle">Edit ITPeriod</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+    @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+    {@Html.AntiForgeryToken();
+        <div class="modal-body">
+
+
+            <div class="form-group">
+                <label for="praticesname">Start Date<span>*</span></label>
+
+                <div class='input-group date' id='dtStartDate'>
+                    <input type='text' id="txtStartDate" class="form-control" required />
+
+                    <div class="input-group-addon">
+                        <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                    </div>
+
+                    </div>
+                    <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
+                </div>
+            <div class="form-group">
+                <label for="praticesname">End Date<span>*</span></label>
+                <div class='input-group date' id='dtEndDate'>
+                    <input type='text' id="txtEndDate" class="form-control" required />
+                    <div class="input-group-addon">
+                        <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                    </div>
+
+                    </div>
+                    <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
+                </div>
+            <div class="form-group">
+                <label>Lock this period so entries cannot be made<span>*</span></label>
+                @Html.CheckBox("isPeriodlockFlag", false)
+               
+            </div>
+           
+            <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
+            <label id="invaliddate" style="color:#CC0000;font-weight:400" class="text-danger error"></label>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn saveBtn btn-sm" onclick="addsubperiod();">Save</button>
+            <button type="button" class="btn btn-sm clBtn" onclick="closeaddperiod();">Close</button>
+        </div>
+    }
+</div><!-- /.modal-content -->
+<
+
+<script type="text/javascript">
+
+        $('#dtStartDate').datetimepicker({
+            format: 'DD/MM/YYYY',
+            icons:
+            {
+                next: 'fa fa-angle-right',
+                previous: 'fa fa-angle-left'
+            },
+
+        });
+        $('#dtEndDate').datetimepicker({
+            format: 'DD/MM/YYYY',
+            icons:
+            {
+                next: 'fa fa-angle-right',
+                previous: 'fa fa-angle-left'
+            },
+        });
+        var EndDateStatus = false;
+        var StartDateStatus = false;
+        $(document).ready(function () {
+            $("#txtStartDate").val('@Model.str_fromdate');
+            $("#txtEndDate").val('@Model.str_todate');
+            var checkperiod='@Model.PeriodlockFlag';
+            if (checkperiod == 1)
+            {
+                $("#isPeriodlockFlag").prop("checked", true);
+
+            }
+            else {
+                $("#isPeriodlockFlag").prop("checked", false);
+            }
+            $("#startdateerror,#enddateerror").hide();
+
+            $("#invaliddate").hide();
+
+            $("#btnSave").click(function () {
+
+                var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+                var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+
+                if (new Date(startdate) > new Date(enddate)) {
+
+                    $("#invaliddate").html(" * To Date must be greater than From Date");
+                    $("#invaliddate").show();
+                }
+                else {
+
+                    $("#invaliddate").hide();
+               //     alert("test");
+                    SaveData();
+                }
+
+
+
+            });
+
+
+        });
+
+
+        function SaveData() {
+
+            // alert('Save');
+            var periodlock;
+            if ($('#isPeriodlockFlag').is(':checked')) {
+               // alert("checked");
+
+                periodlock = 1;
+            }
+            else {
+                periodlock = 0;
+
+            }
+
+            var StartDate;
+            var EndDate;
+
+
+
+            StartDate = $('#txtStartDate').val();
+            EndDate = $('#txtEndDate').val();
+
+
+
+
+            if (StartDate == '') {
+                StartDateStatus = false;
+            }
+            else {
+                //$('#assignError').hide();
+                StartDateStatus = true;
+            }
+            if (EndDate == '') {
+                EndDateStatus = false;
+            }
+            else {
+                //$('#assignError').hide();
+                EndDateStatus = true;
+            }
+
+            if (StartDateStatus == true && EndDateStatus == true) {
+
+
+                $("#startdateerror,#enddateerror").hide();
+
+                var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+                var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+                var postdata =
+                    {
+                        "FromDate": startdate,
+                        "ToDate": enddate,
+                        "PeriodlockFlag": periodlock
+
+                    };
+              //  alert(postdata);
+
+                var form = $('#frmNewEmp');
+                var token = $('input[name="__RequestVerificationToken"]', form).val();
+                var headers = {};
+                headers['__RequestVerificationToken'] = token;
+                swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+                    if (result == true) {
+
+                        var ControllerURL = '@Url.Action("Edit", "ItPeriod")';
+
+                        // alert(ControllerURL);
+                        var returnURL = '@Url.Action("Index", "ItPeriod")';
+                        $.ajax({
+                            type: 'POST',
+                            url: ControllerURL,
+                            contentType: "application/json",
+                            headers: headers,
+                            data: JSON.stringify(postdata),
+                            success: function (res) {
+                                if (res == "Failed") {
+                                    swal("Alert", "You Cannot Add this Record", "warning");
+                                }
+                                else {
+                                    swal({ title: "Successfully Edited!", icon: "success" }).then((result) => {
+                                        if (result == true) {
+                                            window.location.replace(returnURL);
+                                        }
+                                    });
+                                }
+
+                            },
+
+                            failure: function () { alert("Error"); }
+
+                        });
+                    }
+                });
+                // window.location.replace(returnURL);
+            }
+
+            else {
+                if (StartDateStatus == true && EndDateStatus == false) {
+                    $('#enddateerror').show();
+
+                    $('#startdateerror').hide();
+
+                } else if (EndDateStatus == true && StartDateStatus == false) {
+                    $('#enddateerror').hide();
+
+                    $('#startdateerror').show();
+                }
+
+                else {
+                    $('#enddateerror').show();
+
+                    $('#startdateerror').show();
+
+                }
+
+                return false;
+            }
+        }
+
+
+</script>

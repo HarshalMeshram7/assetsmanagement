@@ -1,0 +1,147 @@
+﻿
+@{
+    ViewBag.Title = " Assets Extra Found_Index";
+}
+
+<div class="container-fluid py-4">
+    <div class="row my-1">
+        <div class="col-12">
+            <div class="card">
+
+                <div class="card-header pb-0">
+                    <div class="row">
+                        <div class="d-sm-flex justify-content-between" style="border-bottom:groove">
+                            <div class="text-2xl"><b>Assets Extra Found Report </b></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    @using (@Html.BeginForm(null, null, FormMethod.Get, new { id = "frmNewEmp", name = "frmNewEmp" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="modal-body">
+
+
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label for="praticesname" class="form-control-sm">Select Batch<span style="color:#CC0000;">*</span></label>
+                                    @Html.DropDownList("BatchName", (SelectList)ViewBag.BatchName, "Select Batch", new { @class = "form-control form-control-sm", id = "BatchId", @required = true })
+                                    <div style="color:#CC0000;font-weight:400" id="locaerror"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
+                   
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn saveBtn btn-sm" id="btngetreport">Show Report</button>
+                    </div>
+
+                }
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+          
+       
+<div id="progressbar" class="modal fade" role="dialog" style="height: auto;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lx">
+
+        <!-- Modal content-->
+        <div class="modal-content" style="height:auto;width:auto;overflow:auto">
+            <div class="modal-header">
+                <label style="color:red;text-align: center;">Please wait........</label>
+
+            </div>
+            <div class="modal-body ">
+
+                <div class="row col-6" style="overflow:auto;align-content:center">
+                    <label style="color:darkred;text-align: center;"> Report is in progress........</label>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+
+    $(document).ready(function ($) {
+        $('#progressbar').modal('hide');
+        //voucherdate set to all other date
+
+        //$('#dtfromDate').datetimepicker({
+        //    format: 'DD/MM/YYYY'
+        //});
+        //$('#dttoDate').datetimepicker({
+        //    format: 'DD/MM/YYYY'
+        //})
+        $("#frmNewEmp").submit(function (e) {
+            var BatchId = $("#BatchId").val();
+            // var todate = $("#Todate").val();
+            getreport(BatchId);
+            e.preventDefault();
+            return false;
+
+        });
+
+    });
+    if (typeof jQuery !== 'undefined') {
+        console.log('jQuery Loaded');
+    }
+    else {
+        console.log('not loaded yet');
+    }
+
+    function getreport(BatchId) {
+
+        @*var url = '@Url.Action("GetAssetsExtraFound", "BatchVerification")';
+
+        url = url + "?BatchId=" + BatchId;
+
+            window.location.href = url;*@
+
+          var data = {
+              'BatchId': BatchId
+
+
+
+        };
+          var form = $('#frmNewEmp');
+          var token = $('input[name="__RequestVerificationToken"]', form).val();
+          var headers = {};
+          headers['__RequestVerificationToken'] = token;
+            $('#progressbar').modal('show');
+         var ControllerURL = '@Url.Action("GetAssetsExtraFound", "BatchVerification")';
+        var DownloadURL = '@Url.Action("Download", "BatchVerification")';
+
+            $.ajax({
+                type: 'POST',
+                url: ControllerURL,
+                headers: headers,
+                contentType: "application/json",
+                data: JSON.stringify(data),
+
+
+                success: function (data) {
+                    var fileurl = DownloadURL + '?fileGuid=' + data.FileGuid
+                        + '&filename=' + data.FileName;
+                    $('#progressbar').modal('hide');
+                    //alert(fileurl);
+
+                    window.location = fileurl;
+    $('#progressbar').modal('hide');
+
+                },
+                failure: function () { alert("Error"); }
+            });
+    }
+
+</script>
+
+

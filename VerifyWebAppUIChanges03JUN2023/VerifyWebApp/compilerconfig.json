@@ -1,0 +1,13 @@
+﻿[
+  {
+    "outputFile": "Content/main.css",
+    "inputFile": "Content/bootstrap/main.scss",
+    "options": {
+      "sourceMap": true
+    }
+  },
+  {
+    "outputFile": "Scripts/app/supplier.es5.js",
+    "inputFile": "Scripts/app/supplier.js"
+  }
+]

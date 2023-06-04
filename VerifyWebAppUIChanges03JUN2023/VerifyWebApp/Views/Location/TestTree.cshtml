@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "TestTree";
+}
+
+<h2>TestTree</h2>
+<div class="container-fluid rounded page border shadow">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div id="jstree_sample" style="margin-top:100px">
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+
+    $('#jstree_sample').jstree({
+        'core': {
+            'data': [
+                { "id": "ajson1", "parent": "#", "text": "Simple root node" },
+                { "id": "ajson3", "parent": "ajson1", "text": "Child 1" },
+                { "id": "ajson4", "parent": "ajson1", "text": "Child 2" },
+                { "id": "ajson5", "parent": "ajson1", "text": "Child 3" },
+                { "id": "ajson6", "parent": "ajson3", "text": "Child 3 -1 " },
+            ],
+            'themes': {
+                'name': 'default',
+
+            }
+        }
+
+    });   
+</script>

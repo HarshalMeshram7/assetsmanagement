@@ -1,0 +1,304 @@
+﻿@model VerifyWebApp.Models.EmployeeAsset
+@{
+    ViewBag.Title = "Add";
+}
+<div class="modal-content">
+    <div class="modal-header hborder">
+
+        <h4 class="modal-title htitle">Assign  Asset to Employee</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+    @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+            {@Html.AntiForgeryToken();
+        <div class="modal-body">
+
+            @Html.ValidationSummary(true)
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="Company">Search by Asset Sr No<span>*</span></label>
+                        <input id="txtSearchAssetSrNo" type ="text" class="form-control"/>
+                    </div>
+                </div>
+            </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="Company">Asset<span>*</span></label>
+                            @Html.DropDownList("AssetNo", (SelectList)ViewBag.Assestlist, "Select Asset", new { @class = "form-control", id = "AssetId", @required = "required", @onblur = "checkassetasigned();" })
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="Company">Employee<span>*</span></label>
+                            @Html.DropDownList("str_employeeid", (SelectList)ViewBag.Emplist, "Select Employee", new { @class = "form-control", id = "str_employeeid", @required = "required" })
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <label for="praticesname">Issue Date<span>*</span></label>
+                        <div class='input-group date' id='dtIssueDate'>
+                            <input type='text' id="IssueDate" class="form-control" required />
+
+                            <div class="input-group-addon">
+                                <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="display:none">
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label for="Company">Asset returned </label>
+
+                            @Html.CheckBox("AssetReceivedFlag", false)
+
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <label for="praticesname">Asset returned date</label>
+                        <div class='input-group date' id='dtRDate'>
+                            <input type='text' id="RDate" class="form-control" />
+
+                            <div class="input-group-addon">
+                                <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
+            </div>
+        <div class="modal-footer">
+            <button type="button" class="btn delBtn" data-dismiss="modal">Close</button>
+            <button type="button" class="btn modBtn" id="btnSave">Save</button>
+        </div>
+    }
+</div><!-- /.modal-content -->
+
+
+
+<script type="text/javascript">
+
+
+
+    var assetreceivedflagstatus = "N";
+    var checkassetassignedflag = "N";
+    var comparedateflag = "N";
+    $(document).ready(function ($) {
+
+
+        var cars = ['Audi', 'Audi1', 'Audi2', 'Audi3', 'Audi4' ,'BMW', 'Bugatti', 'Ferrari', 'Ford', 'Lamborghini', 'Mercedes Benz', 'Porsche', 'Rolls-Royce', 'Volkswagen'];
+        // Constructing the suggestion engine
+        var cars = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.whitespace,
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            local: cars
+        });
+
+        // Initializing the typeahead
+        $('#txtSearchAssetSrNo').typeahead({
+            hint: true,
+            highlight: true, /* Enable substring highlighting */
+            minLength: 1 /* Specify minimum characters required for showing suggestions */
+        },
+            {
+                name: 'cars',
+                source: cars
+            });
+
+        //AssetReceivedFlag
+        $('#AssetReceivedFlag').change(function () {
+            if ($(this).prop("checked")) {
+                assetreceivedflagstatus = "Y";
+
+            }
+            else {
+
+                assetreceivedflagstatus = "N";
+            }
+        });
+        $('#dtIssueDate').datetimepicker({
+            format: 'DD/MM/YYYY',
+            icons:
+            {
+                next: 'fa fa-angle-right',
+                previous: 'fa fa-angle-left'
+            },
+
+        });
+        $('#dtRDate').datetimepicker({
+            format: 'DD/MM/YYYY',
+            icons:
+            {
+                next: 'fa fa-angle-right',
+                previous: 'fa fa-angle-left'
+            },
+        });
+
+
+
+        $("#btnSave").click(function () {
+            SaveData();
+        });
+
+
+        //$("#frmNewEmp").submit(function (e) {
+
+        //    SaveData();
+        //    e.preventDefault();
+        //    return false;
+
+        //});
+
+    });
+
+    function checkassetasigned() {
+        var assetid = $('#AssetId').val();
+       
+        var url = '@Url.Action("CheckAssetalreadyassigned", "EmployeeAsset")?assetid=' + assetid;
+                if (assetid != "") {
+                    $.ajax({
+                        url: url,
+                        type: "GET",
+                        contentType: "application/json",
+                        success: function (res) {
+                             //alert(res.Data)
+                            if (res == "assetnotallocated") {
+                              
+                                checkassetassignedflag = "N";
+                            }
+                            else {
+                                checkassetassignedflag = "Y";
+                                var empname = res;
+                                
+                                swal("Alert", "Asset is already assigned to   " +empname, "warning");
+
+                            }
+
+                           
+
+                        },
+                        error: function (reponse) {
+                            alert("error : " + reponse);
+                        }
+                    });
+                 }
+                else {
+                    swal("Alert", "Asset not selected" + empname, "warning");
+                }
+
+    }
+    function comparedate() {
+    
+        var recieveddate = $('#RDate').val();
+
+        if (recieveddate == "" || recieveddate==null) {
+            comparedateflag = "N";
+        }
+        else {
+            var issuedate = moment($("#IssueDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var rdate = moment($("#RDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+
+            if (new Date(issuedate) >= new Date(rdate)) {
+
+                comparedateflag = "Y";
+                swal("Alert", "Issue Date must be greater than Recieved Date", "warning");
+            }
+            else {
+                comparedateflag = "N";
+            }
+        }
+    }
+
+   function SaveData() {
+
+        var result;
+        var empid;
+
+        var assetno;
+        var issuedate;
+        var rdate;
+        var assetreceivedflag = assetreceivedflagstatus;
+
+
+
+
+        //alert('2');
+
+
+        empid = $('#str_employeeid').val();
+        assetno = $('#AssetId').val();
+        issuedate = moment($("#IssueDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+        if ($("#RDate").val() != "") {
+            rdate = moment($("#RDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+        }
+        else {
+            rdate = "";
+        }
+
+            var postdata =
+            {
+                    "RecievedDate": rdate,
+                    "IssueDate": issuedate,
+                    "AssetId": assetno,
+                    "str_employeeid": empid,
+                    "AssetRecievedFlag": assetreceivedflag
+
+
+            };
+            //
+
+            checkassetasigned();
+            comparedate();
+           
+            console.log(postdata)
+       
+            if (checkassetassignedflag == "N" && comparedateflag == "N") {
+                var form = $('#frmNewEmp');
+                var token = $('input[name="__RequestVerificationToken"]', form).val();
+                var headers = {};
+                headers['__RequestVerificationToken'] = token;
+                swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+                    if (result == true) {
+                        var ControllerURL = '@Url.Action("Add", "EmployeeAsset")';
+
+
+                        var returnURL = '@Url.Action("Index", "EmployeeAsset")';
+
+                        $.ajax({
+                            type: 'POST',
+                            url: ControllerURL,
+                            contentType: "application/json",
+                            headers: headers,
+                            data: JSON.stringify(postdata),
+                            success: function (res) {
+                                if (res == "Failed") {
+                                    swal("Alert", "You Cannot Add this Record", "warning");
+                                }
+                                else {
+                                    swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
+                                        if (result == true) {
+                                            window.location.replace(returnURL);
+                                        }
+                                    });
+                                }
+
+                            },
+
+                            failure: function () { alert("Error"); }
+
+                        });
+                    }
+                });
+            }
+                }
+</script>
+
+
+

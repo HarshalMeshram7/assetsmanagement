@@ -1,0 +1,450 @@
+﻿
+@model VerifyWebApp.Models.AccessRights
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2></h2>
+
+<div id="locationmodal" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Edit</h4>
+            </div>
+            @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-body ">
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+
+                            <label for="praticesname">User<span style="color:#CC0000;">*</span></label>
+                            
+                            <!--@Html.DropDownList("Userid", (SelectList)ViewBag.Username, "Select User", new { @class = "form-control", id = "Userid", @required = true }) -->
+                            @Model.username 
+
+                            <div style="color:#CC0000;font-weight:400" id="locaerror"></div>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label for="praticesname">Access Page <span style="color:#CC0000;">*</span></label>
+                            <!-- @Html.DropDownList("Controllername", (SelectList)ViewBag.controllername, "Select Access Page", new { @class = "form-control", id = "Controllername", @required = true })-->
+                              @ViewBag.pagename  
+                            <div style="color:#CC0000;font-weight:400" id="locaerror"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-4">
+                            <input type="checkbox" id="index" />
+                            <label for="praticesname" id="lblindex">Index</label>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <input type="checkbox" id="add" />
+                            <label for="praticesname" id="lbladd">Add</label>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <input type="checkbox" id="edit" />
+                            <label for="praticesname" id="lbledit">Edit</label>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="form-group col-lg-4">
+                            <input type="checkbox" id="delete" />
+                            <label for="praticesname" id="lbldelete"> Delete</label>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <input type="checkbox" id="export" />
+                            <label for="praticesname" id="lblexport">Export</label>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <input type="checkbox" id="import" />
+                            <label for="praticesname" id="lblimport"> Import</label>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
+
+
+                <div class="modal-footer">
+                    @*<button type="button" class="btn btn-default" onclick="closeloc();">Close</button>*@
+                    <button type="submit" class="btn btn-primary" id="btnsave">Save</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var addflag = "no";
+    var editflag = "no";
+    var deleteflag = "no";
+    var exportflag = "no";
+    var importflag = "no";
+    var indexflag = "no";
+
+    $(document).ready(function ($) {
+
+
+        $('#Controllername').change(function () {
+            var cname = $("#Controllername").val();
+            if (cname == "Reports" || cname =="ExportData") {
+                document.getElementById('add').hidden = true;
+                document.getElementById('edit').hidden = true;
+
+                document.getElementById('import').hidden = true;
+                document.getElementById('delete').hidden = true;
+                document.getElementById('export').hidden = true;
+                document.getElementById('lbladd').hidden = true;
+                document.getElementById('lbledit').hidden = true;
+                document.getElementById('lblindex').hidden = false;
+                document.getElementById('index').hidden = false;
+                document.getElementById('lblimport').hidden = true;
+                document.getElementById('lblexport').hidden = true;
+                document.getElementById('lbldelete').hidden = true;
+                $("#index").prop("checked", false);
+                indexflag = "no";
+            }
+            else {
+                document.getElementById('add').hidden = false;
+                document.getElementById('edit').hidden = false;
+                document.getElementById('index').hidden = false;
+                document.getElementById('import').hidden = false;
+                document.getElementById('delete').hidden = false;
+                document.getElementById('export').hidden = false;
+                document.getElementById('lbladd').hidden = false;
+                document.getElementById('lbledit').hidden = false;
+                document.getElementById('lblindex').hidden = false;
+                document.getElementById('lblimport').hidden = false;
+                document.getElementById('lblexport').hidden = false;
+                document.getElementById('lbldelete').hidden = false;
+
+            }
+
+
+        });
+
+        ////initialise value on load
+
+         var userid = '@Model.Userid';
+                var controllername = '@Model.ControllerName';
+                $("#Userid").val(userid);
+                $("#Controllername").val(controllername);
+        /////now checkbox checked if "yes""
+
+
+
+
+
+
+                ///////////////////show other fields on initialise if controller is not report or exportdata
+               // alert(controllername)
+                //if (controllername != "Report" || controllername!= "ExportData")
+                //{
+                //    document.getElementById('add').hidden = false;
+                //    document.getElementById('edit').hidden = false;
+                //    document.getElementById('index').hidden = false;
+                //    document.getElementById('import').hidden = false;
+                //    document.getElementById('delete').hidden = false;
+                //    document.getElementById('export').hidden = false;
+                //    document.getElementById('lbladd').hidden = false;
+                //    document.getElementById('lbledit').hidden = false;
+                //    document.getElementById('lblindex').hidden = false;
+                //    document.getElementById('lblimport').hidden = false;
+                //    document.getElementById('lblexport').hidden = false;
+                //    document.getElementById('lbldelete').hidden = false;
+
+
+
+
+                //}
+
+                if ('@Model.ControllerName' == "Reports" || '@Model.ControllerName' == "ExportData") {
+
+                    document.getElementById('add').hidden = true;
+                    document.getElementById('edit').hidden = true;
+                    document.getElementById('index').hidden = false;
+                    document.getElementById('import').hidden = true;
+                    document.getElementById('delete').hidden = true;
+                    document.getElementById('export').hidden = true;
+                    document.getElementById('lbladd').hidden = true;
+                    document.getElementById('lbledit').hidden = true;
+                    document.getElementById('lblindex').hidden = false;
+                    document.getElementById('lblimport').hidden = true;
+                    document.getElementById('lblexport').hidden = true;
+                    document.getElementById('lbldelete').hidden = true;
+
+
+                }
+                else {
+                    document.getElementById('add').hidden = false;
+                    document.getElementById('edit').hidden = false;
+                    document.getElementById('index').hidden = false;
+                    document.getElementById('import').hidden = false;
+                    document.getElementById('delete').hidden = false;
+                    document.getElementById('export').hidden = false;
+                    document.getElementById('lbladd').hidden = false;
+                    document.getElementById('lbledit').hidden = false;
+                    document.getElementById('lblindex').hidden = false;
+                    document.getElementById('lblimport').hidden = false;
+                    document.getElementById('lblexport').hidden = false;
+                    document.getElementById('lbldelete').hidden = false;
+                }
+          if ('@Model.Index' == "yes") {
+            $("#index").prop("checked", true);
+            indexflag = "yes";
+                }
+                else {
+
+            $("#index").prop("checked", false);
+            indexflag = "no";
+                }
+
+
+        if ('@Model.Add' == "yes") {
+            $("#add").prop("checked", true);
+            addflag = "yes";
+                }
+                else {
+
+            $("#add").prop("checked", false);
+            addflag = "no";
+                }
+        if ('@Model.Edit' == "yes") {
+                    $("#edit").prop("checked", true);
+                    editflag = "yes";
+                }
+                else {
+
+            $("#edit").prop("checked", false);
+            editflag = "no";
+        }
+        if ('@Model.Delete' == "yes") {
+            $("#delete").prop("checked", true);
+            deleteflag = "yes";
+
+                }
+                else {
+
+            $("#delete").prop("checked", false);
+            deleteflag = "no";
+                }
+
+          if ('@Model.Export' == "yes") {
+                    $("#export").prop("checked", true);
+                    exportflag = "yes";
+                }
+                else {
+
+            $("#export").prop("checked", false);
+            exportflag = "no";
+        }
+        if ('@Model.Import' == "yes") {
+            $("#import").prop("checked", true);
+            importflag = "yes";
+
+                }
+                else {
+
+            $("#import").prop("checked", false);
+            importflag = "no";
+                }
+
+
+        ///////////
+        //if checkbox is checked logic
+
+
+        //$('#index').change(function () {
+        //    if ($(this).prop("checked")) {
+        //        indexflag = "yes";
+        //        //alert(addflag)
+        //    }
+        //    if ($(this).prop("checked", false)) {
+        //        indexflag = "no";
+        //        //alert(addflag)
+        //    }
+
+        //});
+        $('#index').change(function () {
+
+            if ($(this).is(':checked')) {
+                indexflag = "yes";
+              //  alert(indexflag)
+            }
+            else {
+                indexflag = "no";
+                //alert(indexflag)
+            }
+
+        });
+        $('#add').change(function () {
+            if ($(this).is(':checked')) {
+                addflag = "yes";
+                //alert(addflag)
+            }
+            else  {
+                addflag = "no";
+                //alert(addflag)
+            }
+
+        });
+        $('#edit').change(function () {
+            if ($(this).is(':checked')) {
+                editflag = "yes";
+
+            }
+            else {
+                editflag = "no";
+
+            }
+        });
+        $('#delete').change(function () {
+            if ($(this).is(':checked')) {
+                deleteflag = "yes";
+
+            }
+          else {
+                deleteflag = "no";
+
+            }
+        });
+        $('#import').change(function () {
+            if ($(this).is(':checked')) {
+                importflag = "yes";
+
+            }
+           else {
+                importflag = "no";
+
+            }
+        });
+        $('#export').change(function () {
+            if ($(this).is(':checked')) {
+                exportflag = "yes";
+
+            }
+         else {
+                exportflag = "no";
+
+            }
+        });
+        $("#frmNewEmp").submit(function (e) {
+
+            // console.log(postdata)
+            savedata()
+            e.preventDefault();
+            return false;
+
+        });
+
+    });
+
+
+
+    if (typeof jQuery !== 'undefined') {
+        console.log('jQuery Loaded');
+    }
+    else {
+        console.log('not loaded yet');
+    }
+
+    function savedata() {
+        var userid = '@Model.Userid'   //$("#Userid").val();
+
+
+        var controllername = '@Model.ControllerName';   // $("#Controllername").val();
+
+        var add;
+        var edit;
+        var Delete;
+        var exports;
+        var imports;
+        var index;
+        if (controllername == "Reports" || controllername == "ExportData") {
+            add = "no";
+            edit = "no";
+            Delete = "no";
+            exports = "no";
+            imports = "no";
+            index = indexflag;
+        }
+        else {
+            add = addflag;
+            edit = editflag;
+            Delete = deleteflag;
+            exports = exportflag;
+            imports = importflag;
+            index = indexflag;
+        }
+        if (add == "no" && edit == "no" && Delete == "no" && index == "no" && imports == "no" && exports == "no") {
+
+            swal("Alert", "You have not selected any options for an page", "warning");
+        }
+        else {
+            var postdata = {
+
+                "ControllerName": controllername,
+                "Userid": userid,
+                "Add": add,
+                "Edit": edit,
+                "Delete": Delete,
+                "Export": exports,
+                "Import": imports,
+                "Index": index
+            }
+            console.log(postdata);
+            var form = $('#frmNewEmp');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
+            var headers = {};
+            headers['__RequestVerificationToken'] = token;
+
+            swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+                if (result == true) {
+
+                    var ControllerURL = '@Url.Action("Edit", "AccessRights")';
+
+                    // alert(ControllerURL);
+                    var returnURL = '@Url.Action("Index", "AccessRights")';
+                    $.ajax({
+                        type: 'POST',
+                        url: ControllerURL,
+                        contentType: "application/json",
+                        headers: headers,
+                        data: JSON.stringify(postdata),
+                        success: function (res) {
+                            if (res == "Failed") {
+                                swal("Alert", "You Cannot Add this Record", "warning");
+                            }
+                            else {
+                                swal({ title: "Successfully Edited!", icon: "success" }).then((result) => {
+                                    if (result == true) {
+                                        window.location.replace(returnURL);
+                                    }
+                                });
+                            }
+
+                        },
+
+                        failure: function () { alert("Error"); }
+
+                    });
+                }
+            });
+        }
+    }
+
+</script>

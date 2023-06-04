@@ -1,0 +1,731 @@
+﻿
+<style>
+    #jstree {
+        width: 500px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    #normal_div {
+        margin-top: 10px;
+        width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        border: 1px solid blue;
+        white-space: nowrap;
+    }
+
+    .jstree-node > a {
+        /* 100% - (the width of the presentation node : the line - the left padding of the <a> node - the right padding of the <a> node)*/
+        width: calc(100% - (100px + 1px + 4px));
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+</style>
+
+
+
+
+@using (@Html.BeginForm(null, null, FormMethod.Get, new { id = "frmNewEmp", name = "frmNewEmp" }))
+{
+    @Html.AntiForgeryToken()
+}
+<div class="container-fluid py-4">
+
+
+    <div class="row my-2">
+        <div class="card">
+            <div class="card-header pb-0">
+                <div class="row">
+                    <div class="d-sm-flex justify-content-between hborder">
+                        <div class="htitle"> <b>Cost Centers </b> </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row my-2" style="padding-left:10px">
+                <div class="col-md-12">
+                    <button type="button" id="mnuAdd" value="New Practice"
+                            class="btn btn-sm addBtn pull-left m-1 order-1"
+                            data-toggle="tooltip" data-placement="top" title="Add New"
+                            data-delay='{"show":"2000", "hide":"1500"}'>
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" id="mnuEdit" value="New Practice"
+                            class="btn btn-sm modBtn pull-left m-1 order-1"
+                            data-toggle="tooltip" data-placement="top" title="Modify">
+                        <i class="fa fa-edit"></i>
+                      
+                    </button>
+                    <button type="button" id="mnuDelete" value="New Practice"
+                            class="btn btn-sm delBtn pull-left m-1 order-1"
+                            data-toggle="tooltip" data-placement="top" title="Delete">
+                        <i class="fa fa-trash-o"></i>
+                    
+                    </button>
+                    <button type="button" id="mnuExpand" value=""
+                            class="btn btn-sm xtraBtn pull-left m-1 order-1"
+                            data-toggle="tooltip" data-placement="top" title="Expand all locations"
+                            data-delay='{"show":"2000", "hide":"1500"}'>
+                        <i class="fa fa-expand"></i>
+
+                    </button>
+                    <button type="button" id="mnuContract" value=""
+                            class="btn btn-sm xtraBtn pull-left m-1 order-1"
+                            data-toggle="tooltip" data-placement="top" title="Contract all locations"
+                            data-delay='{"show":"2000", "hide":"1500"}'>
+                        <i class="fa fa-compress"></i>
+
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+
+                
+                <div class="col-md-4">
+                    <div class="tree m-1">
+                        <div class="row" style=" overflow-y: scroll;max-height:initial;height:550px">
+                            <div class="col-md-12">
+                                <div id="jstree">
+                                    <!-- in this example the tree is populated from inline HTML -->
+                                    <ul>
+                                        <li>
+                                            Root node 1
+                                            <ul>
+                                                <li id="child_node_1">Child node 1</li>
+                                                <li>Child node 2</li>
+                                            </ul>
+                                        </li>
+                                        <li style="margin-top:3px">Root node 2</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+
+                    <div class="table-responsive">
+                        <table class="table table-flush table-hover text-xs"
+                               style="width:50%" id="tblasset">
+                            <thead class="hcol text-uppercase" style="font-weight:bold">
+                                <tr>
+
+                                    <td>
+                                        Asset No
+                                    </td>
+                                    <td>
+                                        Identification No
+                                    </td>
+                                    <td>
+                                        Asset Name
+                                    </td>
+                                    <td>
+                                        Voucher Date
+                                    </td>
+                                    <td class="text-end" width="15%">
+                                        Amount Capitalised
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody style="font-weight: bold; color: black">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+</div>
+<!-- Modal -->
+
+
+<div id="myModal_Add" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title htitle">Add Cost Center</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row ">
+                    <div class="col-md-4"><label id="plbl" class="form-control-sm">Parent Cost Center</label></div>
+                    <div class="col-md-8"> <input id="parentccname" class="form-control form-control-sm" readonly /></div>
+
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-4"><label class="form-control-sm">  Cost Center Code </label><span style="color:#CC0000;">*</span></div>
+                    <div class="col-md-8"><input id="txtCCCode" class="form-control form-control-sm" /></div>
+                </div>
+                <div class="row" style="margin-top:10px">
+                    <div class="col-md-4"><label class="form-control-sm">Cost Center Description</label> <span style="color:#CC0000;">*</span></div>
+                    <div class="col-md-8"><input id="txtCCDescription" class="form-control form-control-sm" /></div>
+                </div>
+                <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm saveBtn" id="btnSave">Save</button>
+                <button type="button" class="btn btn-sm clBtn" id="btnClose" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<div id="myModal_Edit" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title htitle">Edit Cost Center</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row ">
+                    <div class="col-md-4"><label id="eplbl" class="form-control-sm">Parent Cost Center</label></div>
+                    <div class="col-md-8"> <input id="eparentccname" class="form-control form-control-sm" readonly /></div>
+
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-4"><label class="form-control-sm">Cost Center Code</label><span style="color:#CC0000;">*</span></div>
+                    <div class="col-md-8"><input id="txteditCCCode" class="form-control form-control-sm" /></div>
+                </div>
+                <div class="row" style="margin-top:10px">
+                    <div class="col-md-4"> <label class="form-control-sm">Cost Center Decription</label><span style="color:#CC0000;">*</span></div>
+                    <div class="col-md-8"><input id="txteditCCDescription" class="form-control form-control-sm" /></div>
+                </div>
+                <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm saveBtn" id="btneditSave">Save</button>
+                <button type="button" class="btn btn-sm clBtn" id="btneditClose" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<div id="progressbar" class="modal fade" role="dialog" style="height: auto;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lx">
+
+        <!-- Modal content-->
+        <div class="modal-content" style="height:auto;width:auto;overflow:auto">
+            <div class="modal-header">
+                <label style="color:red;text-align: center;">Loading........</label>
+
+            </div>
+            <div class="modal-body ">
+
+                <div class="row col-6" style="overflow:auto;align-content:center">
+                    <label style="color:darkred;text-align: center;">Please wait while we load your report........</label>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    var editnode;
+
+    function getHeaders() {
+        var form = $('#frmNewEmp');
+        var token = $('input[name="__RequestVerificationToken"]', form).val();
+        var headers = {};
+        headers['__RequestVerificationToken'] = token;
+        return headers;
+    }
+
+            $(document).ready(function () {
+                $('#progressbar').modal('hide');
+
+                InitTree();
+                //for loading assets list on page laod
+                showasset('L0-0');
+
+
+                $('#btnSave').click(function (event) {
+
+                    var node = $('#jstree').jstree().get_selected(true)[0];
+
+                    var CCDescription = $('#txtCCDescription').val();
+                    var CCCode = $('#txtCCCode').val();
+
+                   // alert(node.id)
+
+                    if (node == null) {
+                        swal("Alert", "Please Select cost center level to add costcenter!", "warning");
+                    }
+                    else {
+                        var ControllerURL = '@Url.Action("SaveCostCenterNode", "CostCenter")';
+                        if (node.id != ""&& CCDescription != ""   && CCCode != "")
+                        {
+                            var postdata =
+                                {
+                                    "id": node.id,
+                                    "CCDescription": CCDescription,
+                                    "CCCode": CCCode
+
+
+                                };
+
+                            $.ajax({
+                                type: 'POST',
+                                url: ControllerURL,
+                                contentType: "application/json",
+                                headers: getHeaders(),
+                                data: JSON.stringify(postdata),
+                                success: function () {
+                                    $('#myModal_Add').modal('hide');
+                                    //window.location = ApptURL;
+                                    //reloadevents();
+                                    $('#jstree').jstree("destroy");
+                                    InitTree();
+                                },
+                                failure: function () { alert("Error"); }
+                            });
+                            $('#myModal_Edit').modal('hide');
+                            InitTree();
+                        }
+
+                        else {
+
+                            swal("Alert", "Please enter mandatory fields!", "warning");
+
+                        }
+
+                    }
+
+
+                });
+
+
+                $('#mnuAdd').click(function (event) {
+                    var node = $('#jstree').jstree().get_selected(true)[0];
+                    if (node == null) {
+                        swal("Alert", "Please Select cost center level to add costcenter!", "warning");
+                    }
+                    else {
+                        var parentnode = $('#jstree').jstree(true).get_text(node.parent);
+                        // alert(parentnode)
+
+
+                        if (parentnode == "Cost Center List" || parentnode == false) {
+                            // alert("if")
+                            document.getElementById('plbl').hidden = true;
+                            document.getElementById('parentccname').hidden = true;
+                        }
+                        else {
+                            document.getElementById('plbl').hidden = false;
+                            document.getElementById('parentccname').hidden = false;
+                            $('#parentccname').val(parentnode);
+                        }
+
+                        //------------blank fields----------------------------------------
+                      //  $('#parentccname').val(node.text);
+                        $("#txtCCCode").val('');
+                        $("#txtCCDescription").val('');
+
+
+                        //---------------------------------------------
+                        $('#myModal_Add').modal('show');
+                          }
+                    //alert("Add");
+                });
+                $('#mnuEdit').click(function (event) {
+                    //alert("Add");
+                    var node = $('#jstree').jstree().get_selected(true)[0];
+                    if (node == null) {
+                        swal("Alert", "Please Select cost center level to edit costcenter!", "warning");
+                    }
+                    else {
+                        var parentnode = $('#jstree').jstree(true).get_text(node.parent);
+                       // alert(parentnode)
+
+
+                        if (parentnode == "Cost Center List" || parentnode == false) {
+                            // alert("if")
+                            document.getElementById('eplbl').hidden = true;
+                            document.getElementById('eparentccname').hidden = true;
+                        }
+                        else {
+                            document.getElementById('eplbl').hidden = false;
+                            document.getElementById('eparentccname').hidden = false;
+                            $('#eparentccname').val(parentnode);
+                        }
+                     //   $('#parentccname').val(node.text);
+                        editnode = node.id;
+
+                        $('#txteditCCDescription').val(node.text)
+
+                        var ControllerURL = '@Url.Action("GetCostCenterGrpValues", "CostCenter")';
+
+                        ControllerURL = ControllerURL + "/" + node.id
+                        if (node.id != "") {
+
+                            $.ajax({
+                                type: 'GET',
+                                url: ControllerURL,
+                                contentType: "application/json",
+
+                                success: function (Result) {
+                                    //console.log(Result.Data.CCCode);
+                                    $('#txteditCCCode').val(Result.Data.CCCode)
+                                },
+                                failure: function () { alert("Error"); }
+
+                                 });
+                            $('#myModal_Edit').modal('show');
+                        }
+                        else {
+                            swal("Alert", "Please Select cost center level to edit costcenter!", "warning");
+                        }
+
+
+
+                    }
+                    //alert("Add");
+                });
+              //  $('#jstree').jstree();
+                // AJAX
+
+
+               ////------------------delete cost center code------
+                $('#mnuDelete').click(function (event) {
+                    //alert("Add");
+                    var node = $('#jstree').jstree().get_selected(true)[0];
+                    if (node == null) {
+                        swal("Alert", "Please Select Cost Center level to delete Cost Center!", "warning");
+
+
+                    }
+                    else {
+                        Deletecostcenter();
+                        //editnode = node.id;
+                        //$('#myModal_Add').modal('show');
+                        //$('#txteditLocation').val(node.text)
+                        //$('#myModal_Edit').modal('show');
+
+                    }
+                });
+//---------------------------------------------------------------------------
+
+
+
+                // 7 bind to events triggered on the tree
+                $('#jstree').on("changed.jstree", function (e, data) {
+
+                    var node = $('#jstree').jstree().get_selected(true)[0];
+                    showasset(node.id);
+
+                });
+                // 8 interact with the tree - either way is OK
+                $('button').on('click', function () {
+                    $('#jstree').jstree(true).select_node('child_node_1');
+                    $('#jstree').jstree('select_node', 'child_node_1');
+                    $.jstree.reference('#jstree').select_node('child_node_1');
+                });
+                $('#mnuExpand').on('click', function () {
+                    $('#jstree').jstree("open_all");
+                });
+                $('#mnuContract').on('click', function () {
+                    $('#jstree').jstree("close_all");
+                });
+    });
+
+    function InitTree() {
+          $('#jstree').jstree({
+                    'core': {
+                        'data': {
+                            'url': function (node) {
+                                var url = '@Url.Action("GetCostCenter","CostCenter")';
+                                //return node.id === '#' ? url : url;
+                                return url;
+
+                            },
+                            'headers': getHeaders(),
+                            'data': function (node) {
+                                return { 'id': node.id };
+                            }
+                        },
+                        'themes': {
+                            'name': 'proton',
+                            'responsive': true
+                        }
+                    }
+
+        });
+
+
+          $("#jstree").bind("hover_node.jstree", function (e, data) {
+
+              $("#" + data.node.id).prop("title", data.node.text);
+          });
+
+    }
+    //EditSaveLocationNode
+     $('#btneditSave').click(function (event) {
+                    // alert("Add");
+                    // jquery save controller
+                     var node = $('#jstree').jstree().get_selected(true)[0];
+
+                     var CCDescription = $('#txteditCCDescription').val();
+                     var CCCode = $('#txteditCCCode').val();
+
+                     if (node == null) {
+                         swal("Alert", "Please Select cost center level to edit costcenter!", "warning");
+                     } else {
+                         console.log(node.id);
+                         var ControllerURL = '@Url.Action("EditSaveCostCenterNode", "CostCenter")';
+                         if (node != "" && CCDescription != "") {
+
+                             var postdata =
+                                 {
+                                     "id": editnode,
+                                     "CCDescription": CCDescription,
+                                     "CCCode": CCCode,
+                                 };
+                             var form = $('#frmNewEmp');
+                             var token = $('input[name="__RequestVerificationToken"]', form).val();
+                             var headers = {};
+                             headers['__RequestVerificationToken'] = token;
+                             $.ajax({
+                                 type: 'POST',
+                                 url: ControllerURL,
+                                 contentType: "application/json",
+                                 headers: headers,
+                                 data: JSON.stringify(postdata),
+                                 success: function () {
+                                     $('#myModal_Edit').modal('hide');
+                                     //window.location = ApptURL;
+                                     //reloadevents();
+
+                                     editnode = "";
+                                    // $('#jstree').jstree("destroy");
+                                     $('#jstree').jstree(true).refresh();
+                                   //  InitTree();
+                                 },
+                                 failure: function () { alert("Error"); }
+                             });
+
+
+
+                         }
+                         else {
+                             swal("Alert", "Please Enter Mandatory fields!", "warning");
+
+                            }
+
+                         }
+                     });
+
+     function showasset(id) {
+
+         let searchby = '';
+        let searchstring = '';
+       // searchby = $("#cboSearchBy").val();
+
+        //searchstring = $("#txtsearch").val();
+
+
+         var ControllerURL = '@Url.Action("GetAssetData", "Asset")';
+         console.log(ControllerURL);
+         var table = $('#tblasset')
+             .on('processing.dt', function (e, settings, processing) {
+               //  $('#divspinner').css('display', processing ? 'block' : 'none');
+             }).DataTable({
+                 "destroy": true,
+                 "paging": true,
+                 "info": false,
+                 "searching": true,
+                 "pagingType": 'numbers',
+                 "proccessing": true,
+                 'language': {
+                 "loadingRecords": "&nbsp;",
+                 "decimal": ",",
+                 "thousands": ","
+             },
+             "serverSide": true,
+             "filter": true,
+             "ajax": {
+
+                 url: ControllerURL,
+                 // type: 'GET',
+                 //  data: { "term": productname },
+                 type: 'POST',
+                 "data": function (d) {
+                         d.id = id,
+                         d.searchby = searchby,
+                         d.searchstring = searchstring
+                 }
+
+             },
+
+
+             "columns": [
+                     { "data": "AssetNo", "autoWidth": true },
+                     { "data": "AssetIdentificationNo", "autoWidth": true },
+                     { "data": "AssetName", "autoWidth": true },
+                     { "data": "str_VoucherDate", "autoWidth": true },
+                     {
+                         "data": "AmountCapitalisedCompany",
+                         render: $.fn.dataTable.render.number(',', '.', 2)
+                         , "autoWidth": true
+                   }
+                 ],
+                 columnDefs: [
+                     {
+                         "targets": 0,
+                         "className": "text-xs",
+                         "width": "8%"
+
+                     },
+                     {
+                         "targets": 1,
+                         "className": "text-xs",
+                         "width": "20%"
+                     },
+                     {
+                         "targets": 2,
+                         "className": "text-xs text-wrap",
+                         "width": "30%"
+                     },
+                     {
+                         "targets": 3,
+                         "className": "text-xs",
+                         "width": "10%"
+                     },
+
+                     {
+                         "targets": 4,
+                         "className": "text-end text-xs",
+                         "width": "10%"
+                     },
+
+
+                 ]
+
+     });
+
+
+    }
+
+     function CostCenterassetExport() {
+         var node = $('#jstree').jstree().get_selected(true)[0];
+
+         var id = 0;
+
+         if (node == null ) {
+             id = 0;
+         }
+         else {
+             if (node.id == "L0-0") {
+                 id = 0;
+             }
+             else {
+                 id = node.id;
+             }
+
+         }
+
+         @*var ControllerURL = '@Url.Action("CostCenterassetExport", "CostCenter")';
+         ControllerURL = ControllerURL + "/" + id;
+
+         window.location.href = ControllerURL;*@
+         var data = { "id": id }
+         $('#progressbar').modal('show');
+         var form = $('#frmNewEmp');
+         var token = $('input[name="__RequestVerificationToken"]', form).val();
+         var headers = {};
+         headers['__RequestVerificationToken'] = token;
+             var ControllerURL = '@Url.Action("CostCenterassetExport", "CostCenter")';
+        var DownloadURL = '@Url.Action("Download", "CostCenter")';
+
+            $.ajax({
+                type: 'POST',
+                url: ControllerURL,
+                contentType: "application/json",
+                headers: headers,
+                data: JSON.stringify(data),
+
+
+                success: function (data) {
+                    var fileurl = DownloadURL + '?fileGuid=' + data.FileGuid
+                        + '&filename=' + data.FileName;
+                    $('#progressbar').modal('hide');
+                    //alert(fileurl);
+
+                    window.location = fileurl;
+
+                },
+                failure: function () { alert("Error"); }
+            });
+
+
+     }
+
+    function Deletecostcenter()
+        {
+         var node = $('#jstree').jstree().get_selected(true)[0];
+
+         var id = node.id;
+         if (node == null) {
+             swal("Alert", "Please Select level to delete Cost Center!", "warning");
+
+
+         }
+         else
+         {
+             var form = $('#frmNewEmp');
+             var token = $('input[name="__RequestVerificationToken"]', form).val();
+             var headers = {};
+             headers['__RequestVerificationToken'] = token;
+            swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+            if (result == true) {
+
+                var url = '@Url.Action("Deletecostcenter", "CostCenter")';
+                url = url + "/" + id;
+                    $.ajax({
+                    type: 'POST',
+                    url: url,
+                    headers: headers,
+                    contentType: "application/json",
+                    success: function (res) {
+                        if (res == "Failed")
+                        {
+                            swal("Alert", "You Cannot Delete this Record", "warning");
+                        }
+                        else
+                        {
+                            swal({ title:  "Successfully Deleted!", icon: "success" }).then((result) => {
+                                if (result == true) {
+                                    //InitTree();
+                                    $('#jstree').jstree(true).refresh();
+                                }
+                            });
+                         }
+                    },
+
+                    failure: function () { alert("Error"); }
+
+                 });
+            }
+        });
+         }
+
+        }
+
+</script>

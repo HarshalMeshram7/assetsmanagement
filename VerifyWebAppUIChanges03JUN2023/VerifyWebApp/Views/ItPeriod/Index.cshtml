@@ -1,0 +1,200 @@
+﻿@model IEnumerable<VerifyWebApp.Models.ITPeriod>
+@{
+    ViewBag.Title = "Index";
+}
+
+<!-- Bootstrap DatePicker -->
+@using (@Html.BeginForm(null, null, FormMethod.Post,
+                                                       new { id = "frmNewEmp", name = "frmNewEmp" }))
+{@Html.AntiForgeryToken();
+}
+<div class="pageconent">
+    <div class="row my-2">
+        <div class="card">
+            <div class="card-header pb-0">
+               <div class="row">
+                   <div class="row justify-content-md-center title hborder">
+                      <div class="htitle"><b>Period - Income Tax</b></div>
+                                  </div>
+                                    <!-- /.col-lg-12 -->
+                                </div>
+                <div style="padding-top:10px">
+                                <button type="button" id="btnnew" value="New Practice"
+                                        class="btn btn-sm addBtn pull-right"
+                                        onclick="opennewdialog();" data-toggle="tooltip" data-placement="top" title="Add New">
+                               <i class="fa fa-plus" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                       
+                        <div class="row" style="padding-top:3px">
+                            <div class="col-md-12">
+                                <table class="table table-hover text-uppercase text-xs" id="tblitperiod">
+                                    <thead class="hcol" style="font-weight:bold">
+                                        <tr>
+                                            <td>
+                                                SrNo
+                                            </td>
+                                            <td>
+                                                Start Date
+                                            </td>
+                                            <td>
+                                                End Date
+                                            </td>
+
+                                            <td align="center">
+                                                Edit
+                                            </td>
+                                           </tr>
+                                    </thead>
+                                    <tbody style="font-weight: bold; color: black">
+                                        @if (Model.Count() == 0)
+                                        {
+                                            <tr>
+                                                <td colspan="6">No Rows Found</td>
+                                            </tr>
+                                        }
+                                        else
+                                        {
+                                            foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                    <td>@Html.DisplayFor(modelitem => item.Srno)</td>
+
+                                                    <td>@Html.DisplayFor(modelitem => item.str_fromdate)</td>
+
+                                                    <td>@Html.DisplayFor(modelitem => item.str_todate)</td>
+
+
+                                                    <td align="center">
+                                                        @*<button type="button" class="btn btn-sm modBtn"
+                                                                aria-label="Left Align"
+                                                                ">*@
+                                                            <i class="fa fa-edit" style="color:green" onclick="Edit(@item.ID);"></i>
+                                                    
+
+                                                   
+                                                        @*<button type="button" class="btn btn-sm delBtn" aria-label="Left Align" onclick="Delete(@item.ID);">*@
+                                                            <i class="fa fa-trash" style="color:red" onclick="Delete(@item.ID);"></i>
+                                                        @*</button>*@
+
+                                                    </td>
+                                                </tr>
+
+
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
+<div class="modal fade" tabindex="-1" role="dialog" id="divNew" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg" role="document" id="divNewContent">
+
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" tabindex="-1" role="dialog" id="divEdit" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg" role="document" id="divEditContent">
+
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#tblitperiod').DataTable({
+            pagingType:'numbers'
+        });
+    });
+
+
+    if (typeof jQuery !== 'undefined') {
+        console.log('jQuery Loaded');
+    }
+    else {
+        console.log('not loaded yet');
+    }
+
+    function opennewdialog() {
+
+            var url = '@Url.Action("AddNew","ItPeriod")';
+            $.get(url, function (data) {
+                $("#divNewContent").html(data);
+                // alert(data);
+                $('#divNew').modal('show')
+            });
+        }
+
+    function Edit(id) {
+
+            var url = '@Url.Action("Edit", "ItPeriod")';
+            url = url + "/" + id;
+
+            $.get(url, function (data) {
+                $("#divEditContent").html(data);
+                $('#divEdit').modal('show')
+            });
+         }
+
+        function Subperiod() {
+            //alert("test");
+           // alert(id);
+           // console.log(id);
+           // /SubPeriod/Index ? id = 3
+
+            var url = '@Url.Action("Index","SubPeriod")';
+
+            window.location.href = url;
+
+        }
+     function Delete(id)
+     {
+
+         var form = $('#frmNewEmp');
+         var token = $('input[name="__RequestVerificationToken"]', form).val();
+         var headers = {};
+         headers['__RequestVerificationToken'] = token;
+         swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+            if (result == true) {
+                var returnURL='@Url.Action("Index", "ItPeriod")';
+                var url = '@Url.Action("Delete", "ItPeriod")';
+                url = url + "/" + id;
+                    $.ajax({
+                    type: 'POST',
+                    url: url,
+                    headers: headers,
+                    contentType: "application/json",
+                    success: function (res) {
+                        if (res == "Failed")
+                        {
+                            swal("Alert", "You Cannot Delete this Record", "warning");
+                        }
+                        else
+                        {
+                            swal({ title:  "Successfully Deleted!", icon: "success" }).then((result) => {
+                                if (result == true) {
+                                    window.location.reload();
+                                }
+                            });
+                         }
+                    },
+
+                    failure: function () { alert("Error"); }
+
+                 });
+            }
+        });
+
+        }
+
+
+</script>
+
+
+

@@ -1,0 +1,144 @@
+﻿@model VerifyWebApp.Models.Account
+
+
+<div class="modal-content">
+    <div class="modal-header">
+       
+        <h4 class="modal-title">Create New Account</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+    @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+            {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+            @Html.ValidationSummary(true)
+           
+                    <div class="form-group col-md-6">
+                        <label for="AccountCode">Account Code<span>*</span></label>
+                        @Html.TextBoxFor(m => m.AccountCode, new { @class = "form-control",@required="required" ,id= "AccountCode" })
+                        <div style="color:#CC0000;font-weight:400" class="text-danger error">@Html.ValidationMessageFor(m => m.AccountCode)</div>
+                        @Html.AntiForgeryToken()
+
+                    </div>
+                       <div class="form-group col-md-6">
+                        <label for="AccountName">Account Name Code<span>*</span></label>
+                        @Html.TextBoxFor(m => m.AccountName, new { @class = "form-control", @required = "required" , id = "AccountName" })
+                        <div style="color:#CC0000;font-weight:400" class="text-danger error">@Html.ValidationMessageFor(m => m.AccountName)</div>
+                        @Html.AntiForgeryToken()
+                    </div>
+                    @*<div class="form-group">
+                        <label for="GroupName">Group<span>*</span></label>
+                        @Html.TextBoxFor(m => m.GroupName, new { @class = "form-control" })
+                        <div style="color:#CC0000;font-weight:400" class="text-danger error">@Html.ValidationMessageFor(m => m.GroupName)</div>
+                        @Html.AntiForgeryToken()
+                    </div>*@
+
+                  <div class="form-group col-md-6 ">
+                    
+                      <select id="GroupId"  class="form-control" name="GroupName" required>
+                          <option value="">Select Account type</option>
+                          <option value="1">Asset</option>
+                          <option value="2">Liability</option>
+                          <option value="3">Income</option>
+                          <option value="4">Expense</option>
+                      </select>
+                  </div>
+            
+               </div>
+
+              <div>&nbsp;&nbsp;&nbsp;<label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
+        
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="btnSave">Save</button>
+                    </div>
+    }
+</div><!-- /.modal-content -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+       // alert(result);
+
+
+        //$('#frmNewEmp').removeData('validator');
+        //$('#frmNewEmp').removeData('unobtrusiveValidation');
+        //$("#frmNewEmp").each(function () { $.data($(this)[0], 'validator', false); }); //enable to display the error messages
+        //$.validator.unobtrusive.parse("#frmNewEmp");
+
+    });
+
+    $("#frmNewEmp").submit(function (e) {
+
+        SaveData();
+        e.preventDefault();
+        return false;
+
+    });
+
+   function SaveData() {
+
+        var result;
+        var AccountCode;
+        var AccountName;
+        var Group;
+
+       // var GroupId = document.getElementById("GroupId");
+
+
+        AccountCode = $('#AccountCode').val();
+        AccountName = $('#AccountName').val();
+        Group = $("#GroupId option:selected").text();
+      //// alert(Group)
+    //    $("#GroupId").$("#GroupId option:selected").text());
+      //  Group = $(("#GroupId option:selected").text()).val();
+
+            var postdata =
+            {
+                    "AccountCode": AccountCode,
+                    "AccountName": AccountName,
+                    "GroupName": Group
+            };
+
+       /*     var form = $('#frmNewEmp');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
+            console.log(token);
+            var headers = {};
+            headers['__RequestVerificationToken'] = token;
+       */
+            swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+                if (result == true) {
+                 var ControllerURL = '@Url.Action("Add", "Account")';
+                 var returnURL = '@Url.Action("Index", "Account")';
+
+                $.ajax({
+                type: 'POST',
+                url: ControllerURL,
+                contentType: "application/json",
+                headers: headers,
+                data: JSON.stringify(postdata),
+                success: function (res) {
+                    console.log(res);
+                if (res == "Failed") {
+                      swal("Alert", "You Cannot Add this Record", "warning");
+                }
+                else
+                {
+                    swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
+                        if (result == true) {
+                            window.location.replace(returnURL);
+                        }
+                    });
+                    }
+
+                },
+
+                failure: function () { alert("Error"); }
+
+                 });
+                }
+            });
+   }
+</script>
+
+

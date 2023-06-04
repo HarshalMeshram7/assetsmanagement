@@ -1,0 +1,667 @@
+﻿<style>
+    #jstree {
+        width: 400px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    #normal_div {
+        margin-top: 10px;
+        width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        border: 1px solid blue;
+        white-space: nowrap;
+    }
+
+    .jstree-node > a {
+        /* 100% - (the width of the presentation node : the line - the left padding of the <a> node - the right padding of the <a> node)*/
+        width: calc(100% - (100px + 1px + 4px));
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+</style>
+
+
+    
+    @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+    {
+        @Html.AntiForgeryToken()
+    }
+    <div class="container-fluid py-4">
+        <div class="row my-1">
+            <div class="col-12">
+                <div class="card">
+                    <!-- Card header -->
+                    <div class="card-header pb-0">
+                        <div class="row">
+                            <div class="d-sm-flex justify-content-between hborder">
+                                <div class="htitle"> <b>Assets Purchased</b></div>
+                                </div>
+
+                                <div style="padding:10px">
+                                    <button type="button" id="btnnew" value="New"
+                                            class="btn addBtn btn-sm mb-0 btn-tooltip"
+                                            data-bs-toggle="tooltip" data-bs-placement="top" title="New Asset Entry"
+                                            onclick="AddNew();">
+                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                    </button>
+                                    <button class="btn btn-sm xtraBtn mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Download Template" data-container="body" data-animation="true"><i class="fa fa-download" aria-hidden="true"></i></button>
+                                    <button class="btn btn-sm xtraBtn mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Upload Assets List" data-container="body" data-animation="true"><i class="fa fa-upload" aria-hidden="true"></i></button>
+                                    <button class="btn btn-sm modBtn mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Export Assets List" data-container="body" data-animation="true"><i class="fa fa-file-excel-o" aria-hidden="true"></i></button>
+                                </div>
+
+
+                            </div>
+                     
+                        <form class="row">
+                                <div class="col-sm-2 p-1">
+                                    <select class="form-control form-control-sm" id="cboSearchBy">
+                                        <option value="1">Search By Asset No</option>
+                                        <option value="2">Search By Asset Name</option>
+                                        <option value="3">Search By Asset Sr No</option>
+                                        <option value="4">Search By Asset Id No</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-3 p-1">
+                                    <input type="text" class="form-control form-control-sm"
+                                           id="txtsearch" placeholder="Enter Asset No ..">
+                                 </div>
+                                <div class="col-sm-1 p-1">
+                                    <button type="button" id="btnsearch" value="Search"
+                                            class="btn btn-xs addBtn"
+                                            onclick="showasset('L0-0');">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+
+                                </div>
+                                <div class="col-sm-1 p-1">
+                                    <div id="divspinner">
+                                                    <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+                                    </div>
+
+                                </div>
+
+                           
+                            </form>
+
+                        </div>
+                   
+                        <div class="card-body"  id="divTableData">
+                            
+                            <table class="table table-flush table-hover text-xs "
+                                 style="width:100%"  id="tblasset">
+                                <thead class="hcol text-uppercase" style="font-weight:bold">
+                                    <tr>
+
+                                        <td width="5%">
+                                            Asset No
+                                        </td>
+                                        <td width="5%">
+                                            Identification No
+                                        </td>
+                                        <td width="25%">
+                                            Asset Name
+                                        </td>
+                                        <td width="5%">
+                                            Voucher Date
+                                        </td>
+                                        <td class="text-end" width="15%">
+                                            Amount Capitalised
+                                        </td>
+                                        <td  class="text-center" width="5%">Action </td>
+                                      
+
+                                    </tr>
+                                </thead>
+                                <tbody style="font-weight:bold;color:black">
+                                   
+                                </tbody>
+                            </table>
+                        </div>
+
+                    <div>
+
+
+                       
+                        
+
+                    </div>
+                    </div>
+
+                    </div>
+
+                    </div>
+            </div>
+     
+        
+            <!-- Modal -->
+
+            <div id="myModal_Add" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog modal-lg">
+
+                    <!-- Modal content-->
+
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Add Location</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-4">Location</div>
+                                <div class="col-md-8"><input id="txtLocation" /></div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" id="btnSave">Save</button>
+                            <button type="button" class="btn btn-default" id="btnClose" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div id="myModal_Edit" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog modal-lg">
+
+                    <!-- Modal content-->
+
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Add Location</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-4">Location</div>
+                                <div class="col-md-8"><input id="txteditLocation" /></div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" id="btneditSave">Save</button>
+                            <button type="button" class="btn btn-default" id="btnClose" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div id="Edit_changegroup_modal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog modal-lg">
+
+                    <!-- Modal content-->
+
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Actions</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row ">
+
+
+                                <button style="display:inline-block; margin-left:10px" type="button" class="btn btn-primary btn-md" id="btnedit">
+                                    Edit Asset
+                                </button>
+
+
+
+                                <button style="display:inline-block ; margin-left:10px" type="button" class="btn btn-secondary btn-md" id="btnchangegroup">
+                                    Change Asset Group
+                                </button>
+                                <button style="display:inline-block; margin-left:10px" type="button" class="btn btn-danger btn-md" id="btndeleteasset">
+                                    Delete Asset
+                                </button>
+
+                            </div>
+
+
+
+
+
+
+
+
+
+
+
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-default" id="btnClose" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="modal fade" tabindex="-1" role="dialog" id="divchangegroup" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog modal-xl" role="document" id="divNewContent">
+
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+
+            <div class="modal fade" tabindex="-1" role="dialog" id="divUpload" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog modal-xl" role="document" id="divUploadContent">
+
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <div id="progressbar" class="modal fade" role="dialog" style="height: auto;" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog modal-lx">
+
+                    <!-- Modal content-->
+                    <div class="modal-content" style="height:auto;width:auto;overflow:auto">
+                        <div class="modal-header">
+                            <label style="color:red;text-align: center;">Loading........</label>
+
+                        </div>
+                        <div class="modal-body ">
+
+                            <div class="row col-6" style="overflow:auto;align-content:center">
+                                <label style="color:darkred;text-align: center;">Please wait while we load your report........</label>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+<script type="text/javascript">
+    var editnode;
+    var edit_changegroupassetno;
+    $(document).ready(function () {
+        $('#progressbar').modal('hide');
+
+        $('#tblasset ul').addClass("pagination-sm");
+
+        //for loading assets list on page laod
+
+        showasset('L0-0');
+       // getassetlist();
+
+        $('#cboSearchBy').on('change', function (e) {
+            showasset('L0-0');
+        });
+       
+
+                InitTree();
+
+                // 7 bind to events triggered on the tree
+                $('#jstree').on("changed.jstree", function (e, data) {
+                    console.log(data.selected);
+                    var node = $('#jstree').jstree().get_selected(true)[0];
+                    showasset(node.id);
+
+                });
+                // 8 interact with the tree - either way is OK
+                $('button').on('click', function () {
+                    $('#jstree').jstree(true).select_node('child_node_1');
+                    $('#jstree').jstree('select_node', 'child_node_1');
+                    $.jstree.reference('#jstree').select_node('child_node_1');
+                });
+                $('#mnuExpand').on('click', function () {
+                    $('#jstree').jstree("open_all");
+                });
+                $('#mnuContract').on('click', function () {
+                    $('#jstree').jstree("close_all");
+                });
+    });
+
+    function InitTree() {
+          $('#jstree').jstree({
+                    'core': {
+                        'data': {
+                            'url': function (node) {
+                                var url = '@Url.Action("GetGroups", "Asset")';
+                                //return node.id === '#' ? url : url;
+                                return url;
+
+                            },
+                            'data': function (node) {
+                                return { 'id': node.id };
+                            }
+
+                        },
+                         'themes': {
+                            'name': 'proton',
+                            'responsive': true
+                        }
+                    }
+
+        });
+
+
+          $("#jstree").bind("hover_node.jstree", function (e, data) {
+
+              $("#" + data.node.id).prop("title", data.node.text);
+          });
+    }
+    //if lock=yes then hide fields
+    function hidechangegroupfields() {
+        $("#btnSave").prop('disabled', true);
+        document.getElementById('txtgrpA').readOnly = true;
+        document.getElementById('txtgrpB').readOnly = true;
+        document.getElementById('txtgrpC').readOnly = true;
+        document.getElementById('txtgrpD').readOnly = true;
+    }
+
+
+    function getassetlist() {
+
+        let ControllerURL = '@Url.Action("GetAssetList", "Asset")';
+        $.ajax({
+            type: 'GET',
+            url: ControllerURL,
+            contentType: "application/json",
+            success: function (data) {
+                $("#divTableData").html(data);
+            },
+            failure: function () { alert("Error"); }
+        });
+
+    }
+
+    function showasset(id) {
+        let searchby = '';
+        searchby = $("#cboSearchBy").val();
+        searchstring = $("#txtsearch").val();
+
+
+         var ControllerURL = '@Url.Action("GetAssetData", "Asset")';
+         console.log(ControllerURL);
+         var table = $('#tblasset')
+             .on('processing.dt', function (e, settings, processing) {
+               //  $('#divspinner').css('display', processing ? 'block' : 'none');
+             }).DataTable({
+                 "destroy": true,
+                 "paging": true,
+                 "info": false,
+                 "searching": true,
+                 "pagingType": 'numbers',
+                 "proccessing": true,
+                 'language': {
+                 "loadingRecords": "&nbsp;",
+                 "decimal": ",",
+                 "thousands": ","
+             },
+             "serverSide": true,
+             "filter": true,
+             "ajax": {
+
+                 url: ControllerURL,
+                 // type: 'GET',
+                 //  data: { "term": productname },
+                 type: 'POST',
+                 "data": function (d) {
+                     d.id = id,
+                         d.searchby = searchby,
+                         d.searchstring = searchstring
+
+                 }
+
+             },
+
+
+             "columns": [
+                     { "data": "AssetNo", "autoWidth": true },
+                     { "data": "AssetIdentificationNo", "autoWidth": true },
+                     { "data": "AssetName", "autoWidth": true },
+                     { "data": "str_VoucherDate", "autoWidth": true },
+                     {
+                         "data": "AmountCapitalisedCompany",
+                         render: $.fn.dataTable.render.number(',', '.', 2)
+                         , "autoWidth": true
+                   }
+                 ],
+                 columnDefs: [
+                     {
+                         "targets": 0,
+                         "className": "text-xs",
+                         "width": "8%"
+
+                     },
+                     {
+                         "targets": 1,
+                         "className": "text-xs",
+                         "width": "20%"
+                     },
+                     {
+                         "targets": 2,
+                         "className": "text-xs text-wrap",
+                         "width": "30%"
+                     },
+                     {
+                         "targets": 3,
+                         "className": "text-xs",
+                         "width": "10%"
+                     },
+
+                     {
+                         "targets": 4,
+                         "className": "text-end text-xs",
+                         "width": "10%"
+                     },
+                     {
+                         "targets": 5,
+                         "className": "text-start text-xs",
+                         "width": "10%",
+                         "render": function (data, type, full, meta) {
+
+                             return returnDropdownButton(full.AssetNo);
+                         }
+                     },
+
+                 ]
+
+     });
+
+
+
+    }
+     function returnDropdownButton(AssetNo) {
+         //alert(AssetNo)
+
+
+         //onclick = '+'Edit("'+AssetNo+'");
+
+
+         var option_Edit;
+         var strButton;
+         console.log("AssetNo" + AssetNo)
+         let link = "";
+
+         let view_link = '<a href = "javascript:;"  class="mx-2" ><i class="fas fa-eye " style="color:#229954"></i></a >';
+         let edit_link = '<a href = "javascript:Edit(' + AssetNo + ')"; class="mx-2"><i class="fas fa-edit" style="color:#229954" ></i></a >';
+         let delete_link = '<a href = "javascript:;" class="mx-2" ><i class="fas fa-trash " style="color:#D0312D"></i></a >';
+
+         link = view_link + edit_link + delete_link;
+         return link;
+
+         //strButton = '<div class="dropdown" >';
+         //strButton = strButton + '<button class="btn btn-sm bg-gradient-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">';
+         //strButton = strButton + 'Primary </button>';
+         //strButton = strButton + '<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">';
+         //strButton = strButton + '<li><a class="dropdown-item" href="#">Action</a></li>';
+         //strButton = strButton + '<li><a class="dropdown-item" href="#">Another action</a></li>';
+         //strButton = strButton + '<li><a class="dropdown-item" href="#">Something else here</a></li>';
+         //strButton = strButton +'</ul>';
+         //strButton = strButton + '</div >';
+
+         //strButton= '  <a class="nav-link dropdown-toggle"';
+         //strButton = strButton + ' data-toggle="dropdown" href="#" role="button"  aria-haspopup="true" aria-expanded="false">Actions</a>';
+         //strButton = strButton + '  <div class="dropdown-menu">  <a class="dropdown-item"  href="#" onclick='+'Edit("'+AssetNo+'");> ';
+         //strButton = strButton +  '   Edit  </a> <a class="dropdown-item" href="#" onclick='+'updategroup("'+AssetNo+'");>';
+         //strButton = strButton + ' Change Asset Group </a>   <a class="dropdown-item" href="#"  onclick=' +'Delete("'+AssetNo+'");>';
+         //strButton = strButton + '    Delete Asset </a>';
+         //strButton = strButton + '   <a class="dropdown-item" href="#"  onclick=' + 'ChangeLocation("' + AssetNo + '");>';
+         //strButton = strButton + '    Change Location </a>';
+
+        // return strButton;
+     }
+     function GroupassetExport()
+     {
+         var node = $('#jstree').jstree().get_selected(true)[0];
+
+         var id = 0;
+         if (node == null) {
+             id = 0;
+         }
+         else {
+             if (node.id == "L0-0") {
+                 id = 0;
+             }
+             else {
+                 id = node.id;
+             }
+
+         }
+
+             @*var ControllerURL = '@Url.Action("GroupassetExport", "Asset")';
+             ControllerURL = ControllerURL + "/" + id;
+
+             window.location.href = ControllerURL;*@
+             var data = {
+                 "id":id
+             }
+          $('#progressbar').modal('show');
+         var ControllerURL = '@Url.Action("GroupassetExport", "Asset")';
+        var DownloadURL = '@Url.Action("Download", "Asset")';
+        var form = $('#frmNewEmp');
+        var token = $('input[name="__RequestVerificationToken"]', form).val();
+        var headers = {};
+        headers['__RequestVerificationToken'] = token;
+            $.ajax({
+                type: 'POST',
+                url: ControllerURL,
+                contentType: "application/json",
+                headers: headers,
+                data: JSON.stringify(data),
+
+
+                success: function (data) {
+                    var fileurl = DownloadURL + '?fileGuid=' + data.FileGuid
+                        + '&filename=' + data.FileName;
+                    console.log('hide progres ..');
+
+                    $('#progressbar').modal('hide');
+                    window.location = fileurl;
+
+                },
+                failure: function () { alert("Error"); }
+            });
+
+     }
+
+    if (typeof jQuery !== 'undefined') {
+        console.log('jQuery Loaded');
+    }
+    else {
+        console.log('not loaded yet');
+    }
+
+    function AddNew() {
+
+           var ControllerURL = '@Url.Action("Add", "Asset")';
+           ControllerURL = ControllerURL + "/" + "L1-1";
+            window.location.href = ControllerURL;
+
+      
+     }
+
+    function Edit(id) {
+
+       // id = id.slice(1, -1);
+
+       window.location.href = '@Url.Action("Edit", "Asset")/' + id;
+    // temp commented
+
+          //window.location.href = '@Url.Action("EditAsset", "Asset")/' + id;
+    }
+
+    function ChangeLocation(id) {
+
+
+          window.location.href = '@Url.Action("ChangeLocation", "AssetLocation")/' + id;
+    }
+
+
+    function updategroup(id) {
+       // id = id.slice(1, -1);
+        var url = '@Url.Action("changegroup", "Asset")';
+        url = url + "/"+id;
+            $.get(url, function (data) {
+                $("#divNewContent").html(data);
+                // alert(data);
+                $('#divchangegroup').modal('show')
+            });
+    }
+
+     function downloadexcel()
+     {
+       // alert(1)
+         window.location.href = '@Url.Action("DownloadAssetsExcel", "Asset")';
+
+     }
+     function Importexcel()
+     {
+           var url = '@Url.Action("ImportExcel", "Asset")';
+
+
+            $.get(url, function (data) {
+                $("#divUploadContent").html(data);
+               // alert(data);
+                $('#divUpload').modal('show')
+            });
+
+     }
+
+     function Delete(id)
+     {
+         var form = $('#frmNewEmp');
+         var token = $('input[name="__RequestVerificationToken"]', form).val();
+         var headers = {};
+         headers['__RequestVerificationToken'] = token;
+         swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+            if (result == true) {
+                var returnURL='@Url.Action("Index", "Asset")';
+                var url = '@Url.Action("Delete", "Asset")';
+               // id = id.slice(1, -1);
+                url = url + "/" + id;
+                    $.ajax({
+                    type: 'POST',
+                    url: url,
+                    headers: headers,
+                    contentType: "application/json",
+                    success: function (res) {
+
+                        if (res == "Failed")
+                        {
+                            swal("Alert", "You Cannot Delete this Record", "warning");
+                        }
+                        if (res == "Success")
+                        {
+                            swal({ title:  "Successfully Deleted!", icon: "success" }).then((result) => {
+                                if (result == true) {
+                                    window.location.reload();
+                                }
+                            });
+                        }
+                        if (res== "Depalreadycalculated") {
+                            swal("Alert", "Depreciation is calculated you cannot delete this asset", "warning");
+
+                        }
+                        if (res == "Periodlock") {
+                            swal("Alert", "Period is locked ,you cannot edit this delete", "warning");
+
+                        }
+                    },
+
+                    failure: function () { alert("Error"); }
+
+                 });
+            }
+        });
+
+        }
+
+
+            </script>

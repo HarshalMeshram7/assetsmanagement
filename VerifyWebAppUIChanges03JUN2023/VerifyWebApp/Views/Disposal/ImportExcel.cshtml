@@ -1,0 +1,235 @@
+﻿@{
+    ViewBag.Title = "Upload";
+}
+@{
+    Layout = null;
+}
+
+
+<style>
+    label span {
+        color: red;
+        font-size: 20px;
+    }
+</style>
+
+
+
+
+
+<div class="modal-content">
+    <div class="modal-header hborder">
+
+        <div class="htitle"><b>Import Disposal Assets List</b></div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+    @*@using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))*@
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "frmupload" }))
+    {@Html.AntiForgeryToken();
+        <div class="modal-body">
+
+            @Html.ValidationSummary(true)
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="praticesname"><span>*</span>Select File to be uploaded </label>
+                        @Html.TextBox("File", "", new { type = "file", id = "fileupload", name = "fileupload" })
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn saveBtn btn-sm" id="btnSave">Upload</button>
+            <button type="button" class="btn clBtn btn-sm" data-dismiss="modal">Close</button>
+            
+
+            @*@ViewBag.Message*@
+
+        </div>
+    }
+</div><!-- /.modal-content -->
+<div id="errorlist" class="modal fade" role="dialog" style="height: 670px;">
+    <div class="modal-dialog modal-lx">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Error list</h4>
+            </div>
+            <div class="modal-body ">
+
+                <div class="row" style="overflow:auto">
+                    <table width="100%" class="table table-hover text-uppercase text-xs"  style="overflow:auto" id="errtbl">
+
+                        <thead class="hcol" style="font-weight:bold">
+                            <tr>
+
+                                <td>Srno</td>
+                                <td>Errors</td>
+                            </tr>
+                        </thead>
+                        <tbody style="font-weight:bold"></tbody>
+
+                    </table>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn delBtn" onclick="closeerrorlist();">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var result;
+    jQuery(document).ready(function ($) {
+
+        $('#btnerror').prop('disabled', true);
+        $('#frmupload').removeData('validator');
+       // $('#frmupload').removeData('unobtrusiveValidation');
+        $("#frmupload").each(function () { $.data($(this)[0], 'validator', false); }); //enable to display the error messages
+        //$.validator.unobtrusive.parse("#frmupload");
+
+
+
+        $('#btnSave').click(function (e) {
+
+           // uploadfile();
+
+
+        if (window.FormData !== undefined) {
+
+           // var uploadfile = $('#fileupload').val();
+           // alert(uploadfile);
+
+            var formData = new FormData();
+
+
+            //var file = $('#fileupload').get(0);
+            //formData.append("fileupload", file);
+            e.preventDefault();
+            var formData = new FormData();
+            var totalFiles = document.getElementById("fileupload").files.length;
+
+            var file = document.getElementById("fileupload").files[0];
+
+            formData.append("fileupload", file);
+          //  alert("nooffiles"+totalFiles);
+           // alert("file"+file);
+            //alert(totalFiles);
+           // alert(file);
+
+            var form = $('#frmupload');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
+            var headers = {};
+            headers['__RequestVerificationToken'] = token;
+            swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+                if (result == true) {
+                    var ControllerURL = '@Url.Action("UploadDisposal", "Disposal")';
+
+
+                    var returnURL = '@Url.Action("Index", "Disposal")';
+
+                    $.ajax({
+                        type: 'POST',
+                        headers: headers,
+                        url: ControllerURL,
+                        contentType: false,
+                        processData: false,
+                        dataType: 'json',
+                        data: formData,
+                        success: function (res) {
+                           // alert(res)
+                            if (res == "Failed") {
+                                swal("Alert", "You Cannot Upload this File", "warning");
+                            }
+                            else if (res == "nodata"){
+                                swal("Alert", "NO Data in Excel", "warning");
+                            }
+                             else if(res == "Success") {
+
+                                swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
+                                    if (result == true) {
+                                        window.location.replace(returnURL);
+                                    }
+                                });
+                            }
+
+
+                            else {
+                             // alert(res)
+                                 result = res;
+
+                                showerrorlist(result);
+                            }
+
+                        },
+
+                        failure: function () { alert("Error"); }
+
+                    });
+                }
+            });
+        }
+
+        });
+
+
+
+
+    });
+
+
+
+    $('#frmupload').submit(function (e) {
+
+        //  e.preventDefault();
+
+        var result;
+        result = $('#frmupload').valid();
+        console.log(result);
+
+        //alert(result);
+        if (result == true) {
+            uploadfile();
+        }
+        e.preventDefault();
+        return false;
+
+
+    });
+
+
+    function showerrorlist(result)
+    {
+        var srno = 1;
+
+        for (var i = 0; i < result.length; i++) {
+
+            $('#errtbl').last().append('<tr><td>' + srno + '</td><td>' + result[i] + '</td></tr>');
+            srno++
+        }
+
+        $('#errorlist').modal('show');
+
+    }
+    function closeerrorlist() {
+
+        $('#errorlist').modal('hide');
+          var returnURL = '@Url.Action("Index", "Disposal")';
+        window.location.replace(returnURL);
+    }
+
+</script>

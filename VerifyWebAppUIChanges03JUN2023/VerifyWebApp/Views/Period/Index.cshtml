@@ -1,0 +1,223 @@
+﻿@model IEnumerable<VerifyWebApp.Models.Period>
+@{
+    ViewBag.Title = "Index";
+}
+
+<!-- Bootstrap DatePicker -->
+
+
+
+    @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+    {
+        @Html.AntiForgeryToken()
+
+        // rest
+    }
+    <div class="pageconent">
+        <div class="row my-2">
+            <div class="card">
+                <div class="card-header pb-0">
+                    <div class="row">
+                        <div class="col-lg-12 ">
+                            
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="row justify-content-md-center title hborder">
+                                          <div class="htitle"><b>Period List</b></div>
+                                        </div>
+                                    </div>
+                                    <!-- /.col-lg-12 -->
+                                </div>
+                                <button type="button" id="btnnew" value="New Practice"
+                                        class="btn btn-sm addBtn pull-right m-1 order-1"
+                                        onclick="opennewdialog();" data-toggle="tooltip" data-placement="top" title="Add New">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </button>
+
+
+                            </div>
+                        </div>
+
+
+                    <div class="row" style="padding-top:3px">
+                        <div class="col-lg-12">
+
+                            <table width="100%" class="table table-hover text-uppercase text-xs" id="tblPeriod">
+                                <thead class="hcol" style="font-weight:bold">
+                                    <tr>
+                                        <td>
+                                            SrNo
+                                        </td>
+                                        <td>
+                                            Start Date
+                                        </td>
+                                        <td>
+                                            End Date
+                                        </td>
+
+                                        <td align="center">
+                                            Action
+                                        
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody style="font-weight: bold; color: black">
+                                    @if (Model.Count() == 0)
+                                    {
+                                        <tr>
+                                            <td colspan="6">No Rows Found</td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>@Html.DisplayFor(modelitem => item.Srno)</td>
+
+                                                <td>@Html.DisplayFor(modelitem => item.str_fromdate)</td>
+
+                                                <td>@Html.DisplayFor(modelitem => item.str_todate)</td>
+
+
+                                                <td align="center">
+                                                   <i class="fa fa-edit" style="color:green" onclick="EditSupplier(@item.ID);"></i>
+                                                   <i class="fa fa-trash" style="color:red" onclick="Delete(@item.ID)"></i>
+                                                 </td>
+                                            </tr>
+
+
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+@*<div class="modal fade" tabindex="-1" role="dialog" id="divNew" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg" role="document" id="divNewContent">
+
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="divEdit" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg" role="document" id="divEditContent">
+
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->*@
+
+
+
+@*<style>
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: lightblue;
+    }
+</style>*@
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#tblPeriod').DataTable({
+            pagingType:'numbers'
+        });
+    });
+
+
+    if (typeof jQuery !== 'undefined') {
+        console.log('jQuery Loaded');
+    }
+    else {
+        console.log('not loaded yet');
+    }
+
+    function opennewdialog() {
+
+          var url = '@Url.Action("AddNew", "Period")';
+             window.location = url;
+        }
+
+    function EditSupplier(id) {
+
+            var url = '@Url.Action("EditNew", "Period")';
+             window.location = url+"/" +id;
+         }
+
+        @*function Subperiod(id) {
+            //alert("test");
+           // alert(id);
+            console.log(id);
+           // /SubPeriod/Index ? id = 3
+
+            var url = '@Url.Action("Index","SubPeriod")';
+
+            window.location.href = url + '?id='+ id;
+
+        }*@
+
+     function Delete(id)
+     {
+         var form = $('#frmNewEmp');
+         var token = $('input[name="__RequestVerificationToken"]', form).val();
+         var headers = {};
+         headers['__RequestVerificationToken'] = token;
+
+
+         swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+            if (result == true) {
+                var returnURL='@Url.Action("Index", "Period")';
+                var url = '@Url.Action("Delete", "Period")';
+                url = url + "/" + id;
+                    $.ajax({
+                    type: 'POST',
+                    url: url,
+                    headers: headers,
+                    contentType: "application/json",
+                    success: function (res) {
+                        if (res == "Failed")
+                        {
+                            swal("Alert", "You Cannot Delete this Record", "warning");
+                        }
+                        else
+                        {
+                            swal({ title:  "Successfully Deleted!", icon: "success" }).then((result) => {
+                                if (result == true) {
+                                    window.location.reload();
+                                }
+                            });
+                         }
+                    },
+
+                    failure: function () { alert("Error"); }
+
+                 });
+            }
+        });
+
+        }
+
+
+</script>
+
+
+

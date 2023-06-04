@@ -1,0 +1,583 @@
+﻿<style>
+    #jstree {
+        width: 500px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    #normal_div {
+        margin-top: 10px;
+        width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        border: 1px solid blue;
+        white-space: nowrap;
+    }
+
+    .jstree-node > a {
+        /* 100% - (the width of the presentation node : the line - the left padding of the <a> node - the right padding of the <a> node)*/
+        width: calc(100% - (100px + 1px + 4px));
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+</style>
+
+
+    @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+    {
+        @Html.AntiForgeryToken();
+    }
+
+<div class="container-fluid py-4">
+
+    <div class="row my-2">
+
+        <div class="card">
+
+            <div class="card-header pb-0">
+                <div class="row">
+                    <div class="d-sm-flex justify-content-between hborder">
+                        <div class="htitle"> <b>IT Law Groups </b> </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row my-2">
+                <div class="row my-2" style="padding-left:10px">
+                    <div class="col-md-12" style="padding-left:10px">
+                        <button type="button" id="mnuAdd" value="New Practice"
+                                class="btn btn-sm addBtn m-1 order-1"
+                                data-toggle="tooltip" data-placement="top" title="Add New"
+                                data-delay='{"show":"2000", "hide":"1500"}' style="font-size:5px">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" id="mnuEdit" value="New Practice"
+                                class="btn btn-sm modBtn pull-left m-1 order-1"
+                                data-toggle="tooltip" data-placement="top" title="Modify" style="font-size:5px">
+                            <i class="fa fa-edit"></i>
+                         
+                        </button>
+                        <button type="button" id="mnuDelete" value="New Practice"
+                                class="btn btn-sm delBtn pull-left m-1 order-1"
+                                data-toggle="tooltip" data-placement="top" title="Delete" style="font-size:5px">
+                            <i class="fa fa-trash-o"></i>
+                            
+                        </button>
+                        <button type="button" id="mnuExpand" value=""
+                                class="btn btn-sm xtraBtn m-1 order-1"
+                                data-toggle="tooltip" data-placement="top" title="Expand all locations"
+                                data-delay='{"show":"2000", "hide":"1500"}'  style="font-size:4px">
+                            <i class="fa fa-expand"></i>
+
+                        </button>
+                        <button type="button" id="mnuContract" value=""
+                                class="btn btn-sm xtraBtn pull-left m-1 order-1"
+                                data-toggle="tooltip" data-placement="top" title="Contract all locations"
+                                data-delay='{"show":"2000", "hide":"1500"}' >
+                            <i class="fa fa-compress"></i>
+
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="tree m-1">
+                        <div class="row" style=" overflow-y: scroll;max-height:initial;height:550px">
+                            <div class="col-md-12">
+                                <div id="jstree">
+                                    <!-- in this example the tree is populated from inline HTML -->
+                                    <ul>
+                                        <li>
+                                            Root node 1
+                                            <ul>
+                                                <li id="child_node_1">Child node 1</li>
+                                                <li>Child node 2</li>
+                                            </ul>
+                                        </li>
+                                        <li style="margin-top:3px">Root node 2</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+
+                    <div class="table-responsive">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+                
+        </div>
+</div>
+
+            <!-- Modal -->
+
+
+            <div id="myModal_Add" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog modal-lg">
+
+                    <!-- Modal content-->
+
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title htitle">Add ITGroup</h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="row">
+                                <div class="col-md-3"><label class="form-control-sm">   GroupName </label><span style="color:#CC0000;">*</span></div>
+                                <div class="col-md-4"><input type="text" id="txtGroupName" class="form-control form-control-sm" /></div>
+                            </div>
+
+                           
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label class="form-control-sm">
+                                        Depreciation Method<span style="color:#CC0000;">*</span>
+                                    </label>
+
+                                </div>
+                                <div class="col-md-4">
+
+                                    <div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="DepreciationMethod" id="wdv" tabindex="28">
+                                            <label class="custom-control-label" for="customRadio1">WDV</label>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="DepreciationMethod" id="slm" tabindex="28">
+                                            <label class="custom-control-label" for="customRadio2">SLM</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-3"><label class="form-control-sm"> Depreciation Rate </label></div>
+                                <div class="col-md-4"><input type="number" id="txtDepRate" class="form-control form-control-sm" min="0" max="100" onblur="deprate()" /></div>
+                            </div>
+
+
+
+                            <div class="row">
+                                <div class="col-md-3"> <label class="form-control-sm">Opening WDV </label></div>
+                                <div class="col-md-4"><input type="number" id="txtOPWDV" class="form-control form-control-sm" min="0" max="100" /></div>
+                            </div>
+                            <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm saveBtn" id="btnSave">Save</button>
+                            <button type="button" class="btn btn-sm clBtn" id="btnClose" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div id="myModal_Edit" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog modal-lg">
+
+                    <!-- Modal content-->
+
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title htitle">Edit IT Group</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+
+                                <div class="col-md-3"><label class="form-control-sm">Group Name</label><span style="color:#CC0000;">*</span></div>
+                                <div class="col-md-4"><input type="text" id="txteditGroupName" class="form-control form-control-sm" /></div>
+                            </div>
+
+
+                            <div class="row">
+
+                                <div class="col-md-3">
+                                    <label class="form-control-sm">
+                                        Depreciation Method<span style="color:#CC0000;">*</span>
+                                    </label>
+
+                                </div>
+                                <div class="col-md-4">
+
+                                    <div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="DepreciationMethod" id="editwdv" tabindex="28">
+                                            <label class="custom-control-label" for="customRadio1">WDV</label>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="DepreciationMethod" id="editslm" tabindex="28">
+                                            <label class="custom-control-label" for="customRadio2">SLM</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-3"><label class="form-control-sm">Depreciation Rate</label></div>
+                                <div class="col-md-4"><input type="number" id="txteditDepRate" class="form-control form-control-sm" min="0" max="100" onblur="editdeprate()" /></div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3"><label class="form-control-sm"> Opening WDV </label></div>
+                                <div class="col-md-4"><input type="number" id="txteditOPWDV" class="form-control form-control-sm" min="0" max="100" /></div>
+                            </div>
+                            <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-sm saveBtn" id="btneditSave">Save</button>
+                            <button type="button" class="btn btn-sm clBtn" id="btnClose" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <script type="text/javascript">
+    var editnode;
+
+            function getHeaders() {
+                var form = $('#frmNewEmp');
+                var token = $('input[name="__RequestVerificationToken"]', form).val();
+                var headers = {};
+                headers['__RequestVerificationToken'] = token;
+                return  headers;
+            }
+
+            $(document).ready(function () {
+
+                $('#btnSave').click(function (event) {
+                    // alert("Add");
+                    // jquery save controller
+                    var node = $('#jstree').jstree().get_selected(true)[0];
+
+                    var GroupName = $('#txtGroupName').val();
+                    var OPWDV = $('#txtOPWDV').val();
+
+                    var DepMethod = $("input[name='txtDepMethod']:checked").val();
+                    var DepRate = $('#txtDepRate').val();
+
+                    if (node == null) {
+                        swal("Alert", "Please Select Itgroup level to add itgroup!", "warning");
+
+
+                    }
+                    else {
+                        var ControllerURL = '@Url.Action("SaveLocationNode", "ITGroup")';
+                        if (GroupName != "" && node.id != "") {
+                            var postdata =
+                                {
+                                    "id": node.id,
+                                    "GroupName": GroupName,
+                                    "OPWDV": OPWDV,
+                                    "DepRate": DepRate,
+                                    "DepMethod": DepMethod,
+                                };
+
+                            $.ajax({
+                                type: 'POST',
+                                url: ControllerURL,
+                                contentType: "application/json",
+                                headers: getHeaders(),
+                                data: JSON.stringify(postdata),
+                                success: function () {
+                                    $('#myModal_Add').modal('hide');
+                                    //window.location = ApptURL;
+                                    //reloadevents();
+                                    $('#jstree').jstree(true).refresh();
+                                },
+                                failure: function () { alert("Error"); }
+                            });
+
+
+                        }
+
+                        else {
+                            swal("Alert", "Please check  if you entered mandatory fields!", "warning");
+                        }
+                    } });
+
+
+                $('#mnuAdd').click(function (event) {
+
+                    var node = $('#jstree').jstree().get_selected(true)[0];
+                    if (node == null)
+                    {
+                        swal("Alert", "Please check if you selected the level!", "warning");
+                    }
+                    else {
+                       //------------blank fields----------------------------------------
+                        $("#txtDepRate").val(0);
+                        $("#txtGroupName").val('');
+                        $("#txtDepMethod").val('');
+                        $("#txtOPWDV").val(0);
+
+                        //---------------------------------------------
+                    $('#myModal_Add').modal('show');
+                    }
+                });
+                $('#mnuEdit').click(function (event) {
+                    //alert("Add");
+                    var node = $('#jstree').jstree().get_selected(true)[0];
+                   // alert(node);
+                    if (node == null) {
+                        swal("Alert", "Please check if you selected the level!", "warning");
+                    }
+                    else {
+                        editnode = node.id;
+                        //alert(node.text)
+                        $('#txteditGroupName').val(node.text)
+
+                        var ControllerURL = '@Url.Action("GetITGrpValues", "ITGroup")';
+
+                        ControllerURL = ControllerURL + "/" + node.id
+                        if (node.id != "") {
+
+                            $.ajax({
+                                type: 'GET',
+                                url: ControllerURL,
+                                contentType: "application/json",
+                                headers: getHeaders(),
+                                success: function (Result) {
+                                    console.log(Result.Data.GroupName);
+
+                                    if (Result.Data.DepMethod == "SLM") {
+                                        $("#editslm").prop("checked", true);
+
+                                    }
+                                   else if (Result.Data.DepMethod == "WDV") {
+                                        $("#editwdv").prop("checked", true);
+
+                                    }
+                                    else {
+                                        $('#txteditDepMethod').val(Result.Data.DepMethod)
+                                    }
+                                    //$('#txteditDepMethod').val(Result.Data.DepMethod)
+                                    $('#txteditDepRate').val(Result.Data.DepRate)
+                                    $('#txteditOPWDV').val(Result.Data.OPWDV)
+
+
+
+
+
+                                },
+                                failure: function () { alert("Error"); }
+                            });
+                        }
+                        else {
+                            swal("Alert", "Please check if you selected the level!", "warning");
+                        }
+                        $('#myModal_Edit').modal('show');
+                    }
+                    //alert("Add");
+                });
+              //  $('#jstree').jstree();
+                // AJAX
+
+                ////------------------delete cost center code------
+                $('#mnuDelete').click(function (event) {
+                    //alert("Add");
+                    var node = $('#jstree').jstree().get_selected(true)[0];
+                    if (node == null) {
+                        swal("Alert", "Please Select ITGroup to delete !", "warning");
+
+
+                    }
+                    else {
+                        DeleteITGroup();
+                        //editnode = node.id;
+                        //$('#myModal_Add').modal('show');
+                        //$('#txteditLocation').val(node.text)
+                        //$('#myModal_Edit').modal('show');
+
+                    }
+                });
+                // 8 interact with the tree - either way is OK
+                $('button').on('click', function () {
+                    $('#jstree').jstree(true).select_node('child_node_1');
+                    $('#jstree').jstree('select_node', 'child_node_1');
+                    $.jstree.reference('#jstree').select_node('child_node_1');
+                });
+                $('#mnuExpand').on('click', function () {
+                    $('#jstree').jstree("open_all");
+                });
+                $('#mnuContract').on('click', function () {
+                    $('#jstree').jstree("close_all");
+                });
+//---------------------------------------------------------------------------
+
+                InitTree();
+
+                // 7 bind to events triggered on the tree
+                $('#jstree').on("changed.jstree", function (e, data) {
+                    console.log(data.selected);
+                    var node = $('#jstree').jstree().get_selected(true)[0];
+                    //showasset(node.id);
+
+                });
+                // 8 interact with the tree - either way is OK
+                $('button').on('click', function () {
+                    $('#jstree').jstree(true).select_node('child_node_1');
+                    $('#jstree').jstree('select_node', 'child_node_1');
+                    $.jstree.reference('#jstree').select_node('child_node_1');
+                });
+    });
+
+    function InitTree() {
+          $('#jstree').jstree({
+                    'core': {
+                        'data': {
+                            'url': function (node) {
+                                var url = '@Url.Action("GetLocations", "ITGroup")';
+                                //return node.id === '#' ? url : url;
+                                return url;
+
+                            },
+                            headers: getHeaders(),
+                            'data': function (node) {
+                                return { 'id': node.id };
+                            }
+                        },
+                        'themes': {
+                            'name': 'proton',
+                            'responsive': true
+                        }
+                    }
+
+                });
+            }
+    function deprate() {
+
+        var deprate = $("#txtDepRate").val();
+        if (deprate > 100) {
+            swal("Alert", "Depreciation rate should not be greater than 100 !", "warning");
+        }
+    }
+    function editdeprate() {
+
+        var deprate = $("#txteditDepRate").val();
+        if (deprate > 100) {
+            swal("Alert", "Depreciation rate should not be greater than 100 !", "warning");
+        }
+    }
+    //EditSaveLocationNode
+     $('#btneditSave').click(function (event) {
+                    // alert("Add");
+                    // jquery save controller
+                     var node = $('#jstree').jstree().get_selected(true)[0];
+
+                     var GroupName = $('#txteditGroupName').val();
+                     var OPWDV = $('#txteditOPWDV').val();
+                     var DepMethod = $("input[name='txteditDepMethod']:checked").val();
+
+                     var DepRate = $('#txteditDepRate').val();
+                   // console.log(node.id);
+                    var ControllerURL = '@Url.Action("EditSaveLocationNode", "ITGroup")';
+                    if (node != "" && location != "") {
+
+                            var postdata =
+                                {
+                                    "id": editnode,
+                                    "GroupName": GroupName,
+                                    "OPWDV": OPWDV,
+                                    "DepRate": DepRate,
+                                    "DepMethod": DepMethod,
+                                };
+
+                            $.ajax({
+                                type: 'POST',
+                                url: ControllerURL,
+
+                                contentType: "application/json",
+                                headers: getHeaders(),
+                                data: JSON.stringify(postdata),
+                                success: function () {
+                                    $('#myModal_Edit').modal('hide');
+                                    //window.location = ApptURL;
+                                    //reloadevents();
+                                    $('#jstree').jstree(true).refresh();
+                                },
+                                failure: function () { alert("Error"); }
+                            });
+                                        }
+                                        else {
+
+                                            alert("Please check whether you have entered location and selected the level");
+                                            return;
+
+                                        }   });
+
+     
+
+    function DeleteITGroup()
+        {
+         var node = $('#jstree').jstree().get_selected(true)[0];
+
+         var id = node.id;
+         if (node == null) {
+             swal("Alert", "Please Select level to delete ITGroup !", "warning");
+
+
+         }
+         else
+         {
+
+
+            swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+            if (result == true) {
+
+                var url = '@Url.Action("DeleteITGroup", "ITGroup")';
+                url = url + "/" + id;
+                    $.ajax({
+                    type: 'POST',
+                    url: url,
+                    headers: getHeaders(),
+                    contentType: "application/json",
+                    success: function (res) {
+                        if (res == "Failed")
+                        {
+                            swal("Alert", "You Cannot Delete this Record", "warning");
+                        }
+                        else
+                        {
+                            swal({ title:  "Successfully Deleted!", icon: "success" }).then((result) => {
+                                if (result == true) {
+                                    $('#jstree').jstree(true).refresh();
+                                }
+                            });
+                         }
+                    },
+
+                    failure: function () { alert("Error"); }
+
+                 });
+            }
+        });
+         }
+
+        }
+
+  </script>
+

@@ -1,0 +1,320 @@
+﻿@model IEnumerable<VerifyWebApp.Models.Child_Asset_Attachment>
+
+@{
+    ViewBag.Title = "UploadAssetAttachment_Index";
+}
+
+
+<style type="text/css">
+    body {
+        font-family: Arial;
+        font-size: 10pt;
+    }
+
+    .Grid {
+        border: 1px solid #ccc;
+        border-collapse: collapse;
+    }
+
+        .Grid th {
+            background-color: #F7F7F7;
+            font-weight: bold;
+        }
+
+        .Grid th, .Grid td {
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .Grid, .Grid table td {
+            border: 0px solid #ccc;
+        }
+
+            .Grid img {
+                height: 150px;
+                width: 150px;
+                cursor: pointer;
+            }
+
+    #dialog img {
+        height: 550px;
+        width: 575px;
+        cursor: pointer;
+    }
+</style>
+
+
+    
+    @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp", enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+   
+<div class="container-fluid py-4">
+
+    
+
+    <div class="row my-1">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header pb-0">
+                    <div class="row">
+                        <div class="d-sm-flex justify-content-between hborder">
+                            <div class="htitle"> <b>Asset Images</b></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body" id="divTableData">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <input type="text" name="id" hidden id="assetid" />
+                                <input type="file" name="postedFile" required id="file" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="form-group">
+                                <label for="praticesname">SourceEvent:</label>&nbsp;&nbsp;&nbsp;
+                                New Asset @Html.RadioButton("SourceEvent", "New Asset", new { id = "asset" })&nbsp;&nbsp;
+                                Addition Asset @Html.RadioButton("SourceEvent", "Addition Asset", new { id = "additionasset" })&nbsp;&nbsp;
+                                Disposal Asset @Html.RadioButton("SourceEvent", "Disopasal Asset", new { id = "disposalasset" })
+
+
+                                @*<label for="praticesname">Depreciation Method:</label>&nbsp;&nbsp;&nbsp;
+                    SLM @Html.RadioButton("DepreciationMethod", "SLM", new { id = "slm", @tabindex = "11" })
+                    WDV @Html.RadioButton("DepreciationMethod", "WDV", new { id = "wdv", @tabindex = "12" })*@
+                            </div>
+
+                        </div>
+                    </div>
+                    <button type="submit" id="btnUpload" class="btn nBtn btn-sm"
+                            aria-label="Left Align">
+                        Upload
+                    </button>
+
+
+                    <hr />
+                    <div class="row" style="font-size:larger;font-style:oblique">
+                        <div class="form-group col-lg-2">
+                            <label for="praticesname" style="font-style:inherit">Asset No: @ViewBag.assetno</label>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label for="praticesname" style="font-style:inherit">Asset Name: @ViewBag.assetname</label>
+                        </div>
+                    </div>
+
+                    <table class="table table-hover text-uppercase text-xs" id="tblattachment">
+                        <thead class="hcol" style="font-weight:bold">
+                            <tr>
+                                <td class="opacity-7">
+                                    File Name
+                                </td>
+
+                                <td class="opacity-7">
+                                    File Type
+                                </td>
+                                <td class="opacity-7"d>
+                                    Source Event
+                                </td>
+                                <td class="opacity-7">
+                                    Upload Date
+                                </td>
+
+                                <td class="opacity-7">
+                                    Attachments
+                                </td>
+                                <td class="opacity-7">
+                                    Delete Attachments
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody style="font-weight:bold">
+                            @if (Model.Count() == 0)
+                            {
+                                <tr class="opacity-7">
+                                    <td colspan="6">No Rows Found</td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelitem => item.Filename)</td>
+
+                                        <td >@Html.DisplayFor(modelitem => item.Ext)</td>
+                                        <td >@Html.DisplayFor(modelitem => item.SourceEvent)</td>
+                                        <td >@Html.DisplayFor(modelitem => item.str_uploaddate)</td>
+                                        <td >
+                                            <button type="button" class="btn modBtn btn-sm"
+                                                    aria-label="Left Align"
+                                                    onclick="download(@item.ID);">
+                                                <i class="fa fa-download"></i>
+
+                                            </button>
+                                        </td>
+                                        <td class="text-xs">
+                                            <button type="button" class="btn delBtn btn-sm"
+                                                    aria-label="Left Align"
+                                                    onclick="Delete(@item.ID);">
+                                                <i class="fa fa-trash"></i>
+
+                                            </button>
+                                        </td>
+                                      
+
+                                    </tr>
+
+
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+                </div>
+            </div>
+                </div>
+            </div>
+    }
+            <div id="dialog" style="display: none"></div>
+
+            <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('#assetid').val(@ViewBag.id)
+            $('#frmNewEmp').submit(function (e) {
+
+         if (window.FormData !== undefined) {
+
+           
+
+             var formData = new FormData();
+
+
+          
+             e.preventDefault();
+             var formData = new FormData();
+             var totalFiles = document.getElementById("file").files.length;
+             var size = document.getElementById("file").files[0].size;
+            // alert(size)
+             var file = document.getElementById("file").files[0];
+             var srceevent = $("input[name ='SourceEvent']:checked").val();
+
+           //  var depreciationmethod = $("input[name='DepreciationMethod']:checked").val();
+
+             formData.append("file", file);
+             formData.append("id",@ViewBag.id)
+             formData.append("SourceEvent", srceevent)
+             formData.append("assetno", '@ViewBag.assetno')
+        
+
+             if (srceevent ==null)
+             {
+
+                 swal("Alert", "Please Select Source Event", "warning");
+             }
+             else{
+                 swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+                     if (result == true) {
+                         var ControllerURL = '@Url.Action("Post_UploadAttachments", "Asset_Attachments")';
+                         var returnURL='@Url.Action("Index", "Asset_Attachments")';
+                         $.ajax({
+                             type: 'POST',
+                             url: ControllerURL,
+
+                             contentType: false,
+                             processData: false,
+                             dataType: 'json',
+
+                             data: formData,
+                             success: function (res) {
+                                //  alert(res)
+                                 if (res == "Failed") {
+                                     swal("Alert", "You Cannot Upload this File", "warning");
+                                  }
+                                 if (res == "error") {
+                                     swal("Alert", "Error while Uploading this File", "warning");
+                                 }
+                                  if (res == "Success") {
+
+                                     swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
+                                         if (result == true) {
+                                             window.location.reload();
+                                         }
+                                     });
+                                 }
+
+
+
+                             },
+
+                             failure: function () { alert("Error"); }
+
+                         });
+                     }
+                 });
+
+             }
+         }
+        });
+
+
+
+
+    });
+
+
+     function Delete(id)
+     {
+         var form = $('#frmNewEmp');
+         var token = $('input[name="__RequestVerificationToken"]', form).val();
+         var headers = {};
+         headers['__RequestVerificationToken'] = token;
+         //alert(token);
+
+         swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+            if (result == true) {
+                var returnURL='@Url.Action("Index", "Asset_Attachments")';
+                var url = '@Url.Action("Delete", "Asset_Attachments")';
+                url = url + "/" + id;
+                    $.ajax({
+                    type: 'POST',
+                    url: url,
+                    headers: headers,
+                    contentType: "application/json",
+                    success: function (res) {
+                        if (res == "Failed")
+                        {
+                            swal("Alert", "You Cannot Delete this Record", "warning");
+                        }
+                        else
+                        {
+                            swal({ title:  "Successfully Deleted!", icon: "success" }).then((result) => {
+                                if (result == true) {
+                                    window.location.reload();
+                                }
+                            });
+                         }
+                    },
+
+                    failure: function () { alert("Error"); }
+
+                 });
+            }
+        });
+
+        }
+
+
+        function download(id) {
+               //  alert(id)
+            var ControllerURL = '@Url.Action("Download", "Asset_Attachments")';
+            ControllerURL = ControllerURL + "/" + id;
+            window.location.href = ControllerURL;
+                }
+
+            </script>

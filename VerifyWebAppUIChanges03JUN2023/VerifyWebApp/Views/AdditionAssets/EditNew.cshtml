@@ -1,0 +1,1631 @@
+﻿@model VerifyWebApp.Models.Addition
+
+@{
+    ViewBag.Title = "EditNew";
+}
+
+@using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+{
+
+    <div class="container"><h1>Edit Addition Assets </h1></div>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#home">General Info</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#menu1">Other Info</a>
+        </li>
+        @*<li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#menu2">Attached Documents</a>
+            </li>*@
+
+
+    </ul>
+
+    <div class="tab-content ">
+        <div class="tab-pane container active" id="home">
+            <div class="container-fluid" style="border: 12px solid #33669A ;border-radius: 10px;margin-top: 15px;
+                        margin-bottom: 15px;">
+                <div class="row col-lg-12" style="margin-top: 10px;">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            @Html.HiddenFor(m => m.ID)
+                            <label for="praticesname">Addition No</label>
+                            @Html.TextBoxFor(m => m.AdditionNo, new { @class = "form-control", @readonly = "readonly", @tabindex = "1" })
+                            @*<input type='text' id="txtaddno" class="form-control" readonly tabindex="1" />*@
+
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            @*@ @Html.EditorFor(m => m.ID, new { @class = "form-control", @readonly = "readonly", @tabindex = "1" })*@
+                            <input type='checkbox' id="checkflag" tabindex="2" />
+                            <label for="praticesname">Asset no wise search</label>
+
+                        </div>
+
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="praticesname">Asset No<span style="color:#CC0000;">*</span></label>
+                            @*<input type='number' placeholder="Enter Assetno and press enter" id="txtassetno" class="form-control" tabindex="3" required />*@
+                            @Html.TextBoxFor(m => m.AssetNo, new { @class = "form-control", @tabindex = "3", type = "number", required = "required", id = "txtassetno" })
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="praticesname">Asset Name<span style="color:#CC0000;">*</span></label>
+                            <div class='input-group dropdown ' id='dtasset' tabindex="4">
+
+                                @Html.DropDownList("AssetId", (SelectList)ViewBag.Assestlist, "Select AssetNo", new { @class = "form-control", id = "AssetId", required = "required", @tabindex = "4" })
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="praticesname">Add.Description<span style="color:#CC0000;">*</span></label>
+
+                            @Html.TextBoxFor(m => m.AdditionAssetName, new { @class = "form-control", @tabindex = "5", required = "required", id = "adddesc" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <label for="praticesname">VoucherNo</label>
+
+
+                            @Html.TextBoxFor(m => m.VoucherNo, new { @class = "form-control", @tabindex = "6", id = "txtvno" })
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label for="praticesname">Voucher Date<span style="color:#CC0000;">*</span></label>
+
+                            <div class='input-group date' id='dtVDate'>
+
+                                @Html.TextBoxFor(m => m.str_VoucherDate, new { @class = "form-control", @tabindex = "7", required = "required", id = "txtVDate", @onblur = "validateassetdate()" })
+                                <div class="input-group-addon">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label for="praticesname">Date Put To Use  (Company Law)<span style="color:#CC0000;">*</span></label>
+
+                            <div class='input-group date' id='dtdpucomDate'>
+
+                                @Html.TextBoxFor(m => m.str_DtPutToUse, new { @class = "form-control", @tabindex = "8", required = "required", id = "txtdpucomDate", @onblur = "dtputusevalidatewithvoucher();" })
+                                <div class="input-group-addon">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label for="praticesname">Date Put To Use  (IT Law)<span style="color:#CC0000;">*</span></label>
+
+                            <div class='input-group date' id='dtdpuItDate'>
+
+                                @Html.TextBoxFor(m => m.str_DtPutToUseIT, new { @class = "form-control", @tabindex = "9", id = "txtdpuItDate" })
+                                <div class="input-group-addon">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <label for="praticesname">PoNo</label>
+
+                            @Html.TextBoxFor(m => m.PONo, new { @class = "form-control", @tabindex = "10", id = "txtpono" })
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label for="praticesname">Po Date</label>
+
+                            <div class='input-group date' id='dtPoDate'>
+
+                                @Html.TextBoxFor(m => m.str_PODate, new { @class = "form-control", @tabindex = "11", id = "txtPoDate" })
+                                <div class="input-group-addon">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label for="praticesname">Receipt Date </label>
+
+                            <div class='input-group date' id='dtrecieptDate'>
+
+                                @Html.TextBoxFor(m => m.str_ReceiptDate, new { @class = "form-control", @tabindex = "12", id = "txtreceiptDate" })
+                                <div class="input-group-addon">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label for="praticesname">Commisioning date</label>
+
+                            <div class='input-group date' id='dtcommDate'>
+
+                                @Html.TextBoxFor(m => m.str_CommissioningDate, new { @class = "form-control", @tabindex = "13", id = "txtcommDate" })
+                                <div class="input-group-addon">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <label for="praticesname">Bill No</label>
+
+                            @Html.TextBoxFor(m => m.BillNo, new { @class = "form-control", @tabindex = "14", id = "txtbillno" })
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label for="praticesname">Bill Date</label>
+
+                            <div class='input-group date' id='dtbillDate'>
+
+                                @Html.TextBoxFor(m => m.str_BillDate, new { @class = "form-control", @tabindex = "15", id = "txtbillDate" })
+                                <div class="input-group-addon">
+                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <label for="praticesname">Residual Value</label>
+
+
+                            @Html.TextBoxFor(m => m.ResidualVal, new { @class = "form-control", @tabindex = "16", id = "txtresidual" })
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <label for="praticesname">Quantity <span style="color:#CC0000;">*</span></label>
+
+                            @Html.TextBoxFor(m => m.Qty, new { @class = "form-control", @tabindex = "17", id = "txtqty", required = "required" })
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <label for="praticesname">Uom</label>
+                            <div class='input-group dropdown ' id='dtuom'>
+
+                                @Html.DropDownList("UomId", (SelectList)ViewBag.uomlist, "Select Uom", new { @class = "form-control", id = "UomId", @tabindex = "18" })
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="praticesname">Supplier Name</label>
+                            <div class='input-group dropdown ' id='dtsupplier'>
+
+                                @Html.DropDownList("SupplierId", (SelectList)ViewBag.supplierlist, "Select Supplier", new { @tabindex = "19", @class = "form-control", id = "SupplierId" })
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container-fluid" style="border: 12px solid #4FA7DD;border-radius: 10px;margin-top: 15px;
+                             margin-bottom: 15px;">
+
+
+
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Gross Value<span style="color:#CC0000;">*</span></label>
+
+                                    @Html.TextBoxFor(m => m.GrossVal, new { @class = "form-control", @tabindex = "20", id = "txtgrossvalue", type = "number", @onblur = "totaladdition()", required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Discount</label>
+
+
+                                    @Html.TextBoxFor(m => m.Discount, new { @class = "form-control", @tabindex = "35", id = "txtdiscount", type = "number", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Duty Drawback</label>
+
+                                    @Html.TextBoxFor(m => m.DutyDrawback, new { @class = "form-control", @tabindex = "38", id = "txtdutydrawback", type = "number", onblur = "totaladdition()" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Service Charges</label>
+
+                                    @Html.TextBoxFor(m => m.ServiceCharges, new { @class = "form-control", @tabindex = "21", id = "txtservicecharge", type = "number", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Rounding Off</label>
+
+                                    @Html.TextBoxFor(m => m.Roundingoff, new { @class = "form-control", @tabindex = "36", id = "txtroundoff", type = "number", })
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Excise Credit</label>
+
+                                    @Html.TextBoxFor(m => m.ExciseCredit, new { @class = "form-control", @tabindex = "39", id = "txtexcisecredit", type = "number", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Other Expenses </label>
+
+                                    @Html.TextBoxFor(m => m.OtherExp, new { @class = "form-control", @tabindex = "22", id = "txtotherexpense", type = "number", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Total Deduction(B)</label>
+
+                                    @Html.TextBoxFor(m => m.TotDeduction, new { @class = "form-control", @tabindex = "36", id = "txttotaldeduction", type = "number", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Service Tax Credit</label>
+
+                                    @Html.TextBoxFor(m => m.ServiceTaxCredit, new { @class = "form-control", @tabindex = "40", id = "txtservicetaxcredit", type = "number", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Custom Duty </label>
+
+                                    @Html.TextBoxFor(m => m.CustomDuty, new { @class = "form-control", @tabindex = "23", id = "txtcustomduty", type = "number", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Invoice Amount</label>
+                                    @Html.TextBoxFor(m => m.InvoiceAmt, new { @class = "form-control", @readonly = "readonly", @tabindex = "37", id = "txtinvoiceamt", type = "number", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Any Other Duty Credit </label>
+
+                                    @Html.TextBoxFor(m => m.AnyOtherDutyCredit, new { @class = "form-control", @tabindex = "41", id = "txtanyotherdutycredit", type = "number", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Excise Duty</label>
+
+                                    @Html.TextBoxFor(m => m.ExciseDuty, new { @class = "form-control", @tabindex = "24", id = "txtexciseduty", type = "number", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Vat Credit</label>
+
+                                    @Html.TextBoxFor(m => m.VATCredit, new { @class = "form-control", @tabindex = "42", id = "txtvatcredit", type = "number", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Service Tax</label>
+
+                                    @Html.TextBoxFor(m => m.ServiceTax, new { @class = "form-control", @tabindex = "25", id = "txtservicetax", type = "number", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">CST Credit</label>
+
+                                    @Html.TextBoxFor(m => m.CSTCredit, new { @class = "form-control", @tabindex = "43", id = "txtcstcredit", type = "number", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Any Other Duty</label>
+
+                                    @Html.TextBoxFor(m => m.AnyOtherDuty, new { @class = "form-control", @tabindex = "26", id = "txtanyotherduty", type = "number", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">GST Credit</label>
+
+                                    @Html.TextBoxFor(m => m.GSTCredit, new { @class = "form-control", @tabindex = "44", id = "txtgstcredit", type = "number", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Vat</label>
+
+                                    @Html.TextBoxFor(m => m.VAT, new { @class = "form-control", @tabindex = "27", id = "txtvat", type = "number", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Any Other Credit</label>
+
+                                    @Html.TextBoxFor(m => m.AnyOtherCredit, new { @class = "form-control", @tabindex = "45", id = "txtanyothercredit", type = "number", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">CGST</label>
+
+                                    @Html.TextBoxFor(m => m.CGST, new { @class = "form-control", @tabindex = "28", id = "txtcgst", type = "number", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">CGST Credit</label>
+
+                                    @Html.TextBoxFor(m => m.CGSTCredit, new { @class = "form-control", @tabindex = "46", id = "txtcgstcredit", type = "number", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">IGST</label>
+
+                                    @Html.TextBoxFor(m => m.IGST, new { @class = "form-control", @tabindex = "29", id = "txtigst", type = "number", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">IGST Credit</label>
+
+                                    @Html.TextBoxFor(m => m.IGSTCredit, new { @class = "form-control", @tabindex = "47", id = "txtigstcredit", type = "number", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">SGST</label>
+
+                                    @Html.TextBoxFor(m => m.SGST, new { @class = "form-control", @tabindex = "30", id = "txtsgst", type = "number", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">SGST Credit</label>
+
+                                    @Html.TextBoxFor(m => m.SGSTCredit, new { @class = "form-control", @tabindex = "48", id = "txtsgstcredit", type = "number", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">CST</label>
+
+                                    @Html.TextBoxFor(m => m.CST, new { @class = "form-control", @tabindex = "31", id = "txtcst", type = "number", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Total Credit(D)</label>
+
+                                    @Html.TextBoxFor(m => m.TotalCredit, new { @class = "form-control", @tabindex = "49", id = "txttotalcredit", type = "number", @readonly = "readonly", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">GST</label>
+
+                                    @Html.TextBoxFor(m => m.GST, new { @class = "form-control", @tabindex = "32", id = "txtgst", type = "number", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Amt.To be Capitalised(E=C-D)</label>
+
+                                    @Html.TextBoxFor(m => m.AmountCapitalised, new { @class = "form-control", @tabindex = "50", id = "txtamttobecap", type = "number", @readonly = "readonly", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Any Other Tax</label>
+
+                                    @Html.TextBoxFor(m => m.AnyOtherTax, new { @class = "form-control", @tabindex = "33", id = "txtanyothertax", type = "number", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Amt.Capitalised(Company Law)</label>
+
+                                    @Html.TextBoxFor(m => m.AmountCapitalisedCompany, new { @class = "form-control", @tabindex = "51", id = "txtamtcapcompanylaw", type = "number", @readonly = "readonly", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Total Addition(A)</label>
+
+                                    @Html.TextBoxFor(m => m.TotalAddition, new { @class = "form-control", @tabindex = "34", @readonly = "readonly", id = "txttotaladdition", type = "number", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Amt.Capitalised(Income Tax Law)</label>
+
+                                    @Html.TextBoxFor(m => m.AmountCApitalisedIT, new { @class = "form-control", @readonly = "readonly", @tabindex = "52", id = "txtamtcapincometax", type = "number", @onblur = "totaladdition()" })
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane container fade" id="menu1">
+            <div class="container-fluid" style="border: 12px solid #33669A ;border-radius: 10px;margin-top: 15px;
+                        margin-bottom: 15px;">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="praticesname">Brand</label>
+
+                            @Html.TextBoxFor(m => m.BrandName, new { @class = "form-control", id = "txtbrandname" })
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="praticesname">Srno</label>
+
+                            @Html.TextBoxFor(m => m.SrNo, new { @class = "form-control", id = "txtsrno" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="praticesname">Model</label>
+
+                            @Html.TextBoxFor(m => m.Model, new { @class = "form-control", @tabindex = "22", id = "txtmodel" })
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="praticesname">Remarks</label>
+
+                            @Html.TextBoxFor(m => m.Remarks, new { @class = "form-control", id = "txtremarks" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-2">
+
+                        <div class="form-group">
+                            <input type="checkbox" id="txtisimported" />
+                            <label for="praticesname">Is Imported</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="praticesname">Currency</label>
+
+                            @Html.TextBoxFor(m => m.Currency, new { @class = "form-control", id = "txtcurrency", type = "text" })
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="praticesname">Value</label>
+
+                            @Html.TextBoxFor(m => m.Values, new { @class = "form-control", id = "txtvalue", type = "number" })
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        @*<div class="tab-pane container fade"  id="menu2">
+                <div class="container-fluid" style="border: 12px solid #33669A ;border-radius: 10px;margin-top: 15px;
+                    margin-bottom: 15px;">
+                    <div class="row" style="margin-top: 10px;">
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-primary" id="btnAddattachment" data-toggle="modal">Add Attachment</button>
+                    </div>
+                    <div class="row" style="height: 200px;overflow:auto">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div class="form-group">
+                            <label for="praticesname">&nbsp;&nbsp;&nbsp;Attached Document</label>
+
+                            <div class="col-lg-12">
+                                <table width="100%" class="table table-striped table-bordered table-hover" id="tblsubaddition">
+                                    <thead>
+                                        <tr>
+
+                                            <td>
+                                                SrNo
+                                            </td>
+                                            <td>
+                                                Asset Image Name
+                                            </td>
+                                            <td align="center">
+                                                View
+                                            </td>
+
+                                            <td  align="center">
+                                                Edit
+                                            </td>
+                                            <td  align="center">
+                                                Delete
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>*@
+    </div>
+
+    <div class="row">
+        &nbsp;	&nbsp;	&nbsp;&nbsp;	&nbsp;	&nbsp;&nbsp;	&nbsp;	&nbsp; &nbsp;	&nbsp;	&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;	&nbsp;	&nbsp; &nbsp;	&nbsp;	&nbsp;&nbsp;	&nbsp;	&nbsp;&nbsp;	&nbsp;	&nbsp;
+        &nbsp;	&nbsp;	&nbsp;&nbsp;	&nbsp;	&nbsp;&nbsp;	&nbsp;	&nbsp;&nbsp;&nbsp;	&nbsp;	&nbsp;
+        &nbsp;	&nbsp;	&nbsp;&nbsp;	&nbsp;	&nbsp;	&nbsp;&nbsp;	&nbsp;	&nbsp;&nbsp;	&nbsp;
+        &nbsp;	&nbsp;	&nbsp;&nbsp;  &nbsp;	&nbsp;	&nbsp;&nbsp;	&nbsp;	&nbsp;&nbsp;
+        &nbsp;	&nbsp;	&nbsp;&nbsp;	&nbsp;	&nbsp;&nbsp;	&nbsp;	&nbsp;
+        &nbsp;	&nbsp;	&nbsp;&nbsp;	&nbsp;	&nbsp;&nbsp;	&nbsp;	&nbsp;
+        <button type="submit" class="btn btn-primary" id="btnsave">	Save</button>
+
+
+    </div>
+
+}
+<div id="imagemodal" class="modal fade" role="dialog" style="height:600px;">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Add Image</h4>
+            </div>
+            <div class="modal-body ">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="praticesname"><span>*</span>Select File to be uploaded </label>
+                            <input type="file" id="fileUploader" required />
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <img id="preview" src="#" alt="your image" style="max-width:300px" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" onclick="closeaddatt();">Close</button>
+            <button type="button" class="btn btn-primary" onclick="saveattachment();">Save</button>
+        </div>
+    </div>
+</div>
+<div id="errorlist" class="modal fade" role="dialog" style="height: 670px;">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Error list</h4>
+            </div>
+            <div class="modal-body ">
+
+                <div class="row" style="overflow:auto">
+                    <table width="100%" class="table table-striped table-bordered table-hover" style="overflow:auto" id="errtbl">
+
+                        <thead>
+                            <tr>
+
+                                <td>Srno</td>
+                                <td>Errors</td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+
+                    </table>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    var isimportedflag;
+    $(document).ready(function ($) {
+        //check whether there is lock or not
+        var lock = '@ViewBag.Lock';
+
+                if (lock == "Depalreadycalculated")
+                {
+                    swal("Alert", "Depreciation is calculated you cannot edit this asset", "warning");
+                    $("#btnsave").prop('disabled', true);
+                }
+                if (lock == "Periodlock")
+                {
+                    swal("Alert", "Period is locked ,you cannot edit this asset", "warning");
+                    $("#btnsave").prop('disabled', true);
+                }
+                if (lock == "Nolock")
+                {
+
+                }
+
+        ////////////////////////////////
+
+
+
+        //isimported checkbox clicked or not
+   // alert("@Model.IsImported")
+        if ('@Model.IsImported'== "yes")
+        {
+            $("#txtisimported").prop("checked", true);
+        }
+        else {
+
+            $("#txtisimported").prop("checked", false);
+        }
+        ////select dropdownlist
+
+        // assetno
+
+        $("#txtassetno").val(@ViewBag.assetno)
+    $("#AssetId").val(@ViewBag.assetno)
+
+        $("#AssetId").prop('selectedIndex', '@ViewBag.assetno');
+        $("#UomId").prop('selectedIndex', '@ViewBag.uomno');
+          $("#SupplierId").prop('selectedIndex', '@ViewBag.supplierno');
+        ////////////////////////////
+          $('#txtisimported').change(function () {
+              if ($(this).prop("checked")) {
+
+                  $("#txtcurrency").prop("disabled", false);
+                  $("#txtvalue").prop("disabled", false);
+                  isimportedflag = "yes";
+              }
+              else {
+                  $("#txtcurrency").prop("disabled", true);
+                  $("#txtvalue").prop("disabled", true);
+                  isimportedflag = "no";
+              }
+          });
+
+            //voucherdate set to all other date
+            $("#txtaddno").val('@ViewBag.additionno');
+            $('#dtVDate').datetimepicker({
+                 format: 'DD/MM/YYYY',
+                icons:
+                {
+                    next: 'fa fa-angle-right',
+                    previous: 'fa fa-angle-left'
+                },
+           });
+           $('#dtdpucomDate').datetimepicker({
+               format: 'DD/MM/YYYY',
+               icons:
+               {
+                   next: 'fa fa-angle-right',
+                   previous: 'fa fa-angle-left'
+               },
+           });
+
+           $('#dtcommDate').datetimepicker({
+               format: 'DD/MM/YYYY',
+               icons:
+               {
+                   next: 'fa fa-angle-right',
+                   previous: 'fa fa-angle-left'
+               },
+           });
+           $('#dtbillDate').datetimepicker({
+               format: 'DD/MM/YYYY',
+               icons:
+               {
+                   next: 'fa fa-angle-right',
+                   previous: 'fa fa-angle-left'
+               },
+           });
+           $('#dtrecieptDate').datetimepicker({
+               format: 'DD/MM/YYYY',
+               icons:
+               {
+                   next: 'fa fa-angle-right',
+                   previous: 'fa fa-angle-left'
+               },
+           });
+           $('#dtPoDate').datetimepicker({
+               format: 'DD/MM/YYYY',
+               icons:
+               {
+                   next: 'fa fa-angle-right',
+                   previous: 'fa fa-angle-left'
+               },
+           });
+           $('#dtdpuItDate').datetimepicker({
+               format: 'DD/MM/YYYY',
+               icons:
+               {
+                   next: 'fa fa-angle-right',
+                   previous: 'fa fa-angle-left'
+               },
+           });
+           //$('input[id=txtVDate]').on('keydown', function (evt) {
+           //    if (evt.key === 'Tab' || evt.key === 'Enter') {
+
+
+           //        var vdate = $('#txtVDate').val();
+           //        $('#txtdpucomDate').val(vdate)
+           //        $('#txtcommDate').val(vdate)
+           //        $('#txtbillDate').val(vdate)
+           //        $('#txtreceiptDate').val(vdate)
+           //        $('#txtPoDate').val(vdate)
+           //        $('#txtdpuItDate').val(vdate)
+           //    }
+           //});
+            ////tabspress
+
+           //$('input[id=txtdpucomDate]').on('keydown', function (evt) {
+           //    if (evt.key === 'Tab' || evt.key === 'Enter') {
+           //        evt.preventDefault();
+
+           //        var vdate = $('#txtVDate').val();
+           //        var voucherdate = moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+           //        var dtputuse = moment($("#txtdpucomDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+
+           //        if (new Date(dtputuse) <= new Date(voucherdate)) {
+
+           //            swal("Alert", "Date put to use is less than voucher date ", "warning");
+           //        }
+           //        else {
+
+
+           //        }
+           //    }
+           //});
+
+
+            //image display
+            function readIMG(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#preview').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#fileUploader").change(function () {
+                readIMG(this);
+            });
+
+            $("#btnAddattachment").click(function () {
+
+
+                $('#imagemodal').modal('show');
+
+
+            });
+
+
+
+
+
+
+            ///for enable disable assetno or search by
+            $("#txtassetno").prop("disabled", true);
+            $("#txtcurrency").prop("disabled", true);
+            $("#txtvalue").prop("disabled", true);
+            $('#checkflag').change(function () {
+                if ($(this).prop("checked")) {
+                    $("#txtassetno").prop("disabled", false);
+                }
+                else {
+                    $("#txtassetno").prop("disabled", true);
+                }
+            });
+            $('#txtisimported').change(function () {
+                if ($(this).prop("checked")) {
+                    $("#txtcurrency").prop("disabled", false);
+                    $("#txtvalue").prop("disabled", false);
+                }
+                else {
+                    $("#txtcurrency").prop("disabled", true);
+                    $("#txtvalue").prop("disabled", true);
+                }
+            });
+
+
+            //on assetno enter set assetname
+            $('#txtassetno').keypress(function () {
+
+                var assetno = $('#txtassetno').val();
+                $('#AssetId').val(assetno);
+                //getassetname(assetno);
+            });
+            $('#AssetId').change(function () {
+
+                var index = $("#AssetId option:selected").val();
+
+                $('#txtassetno').val(index);
+                // getassetname(assetno);
+            });
+
+
+
+            $("#frmNewEmp").submit(function (e) {
+
+                SaveData();
+               e.preventDefault();
+                return false;
+
+            });
+
+
+
+        });
+        function totaladdition() {
+            var grossvalue = 0;
+            var servicecharge = 0;
+            var otherexpense = 0;
+            var customduty = 0;
+            var exciseduty = 0;
+            var servicetax = 0;
+            var vat = 0;
+            var anyotherduty = 0;
+            var cst = 0;
+            var gst = 0;
+            var anyothertax = 0;
+            var totaladdition = 0;
+            var discount = 0;
+            var roundoff = 0;
+            var totaldeduction = 0;
+            var invoiceamt = 0;
+
+
+            var dutydrawback = 0;
+            var excisecredit = 0;
+            var servicetaxcredit = 0;
+            var anyotherdutycredit = 0;
+
+            var vatcredit = 0;
+            var anyothercredit = 0;
+            var cstcredit = 0;
+            var gstcredit = 0;
+            var totalcredit = 0;
+            var amtcap = 0;
+            var amtcapcompanylaw = 0;
+            var amtcapincometax = 0;
+            //
+            var cgstcredit = 0;
+            var igstcredit = 0;
+            var sgstcredit = 0;
+            var cgst = 0;
+            var igst = 0;
+            var sgst = 0;
+            //
+
+            if ($("#txtigst").val() != "") {
+
+                igst = parseFloat($("#txtigst").val());
+
+            }
+            if ($('#txtsgst').val() != "") {
+                sgst = parseFloat($('#txtsgst').val());
+            }
+
+            if ($('#txtcgst').val() != "") {
+                cgst = parseFloat($('#txtcgst').val());
+            }
+            if ($("#txtigstcredit").val() != "") {
+
+                igstcredit = parseFloat($("#txtigstcredit").val());
+
+            }
+            if ($('#txtsgstcredit').val() != "") {
+                sgstcredit = parseFloat($('#txtsgstcredit').val());
+            }
+
+            if ($('#txtcgstcredit').val() != "") {
+                cgstcredit = parseFloat($('#txtcgstcredit').val());
+            }
+
+
+
+            ///
+            if ($("#txtgrossvalue").val() != "") {
+
+                grossvalue = parseFloat($("#txtgrossvalue").val());
+
+            }
+            if ($('#txtservicecharge').val() != "") {
+                servicecharge = parseFloat($('#txtservicecharge').val());
+            }
+
+            if ($('#txtotherexpense').val() != "") {
+                otherexpense = parseFloat($('#txtotherexpense').val());
+            }
+            if ($('#txtcustomduty').val() != "") {
+                customduty = parseFloat($('#txtcustomduty').val());
+            }
+            if ($('#txtexciseduty').val())
+            { exciseduty = parseFloat($('#txtexciseduty').val()); }
+
+            if ($('#txtservicetax').val() != "")
+            { servicetax = parseFloat($('#txtservicetax').val()); }
+
+            if ($('#txtvat').val() != "") { vat = parseFloat($('#txtvat').val()); }
+
+            if ($('#txtanyotherduty').val() != "") { anyotherduty = parseFloat($('#txtanyotherduty').val()); }
+
+            if ($('#txtcst').val() != "") { cst = parseFloat($('#txtcst').val()); }
+            if ($('#txtgst').val() != "") { gst = parseFloat($('#txtgst').val()); }
+            if ($('#txtanyothertax').val() != "") { anyothertax = parseFloat($('#txtanyothertax').val()); }
+
+            totaladdition = parseFloat(grossvalue + servicecharge + otherexpense + customduty + exciseduty + servicetax + vat + anyotherduty
+                + cst + gst + anyothertax+sgst+igst+cgst);
+
+            $('#txttotaladdition').val(totaladdition);
+
+            if ($('#txttotaladdition').val() != "") { totaladdition = parseFloat($('#txttotaladdition').val()); }
+            if ($('#txtdiscount').val() != "") { discount = parseFloat($('#txtdiscount').val()); }
+
+            if ($('#txtroundoff').val() != "") { roundoff = parseFloat($('#txtroundoff').val()); }
+
+            if ($('#txttotaldeduction').val() != "") { totaldeduction = parseFloat($('#txttotaldeduction').val()); }
+
+            invoiceamt = parseFloat(totaladdition - discount -totaldeduction - roundoff);
+            $('#txtinvoiceamt').val(invoiceamt);
+
+            if ($("#txtdutydrawback").val() != "") {
+
+                dutydrawback = parseFloat($("#txtdutydrawback").val());
+
+            }
+            if ($('#txtexcisecredit').val() != "") {
+                excisecredit = parseFloat($('#txtexcisecredit').val());
+            }
+
+            if ($('#txtservicetaxcredit').val() != "") {
+                servicetaxcredit = parseFloat($('#txtservicetaxcredit').val());
+            }
+            if ($('#txtvatcredit').val() != "") {
+                vatcredit = parseFloat($('#txtvatcredit').val());
+            }
+            if ($('#txtgstcredit').val())
+            { gstcredit = parseFloat($('#txtgstcredit').val()); }
+
+            if ($('#txtanyothercredit').val() != "")
+            { anyothercredit = parseFloat($('#txtanyothercredit').val()); }
+
+            if ($('#txtcstcredit').val() != "") { cstcredit = parseFloat($('#txtcstcredit').val()); }
+
+            if ($('#txtanyotherdutycredit').val() != "") { anyotherdutycredit = parseFloat($('#txtanyotherdutycredit').val()); }
+
+            totalcredit = parseFloat(dutydrawback + excisecredit + vatcredit + cstcredit + gstcredit+sgstcredit+ igstcredit + cgstcredit+ anyotherdutycredit
+                + anyothercredit + servicetaxcredit);
+
+            $("#txttotalcredit").val(totalcredit)
+            amtcap = parseFloat(invoiceamt - totalcredit);
+
+            $('#txtamttobecap').val(amtcap);
+            $('#txtamtcapcompanylaw').val(amtcap);
+            $('#txtamtcapincometax').val(amtcap);
+
+
+        }
+
+        function getassetname(id) {
+            if (id == "") {
+                id = 0;
+                $("#AssetId").prop('selectedIndex', id);
+            }
+            else {
+                var ControllerURL = '@Url.Action("getassetinfo", "AdditionAssets")';
+                      var url = ControllerURL + "/" + id;
+                        $.ajax({
+                                type: 'GET',
+                                url: url,
+                                contentType: "application/json",
+                                // data: JSON.stringify(getdata),
+                                success: function (result) {
+                                    var ID = result.Data[0].ID
+                                    $("#AssetId").prop('selectedIndex',ID);
+                                  //  $("#txtassetdesc").val(result.Data[0].Id);
+
+
+                                },
+                                failure: function () { alert("Error"); }
+
+                            });
+              }
+
+        }
+
+        //////////validate asset date with addition asset date////
+         function validateassetdate() {
+           // alert("test")
+            var vdate = $("#txtVDate").val();
+            //var date = moment(vdate, "DD/MM/YYYY").format("YYYY/MM/DD").toString();
+              /// var Strstartdate = moment(StartDate, "DD/MM/YYYY").format("YYYY/MM/DD");
+            var assetno = $("#txtassetno").val();
+            if (vdate != "" && assetno != "")
+            {
+                //alert(assetno)
+
+                var ControllerURL = '@Url.Action("validateassetdate", "AdditionAssets")';
+
+                var returnURL = '@Url.Action("Index", "AdditionAssets")';
+                var url = ControllerURL + "?strvdate=" + vdate + "&assetno="+assetno;
+               //   alert(url)
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    contentType: "application/json",
+                    success: function (res) {
+
+                        if (res.Data == "AssetYes") {
+                            swal({ title: "Addition of asset voucher date cannot be less date asset voucher date", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    document.getElementById("txtVDate").focus();
+                                }
+                                else {
+                                    document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+                        if (res.Data == "Noassetfound")
+                        {
+
+                        }
+                    },
+                    error: function (reponse) {
+                        alert("error : " + reponse);
+                    }
+                });
+            }
+             var ControllerURL = '@Url.Action("checkperiod_itperiod_exits", "AdditionAssets")';
+                var returnURL = '@Url.Action("Index", "AdditionAssets")';
+
+                $.ajax({
+                    url: ControllerURL,
+                    type: "GET",
+                    contentType: "application/json",
+                    success: function (res) {
+                       // alert(res.Data)
+                        if (res.Data == "Noperiodexists") {
+                            swal({ title: "No period found please enter period master first to add asset", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    window.location.replace(returnURL);
+                                }
+                                else {
+                                    document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+
+                        else if (res.Data == "Noitperiodexists") {
+                            swal({
+                                title: "ItPeriod records not found,If you want Itperiod please  click outside dialgouebox and enter itperiod in master , or click on ok to ignore itperiod ", icon: "warning" }).then((result) => {
+                                    if (result == true) {
+                                        checkdatevalidation();
+                                 //   window.location.replace(returnURL);
+                                   // document.getElementById("txtVDate").focus();
+                                }
+                                else {
+                                    window.location.replace(returnURL);
+                                   // document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+                        else {
+                            checkdatevalidation();
+                        }
+                    },
+                    error: function (reponse) {
+                        alert("error : " + reponse);
+                    }
+                });
+        }
+
+        /////check lockperiod and itperiod lock see above function for calls
+          function checkdatevalidation() {
+              var vdate = $("#txtVDate").val();
+            //  alert(vdate)
+            if (vdate != "") {
+                var ControllerURL = '@Url.Action("Dateputtousevalidation", "AdditionAssets")?strvdate=' + vdate;
+                var returnURL = '@Url.Action("Index", "AdditionAssets")';
+                //var url = ControllerURL + "/" + vdate;
+                //  alert(ControllerURL)
+                $.ajax({
+                    url: ControllerURL,
+                    type: "GET",
+                    contentType: "application/json",
+                    success: function (res) {
+                      //  alert(res.Data)
+                        if (res.Data == "Yes") {
+                            swal({ title: "This period is locked you cannot add record", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    window.location.replace(returnURL);
+                                }
+                                else {
+                                    document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+                        if (res.Data == "No") {
+                            // alert("no")
+                            $('#txtdpucomDate').val(vdate)
+                            $('#txtcommDate').val(vdate)
+                            $('#txtbillDate').val(vdate)
+                            $('#txtreceiptDate').val(vdate)
+                            $('#txtPoDate').val(vdate)
+                            $('#txtdpuItDate').val(vdate)
+                        }
+                        if (res.Data == "Nosubperiod") {
+                            swal({ title: "No Sub period found  ", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    window.location.replace(returnURL);
+                                }
+                                else {
+                                    document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+                        if (res.Data == "Depalreadycalculated") {
+                            swal({ title: "Already Depriciation is calculated remove it to add this asset  ", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    window.location.replace(returnURL);
+                                }
+                                else {
+                                    document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+
+                    },
+                    error: function (reponse) {
+                        alert("error : " + reponse);
+                    }
+                });
+            }
+        }
+
+            /////Date put to use is less then voucher date warning
+        function dtputusevalidatewithvoucher() {
+            var voucherdate = moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var dtputuse = moment($("#txtdpucomDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            if (voucherdate != "Invalid date" && dtputuse != "Invalid date") {
+                if (new Date(dtputuse) < new Date(voucherdate)) {
+
+                    swal("Alert", "Date put to use is less than voucher date ", "warning");
+                    //  document.getElementById("txtdpucomDate").focus();
+                }
+                else {
+                }
+            }
+            else {
+
+                //  swal("Alert", "Please check if you have entered voucher date and date put use (Company) ", "warning");
+                swal({ title: "Please check if you have entered voucher date and date put use (Company)", icon: "warning" }).then((result) => {
+                    if (result == true) {
+                        //window.location.replace(returnURL);
+                        document.getElementById("txtdpucomDate").focus();
+                    }
+                    else {
+                        document.getElementById("txtdpucomDate").focus();
+                    }
+                });
+
+            }
+        }
+            function validateform() {
+                var errorlist = [];
+                var AssetName = $("#AssetId option:selected").text()
+                var AdditionAssetName = $('#adddesc').val();
+                var AssetNo = $('#txtassetno').val();
+                // var VoucherNo = $('#txtvno').val();
+                var VoucherDate = $('#txtVDate').val();
+                var DtPutToUse = $('#txtdpucomDate').val();
+                var grossvalue = $("#txtgrossvalue").val();
+                var DtPutToUseIT = $('#txtdpuItDate').val();
+                var Qty = $('#txtqty').val();
+                if (grossvalue == "") {
+                    errorlist.push("Gross value is not entered");
+                }
+                if (DtPutToUseIT == "") {
+                    errorlist.push("Date put to use (IT)  not entered");
+                }
+
+                if (Qty == "") {
+                    errorlist.push("Quantity  not entered");
+                }
+                if (AssetName == "") {
+                    errorlist.push("Asset Name is not entered");
+                }
+                if (AdditionAssetName == "") {
+                    errorlist.push("Addition Asset Name is not entered");
+                }
+
+                if (AssetNo == "") {
+                    errorlist.push("Asset No is not entered");
+                }
+                if (VoucherDate == "") {
+                    errorlist.push("Voucher date is not entered");
+                }
+                if (DtPutToUse == "") {
+                    errorlist.push("Date put to use company is not entered");
+                }
+              //  alert(errorlist)
+                return errorlist;
+            }
+
+
+
+            function SaveData() {
+
+                var validateformz = validateform();
+
+                if (validateformz.length != 0)
+                {
+                   // alert("if" + validateformz)
+                    var srno = 1;
+
+                    for (var i = 0; i < validateformz.length; i++) {
+
+                        $('#errtbl').last().append('<tr><td>' + srno + '</td><td>' + validateformz[i] + '</td></tr>');
+                        srno++
+                    }
+
+                    $('#errorlist').modal('show');
+                }
+                else {
+                var grossvalue = $("#txtgrossvalue").val();
+
+                var servicecharge = $('#txtservicecharge').val();
+                var otherexpense = $('#txtotherexpense').val();
+                var customduty = $('#txtcustomduty').val();
+                var exciseduty = $('#txtexciseduty').val();
+                var servicetax = $('#txtservicetax').val();;
+                var vat = $('#txtvat').val();;
+                var anyotherduty = $('#txtanyotherduty').val();;
+                var cst = $('#txtcst').val();;
+                var gst = $('#txtgst').val();
+                var anyothertax = $('#txtanyothertax').val();
+                var totaladdition = $('#txttotaladdition').val();
+                var discount = $('#txtdiscount').val();
+                var roundoff = $('#txtroundoff').val();
+                var totaldeduction = $('#txttotaldeduction').val();
+                var invoiceamt = $('#txtinvoiceamt').val();
+
+
+                var dutydrawback = $('#txtdutydrawback').val();
+                var excisecredit = $('#txtexcisecredit').val();
+                var servicetaxcredit = $('#txtservicetaxcredit').val();
+                var anyotherdutycredit = $('#txtanyotherdutycredit').val();
+
+                var vatcredit = $('#txtvatcredit').val();
+                var anyothercredit = $('#txtanyothercredit').val();
+                var cstcredit = $('#txtcstcredit').val();
+                var gstcredit = $('#txtgstcredit').val();
+                var totalcredit = $('#txttotalcredit').val();
+                var amtcap = $('#txtamttobecap').val();
+                var amtcapcompanylaw = $('#txtamtcapcompanylaw').val();
+                var amtcapincometax = $('#txtamtcapincometax').val();
+                var AssetNo = $('#txtassetno').val();
+                var ClientID = $('#txtxclientid').val();
+                var AssetName = $("#AssetId option:selected").text()
+                var AdditionAssetName = $('#adddesc').val();
+                var VoucherNo = $('#txtvno').val();
+                var VoucherDate = $('#txtVDate').val();
+                var PODate = $('#txtPoDate').val();
+                var ReceiptDate = $('#txtreceiptDate').val();
+                var CommissioningDate = $('#txtcommDate').val();
+                var BillDate = $('#txtbillDate').val();
+                var DtPutToUse = $('#txtdpucomDate').val();
+                var DtPutToUseIT = $('#txtdpuItDate').val();
+                var PONo = $('#txtpono').val();
+                var BillNo = $('#txtbillno').val();
+                var MRRNo = $('#txtmrrno').val();
+                var Qty = $('#txtqty').val();
+                var SupplierNo = $('#SupplierId').val();
+                var BrandName = $('#txtbrandname').val();
+                var SrNo = $('#txtsrno').val();
+                var Model = $('#txtmodel').val();
+                var Remarks = $('#txtremarks').val();
+                var IsImported = $('#txtisimported').val();
+                var Currency = $('#txtcurrency').val();
+                var Values = $('#txtvalue').val();
+                var cgstcredit = $('#txtcgstcredit').val();
+                var igstcredit = $('#txtigstcredit').val();
+                var sgstcredit = $('#txtsgstcredit').val();
+                var cgst = $('#txtcgst').val();
+                var igst = $('#txtigst').val();
+                var sgst = $('#txtsgst').val();
+                var uomno = $('#UomId').val();
+                var residual = $('#txtresidual').val();
+                var additionno = $('#txtaddno').val();
+
+
+                var postdata =
+
+                    {
+                        "ID": '@Model.ID',
+                        "AdditionNo": additionno,
+                        "Gst": gst,
+                        "GstCredit": gstcredit,
+                        "AssetNo": AssetNo,
+                        "uom": uomno,
+                        "AssetName": AssetName,
+                        "AdditionAssetName": AdditionAssetName,
+                        "VoucherNo": VoucherNo,
+                        "VoucherDate": VoucherDate,
+                        "PODate": PODate,
+                        "ReceiptDate": ReceiptDate,
+                        "CommissioningDate": CommissioningDate,
+                        "BillDate": BillDate,
+                        "DtPutToUse": DtPutToUse,
+                        "DtPutToUseIT": DtPutToUseIT,
+                        "PONo": PONo,
+                        "BillNo": BillNo,
+
+                        "Qty": Qty,
+                        "SupplierNo": SupplierNo,
+                        "BrandName": BrandName,
+                        "SrNo": SrNo,
+                        "Model": Model,
+                        "Remarks": Remarks,
+                        "IsImported": IsImported,
+                        "Currency": Currency,
+                        "Values": Values,
+                        "GrossVal": grossvalue,
+                        "ServiceCharges": servicecharge,
+                        "OtherExp": otherexpense,
+                        "CustomDuty": customduty,
+                        "ExciseDuty": exciseduty,
+                        "ServiceTax": servicetax,
+                        "AnyOtherDuty": anyotherduty,
+                        "VAT": vat,
+                        "CST": cst,
+                        "CGST": cgst,
+                        "SGST": sgst,
+                        "IGST": igst,
+                        "AnyOtherTax": anyothertax,
+                        "TotalAddition": totaladdition,
+                        "Discount": discount,
+                        "Roundingoff": roundoff,
+                        "TotDeduction": totaldeduction,
+                        "InvoiceAmt": invoiceamt,
+                        "DutyDrawback": dutydrawback,
+                        "ExciseCredit": excisecredit,
+                        "ServiceTaxCredit": servicetaxcredit,
+                        "AnyOtherDutyCredit": anyotherdutycredit,
+                        "VATCredit": vatcredit,
+                        "CSTCredit": cstcredit,
+                        "CGSTCredit": cgstcredit,
+                        "SGSTCredit": sgstcredit,
+                        "IGSTCredit": igstcredit,
+                        "AnyOtherCredit": anyothercredit,
+                        "TotalCredit": totalcredit,
+                        "AmountCapitalised": amtcap,
+                        "AmountCapitalisedCompany": amtcapcompanylaw,
+                        "AmountCApitalisedIT": amtcapincometax,
+                        "ResidualVal": residual
+
+                    };
+
+                console.log(postdata)
+                swal({
+                    title: "Are You Sure?", text: "You won't be able to revert this!",
+                    icon: "warning", buttons: true, dangerMode: true
+                }).then((result) => {
+                    if (result == true) {
+
+                        var ControllerURL = '@Url.Action("Edit", "AdditionAssets")';
+
+
+                        var returnURL = '@Url.Action("Index", "AdditionAssets")';
+                        $.ajax({
+                            type: 'POST',
+                            url: ControllerURL,
+                            contentType: "application/json",
+                            data: JSON.stringify(postdata),
+                            success: function (res) {
+                                if (res == "Failed") {
+                                    swal("Alert", "You Cannot Add this Record", "warning");
+                                }
+                                else {
+                                    swal({ title: "Successfully Edited!", icon: "success" }).then((result) => {
+                                        if (result == true) {
+                                            window.location.replace(returnURL);
+                                        }
+                                    });
+                                }
+
+                            },
+
+                            failure: function () { alert("Error"); }
+
+                        });
+                    }
+                });
+            }
+        }
+</script>

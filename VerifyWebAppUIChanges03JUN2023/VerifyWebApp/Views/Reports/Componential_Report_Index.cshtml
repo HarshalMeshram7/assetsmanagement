@@ -1,0 +1,154 @@
+﻿@{
+    ViewBag.Title = "Componentization_Report_Index";
+}
+
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid py-4">
+    <div class="row my-1">
+        <div class="col-12">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header pb-0">
+                    <div class="row">
+                        <div class="d-sm-flex justify-content-between" style="border-bottom:groove">
+                            <div class="text-2xl"><b>Componentization Asset Report</b> </div>
+                        </div>
+                    </div>
+                </div>
+                @using (@Html.BeginForm(null, null, FormMethod.Get, new { id = "frmNewEmp", name = "frmNewEmp" }))
+                {@Html.AntiForgeryToken();
+                <div class="card-body">
+
+
+                    <div class="modal-body">
+
+                        <div class="form-row col-md-12">
+                            <div class="form-group">
+                                <label for="praticesname">From Date<span style="color:#CC0000;">*</span></label>
+
+                                <input type="date" class="form-control-sm" required id="txtfromDate">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row col-md-12">
+                        <div class="form-group">
+                            <label for="praticesname">To Date<span style="color:#CC0000;">*</span></label>
+
+                            <input type="date" class="form-control-sm" required id="txttoDate">
+
+
+                        </div>
+                    </div>
+                    <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
+
+                    <div class="modal-footer">
+
+                        <button type="submit" class="btn btn-sm saveBtn" id="btngetreport">Show Report</button>
+                    </div>
+
+
+                </div>
+
+
+            }
+
+            </div><!-- /.modal-content -->
+    </div>
+</div>
+        </div>
+   
+<div id="progressbar" class="modal fade" role="dialog" style="height: auto;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lx">
+
+        <!-- Modal content-->
+        <div class="modal-content" style="height:auto;width:auto;overflow:auto">
+            <div class="modal-header">
+                <label style="color:red;text-align: center;">Please wait........</label>
+
+            </div>
+            <div class="modal-body ">
+
+                <div class="row col-6" style="overflow:auto;align-content:center">
+                    <label style="color:darkred;text-align: center;"> Report is in progress........</label>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+
+    $(document).ready(function ($) {
+        $('#progressbar').modal('hide');
+        //voucherdate set to all other date
+
+
+
+        $("#frmNewEmp").submit(function (e) {
+            var todate =  moment($("#txttoDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var fromdate =  moment($("#txtfromDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+
+            getreport(fromdate, todate);
+            e.preventDefault();
+            return false;
+
+        });
+
+    });
+    if (typeof jQuery !== 'undefined') {
+        console.log('jQuery Loaded');
+    }
+    else {
+        console.log('not loaded yet');
+    }
+
+    function getreport(fromdate, todate) {
+
+        @*var url = '@Url.Action("Componentialreport", "Reports")';
+
+            url = url + "?fromdate="+fromdate+"&todate="+todate;
+
+            window.location.href = url;*@
+
+        var data = {
+            "fromdate": fromdate,
+            "todate": todate
+        }
+        $('#progressbar').modal('show');
+
+        var form = $('#frmNewEmp');
+        var token = $('input[name="__RequestVerificationToken"]', form).val();
+        var headers = {};
+        headers['__RequestVerificationToken'] = token;
+         var ControllerURL = '@Url.Action("Componentialreport", "Reports")';
+        var DownloadURL = '@Url.Action("Download", "Reports")';
+
+            $.ajax({
+                type: 'POST',
+                url: ControllerURL,
+                contentType: "application/json",
+                headers: headers,
+                data: JSON.stringify(data),
+
+
+                success: function (data) {
+                    var fileurl = DownloadURL + '?fileGuid=' + data.FileGuid
+                        + '&filename=' + data.FileName;
+                    $('#progressbar').modal('hide');
+                    //alert(fileurl);
+
+                    window.location = fileurl;
+                    $('#progressbar').modal('hide');
+                },
+                failure: function () { alert("Error"); }
+            });;
+    }
+
+</script>

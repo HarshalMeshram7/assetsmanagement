@@ -1,0 +1,162 @@
+﻿
+@{
+    ViewBag.Title = "CalculateDepreciation";
+}
+@{
+    Layout = null;
+}
+<style>
+    label span {
+        color: red;
+        font-size: 20px;
+    }
+</style>
+
+
+<div class="modal-content">
+    <div class="modal-header hborder">
+
+        <div class="htitle"><b>Calculate Depreciation</b> </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+    @*@using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))*@
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "frmupload" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="modal-body">
+
+            @Html.ValidationSummary(true)
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="praticesname">From Date @ViewBag.fromdate</label>
+
+
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="praticesname">To Date @ViewBag.todate<span>*</span></label>
+
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="praticesname">Base (Days) for Dep. Calculation :</label>&nbsp;&nbsp;&nbsp;
+                        365 @Html.RadioButton("BaseDays", "365", new { id = "365", @tabindex = "12", })
+                        366 @Html.RadioButton("BaseDays", "366", new { id = "366", @tabindex = "12" })
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="praticesname">Dep Amount Round Off To:</label>&nbsp;&nbsp;&nbsp;
+                        Actual (In Decimal) @Html.RadioButton("RounfOff", "InDecimal", new { id = "InDecimal", @tabindex = "12", })
+                        Re 1 @Html.RadioButton("RounfOff", "Re1", new { id = "Re1", @tabindex = "12" })
+                        Rs 10  @Html.RadioButton("RounfOff", "Rs10", new { id = "Rs10", @tabindex = "12" })
+                        Rs 100  @Html.RadioButton("RounfOff", "Rs100", new { id = "Rs100", @tabindex = "12" })
+                        Rs 1000 @Html.RadioButton("RounfOff", "Rs1000", new { id = "Rs1000", @tabindex = "12" })
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn saveBtn btn-sm" onclick="getdepreciation()">Calculate</button>
+            <button type="button" class="btn clBtn btn-sm" data-dismiss="modal">Close</button>
+            
+            @*@ViewBag.Message*@
+
+        </div>
+    }
+</div><!-- /.modal-content -->
+<script>
+    $(document).ready(function () {
+
+
+    //check if fromdate ,todate
+        checkdates();
+
+
+    });
+    function checkdates() {
+          var startdate = '@ViewBag.fromdate';
+        var enddate = '@ViewBag.todate';
+        if (startdate == "" && enddate == "") {
+
+            swal("Alert", "Please add Subperiod to calculate depreciation", "warning");
+            return;
+
+        }
+    }
+    function getdepreciation() {
+
+      //  checkdates();
+
+         var fromdate = '@ViewBag.fromdate';
+         var todate = '@ViewBag.todate';
+         if (fromdate == "" && todate == "") {
+
+             swal("Alert", "Please add Subperiod to calculate depreciation", "warning");
+             return;
+
+         }
+         var startdate = moment(fromdate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+         var enddate = moment(todate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+        var userid ='@ViewBag.userid';
+        var data = {
+            'startdate': startdate,
+            'enddate': enddate,
+            //'fromassetno': fromassetno,
+            //'toassetno': toassetno,
+            //'alocid': location
+
+        };
+
+        //  var ControllerURL = '@Url.Action("Getdepreciation", "Depreciation")';
+        var DownloadURL = '@Url.Action("ShowProgress", "Depreciation")';
+         
+        DownloadURL = DownloadURL + "?fromdate=" + startdate + "&todate=" + enddate;
+        var ControllerURL = '@Url.Action("startcalculation", "Depreciation")';
+        var form = $('#frmNewEmp');
+        var token = $('input[name="__RequestVerificationToken"]', form).val();
+        var headers = {};
+        headers['__RequestVerificationToken'] = token;
+            $.ajax({
+                type: 'POST',
+                url: ControllerURL,
+                contentType: "application/json",
+                headers: headers,
+                data: JSON.stringify(data),
+                success: function (data) {
+                    console.log(data);
+
+                    /*
+                    var fileurl = DownloadURL + '?fileGuid=' + data.FileGuid
+                        + '&filename=' + data.FileName;
+                    */
+                    window.location.href = DownloadURL;
+
+                },
+                failure: function () { alert("Error"); }
+            });
+
+
+    }
+
+</script>
+

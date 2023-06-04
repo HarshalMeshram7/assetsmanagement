@@ -1,0 +1,112 @@
+﻿
+@{
+    ViewBag.Title = "ShowProgress";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div id="page-wrapper" class="container-fluid rounded page border shadow">
+    <div class="row border-bottom">
+        <div class="col-lg-12">
+            <div class="row justify-content-md-center title">
+                <h2>Depreciation Calculation </h2>
+            </div>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+
+    <div class="pageconent">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div>Depreciation calculation is in progress for @ViewBag.fromdate -- @ViewBag.todate</div>
+                <div> Note: After the depreciation  calculation is completed you will be redirected to the current depreciation period page</div>
+                <label style="color:crimson;font-size:large">@ViewBag.count   Assets depreciation calculated till now </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div>Total Assets : </div> <div id="totalcount"></div>
+                <div>Total Assets Processed : </div> <div id="totalprocessed"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                Time Elapsed     <div id="timer"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+     var timerVar = setInterval(countTimer, 1000);
+     var totalSeconds = 0;
+
+
+    $(document).ready(function () {
+
+
+
+     });
+
+     function countTimer() {
+         ++totalSeconds;
+         var hour = Math.floor(totalSeconds / 3600);
+         var minute = Math.floor((totalSeconds - hour * 3600) / 60);
+         var seconds = totalSeconds - (hour * 3600 + minute * 60);
+         if (hour < 10)
+             hour = "0" + hour;
+         if (minute < 10)
+             minute = "0" + minute;
+         if (seconds < 10)
+             seconds = "0" + seconds;
+         document.getElementById("timer").innerHTML = hour + ":" + minute + ":" + seconds;
+     }
+
+    function GetProgress() {
+
+        var index_url = '@Url.Action("Index", "Depreciation")';
+
+        var fromdate = '@ViewBag.fromdate';
+        var todate = '@ViewBag.todate';
+        fromdate = moment(fromdate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+         todate = moment(todate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+        var url = '@Url.Action("checkdepreciationiscalculated", "Depreciation")';
+        url = url + "?fromdate=" + fromdate + "&todate=" + todate;
+
+        $.ajax({
+            type: 'GET',
+            url: url,
+            contentType: "application/json",
+            success: function (res) {
+                console.log(res);
+                $("#totalcount").html(res.TotalRecords);
+                $("#totalprocessed").html(res.TotalProcessed);
+                var isProcessComplete = res.IsComplete;
+                if (isProcessComplete == "Y") {
+                    window.location.href = index_url;
+                }
+            },
+            failure: function () { alert("Error in showing progress!"); }
+
+        });
+
+     }
+
+    window.setInterval(function () {
+
+        var fromdate = '@ViewBag.fromdate';
+        var todate = '@ViewBag.todate';
+        fromdate = moment(fromdate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+        todate = moment(todate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+        var url = '@Url.Action("checkdepreciationiscalculated", "Depreciation")';
+        url = url + "?fromdate="+fromdate+"&todate="+todate;
+
+        //window.location.href = url;
+
+        GetProgress();
+
+    }, 5000);
+
+</script>
+

@@ -1,0 +1,298 @@
+﻿
+
+
+
+@model IEnumerable<VerifyWebApp.Models.EmployeeAsset>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+{
+    @Html.AntiForgeryToken()}
+
+<div class="container-fluid py-4">
+    <div class="row my-1">
+        <div class="col-12">
+            <div class="card">
+
+                <div class="card-header pb-0">
+                    <div class="row">
+                        <div class="d-sm-flex justify-content-between hborder">
+                            <div class="htitle"> <b>Employee Asset</b></div> <br />
+                        </div>
+                    </div>
+                </div>
+                <div style="padding-left:10px">
+                    <button type="button" id="btnnew" value="New Practice"
+                            class="btn btn-sm addBtn pull-right m-1 order-1"
+                            onclick="IssueAsset()" data-bs-toggle="tooltip" data-bs-placement="top" title="Add New">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
+
+                    <button type="button" id="btnexport" value="New Practice"
+                            class="btn btn-sm modBtn pull-right  m-1 order-2"
+                            onclick="EmployeeAssetExport();" data-bs-toggle="tooltip" data-bs-placement="top" title="Export">
+                        <i class="fa fa-file-excel-o"></i>
+                    </button>
+
+                    <button type="button" id="btnimportdate" value="New Practice"
+                            class="btn btn-sm xtraBtn pull-right m-1 order-2"
+                            onclick="EmployeeAssetimportdate();" data-bs-toggle="tooltip" data-bs-placement="top" title="Import">
+                        <i class="fa fa-file-excel-o"></i>
+                    </button>
+                    <button type="button" id="btndownloadexcel" value="New Practice"
+                            class="btn btn-sm xtraBtn pull-right m-1 order-3"
+                            onclick="downloadexcel();" data-bs-toggle="tooltip" data-bs-placement="top" title="Download">
+                        <i class="fa fa-download"></i>
+                    </button>
+
+                    <button type="button" id="btnimport" value="Upload"
+                            class="btn btn-sm xtraBtn pull-right m-1 order-4"
+                            onclick="Importexcel();" data-bs-toggle="tooltip" data-bs-placement="top" title="Import">
+                        <i class="fa fa-upload"></i>
+                    </button>
+
+
+                </div>
+                
+                <div class="row">
+                    <div class="card-body justify-content-around" id="divTableData">
+                        <table class="table table-hover text-xs"  id="tblemployee">
+                            <thead class="hcol text-uppercase" style="font-weight:bold">
+                                <tr>
+                                    <td style="width: 5%;">
+                                        Employee No
+                                    </td>
+
+                                    <td style="width: 5%;">
+                                        Employee Name
+                                    </td>
+
+                                    <td style="width: 5%;">
+                                        Asset No
+                                    </td>
+                                    <td style="width: 5%;">
+                                        Asset Name
+                                    </td>
+                                    <td style="width: 5%;">
+                                        Asset ID No
+                                    </td>
+                                    <td style="width: 5%;">
+                                        Issue Date
+                                    </td>
+                                    <td style="width: 5%;">
+                                        Return
+                                    </td>
+                                    <td style="width: 5%;">
+                                        Return date
+                                    </td>
+                                    <td style="width: 5%;" align="center">
+                                        Edit
+                                    </td>
+                                    <td style="width: 5%;" align="center">
+                                        Delete
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody style="font-weight: bold; color: black">
+                                @if (Model.Count() == 0)
+                                {
+                                    <tr class="text-xs">
+                                        <td colspan="7" align="center">No Rows Found</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td style="width: 5%;" class="text-xs">@Html.DisplayFor(modelitem => item.empno)</td>
+                                            <td style="width: 5%;" class="text-xs">@Html.DisplayFor(modelitem => item.str_empname)</td>
+                                            <td style="width: 5%;" class="text-xs">@Html.DisplayFor(modelitem => item.str_assetno)</td>
+                                            <td style="width: 5%;" class="text-xs">@Html.DisplayFor(modelitem => item.str_assetname)</td>
+                                            <td style="width: 5%;" class="text-xs">@Html.DisplayFor(modelitem => item.AssetIdentificationNo)</td>
+                                            <td style="width: 5%;" class="text-xs">@Html.DisplayFor(modelitem => item.str_IssueDate)</td>
+                                            <td style="width: 5%;" class="text-xs">@Html.DisplayFor(modelitem => item.AssetRecievedFlag)</td>
+                                            <td style="width: 5%;" class="text-xs">@Html.DisplayFor(modelitem => item.str_RecievedDate)</td>
+
+                                            <td align="center">
+                                                <button type="button" class="btn btn-primary btn-sm"
+                                                        aria-label="Left Align"
+                                                        onclick="EditLogin(@item.ID);">
+                                                    <i class="fa fa-edit"></i>Edit
+                                                </button>
+
+                                            </td>
+                                            <td align="center">
+                                                <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" onclick="Delete(@item.ID);">
+                                                    <i class="fa fa-remove"></i>Delete
+                                                </button>
+
+                                            </td>
+                                        </tr>
+
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>    
+
+                </div>
+            </div>
+        </div>
+    </div>
+                        <div class="modal fade" tabindex="-1" role="dialog" id="divNew">
+                            <div class="modal-dialog modal-lg" role="document" id="divNewContent">
+
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+
+                        <div class="modal fade" tabindex="-1" role="dialog" id="divEdit">
+                            <div class="modal-dialog modal-lg" role="document" id="divEditContent">
+
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+
+                        <div class="modal fade" tabindex="-1" role="dialog" id="divUpload" data-backdrop="static" data-keyboard="false">
+                            <div class="modal-dialog modal-lx" role="document" id="divUploadContent">
+
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+
+
+
+                       
+                        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+                        <script type="text/javascript">
+                            $(document).ready(function () {
+
+                                $('#tblemployee').DataTable({
+                                    "paging": true,
+                                    "info": false,
+                                    "searching": true,
+                                    "pagingType": 'numbers',
+                                    });
+    });
+
+
+    if (typeof jQuery !== 'undefined') {
+        console.log('jQuery Loaded');
+    }
+    else {
+        console.log('not loaded yet');
+    }
+
+    function IssueAsset() {
+        var url = '@Url.Action("IssueAsset","EmployeeAsset")';
+        console.log(url)
+        window.location = url;
+    }
+
+
+        function opennewdialog() {
+
+            var url = '@Url.Action("Add", "EmployeeAsset")';
+            $.get(url, function (data) {
+                $("#divNewContent").html(data);
+                // alert(data);
+                $('#divNew').modal('show')
+            });
+        }
+
+        function EditLogin(id) {
+            var url = '@Url.Action("Edit", "EmployeeAsset")';
+            url = url + "/" + id;
+
+            $.get(url, function (data) {
+                $("#divEditContent").html(data);
+                $('#divEdit').modal('show')
+            });
+       }
+
+    function closeEditModal() {
+        $('#divEdit').modal('hide');
+    }
+
+     function Delete(id)
+     {
+         var form = $('#frmNewEmp');
+         var token = $('input[name="__RequestVerificationToken"]', form).val();
+         var headers = {};
+         headers['__RequestVerificationToken'] = token;
+         swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+            if (result == true) {
+                var returnURL='@Url.Action("Index", "EmployeeAsset")';
+                var url = '@Url.Action("Delete", "EmployeeAsset")';
+                url = url + "/" + id;
+                    $.ajax({
+                    type: 'POST',
+                    url: url,
+                    headers: headers,
+                    contentType: "application/json",
+                    success: function (res) {
+                        if (res == "Failed")
+                        {
+                            swal("Alert", "You Cannot Delete this Record", "warning");
+                        }
+                        else
+                        {
+                            swal({ title:  "Successfully Deleted!", icon: "success" }).then((result) => {
+                                if (result == true) {
+                                    window.location.reload();
+                                }
+                            });
+                         }
+                    },
+
+                    failure: function () { alert("Error"); }
+
+                 });
+            }
+        });
+
+        }
+
+          function EmployeeAssetExport()
+     {
+
+         window.location.href = '@Url.Action("EmployeeAssetExport", "EmployeeAsset")';
+
+     }
+     function downloadexcel()
+     {
+
+         window.location.href = '@Url.Action("DownloadEmployeeAssetExcel", "EmployeeAsset")';
+
+     }
+     function Importexcel()
+     {
+           var url = '@Url.Action("ImportExcel", "EmployeeAsset")';
+
+
+            $.get(url, function (data) {
+                $("#divUploadContent").html(data);
+               // alert(data);
+                $('#divUpload').modal('show')
+            });
+
+     }
+     function EmployeeAssetimportdate() {
+
+      var url = '@Url.Action("ImportExcelRecievedDate", "EmployeeAsset")';
+
+
+            $.get(url, function (data) {
+                $("#divUploadContent").html(data);
+               // alert(data);
+                $('#divUpload').modal('show')
+            });
+     }
+                        </script>
+
+
+

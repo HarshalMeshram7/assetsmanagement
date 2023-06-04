@@ -1,0 +1,340 @@
+﻿
+@{
+    ViewBag.Title = "FARReport";
+
+}
+
+<div class="container-fluid py-4">
+    <div class="row my-1">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header pb-0">
+                    <div class="row">
+                        <div class="d-sm-flex justify-content-between" style="border-bottom:groove">
+                            <div class="text-2xl"><b>Fixed Asset Register Report </b></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    @using (@Html.BeginForm(null, null, FormMethod.Get, new { id = "frmNewEmp", name = "frmNewEmp" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="form-group col-md-3">
+                                    <label for="praticesname" class="form-control-sm">From Date<span style="color:#CC0000;">*</span></label>
+                                    @Html.DropDownList("Fromdate", (SelectList)ViewBag.Fromdate, "Select From date", new { @class = "form-control form-control-sm", id = "Fromdate", @required = true })
+                                    <div style="color:#CC0000;font-weight:400" id="locaerror"></div>
+                                </div>
+
+                                <div class="form-group col-md-3">
+                                    <label for="praticesname" class="form-control-sm">To Date <span style="color:#CC0000;">*</span></label>
+                                    @Html.DropDownList("Todate", (SelectList)ViewBag.Todate, "Select To date", new { @class = "form-control form-control-sm", id = "Todate", @required = true })
+                                    <div style="color:#CC0000;font-weight:400" id="locaerror"></div>
+                                </div>
+                            </div>
+                            <div><label style="font-size:10px;color:red "><span>*</span> Mandatory Fields</label></div>
+                            <div class="modal-footer">
+                                
+                                    <button type="submit" class="btn saveBtn btn-sm" id="btngetreport">Show Report</button>
+                                </div>
+                                
+                            </div>
+                        
+                    }
+                    </div>
+
+             </div>
+            </div>
+     </div>
+</div>
+
+
+              
+
+                <!--
+    <div class="row" style="padding-top:3px">
+        <div class="col-12">
+            <div>
+                Toggle column: <a class="toggle-vis" data-column="0">AGroupName</a> - <a class="toggle-vis" data-column="1">BGroupName</a> - <a class="toggle-vis" data-column="2">CGroupName</a> - <a class="toggle-vis" data-column="3">DGroupName</a>
+                - <a class="toggle-vis" data-column="4">AssetNo</a> - <a class="toggle-vis" data-column="5">AssetIdentificationNo</a>
+            </div>
+
+        </div>
+    </div>
+    <div>
+        <table id="tblreport" width="100%"
+               class="table table-bordered small">
+            <thead>
+                <tr>
+                    <td>
+                        AGroupName
+                    </td>
+                    <td>
+                        BGroupName
+                    </td>
+                    <td>
+                        CGroupName
+                    </td>
+                    <td>
+                        DGroupName
+                    </td>
+                    <td>
+                        AssetNo
+                    </td>
+                    <td>
+                        AssetIdentificationNo
+                    </td>
+                    <td>
+                        AssetName
+                    </td>
+                    <td>
+                        Voucherdate
+                    </td>
+                    <td>
+                        OpGross
+                    </td>
+                    <td>
+                        Addition
+                    </td>
+                    <td>
+                        Disposal
+                    </td>
+                    <td>
+                        ClGross
+                    </td>
+                    <td>
+                        OpDep
+                    </td>
+                    <td>
+                        DepForPeriod
+                    </td>
+                    <td>
+                        DispoDep
+                    </td>
+                    <td>
+                        TotDep
+                    </td>
+                    <td>
+                        NetBalance
+                    </td>
+
+                </tr>
+            </thead>
+        </table>
+    </div>
+    -->
+                <div id="progressbar" class="modal fade" role="dialog" style="height: auto;" data-backdrop="static" data-keyboard="false">
+                    <div class="modal-dialog modal-lx">
+
+                        <!-- Modal content-->
+                        <div class="modal-content" style="height:auto;width:auto;overflow:auto">
+                            <div class="modal-header">
+                                <label style="color:red;text-align: center;">Please wait........</label>
+
+                            </div>
+                            <div class="modal-body ">
+
+                                <div class="row col-6" style="overflow:auto;align-content:center">
+                                    <label style="color:darkred;text-align: center;"> Report is in progress........</label>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+
+
+    $(document).ready(function ($) {
+        $('#progressbar').modal('hide');
+        //voucherdate set to all other date
+
+        $('#dtfromDate').datetimepicker({
+            format: 'DD/MM/YYYY',
+            icons:
+            {
+                next: 'fa fa-angle-right',
+                previous: 'fa fa-angle-left'
+            },
+
+        });
+        $('#dttoDate').datetimepicker({
+            format: 'DD/MM/YYYY',
+            icons:
+            {
+                next: 'fa fa-angle-right',
+                previous: 'fa fa-angle-left'
+            },
+        })
+        $("#frmNewEmp").submit(function (e) {
+            var fromdate = $("#Fromdate").val();
+            var todate = $("#Todate").val();
+            getreport(fromdate, todate);
+            e.preventDefault();
+            return false;
+
+        });
+
+        $("#btnShowReport").click(function (e) {
+            showFARReportScreen();
+        });
+
+
+    });
+    if (typeof jQuery !== 'undefined') {
+        console.log('jQuery Loaded');
+    }
+    else {
+        console.log('not loaded yet');
+    }
+
+    function getreport(fromdate, todate) {
+
+
+        fromdate = moment(fromdate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+        todate = moment(todate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+          var data = {
+              'fromdate': fromdate,
+              'todate': todate
+
+
+        };
+          var form = $('#frmNewEmp');
+          var token = $('input[name="__RequestVerificationToken"]', form).val();
+          var headers = {};
+          headers['__RequestVerificationToken'] = token;
+            $('#progressbar').modal('show');
+         var ControllerURL = '@Url.Action("GetFAReport_New", "FARReport")';
+        var DownloadURL = '@Url.Action("Download", "FARReport")';
+
+            $.ajax({
+                type: 'POST',
+                url: ControllerURL,
+                contentType: "application/json",
+                headers: headers,
+                data: JSON.stringify(data),
+
+
+                success: function (data) {
+                    var fileurl = DownloadURL + '?fileGuid=' + data.FileGuid
+                        + '&filename=' + data.FileName;
+                    $('#progressbar').modal('hide');
+                    //alert(fileurl);
+
+                    window.location = fileurl;
+                    $('#progressbar').modal('hide');
+                },
+                failure: function () { alert("Error"); }
+            });
+
+
+    }
+
+    function showFARReportScreen() {
+        console.log('loaddepriciation');
+
+        var _fromdate = $("#Fromdate").val();
+        var _todate = $("#Todate").val();
+
+        let fromdate = moment(_fromdate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+        let todate = moment(_todate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+        var data = {
+            'fromdate': fromdate,
+            'todate': todate
+
+
+        };
+
+        //$('#tbldepreciation').DataTable();
+
+        var ControllerURL = '@Url.Action("GetFARReport_NewGrid", "FARREport")';
+
+        console.log(ControllerURL);
+
+        var table = $('#tblreport')
+            .on('processing.dt', function (e, settings, processing) {
+                $('#divspinner').css('display', processing ? 'block' : 'none');
+            }).DataTable({
+                "destroy": true,
+                scrollY: '600px',
+                scrollX: true,
+                scrollCollapse: true,
+                colReorder: true,
+                paging: false,
+                fixedColumns: {
+                    left: 1
+                },
+
+
+             "serverSide": true,
+             "ajax": {
+             url: ControllerURL,
+             type: 'POST',
+             dataType: 'json',
+             "data": function (d) {
+                 d.FromDate = fromdate,
+                     d.ToDate = todate
+
+             }
+         },
+        "columns": [
+             { "data": "AGroupName", "autoWidth": true },
+             { "data": "BGroupName", "autoWidth": true },
+             { "data": "CGroupName", "autoWidth": true },
+             { "data": "DGroupName", "autoWidth": true },
+             { "data": "AssetNo", "autoWidth": true },
+             { "data": "AssetIdentificationNo", "autoWidth": true },
+             { "data": "AssetName", "autoWidth": true },
+             { "data": "str_voucherdate", "autoWidth": true },
+             { "data": "OpGross", "autoWidth": true },
+             { "data": "Addition", "autoWidth": true },
+             { "data": "Disposal", "autoWidth": true },
+             { "data": "ClGross", "autoWidth": true },
+             { "data": "OpDep", "autoWidth": true },
+             { "data": "UpToDep", "autoWidth": true },
+             { "data": "DispoDep", "autoWidth": true },
+             { "data": "TotDep", "autoWidth": true },
+             { "data": "NetBalance", "autoWidth": true },
+
+         ],
+           'columnDefs': [
+
+            {
+                "targets": 5,
+                "className": "text-right",
+            },
+            {
+                "targets": 6,
+                "className": "text-right",
+            }],
+            });
+
+        $('a.toggle-vis').on('click', function (e) {
+            e.preventDefault();
+
+            // Get the column API object
+            var column = table.column($(this).attr('data-column'));
+
+            // Toggle the visibility
+            column.visible(!column.visible());
+        });
+
+    }
+
+                </script>
+                <style>
+                    /* Ensure that the demo table scrolls */
+                    th, td {
+                        white-space: nowrap;
+                    }
+
+                    div.dataTables_wrapper {
+                        margin: 0 auto;
+                    }
+
+                    div.container {
+                        width: 80%;
+                    }
+                </style>

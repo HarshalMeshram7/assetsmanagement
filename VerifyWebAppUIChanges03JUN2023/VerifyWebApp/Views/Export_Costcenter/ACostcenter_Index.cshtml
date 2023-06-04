@@ -1,0 +1,131 @@
+﻿@model IEnumerable<VerifyWebApp.Models.ACostCenter>
+
+@{
+    ViewBag.Title = "ACostcenterIndex";
+}
+
+<div id="page-wrapper" class="container-fluid rounded page border shadow text-center">
+    <div class="row border-bottom">
+        <div class="col-lg-12">
+            <div class="row title">
+                <strong> <h4>A Costcenter</h4></strong>
+            </div>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <div class="pageconent">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-2">
+                <button type="button" id="btnnew"  class="btn btn-sm btn-secondary pull-right m-1 order-3"
+                        onclick="downloadexcel();">
+                    <i class="fa fa-download"></i> Download Excel
+                </button>
+            </div>
+            <div class="col-2">
+                <button type="button" id="btnnew" value="New Practice"  class="btn btn-sm btn-success pull-right m-1 order-4"
+                        onclick="importexcel();">
+                    <i class="fa fa-upload"></i> Import Excel
+                </button>
+            </div>
+            <div class="col-2">
+                <button type="button" id="btnnew" value="New Practice"  class="btn btn-sm btn-secondary pull-right m-1 order-2"
+                        onclick="exportexcel();"><i class="fa fa-file-excel-o"></i>
+                    Export Excel
+                </button>
+            </div>
+        </div>
+        <div class="row" style="padding-top:3px">
+            <div class="col-lg-12">
+                <table class="table table-bordered table-striped table-hover" id="tblacostcenter">
+                    <thead>
+                        <tr>
+                            <td>
+                                A Costcenter No
+                            </td>
+
+                            <td>
+                                A Costcenter Code
+                            </td>
+                            <td align="left">
+                                A Costcenter Description
+                            </td>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Count() == 0)
+                        {
+                            <tr>
+                                <td colspan="3">No Rows Found</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelitem => item.ID)</td>
+
+                                    <td>@Html.DisplayFor(modelitem => item.CCCode)</td>
+                                    <td align="left">@Html.DisplayFor(modelitem => item.CCDescription)</td>
+
+                                </tr>
+
+
+                            }
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="divNew">
+    <div class="modal-dialog modal-lg" role="document" id="divNewContent">
+
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#tblacostcenter').DataTable();
+    });
+
+
+    if (typeof jQuery !== 'undefined') {
+        console.log('jQuery Loaded');
+    }
+    else {
+        console.log('not loaded yet');
+    }
+
+    function importexcel() {
+
+        var url = '@Url.Action("importacostcenter","Export_Costcenter")';
+            $.get(url, function (data) {
+                $("#divNewContent").html(data);
+                // alert(data);
+                $('#divNew').modal('show')
+            });
+        }
+        function exportexcel()
+        {
+            var url = '@Url.Action("exportacostcenter", "Export_Costcenter")';
+            window.location.href = url;
+        }
+
+    function downloadexcel()
+        {
+            var url = '@Url.Action("downloadacostcenter", "Export_Costcenter")';
+            window.location.href = url;
+        }
+
+
+
+</script>
+

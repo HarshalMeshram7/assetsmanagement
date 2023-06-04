@@ -1,0 +1,69 @@
+﻿/*Pagination*/
+.pagination > li > a, .pagination > li > span {
+    background-color: white
+}
+
+.pagination > li.active > a, .pagination > li.active > span {
+    background-color: tan;
+    color:black;
+}
+
+
+
+/*Dropdown Box*/
+select {
+    min-width: 75px;
+    width: auto;
+}
+
+    select:focus {
+        min-width: 75px;
+        width: auto;
+   }
+
+    /*Avatar Set-up*/
+
+.avatar {
+    vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    border-radius: 0%;
+}
+
+/* Table Highlights(even rows) */
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    color:black
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #fce8a7;
+    color: black
+}
+
+
+.hcol {
+    color: brown;
+}
+/*Serach Bar Align Right*/
+.dataTables_filter {
+    width: 50%;
+    float: right;
+    }
+.htitle {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    color:brown;
+}
+
+.hborder {
+    border-bottom-style: groove;
+    border-color: #935757;
+}

@@ -1,0 +1,1983 @@
+﻿
+@{
+    ViewBag.Title = "AddNew";
+}
+
+
+<style>
+    #jstree {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .jstree-node > a {
+        /* 100% - (the width of the presentation node : the line - the left padding of the <a> node - the right padding of the <a> node)*/
+        width: calc(100% - (100px + 1px + 4px));
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+</style>
+
+
+
+@using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container-fluid py-3">
+        <div class="row my-1">
+            <div class="col-12">
+                <div class="card ">
+                    <div class="card-header pb-0">
+                        <div class="row">
+                            <div class="d-sm-flex justify-content-between hborder">
+                                <div class="htitle"> <b>Add New Asset </b> </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="nav-wrapper position-relative end-0">
+                        <ul class="nav nav-pills nav-fill p-1" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab"
+                                   href="#home" role="tab"
+                                   aria-controls="General" aria-selected="true">
+                                    <i class="fa fa-home text-sm me-2"></i>General Info
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab"
+                                   href="#menu1" role="tab" aria-controls="Location" aria-selected="false">
+                                    <i class="fa fa-map-marker" text-sm me-2"></i> Location
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab"
+                                   href="#menu2" role="tab" aria-controls="Cost Center" aria-selected="false">
+                                    Cost Center
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab"
+                                   href="#menu4" role="tab" aria-controls="Other Infp" aria-selected="false">
+                                    Other Info
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+
+
+
+                    <!-- Tab panes -->
+                    <div class="tab-content container-fluid my-1">
+                        <div class="tab-pane  active" id="home">
+                            <div class="container ">
+
+
+                                <div class="row border border-success rounded my-2">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div style="font-weight:bold">Last Record Asset No : @ViewBag.LastAssetNo</div>
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col-md-2 align-content-center">
+
+                                                <button type="button" onclick="ShowGroups();" class="btn btn-link">Select Group</button>
+
+
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">A Group</label>
+                                                    <input type='text' id="txtAgroupname" readonly class="form-control  form-control-sm" tabindex="1" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">B Group</label>
+                                                    <input type='text' id="txtBgroupname" readonly class="form-control form-control-sm" tabindex="1" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="praticesname">C Group</label>
+                                                    <input type='text' id="txtCgroupname" readonly class="form-control form-control-sm" tabindex="1" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="praticesname">D Group</label>
+                                                    <input type='text' id="txtDgroupname" readonly class="form-control form-control-sm" tabindex="1" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label for="praticesname">Asset No</label>
+                                                    @{
+                                                        if (ViewBag.AutoGenerateAssetNo == "Y")
+                                                        {
+                                                            <input type='text' id="txtassetno" class="form-control form-control-sm" tabindex="1" value="@ViewBag.NextAssetNo"
+                                                                   readonly="readonly"
+                                                                   onblur="assetnoalreadyexists()" />
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type='text' id="txtassetno" class="form-control form-control-sm" tabindex="1" value="@ViewBag.NextAssetNo"
+                                                                   onblur="assetnoalreadyexists()" />
+                                                        }
+
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="praticesname">Asset Identification no<span style="color:#CC0000;">*</span></label>
+                                                    <input type='text' id="assetidno" class="form-control form-control-sm" tabindex="2" />
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="praticesname">Asset Name<span style="color:#CC0000;">*</span></label>
+                                                    <input type='text' id="assetname" class="form-control form-control-sm" tabindex="3" maxlength="100"
+                                                           required onblur="setassetname()" />
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="praticesname">Parent Asset Name</label>
+
+
+
+                                                    @Html.DropDownList("Parent_AssetId", (SelectList)ViewBag.Assestlist, "Select AssetNo",
+                                                     new { @class = "form-control form-control-sm", id = "Parent_AssetId", @tabindex = "4", @onChange = "Enableiscomponentcheckbox();" })
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label for="praticesname" id="componentlabelid" hidden>Is component or not?&nbsp;</label>
+                                                    @Html.CheckBox("iscomponent", false, new { id = "iscomponent", @hidden = "hidden", @tabindex = "5" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">VoucherNo</label>
+                                                    <input type='text' id="txtvno" name="txtvno" class="form-control form-control-sm" tabindex="5" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">Voucher Date<span style="color:#CC0000;">*</span></label>
+                                                    <input id="txtVDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">PoNo</label>
+                                                    <input type='text' id="txtpono" class="form-control form-control-sm" tabindex="7" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">Po Date</label>
+
+                                                    <input id="txtPoDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" tabindex="8" value="" type="date" />
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">Receipt Date </label>
+
+                                                    <input id="txtreceiptDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" tabindex="9" value="" type="date" />
+
+
+
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">Commisioning date</label>
+
+                                                    <input id="txtcommDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" tabindex="10" value="" type="date" />
+
+
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">Date Put To Use  (Company Law)<span style="color:#CC0000;">*</span></label>
+
+                                                    <input id="txtdpucomDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy"
+                                                           tabindex="11" value="" type="date" />
+
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">Date Put To Use  (IT Law)<span style="color:#CC0000;">*</span></label>
+
+                                                    <input id="txtdpuItDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" tabindex="12" value="" type="date" />
+
+
+
+
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">Bill No</label>
+                                                    <input type='text' id="txtbillno" name="txtbillno" class="form-control form-control-sm" tabindex="13" />
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">Bill Date</label>
+
+                                                    <input id="txtbillDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" tabindex="14" value="" type="date" />
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">Quantity<span style="color:#CC0000;">*</span> </label>
+                                                    <input type='number' id="txtqty" name="txtqty" class="form-control form-control-sm" tabindex="16" />
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="praticesname">Uom</label>
+                                                    <div class='input-group dropdown ' id='dtuom' tabindex="17">
+
+                                                        @Html.DropDownList("UomId", (SelectList)ViewBag.uomlist, "Select Uom", new { @class = "form-control form-control-sm", id = "UomId" })
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="Supplier">Supplier</label>
+                                                    <div class='input-group dropdown ' id='dtsupplier' tabindex="18">
+
+                                                        @Html.DropDownList("SupplierId", (SelectList)ViewBag.supplierlist, "Select Supplier", new { @class = "form-control form-control-sm", id = "SupplierId" })
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <!--remarks-->
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    <label for="praticesname">Remarks</label>
+                                                    <input type="text" class="form-control form-control-sm" id="txtremarks" tabindex="19" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                                <!-- Rate -->
+                                <div class="row border border-primary rounded my-2">
+
+                                    <div class="col-md-6">
+                                        <div class="row my-1">
+                                            <div class="col">
+                                                <label for="txtgrossvalue">
+                                                    Op Accumulated Depreciation<span style="color:#CC0000;">*</span>
+                                                </label>
+                                            </div>
+                                            <div class="col">
+                                                <input type='number' id="opaccdepreciation" class="form-control form-control-sm"
+                                                       required tabindex="19" readonly step=".01" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row my-1">
+                                            <div class="col">
+                                                <label for="praticesname">Normal Rate(A)</label>
+                                            </div>
+                                            <div class="col">
+                                                <input type="number" class="form-control form-control-sm" id="txtNRate" tabindex="20" step=".01" onblur="totalrate()" />
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"> <label for="praticesname">Additional Rate(B) </label></div>
+                                            <div class="col"> <input type="number" class="form-control form-control-sm" id="txtARate" tabindex="21" step=".01" onblur="totalrate()" /></div>
+                                        </div>
+
+                                        <div class="row my-1">
+                                            <div class="col">
+                                                <label> Total Rate(C) </label>
+                                            </div>
+                                            <div class="col">
+                                                <input type="number" class="form-control form-control-sm" id="txtTRate" readonly tabindex="22" step=".01" />
+                                            </div>
+
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"> <label>Residual Value </label></div>
+                                            <div class="col">  <input type='number' id="txtresidual" name="txtresidual" class="form-control form-control-sm" tabindex="23" step=".01" /></div>
+                                        </div>
+
+                                        <div class="row my-1">
+                                            <div class="col"><label> Useful Life(in years)</label></div>
+                                            <div class="col">   <input type='text' id="txtuseful" class="form-control form-control-sm" required tabindex="24" onchange="generateexpirydate()" /></div>
+                                        </div>
+
+                                        <div class="row my-1">
+                                            <div class="col"><label>Asset life ends on</label> </div>
+                                            <div class="col">
+
+
+                                                <input id="txtExpDate" class="form-control form-control-sm" tabindex="26"
+                                                       onblur="expiredatevalidatewithvoucher()"
+                                                       value="" type="date" />
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="row my-1">
+                                            <div class="col"> <label>Depreciation Method:</label></div>
+                                            <div class="col">
+                                                <div class="row m-0 p-0">
+                                                    <div class="col m-0 p-0">
+                                                        <div class="form-check mb-3">
+                                                            <input class="form-check-input" type="radio" name="DepreciationMethod" id="slm" tabindex="27" checked="checked">
+                                                            <label class="custom-control-label" for="customRadio1">SLM</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col m-0 p-0">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="DepreciationMethod" id="wdv" tabindex="28">
+                                                            <label class="custom-control-label" for="customRadio2">WDV</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <!--
+                                                SLM @Html.RadioButton("DepreciationMethod", "SLM", new { id = "slm", @tabindex = "27", @checked = "true" })
+                                                WDV @Html.RadioButton("DepreciationMethod", "WDV", new { id = "wdv", @tabindex = "28" })
+                                                    -->
+
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"><label>Purchase A/c Name </label></div>
+                                            <div class="col">
+                                                @Html.DropDownList("txtPAccName", (SelectList)ViewBag.purchaselist, "Select Account", new { @class = "form-control form-control-sm", id = "txtPAccName", @tabindex = "29" })
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"><label> Depreciation A/c Name </label></div>
+                                            <div class="col"> @Html.DropDownList("txtDepAccName", (SelectList)ViewBag.depreciationlist, "Select Account", new { @class = "form-control form-control-sm", id = "txtDepAccName", @tabindex = "30" })</div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"><label> Accumulated Dep. A/c Name </label></div>
+                                            <div class="col">   @Html.DropDownList("txtAccDepAccName", (SelectList)ViewBag.accumulatedlist, "Select Account", new { @class = "form-control form-control-sm", id = "txtAccDepAccName", @tabindex = "31" })</div>
+
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"><label>IT Group</label></div>
+                                            <div class="col">
+                                                @Html.DropDownList("txtItgroupName", (SelectList)ViewBag.itgrouplist, "Select It group", new { @class = "form-control form-control-sm", id = "txtItgroupName", @tabindex = "32" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row border border-success rounded my-2">
+                                    <!-- Col 1 -->
+                                    <div class="col-md-4">
+
+                                        <div class="row my-1">
+                                            <div class="col">
+                                                <label for="txtgrossvalue">
+                                                    Gross Value<span style="color:#CC0000;">*</span>
+                                                </label>
+                                            </div>
+                                            <div class="col">
+                                                <input type="number" tabindex="32"
+                                                       class="form-control form-control-sm" id="txtgrossvalue"
+                                                       required onblur="totaladdition()" step=".01" />
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"><label for="praticesname">Service Charges</label></div>
+                                            <div class="col">
+                                                <input type="number" tabindex="33" class="form-control form-control-sm"
+                                                       id="txtservicecharge" onblur="totaladdition()" step=".01" />
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"> <label for="praticesname">Other Expenses </label></div>
+                                            <div class="col">
+                                                <input type="number" tabindex="34" class="form-control form-control-sm" id="txtotherexpense" onblur="totaladdition()" step=".01" />
+                                            </div>
+
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col">     <label for="praticesname">Custom Duty </label></div>
+                                            <div class="col">
+                                                <input type="number" tabindex="35" class="form-control form-control-sm" id="txtcustomduty" onblur="totaladdition()" step=".01" />
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row my-1">
+                                            <div class="col"><label for="praticesname">Excise Duty</label></div>
+                                            <div class="col">
+                                                <input type="number" tabindex="36" class="form-control form-control-sm" id="txtexciseduty" onblur="totaladdition()" step=".01" />
+                                            </div>
+
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"> <label for="praticesname">Service Tax</label></div>
+                                            <div class="col">
+                                                <input type="number" tabindex="37" class="form-control form-control-sm"
+                                                       id="txtservicetax" onblur="totaladdition()" step=".01" />
+                                            </div>
+
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"> <label for="praticesname">Any Other Duty</label></div>
+                                            <div class="col">
+                                                <input type="number" tabindex="38" class="form-control form-control-sm" id="txtanyotherduty" onblur="totaladdition()" step=".01" />
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row my-1">
+                                            <div class="col">
+                                                <label for="praticesname">Vat</label>
+                                            </div>
+                                            <div class="col">
+                                                <input type="number" tabindex="39" class="form-control form-control-sm" id="txtvat" onblur="totaladdition()" step=".01" />
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row my-1">
+                                            <div class="col">  <label for="praticesname">CST</label></div>
+                                            <div class="col">
+                                                <input type="number" tabindex="40" class="form-control form-control-sm" id="txtcst" onblur="totaladdition()" step=".01" />
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row my-1">
+                                            <div class="col"> <label for="praticesname">CGST</label></div>
+                                            <div class="col">
+                                                <input type="number" tabindex="41" class="form-control form-control-sm" id="txtcgst" onblur="totaladdition()" step=".01" />
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="row my-1">
+                                            <div class="col"> <label for="praticesname">SGST</label></div>
+                                            <div class="col">
+                                                <input type="number" tabindex="42" class="form-control form-control-sm" id="txtsgst" onblur="totaladdition()" step=".01" />
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="row my-1">
+                                            <div class="col">  <label for="praticesname">IGST</label></div>
+                                            <div class="col">
+                                                <input type="number" tabindex="43" class="form-control form-control-sm" id="txtigst" onblur="totaladdition()" step=".01" />
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="row my-1">
+                                            <div class="col">     <label for="praticesname">Any Other Tax</label></div>
+                                            <div class="col">
+                                                <input type="number" tabindex="44" class="form-control form-control-sm"
+                                                       id="txtanyothertax" onblur="totaladdition()" step=".01" />
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row my-1">
+                                            <div class="col"> <label for="praticesname">Total Addition(A)</label></div>
+                                            <div class="col">
+
+                                                <input type="number" tabindex="45" class="form-control form-control-sm" id="txttotaladdition"
+                                                       readonly onblur="totaladdition()" step=".01" />
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                    <!-- Col 2 -->
+                                    <div class="col-md-4">
+                                        <div class="row my-1">
+                                            <div class="col"><label for="praticesname">Discount</label></div>
+                                            <div class="col">
+                                                <input type="number" tabindex="46" class="form-control form-control-sm" id="txtdiscount" onblur="totaladdition()" step=".01" />
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col">  <label for="praticesname">Rounding Off</label></div>
+                                            <div class="col"> <input type="number" tabindex="47" class="form-control form-control-sm" id="txtroundoff" onblur="totaladdition()" step=".01" /></div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"> <label for="praticesname">Total Deduction(B)</label></div>
+                                            <div class="col">
+                                                <input type="number" tabindex="48" class="form-control form-control-sm" id="txttotaldeduction"
+                                                       onblur="totaladdition()" step=".01" />
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col">  <label for="praticesname">Invoice Amt(C=A-B)</label></div>
+                                            <div class="col">
+                                                <input type="number" tabindex="49" class="form-control form-control-sm" id="txtinvoiceamt" readonly onblur="totaladdition()" step=".01" />
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!-- Col 3 -->
+                                    <div class="col-md-4">
+                                        <div class="row my-1">
+                                            <div class="col">     <label for="praticesname">Duty Drawback</label></div>
+                                            <div class="col">
+                                                <input type="number" tabindex="50" class="form-control form-control-sm" id="txtdutydrawback" onblur="totaladdition()" step=".01" />
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"> <label for="praticesname">Excise Credit</label></div>
+                                            <div class="col">
+                                                <input type="number" tabindex="51" class="form-control form-control-sm" id="txtexcisecredit" onblur="totaladdition()" step=".01" />
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"><label for="praticesname">Service Tax Credit</label></div>
+                                            <div class="col">
+                                                <input type="number" tabindex="52" class="form-control form-control-sm" id="txtservicetaxcredit" onblur="totaladdition()" step=".01" />
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"><label for="praticesname">Any Other Duty Credit </label></div>
+                                            <div class="col">
+                                                <input type="number" tabindex="53" class="form-control form-control-sm" id="txtanyotherdutycredit" onblur="totaladdition()" step=".01" />
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"><label for="praticesname">Vat Credit</label></div>
+                                            <div class="col">
+                                                <input type="number" tabindex="54" class="form-control form-control-sm" id="txtvatcredit" onblur="totaladdition()" step=".01" />
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col">  <label for="praticesname">CST Credit</label></div>
+                                            <div class="col">
+                                                <input type="number" tabindex="55" class="form-control form-control-sm" id="txtcstcredit" onblur="totaladdition()" step=".01" />
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"> <label for="praticesname">Any Other Credit</label></div>
+                                            <div class="col">
+                                                <input type="number" tabindex="56"
+                                                       class="form-control form-control-sm" id="txtanyothercredit" onblur="totaladdition()" step=".01" />
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"> <label for="praticesname">CGST Credit</label></div>
+                                            <div class="col">
+                                                <input type="number" tabindex="57" class="form-control" id="txtcgstcredit" onblur="totaladdition()" step=".01" />
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col">  <label for="praticesname">IGST Credit</label></div>
+                                            <div class="col">
+                                                <input type="number" tabindex="58" class="form-control form-control-sm" id="txtigstcredit" onblur="totaladdition()" step=".01" />
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"> <label for="praticesname">SGST Credit</label></div>
+                                            <div class="col">
+                                                <input type="number" tabindex="59" class="form-control form-control-sm" id="txtsgstcredit" onblur="totaladdition()" step=".01" />
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col"> <label for="praticesname">Total Credit(D)</label></div>
+                                            <div class="col"> <input type="number" tabindex="60" class="form-control form-control-sm" id="txttotalcredit" readonly onblur="totaladdition()" step=".01" /></div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col">  <label for="praticesname">Amt.To be Capitalised(E=C-D)</label></div>
+                                            <div class="col">
+                                                <input type="number" tabindex="61" class="form-control form-control-sm" id="txtamttobecap" readonly onblur="totaladdition()" step=".01" />
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col">
+                                                <label for="praticesname">Amt.Capitalised</label>
+                                                <label for="praticesname">(Company Law)</label>
+                                            </div>
+                                            <div class="col">
+                                                <input type="number" tabindex="62" class="form-control form-control-sm" id="txtamtcapcompanylaw" readonly onblur="totaladdition()" step=".01" />
+                                            </div>
+                                        </div>
+                                        <div class="row my-1">
+                                            <div class="col">
+                                                <label for="praticesname">Amt.Capitalised </label>
+                                                <label for="praticesname">(Income Tax Law)</label>
+                                            </div>
+                                            <div class="col">
+                                                <input type="number" tabindex="63" class="form-control form-control-sm" id="txtamtcapincometax" readonly onblur="totaladdition()" step=".01" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="tab-pane assettab container fade " id="menu1">
+                            <div class="container border border-secondary">
+                                <div class="row my-2">
+                                    <div class="col-md-12">
+                                        <div class="pull-right">
+                                            <button type="button" class="btn btn-sm nBtn"
+                                                    id="btnAddloc" onclick="ShowAddLocationModal()">
+                                                Add Location
+                                            </button>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="row">
+
+                                    <table class="table table-hover text-uppercase text-xs"
+                                           id="tbllocation">
+                                        <thead class="hcol" style="font-weight:bold">
+                                            <tr>
+                                                <td>
+                                                    Srno
+                                                </td>
+                                                <td hidden>
+                                                    locaid
+                                                </td>
+                                                <td hidden>
+                                                    locbid
+                                                </td>
+                                                <td hidden>
+                                                    loccid
+                                                </td>
+                                                <td>
+                                                    Date
+                                                </td>
+                                                <td>
+                                                    Main Location
+                                                </td>
+                                                <td>
+                                                    Sub-Location
+                                                </td>
+                                                <td>
+                                                    Sub  Sub-Location
+                                                </td>
+
+                                                <td>
+                                                    Action
+                                                </td>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody style="font-weight:bold;color"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane container fade" id="menu2">
+                            <div class="container border border-secondary">
+                                <div class="row my-2">
+                                    <div class="col-md-12">
+                                        <div class="pull-right">
+                                            <button type="button" class="btn btn-sm  nBtn"
+                                                    id="btnAddCC" onclick="ShowAddCostCenterModal();" data-toggle="modal">
+                                                Add Cost Center
+                                            </button>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table class="table table-hover text-uppercase text-xs"
+                                               id="tblcostcenter">
+                                            <thead class="hcol" style="font-weight:bold">
+                                                <tr>
+
+                                                    <td width="5%">
+                                                        Srno
+                                                    </td>
+                                                    <td hidden>
+                                                        ccaid
+                                                    </td>
+                                                    <td hidden>
+                                                        ccbid
+                                                    </td>
+
+                                                    <td>
+                                                        Date
+                                                    </td>
+                                                    <td>
+                                                        Cost Center
+                                                    </td>
+                                                    <td>
+                                                        Sub-Cost Center
+                                                    </td>
+                                                    <td>
+                                                        Percentage
+                                                    </td>
+
+                                                    <td align="center" width="5%">
+                                                        Action
+                                                    </td>
+                                                </tr>
+                                            </thead>
+                                            <tbody style="font-weight:bold;color:black"></tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="tab-pane container fade" id="menu4">
+                            <div class="container border border-secondary">
+
+
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="praticesname">Brand</label>
+                                            <input type="text" class="form-control form-control-sm" id="txtbrandname" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="praticesname">Product Serial no</label>
+                                            <input type="text" class="form-control form-control-sm" id="txtsrno" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="praticesname">Model</label>
+                                            <input type="text" class="form-control form-control-sm" id="txtmodel" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label for="praticesname">Yr.of Manufacturing</label>
+                                        <input type='text' id="txtYrMang" class="form-control form-control-sm" tabindex="25" />
+                                    </div>
+
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-2">
+
+                                        <div class="form-group">
+                                            <input type="checkbox" id="txtisimported" />
+                                            <label for="praticesname">Is Imported</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="praticesname">Currency</label>
+                                            <input type="text" class="form-control form-control-sm" id="txtcurrency" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="praticesname">Value</label>
+                                            <input type="number" class="form-control form-control-sm" id="txtvalue" step=".01" />
+                                        </div>
+                                    </div>
+                                </div>
+                               
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="container">
+                        <div class="row my-2">
+                            <div class="modal-footer">
+
+                                <button type="button" class="btn saveBtn btn-sm" id="btnsave">Save</button>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+}
+
+
+
+
+
+<div id="locationmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Add Location</h4>
+            </div>
+            <div class="modal-body ">
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <label for="praticesname"> Date<span style="color:#CC0000;">*</span></label>
+
+                        <input id="txtlocDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
+
+                        <div style="color:#CC0000;font-weight:400" id="locdateemerror"></div>
+                        <div style="color:#CC0000;font-weight:400" id="locdateerror">Date should be greater than voucher date</div>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="praticesname">Main Location<span style="color:#CC0000;">*</span></label>
+
+                        @Html.DropDownList("txtlocA", (SelectList)ViewBag.alocationlist, "Select Location", new { @class = "form-select form-select-sm", id = "txtlocA", @required = true })
+
+                        <div style="color:#CC0000;font-weight:400" id="locaerror"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="praticesname">SubLocation </label>
+
+                        <select id="txtlocB" name="txtlocB" class="form-select form-select-sm"></select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="praticesname">Sub SubLocation </label>
+                        <select id="txtlocC" name="txtlocC" class="form-select form-select-sm"></select>
+                    </div>
+                </div>
+            </div>
+            <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn saveBtn btn-sm" onclick="saveloc();">Save</button>
+                <button type="button" class="btn clBtn btn-sm" onclick="closeloc();">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="editlocationmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Edit Location</h4>
+            </div>
+            <div class="modal-body ">
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <label for="praticesname"> Date<span style="color:#CC0000;">*</span></label>
+
+                        <input id="txteditlocDate" class="form-control form-control-sm" required placeholder="dd-mm-yyyy" value="" type="date" />
+
+
+                        <div style="color:#CC0000;font-weight:400" id="editlocdateemerror"></div>
+                        <div style="color:#CC0000;font-weight:400" id="editlocdateerror">Date should be greater than voucher date</div>
+
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Main Location <span style="color:#CC0000;">*</span></label>
+                        @Html.DropDownList("txteditlocA", (SelectList)ViewBag.alocationlist, "Select Location", new { @class = "form-control", id = "txteditlocA", @required = true })
+                        <div style="color:#CC0000;font-weight:400" id="editlocaerror"></div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">SubLocation </label>
+
+                        <select id="txteditlocB" name="txteditlocB" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Sub SubLocation </label>
+                        <select id="txteditlocC" name="txteditlocC" class="form-control"></select>
+                    </div>
+                </div>
+            </div>
+            <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn saveBtn btn-sm" onclick="saveeditloc();">Save</button>
+                <button type="button" class="btn clBtn btn-sm" onclick="closeeditloc();">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="ccmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Add Cost Center</h4>
+            </div>
+            <div class="modal-body ">
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <label for="praticesname"> Date<span style="color:#CC0000;">*</span></label>
+
+                        <input id="txtccDate" required class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
+
+                        <div style="color:#CC0000;font-weight:400" id="ccdateemerror"></div>
+                        <div style="color:#CC0000;font-weight:400" id="ccdateerror">Date should be greater than voucher date</div>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Cost Center<span style="color:#CC0000;">*</span></label>
+                        @Html.DropDownList("txtccA", (SelectList)ViewBag.costalist, "Select Cost Center", new { @class = "form-control form-control-sm", id = "txtccA", @required = true })
+                        <div style="color:#CC0000;font-weight:400" id="ccaerror"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Sub-Cost Center</label>
+
+                        <select id="txtccB" name="txtccB" class="form-control form-control-sm"></select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Percentage<span style="color:#CC0000;">*</span></label>
+
+                        <input type="number" id="txtpercentage" name="txtpercentage" class="form-control form-control-sm" value="100" required />
+                        <div style="color:#CC0000;font-weight:400" id="ccpercentageerror"></div>
+                    </div>
+                </div>
+            </div>
+            <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn saveBtn btn-sm" onclick="savecc();">Save</button>
+                <button type="button" class="btn clBtn btn-sm" onclick="closecc();">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="editccmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Edit Cost Center</h4>
+            </div>
+            <div class="modal-body ">
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <label for="praticesname"> Date<span style="color:#CC0000;">*</span></label>
+                        <input id="txteditccDate" required class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
+                        <div style="color:#CC0000;font-weight:400" id="editccdateemerror"></div>
+                        <div style="color:#CC0000;font-weight:400" id="editccdateerror">Date should be greater than voucher date</div>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Cost Center<span style="color:#CC0000;">*</span></label>
+                        @Html.DropDownList("txteditccA", (SelectList)ViewBag.costalist, "Select Cost center", new { @class = "form-control form-control-sm", id = "txteditccA", @required = true })
+                        <div style="color:#CC0000;font-weight:400" id="editccaerror"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Sub-Cost Center</label>
+
+                        <select id="txteditccB" name="txteditccB" class="form-control form-control-sm"></select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Percentage <span style="color:#CC0000;">*</span></label>
+                        <input type="number" id="txteditpercentage" name="txteditpercentage" class="form-control form-control-sm" required />
+                        <div style="color:#CC0000;font-weight:400" id="editccpercentageerror"></div>
+                    </div>
+                </div>
+            </div>
+            <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn saveBtn" onclick="saveeditcc();">Save</button>
+                <button type="button" class="btn clBtn" onclick="closeeditcc();">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="assetfreeofcostmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Add</h4>
+            </div>
+            <div class="modal-body ">
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname"> Date<span style="color:#CC0000;">*</span></label>
+
+                        <div class='input-group date' id='dtassetfDate'>
+                            <input type='text' id="txtassetfDate" class="form-control" required pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})" />
+
+                            <div class="input-group-addon">
+                                <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                            </div>
+
+                        </div>
+                        <div style="color:#CC0000;font-weight:400" id="assetfdateemerror"></div>
+                        <div style="color:#CC0000;font-weight:400" id="assetfdateerror">Date should be greater than voucher date</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Description<span style="color:#CC0000;">*</span></label>
+
+                        <input id="txtdescription" name="txtdescription" required class="form-control" />
+                        <div style="color:#CC0000;font-weight:400" id="assetfdescriptionerror"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Qty</label>
+                        <input type="number" id="txtassetfqty" value="1" name="txtassetfqty" class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Uom</label>
+                        @Html.DropDownList("txtassetfuom", (SelectList)ViewBag.uomlist, "Select Uom", new { @class = "form-control", id = "txtassetfuom" })
+
+                    </div>
+                </div>
+            </div>
+            <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn saveBtn btn-sm" onclick="saveassetf();">Save</button>
+                <button type="button" class="btn clBtn btn-sm" onclick="closeassetf();">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="AssetGroupmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Select Asset Group</h4>
+
+            </div>
+            <div class="modal-body ">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="button" id="mnuExpand" value=""
+                                class="btn btn-sm xtraBtn pull-left m-1 order-1"
+                                data-toggle="tooltip" data-placement="top" title="Expand all locations"
+                                data-delay='{"show":"2000", "hide":"1500"}'>
+                            <i class="fa fa-expand"></i>
+
+                        </button>
+                        <button type="button" id="mnuContract" value=""
+                                class="btn btn-sm xtraBtn pull-left m-1 order-1"
+                                data-toggle="tooltip" data-placement="top" title="Contract all locations"
+                                data-delay='{"show":"2000", "hide":"1500"}'>
+                            <i class="fa fa-compress"></i>
+
+                        </button>
+
+                        <button type="button" id="mnuSelectGroup" value="New Practice"
+                                class="btn btn-sm saveBtn pull-left m-1 order-1"
+                                data-toggle="tooltip" data-placement="top" title="Select a node first
+                                to Add new location"
+                                data-delay='{"show":"2000", "hide":"1500"}'>
+                            <i class="fa fa-check"></i>
+                            Select Group
+                        </button>
+
+                        <button type="button" id="mnuAdd" value="New Practice"
+                                class="btn btn-sm clBtn pull-left m-1 order-1"
+                                data-toggle="tooltip" data-placement="top" title="Select a node first
+                                to Add new location"
+                                data-delay='{"show":"2000", "hide":"1500"}'>
+                            <i class="fa window-close"></i>
+                            Close
+                        </button>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="tree m-1">
+                            <div class="row" style=" overflow-y: scroll;max-height:initial;">
+                                <div class="col-md-12">
+                                    <div id="jstree">
+                                        <!-- in this example the tree is populated from inline HTML -->
+                                        <ul>
+                                            <li>
+                                                Root node 1
+                                                <ul>
+                                                    <li id="child_node_1">Child node 1</li>
+                                                    <li>Child node 2</li>
+                                                </ul>
+                                            </li>
+                                            <li style="margin-top:3px">Root node 2</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="editassetfreeofcostmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Edit</h4>
+            </div>
+            <div class="modal-body ">
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname"> Date<span style="color:#CC0000;">*</span></label>
+
+                        <div class='input-group date' id='dteditassetfDate'>
+                            <input type='text' id="txteditassetfDate" class="form-control" required pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})" />
+
+                            <div class="input-group-addon">
+                                <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                            </div>
+
+                        </div>
+                        <div style="color:#CC0000;font-weight:400" id="editassetfdateemerror"></div>
+                        <div style="color:#CC0000;font-weight:400" id="editassetfdateerror">Date should be greater than voucher date</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Description<span style="color:#CC0000;">*</span></label>
+
+                        <input id="txteditdescription" name="txteditdescription" required class="form-control" />
+                        <div style="color:#CC0000;font-weight:400" id="editassetfdescriptionerror"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Qty </label>
+                        <input type="number" id="txteditassetfqty" value="0" name="txteditassetfqty" class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Uom></label>
+                        @Html.DropDownList("txteditassetfuom", (SelectList)ViewBag.uomlist, "Select Uom", new { @class = "form-control", id = "txteditassetfuom" })
+
+                    </div>
+                </div>
+            </div>
+            <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn saveBtn btn-sm" onclick="saveeditassetf();">Save</button>
+                <button type="button" class="btn clBtn btn-sm" onclick="closeeditassetf();">Close</button>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="errorlist" class="modal fade" role="dialog" style="height: 670px;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Error list</h4>
+            </div>
+            <div class="modal-body ">
+
+                <div class="row" style="overflow:auto">
+                    <table width="100%" class="table table-hover text-uppercase text-xs" style="overflow:auto" id="errtbl">
+
+                        <thead class="hcol" style="font-weight:bold">
+                            <tr>
+
+                                <td>Sr No</td>
+                                <td>Error</td>
+                            </tr>
+                        </thead>
+                        <tbody style="font-weight:bold;color:black"></tbody>
+
+                    </table>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn clBtn btn-sm" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/Content/app_js/asset_add/asset_add_main.js"></script>
+<script src="~/Content/app_js/asset_add/asset_add_location.js"></script>
+<script src="~/Content/app_js/asset_add/asset_add_costcenter.js"></script>
+
+
+
+
+<script type="text/javascript">
+
+            var srnocnt = 1;
+            var srnocccnt = 1;
+            var srnoassetfcnt = 1;
+            var isimportedflag="no";
+            var iscomponentflag="no";
+            var editindex = 0;
+            var editccindex = 0;
+            var editassetfindex = 0;
+            let ResidualValuePercent = '@ViewBag.ResidualValuePercent';
+            let AutoGenerateAssetNo = '@ViewBag.AutoGenerateAssetNo';
+
+            var URL_Get_LocationB = '@Url.Action("getlocationb", "Asset")'; // fetch B level locations
+            var URL_Get_LocationC = '@Url.Action("getlocationc", "Asset")'; // fetch c level locations
+            var URL_Get_CostCenterB = '@Url.Action("getcostcenterb", "Asset")'; // get b level cost center
+
+            var URL_Get_AssetGroups = '@Url.Action("GetAssetGroup", "AssetGroups")';
+            var URL_AddAssetGroup = '@Url.Action("Addassetgroup", "Asset")'; // save asset
+
+            var URL_AssetIndex =  '@Url.Action("Index", "Asset")'; //  asset
+
+
+            let AGroupID = '';
+            let AGroupName = '';
+
+            let BGroupID = '';
+            let BGroupName = '';
+
+            let CGroupID = '';
+            let CGroupName = '';
+
+            let DGroupID = '';
+            let DGroupName = '';
+
+
+            function getToken() {
+                var form = $('#frmNewEmp');
+                var token = $('input[name="__RequestVerificationToken"]', form).val();
+                var headers = {};
+                headers['__RequestVerificationToken'] = token;
+                return headers;
+            }
+
+
+
+            $(document).ready(function ($) {
+
+                //test("sample data");
+
+                InitPage();
+
+                InitTree();
+                //InitDropDown();
+
+                InitLocation();
+
+                $('#txtgrossvalue').on('change', function () {
+                    //alert(this.value);
+                    //calculate residual value
+                    let grossvalue = 0;
+                    grossvalue = parseFloat($('#txtgrossvalue').val());
+                    if (!isNaN(grossvalue)) {
+                        let resvalue = (grossvalue * ResidualValuePercent / 100).toFixed(2);
+                        $('#txtresidual').val(resvalue);
+                    }
+
+                });
+
+
+                $("#locdateerror,#editlocdateerror,#ccdateerror,#editccdateerror,#assetfdateerror,#editassetfdateerror").hide();
+                $('#locaerror,#locdateemeerror,#editlocaerror,#editlocdateemerror,#ccaerror,#ccdateemerror,#ccaerror,#ccpercentageerror,#editccaerror,#editccpercentageerror,#editccdateemerror,#editccaerror,'+
+                   +' #assetfdateemrror, #editassetfdateemerror, #assetfdescriptionerror, #editassetfdescriptionerror').hide();
+
+
+
+
+
+
+            //////////////////////////////////////--------------costcenter----------------------/////////////////////
+                    $('#txtccA').change(function () {
+
+                        var index = $("#txtccA option:selected").val();
+
+
+                        //  $('#txtassetno').val(index);
+                        getcostcenterb(index);
+                    });
+
+                    $('#txteditccA').change(function () {
+
+
+                        var index = $("#txteditccA option:selected").val();
+
+
+                        //  $('#txtassetno').val(index);
+                        geteditcostcenterb(index);
+                    });
+
+            ////////////////////////////////////
+
+
+
+
+
+                    /*
+                    $("#btnAddloc").click(function () {
+
+
+                        $("#txtlocA").val("");
+
+                        $("#txtlocB ").val("");
+                        $("#txtlocC ").val("");
+                        $("#txtlocDate").val("");
+                        $("#locdateerror,#editlocdateerror,#ccdateerror,#editccdateerror,#assetfdateerror,#editassetfdateerror").hide();
+                        $('#locaerror,#locdateemeerror,#editlocaerror,#editlocdateemerror,#ccaerror,#ccdateemerror,#ccaerror,#ccpercentageerror,#editccaerror,#editccpercentageerror,#editccdateemerror,#editccaerror,' +
+                            +' #assetfdateemrror, #editassetfdateemerror, #assetfdescriptionerror, #editassetfdescriptionerror').hide();
+
+                        //console.log(" locationmodal show call ...");
+
+                        $('#locationmodal').modal('show');
+
+
+                    });
+                    */
+
+
+                    /*
+                    $("#btnAddCC").click(function () {
+                        $("#txtccA").val("");
+                        $("#txtccB").val("");
+                        $("#txtpercentage").val("")
+                        $("#txtccDate").val("");
+                        $("#locdateerror,#editlocdateerror,#ccdateerror,#editccdateerror,#assetfdateerror,#editassetfdateerror").hide();
+                        $('#locaerror,#locdateemeerror,#editlocaerror,#editlocdateemerror,#ccaerror,#ccdateemerror,#ccaerror,#ccpercentageerror,#editccaerror,#editccpercentageerror,#editccdateemerror,#editccaerror,' +
+                            +' #assetfdateemrror, #editassetfdateemerror, #assetfdescriptionerror, #editassetfdescriptionerror').hide();
+                        $('#ccmodal').modal('show');
+
+
+                    });
+                    */
+
+
+                    $("#btnAddassetfreeofcost").click(function () {
+                        $("#txtassetfuom").val("");
+                        $("#txtassetfDate").val("")
+                        $("#txtdescription").val("");
+                        $("#txtassetfqty").val("");
+                        $("#locdateerror,#editlocdateerror,#ccdateerror,#editccdateerror,#assetfdateerror,#editassetfdateerror").hide();
+                        $('#locaerror,#locdateemeerror,#editlocaerror,#editlocdateemerror,#ccaerror,#ccdateemerror,#ccaerror,#ccpercentageerror,#editccaerror,#editccpercentageerror,#editccdateemerror,#editccaerror,' +
+                            +' #assetfdateemrror, #editassetfdateemerror, #assetfdescriptionerror, #editassetfdescriptionerror').hide();
+                        $('#assetfreeofcostmodal').modal('show');
+
+
+                    });
+
+
+
+            ///for enable disable assetno or search by
+            //$("#txtassetno").prop("disabled", true);
+            $("#txtcurrency").prop("disabled", true);
+            $("#txtvalue").prop("disabled", true);
+            $('#checkflag').change(function () {
+                if ($(this).prop("checked")) {
+                    $("#txtassetno").prop("disabled", false);
+                }
+                else {
+                    $("#txtassetno").prop("disabled", true);
+                }
+            });
+
+            $('#txtisimported').change(function () {
+                if ($(this).prop("checked")) {
+                    isimportedflag = "yes";
+                    $("#txtcurrency").prop("disabled", false);
+                    $("#txtvalue").prop("disabled", false);
+                }
+                else {
+                    $("#txtcurrency").prop("disabled", true);
+                    $("#txtvalue").prop("disabled", true);
+                    isimportedflag = "no";
+                }
+            });
+                /////iscomponent checked set yes or unchecked set no
+            $('#iscomponent').change(function () {
+                if ($(this).prop("checked")) {
+                    iscomponentflag = "yes";
+
+                }
+                else {
+
+                    iscomponentflag = "no";
+                }
+            });
+
+                $("#frmNewEmp").submit(function (e) {
+                    alert("Save");
+                    SaveData();
+                    return false;
+
+                 });
+            });
+
+
+            function ShowGroups() {
+                $('#AssetGroupmodal').modal('show');
+            }
+
+
+            function Enableiscomponentcheckbox()
+            {
+
+                document.getElementById('componentlabelid').hidden = false;
+
+                document.getElementById('iscomponent').hidden = false;
+
+               ///////////check usefulllife of parent and update it in componentusefullife
+
+                var parentassetno = $("#Parent_AssetId").val();
+
+                var url = '@Url.Action("GetUsefulife", "Asset")';
+                if ($("#txtVDate").val() == "") {
+
+                    swal("Alert", "To select parent asset please enter voucher date", "warning");
+                }
+                else {
+                    var voucherdate = moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+                    var data = {
+                        "parentassetno": parentassetno,
+                        "vdate": voucherdate
+                    }
+                    if (parentassetno != "" && voucherdate != "") {
+                        $.ajax({
+                            url: url,
+                            type: "GET",
+                            contentType: "application/json",
+                            data: data,
+                            success: function (res) {
+                                // alert(res.Data)
+                                swal({ title: "Usefullife Alert", text: "", button: true, icon: "warning" }).then((result) => {
+                                    if (result == true) {
+
+                                        var usefulllife = res.Data;
+                                        $("#txtuseful").val(usefulllife);
+
+                                        var expirydate = moment(voucherdate, "YYYY-MM-DD").add('years', usefulllife);
+                                        var formatteddate = moment(expirydate, "dddd-mmmm-dS-yyyy-h:MM:ss").format("DD/MM/YYYY");
+
+                                        $("#txtExpDate").val(formatteddate);
+                                    }
+                                    else {
+
+                                    }
+                                });
+
+                            },
+                            error: function (reponse) {
+                                alert("error : " + reponse);
+                            }
+                        });
+                    }
+                }
+            }
+     //////check addition to be added or not based on amt caps
+        function checkadditionassettobeaddedornot() {
+
+
+            var amtcap = $("#txtamtcapcompanylaw").val();
+            var assetno = $("#Parent_AssetId").val();
+
+            if (amtcap != "" && assetno != "") {
+
+                var ControllerURL = '@Url.Action("checkadditionentry", "Asset")?amtcap=' + amtcap + '&assetno=' + assetno;
+                var returnURL = '@Url.Action("Index", "Asset")';
+                //var url = ControllerURL + "/" + vdate;
+                //  alert(ControllerURL)
+                $.ajax({
+                    url: ControllerURL,
+                    type: "GET",
+                    contentType: "application/json",
+                    success: function (res) {
+                      //  alert(res.Data)
+                        if (res.Data == "amtisgreater") {
+                            swal({ title: "Alert",text:"amount greater", icon: "warning", buttons: true,}).then((result) => {
+                                if (result == true) {
+
+                                }
+                                else {
+
+                                }
+                            });
+                        }
+                        else {
+
+                        }
+
+                        if (res.Data == "Noamtfound")
+                        {
+                            swal("Alert", "No Amount Capitalised found in corresponding asset", "warning");
+                        }
+
+                    },
+                    error: function (reponse) {
+                        alert("error : " + reponse);
+                    }
+                });
+            }
+
+
+        }
+
+
+    ////////////////checking wheter period entry is there or not and opening accumulated depreciation textbox enable disable logic//////////
+        function validateopaccdepreciation() {
+
+            /////checking if period is entered or not
+
+            var vdate = moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+           // alert(vdate);
+           // if (vdate != "01/Jan/0001 00:00:00" || vdate != null) {
+            if ( vdate != "") {
+                var ControllerURL = '@Url.Action("checkopeningaccumulateddepreciation", "Asset")';
+                var data = { "strvdate": vdate}
+                var returnURL = '@Url.Action("Index", "Asset")';
+                //var url = ControllerURL + "/" + vdate;
+                //  alert(ControllerURL)
+                $.ajax({
+                    url: ControllerURL,
+                    type: "GET",
+                    contentType: "application/json",
+                    data: data,
+                    success: function (res) {
+                           // alert(res.Data)
+                        if (res.Data == "Yes") {
+                            // alert("if")
+                            document.getElementById('opaccdepreciation').readOnly = false;
+                            //$("#opaccdepreciation").prop("disable", false);
+                        }
+                        if (res.Data == "No") {
+                            document.getElementById('opaccdepreciation').readOnly = true;
+                            // $("#opaccdepreciation").prop("disable", true);
+                        }
+                        if (res.Data == "Noperiod") {
+                            swal({ title: "Period records not found, please enter period first to add asset!", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    window.location.replace(returnURL);
+                                }
+                                else {
+                                    document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+                    },
+                    error: function (reponse) {
+                        alert("error : " + reponse);
+                    }
+                });
+            }
+
+
+            var ControllerURL = '@Url.Action("checkperiod_itperiod_exits", "Asset")';
+                var returnURL = '@Url.Action("Index", "Asset")';
+
+                $.ajax({
+                    url: ControllerURL,
+                    type: "GET",
+                    contentType: "application/json",
+                    success: function (res) {
+                       // alert(res.Data)
+                        if (res.Data == "Noperiodexists") {
+                            swal({ title: "No period found please enter period master first to add asset", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    window.location.replace(returnURL);
+                                }
+                                else {
+                                    document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+
+                        else if (res.Data == "Noitperiodexists") {
+                            swal({
+                                title: "ItPeriod records not found,If you want Itperiod please  click outside dialgouebox and enter itperiod in master , or click on ok to ignore itperiod ", icon: "warning" }).then((result) => {
+                                    if (result == true) {
+                                        checkdatevalidation();
+                                 //   window.location.replace(returnURL);
+                                   // document.getElementById("txtVDate").focus();
+                                }
+                                else {
+                                    window.location.replace(returnURL);
+                                   // document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+                        else {
+                            checkdatevalidation();
+                        }
+                    },
+                    error: function (reponse) {
+                        alert("error : " + reponse);
+                    }
+                });
+
+
+        }
+
+        function checkdatevalidation() {
+            var vdate = moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            if (vdate != "") {
+                var ControllerURL = '@Url.Action("Dateputtousevalidation", "Asset")';
+                var returnURL = '@Url.Action("Index", "Asset")';
+                var data = { "strvdate": vdate}
+                $.ajax({
+                    url: ControllerURL,
+                    type: "GET",
+                    contentType: "application/json",
+                    data: data,
+                    success: function (res) {
+                      //  alert(res.Data)
+                        if (res.Data == "Yes") {
+                            swal({ title: "This period is locked you cannot add record", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    window.location.replace(returnURL);
+                                }
+                                else {
+                                    document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+                        if (res.Data == "No") {
+                            // alert("no")
+                            $('#txtdpucomDate').val($("#txtVDate").val())
+                            $('#txtcommDate').val($("#txtVDate").val())
+                            $('#txtbillDate').val($("#txtVDate").val())
+                            $('#txtreceiptDate').val($("#txtVDate").val())
+                            $('#txtPoDate').val($("#txtVDate").val())
+                            $('#txtdpuItDate').val($("#txtVDate").val())
+                        }
+                        if (res.Data == "Nosubperiod")
+                        {
+                            swal({ title: "Sub period found  ", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    window.location.replace(returnURL);
+                                }
+                                else {
+                                    document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }//Depalreadycalculated
+                        if (res.Data == "Depalreadycalculated") {
+                            swal({ title: "Already Depriciation is calculated remove it to add this asset  ", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    window.location.replace(returnURL);
+                                }
+                                else {
+                                    document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+                    },
+                    error: function (reponse) {
+                        alert("error : " + reponse);
+                    }
+                });
+            }
+        }
+
+
+
+        function assetnoalreadyexists() {
+
+
+            var assetno = $("#txtassetno").val();
+          //  alert(assetno);
+            // if (vdate != "01/Jan/0001 00:00:00" || vdate != null) {
+            if (assetno != "") {
+                var ControllerURL = '@Url.Action("assetnoexists", "Asset")?assetno=' + assetno;
+                var returnURL = '@Url.Action("Index", "Asset")';
+                //var url = ControllerURL + "/" + vdate;
+                //  alert(ControllerURL)
+                $.ajax({
+                    url: ControllerURL,
+                    type: "GET",
+                    contentType: "application/json",
+                    success: function (res) {
+
+                        if (res.Data == "Yes") {
+                            // alert("if")
+                            document.getElementById('btnsave').readOnly = true;
+                            //$("#opaccdepreciation").prop("disable", false);
+                        }
+                        if (res.Data == "No" || res.Data == "Noassetfound") {
+                            document.getElementById('btnsave').readOnly = false;
+                            // $("#opaccdepreciation").prop("disable", true);
+                        }
+
+                    },
+                    error: function (reponse) {
+                        alert("error : " + reponse);
+                    }
+                });
+            }
+        }
+    /////Date put to use is less then voucher date warning
+        function dtputusevalidatewithvoucher() {
+            var voucherdate = moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var dtputuse = moment($("#txtdpucomDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+          //  alert(voucherdate)
+            if (voucherdate != "Invalid date" && dtputuse != "Invalid date") {
+                //alert("1if")
+                if (new Date(dtputuse) < new Date(voucherdate)) {
+
+                    swal("Alert", "Date put to use is less than voucher date ", "warning");
+                    //  document.getElementById("txtdpucomDate").focus();
+                }
+                else {
+                    //alert("1else")
+                }
+            }
+            else {
+               // alert("else")
+              //  swal("Alert", "Please check if you have entered voucher date and date put use (Company) ", "warning");
+                swal({ title: "Please check if you have entered voucher date and date put use (Company)" , icon: "warning" }).then((result) => {
+                    if (result == true) {
+                       // window.location.replace(returnURL);
+                        //document.getElementById("txtdpucomDate").focus();
+                    }
+                    else {
+                        //document.getElementById("txtdpucomDate").focus();
+                    }
+                });
+
+            }
+        }
+
+
+
+    @*/////////////////date put to use validation////////////////////////////
+        function Dateputtousevalidation() {
+
+            /////checking if period is entered or not
+
+            var vdate = $("#txtdtptusecomDate").val();
+
+            var ControllerURL = '@Url.Action("Dateputtousevalidation", "Asset")?strvdate='+vdate;
+            var returnURL='@Url.Action("Index", "Asset")'
+            //var url = ControllerURL + "/" + vdate;
+          //  alert(ControllerURL)
+                         $.ajax({
+                             url: ControllerURL,
+                        type: "GET",
+                        contentType: "application/json",
+                        success: function (res) {
+                            alert(res.Data)
+                            if (res.Data == "Yes") {
+                                swal({ title: "This period is locked", icon: "warning" }).then((result) => {
+                                    if (result == true) {
+                                        window.location.replace(returnURL);
+                                    }
+                                });
+                            }
+                            if(res.Data=="No") {
+
+                            }
+                            if (res.Data == "Noitperiod") {
+                                swal({ title: "itPeriod records not found, please enter period first to add asset!", icon: "warning" }).then((result) => {
+                                    if (result == true) {
+                                        window.location.replace(returnURL);
+                                    }
+                                });
+                                    }
+                        },
+                        error: function (reponse) {
+                            alert("error : " + reponse);
+                        }
+                    });
+
+        }*@
+
+
+
+
+
+
+        function InitDropDown() {
+
+            /*
+            if (document.getElementById('txtlocA')) {
+                var element = document.getElementById('txtlocA');
+                const example = new Choices(element, {
+                    searchEnabled: false,
+                    itemSelectText: ""
+                });
+            };
+
+            if (document.getElementById('txtlocB')) {
+                var element = document.getElementById('txtlocB');
+                const example = new Choices(element, {
+                    searchEnabled: false,
+                    itemSelectText: ""
+                });
+            };
+
+            if (document.getElementById('txtlocC')) {
+                var element = document.getElementById('txtlocC');
+                const example = new Choices(element, {
+                    searchEnabled: false,
+                    itemSelectText: ""
+                });
+            };
+            */
+
+        }
+
+</script>
+
+

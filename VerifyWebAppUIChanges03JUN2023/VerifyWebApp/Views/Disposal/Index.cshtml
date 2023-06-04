@@ -1,0 +1,341 @@
+﻿
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#progressbar').modal('hide');
+        loaddisposal();
+
+    });
+
+
+    if (typeof jQuery !== 'undefined') {
+        console.log('jQuery Loaded');
+    }
+    else {
+        console.log('not loaded yet');
+    }
+
+    function loaddisposal() {
+        console.log('loaddisposal');
+
+
+        var ControllerURL = '@Url.Action("GetDisposalData", "Disposal")';
+        console.log(ControllerURL);
+
+        var table = $('#tbldisposal')
+            .on('processing.dt', function (e, settings, processing) {
+                $('#divspinner').css('display', processing ? 'block' : 'none');
+            }).DataTable({
+                     "destroy": true,
+                "serverSide": true,
+                pagingType:'numbers',
+                     "ajax": {
+                         url: ControllerURL,
+                         type: 'POST',
+                         dataType: 'json'
+                         },
+                    "columns": [
+                         { "data": "ID"},
+                         { "data": "AssetNo"},
+                         { "data": "AssetName"},
+                         { "data": "str_disposalDate"},
+                         { "data": "DisposalType"},
+                         { "data": "Qty"},
+                         { "data": "DisposalAmount"},
+                         { "data": "Remarks"},
+                         {
+                             "render": function (data, type, full, meta) {
+                                 return returnEditButton(full.ID);
+                             }
+                         },
+                         {
+                             data: null, render: function (data, type, full, meta) {
+                                 return returnDeleteButton(full.ID);
+                             }
+                         },
+
+                     ],
+
+                });
+        }
+
+    function returnDeleteButton(id) {
+        var strButton = "";
+        //strButton = id;
+        strButton = '<button type="button" class="btn delBtn btn-sm"';
+        strButton = strButton + 'aria-label="Left Align"';
+        strButton = strButton + 'onclick=Delete(' + id + ');>';
+        strButton = strButton + '<i class="fa fa-remove"></i></button>';
+
+
+        return strButton;
+
+    }
+    function returnEditButton(id) {
+        var strButton = "";
+        //strButton = id;
+        strButton = '<button type="button" class="btn modBtn btn-sm"';
+        strButton = strButton + 'aria-label="Left Align"';
+        strButton = strButton + 'onclick=EditDisposal(' + id + ');>';
+        strButton = strButton + '<i class="fa fa-edit"></i></button>';
+
+
+        return strButton;
+    }
+
+    function opennewdialog() {
+
+          window.location.href ='@Url.Action("Add","Disposal")';
+     }
+
+    function EditDisposal(id) {
+              //alert("edit")
+
+        var url = '@Url.Action("Edit", "Disposal")';
+            url = url + "/" + id;
+           // alert(url)
+            window.location.href = url;
+
+     }
+
+
+     function Delete(id)
+     {
+         var form = $('#frmNewEmp');
+         var token = $('input[name="__RequestVerificationToken"]', form).val();
+         var headers = {};
+         headers['__RequestVerificationToken'] = token;
+         swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+            if (result == true) {
+                var returnURL='@Url.Action("Index", "Disposal")';
+                var url = '@Url.Action("Delete", "Disposal")';
+                url = url + "/" + id;
+                    $.ajax({
+                        type: 'POST',
+                        headers: headers,
+                    url: url,
+                    contentType: "application/json",
+                    success: function (res) {
+                        if (res == "Failed")
+                        {
+                            swal("Alert", "You Cannot Delete this Record", "warning");
+                        }
+                        else
+                        {
+                            swal({ title:  "Successfully Deleted!", icon: "success" }).then((result) => {
+                                if (result == true) {
+                                    window.location.reload();
+                                }
+                            });
+                         }
+                    },
+
+                    failure: function () { alert("Error"); }
+
+                 });
+            }
+        });
+
+        }
+
+
+     function DisposalExport()
+     {
+
+       //  window.location.href = '@Url.Action("DisposalExport", "Disposal")';
+         var ControllerURL = '@Url.Action("DisposalExport", "Disposal")';
+         $('#progressbar').modal('show');
+        var DownloadURL = '@Url.Action("Download", "Disposal")';
+
+            $.ajax({
+                type: 'POST',
+                url: ControllerURL,
+                contentType: "application/json",
+                //data: JSON.stringify(data),
+
+
+                success: function (data) {
+                    var fileurl = DownloadURL + '?fileGuid=' + data.FileGuid
+                        + '&filename=' + data.FileName;
+                    $('#progressbar').modal('hide');
+                    //alert(fileurl);
+
+                    window.location = fileurl;
+                    $('#progressbar').modal('hide');
+
+                },
+                failure: function () { alert("Error"); }
+            });
+
+     }
+
+    function downloadexcel()
+     {
+
+         window.location.href = '@Url.Action("DownloadDisposalExcel", "Disposal")';
+
+     }
+     function Importexcel()
+     {
+           var url = '@Url.Action("ImportExcel", "Disposal")';
+
+
+            $.get(url, function (data) {
+                $("#divUploadContent").html(data);
+               // alert(data);
+                $('#divUpload').modal('show')
+            });
+
+     }
+
+
+</script>
+
+
+
+<style>
+    div.dataTables_processing {
+        z-index: 1;
+    }
+</style>
+
+@model IEnumerable<VerifyWebApp.ViewModel.Disposal_ViewModel>
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+@using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+{
+    @Html.AntiForgeryToken()
+}
+
+    <div class="card">
+        <div class="card-header pb-0">
+           
+                <div class="row border-bottom">
+                    
+                        <div class="card-header pb-0">
+                            <div class="row justify-content-md-center title hborder">
+                                <div class="htitle"> <b>Disposal Assets</b></div>
+                            </div>
+                        </div>
+                        <!-- /.col-lg-12 -->
+                    </div>
+                    <div class="card-body">
+                    <div class="col-lg-12">
+                        <button type="button" id="btnnew" value="New Practice"
+                                class="btn btn-sm addBtn pull-right m-1 order-1"
+                                onclick="opennewdialog();" data-bs-toggle="tooltip" data-bs-placement="top" title="Add New">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" id="btnexport" value="New Practice"
+                                class="btn btn-sm modBtn pull-right m-1 order-2"
+                                onclick="DisposalExport();" data-bs-toggle="tooltip" data-bs-placement="top" title="Excel">
+                            <i class="fa fa-file-excel-o"></i>
+                        </button>
+
+                        <button type="button" id="btndownloadexcel" value="New Practice"
+                                class="btn btn-sm xtraBtn pull-right m-1 order-3"
+                                onclick="downloadexcel();" data-bs-toggle="tooltip" data-bs-placement="top" title="Download">
+                            <i class="fa fa-download"></i>
+                        </button>
+
+                        <button type="button" id="btnimport" value="Upload"
+                                class="btn btn-sm xtraBtn pull-right m-1 order-4"
+                                onclick="Importexcel();" data-bs-toggle="tooltip" data-bs-placement="top" title="Excel">
+                            <i class="fa fa-upload"></i>
+                        </button>
+
+
+                    </div>
+            </div>
+
+
+            <div class="row" style="padding-top:3px" ;>
+                <div class="col-lg-12">
+                    <div class="table-responsive">
+                        <table width="100%" class="table table-hover text-xs"
+                               id="tbldisposal" style="overflow-x: scroll; width: 5%">
+                            <thead class="hcol text-uppercase" style="font-weight:bold">
+                                <tr>
+                                    <td style="width: 5%;">
+                                        ID
+                                    </td>
+                                    <td>
+                                        Asset No
+                                    </td>
+                                    <td>
+                                        Asset Name
+                                    </td>
+                                    <td>
+                                        Disposal Date
+                                    </td>
+                                    <td>
+                                        Disposal Type
+                                    </td>
+                                    <td>
+                                        Qty
+                                    </td>
+                                    <td>
+                                        Disposal Amount
+                                    </td>
+                                    <td>
+                                        Remarks
+                                    </td>
+                                    <td align="center">
+                                        Edit
+                                    </td>
+                                    <td align="center">
+                                        Delete
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody style="font-weight: bold; font-size: small; color: black">
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <div id="divspinner">
+                    <div class="col-md-12 text-center">
+                        <b>Please Wait Loading ...</b>
+                        <div class="fa-3x">
+                            <i class="fa fa-spinner fa-spin"></i>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+            </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="divUpload">
+        <div class="modal-dialog modal-lg" role="document" id="divUploadContent">
+
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div id="progressbar" class="modal fade" role="dialog" style="height: auto;" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lx">
+
+            <!-- Modal content-->
+            <div class="modal-content" style="height:auto;width:auto;overflow:auto">
+                <div class="modal-header">
+                    <label style="color:red;text-align: center;">Loading........</label>
+
+                </div>
+                <div class="modal-body ">
+
+                    <div class="row col-6" style="overflow:auto;align-content:center">
+                        <label style="color:darkred;text-align: center;">Please wait while we load your report........</label>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

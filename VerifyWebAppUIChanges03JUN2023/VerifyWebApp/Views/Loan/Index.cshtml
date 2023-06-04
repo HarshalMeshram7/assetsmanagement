@@ -1,0 +1,267 @@
+﻿@model IEnumerable<VerifyWebApp.Models.Loan>
+@{
+    ViewBag.Title = "Index";
+}
+
+<!-- Bootstrap DatePicker -->
+
+
+   
+    @using (@Html.BeginForm(null, null, FormMethod.Get, new { id = "frmNewEmp", name = "frmNewEmp" }))
+    {
+        @Html.AntiForgeryToken();
+    }
+    <div class="container-fluid py-4">
+
+        <div class="row my-2">
+            <div class="card">
+                <div class="card-header pb-0">
+                    <div class="row">
+                        <div class="d-sm-flex justify-content-between hborder">
+                            <div class="htitle"> <b>Loan List </b> </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row" style="padding-left:10px">
+                    <div class="col-lg-12 ">
+
+                        <button type="button" id="btnnew" value="New Practice"
+                                class="btn btn-sm addBtn pull-right m-1 order-1"
+                                onclick="opennewdialog();" data-toggle="tooltip" data-placement="top" title="Add New">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+
+                        </button>
+                        <button type="button" id="btnexport" value="New Practice"
+                                class="btn btn-sm modBtn pull-right m-1 order-2"
+                                onclick="LoanExport();" data-toggle="tooltip" data-placement="top" title="Export">
+                            <i class="fa fa-file-excel-o"></i>
+                        </button>
+
+
+
+
+                        <button type="button" id="btndownloadexcel" value="New Practice"
+                                class="btn btn-sm xtraBtn pull-right m-1 order-3"
+                                onclick="downloadexcel();" data-toggle="tooltip" data-placement="top" title="Download">
+                            <i class="fa fa-download"></i>
+                        </button>
+
+
+
+                        <button type="button" id="btnimport" value="Upload"
+                                class="btn btn-sm xtraBtn pull-right m-1 order-4"
+                                onclick="Importexcel();" data-toggle="tooltip" data-placement="top" title="Import">
+                            <i class="fa fa-upload"></i>
+                        </button>
+
+                    </div>
+                </div>
+
+
+                <div class="row" style="padding-top:3px">
+                    <div class="col-lg-12">
+
+                        <table width="100%" class="table table-hover text-xs font-weight-bold " id="tblloan">
+                            <thead class="hcol text-uppercase">
+                                <tr>
+                                    <td>
+                                        SrNo
+                                    </td>
+                                    <td>
+                                        Start Date
+                                    </td>
+                                    <td>
+                                        End Date
+                                    </td>
+                                    <td>
+                                        Loan taken from
+                                    </td>
+                                    <td>
+                                        Loan Period
+                                    </td>
+                                    <td align="right">
+                                        Amount
+                                    </td>
+                                    <td>
+                                        interest %
+                                    </td>
+
+                                    <td align="center">
+                                        Action
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody style="font-weight: bold; color: black">
+                                @if (Model.Count() == 0)
+                                {
+                                    <tr>
+                                        <td colspan="8">No Rows Found</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    foreach (var item in Model)
+                                    {
+                            <tr>
+                                <td class="text-xs">@Html.DisplayFor(modelitem => item.Srno)</td>
+
+                                <td class="text-xs">@Html.DisplayFor(modelitem => item.str_fromdate)</td>
+
+                                <td class="text-xs">@Html.DisplayFor(modelitem => item.str_todate)</td>
+
+                                <td class="text-xs">@Html.DisplayFor(modelitem => item.BankName)</td>
+                                <td class="text-xs" >@Html.DisplayFor(modelitem => item.Year)</td>
+                                <td class="text-xs" align="right">@Html.DisplayFor(modelitem => item.Amount)</td>
+                                <td class="text-xs" align="right">@Html.DisplayFor(modelitem => item.Percent)</td>
+
+
+                                <td class="text-start text-xs">
+                                    <a href="javascript:;" class="mx-2"><i class="fas fa-eye " style="color:#229954"></i></a>
+                                    <a href="javascript:EditLoan(@item.ID )" ; class="mx-2"><i class="fas fa-edit" style="color:#229954"></i></a>
+                                    <a href="javascript:Delete(@item.ID)" ; class="mx-2"><i class="fas fa-trash " style="color:red"></i></a>
+
+
+                                </td>
+
+                            </tr>
+
+
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+</div>
+
+        <div class="modal fade" tabindex="-1" role="dialog" id="divUpload" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-xl" role="document" id="divUploadContent">
+
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+
+        <style>
+
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            th, td {
+                text-align: left;
+                padding: 8px;
+            }
+
+            tr:nth-child(even) {
+                background-color: lightblue;
+            }
+        </style>
+        <script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#tblloan').DataTable({
+            pagingType:'numbers'
+        });
+    });
+
+
+    if (typeof jQuery !== 'undefined') {
+        console.log('jQuery Loaded');
+    }
+    else {
+        console.log('not loaded yet');
+    }
+
+    function opennewdialog() {
+        //alert(11)
+            var url = '@Url.Action("Add","Loan")';
+             window.location = url;
+        }
+
+    function EditLoan(id) {
+
+            var url = '@Url.Action("Edit", "Loan")';
+            url = url + "/" + id;
+            window.location = url;
+
+           // alert(data);
+         }
+
+
+     function Delete(id)
+     {
+         var form = $('#frmNewEmp');
+         var token = $('input[name="__RequestVerificationToken"]', form).val();
+         var headers = {};
+         headers['__RequestVerificationToken'] = token;
+         swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+            if (result == true) {
+                var returnURL='@Url.Action("Index", "Loan")';
+                var url = '@Url.Action("Delete", "Loan")';
+                url = url + "/" + id;
+                    $.ajax({
+                    type: 'POST',
+                    url: url,
+                    headers: headers,
+                    contentType: "application/json",
+                    success: function (res) {
+                        if (res == "Failed")
+                        {
+                            swal("Alert", "You Cannot Delete this Record", "warning");
+                        }
+                        else
+                        {
+                            swal({ title:  "Successfully Deleted!", icon: "success" }).then((result) => {
+                                if (result == true) {
+                                    window.location.reload();
+                                }
+                            });
+                         }
+                    },
+
+                    failure: function () { alert("Error"); }
+
+                 });
+            }
+        });
+
+        }
+
+		 function LoanExport()
+     {
+
+         window.location.href = '@Url.Action("LoanExport", "Loan")';
+
+     }
+
+    function downloadexcel()
+     {
+
+         window.location.href = '@Url.Action("DownloadLoanExcel", "Loan")';
+
+     }
+     function Importexcel()
+     {
+           var url = '@Url.Action("ImportExcel", "Loan")';
+
+
+            $.get(url, function (data) {
+                $("#divUploadContent").html(data);
+               // alert(data);
+                $('#divUpload').modal('show')
+            });
+
+     }
+
+
+        </script>
+
+
+

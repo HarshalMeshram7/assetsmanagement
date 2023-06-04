@@ -1,0 +1,1095 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeAnalysis.NetAnalyzers.6.0.0\build\Microsoft.CodeAnalysis.NetAnalyzers.props" Condition="Exists('..\packages\Microsoft.CodeAnalysis.NetAnalyzers.6.0.0\build\Microsoft.CodeAnalysis.NetAnalyzers.props')" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="..\packages\EntityFramework.6.3.0\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.3.0\build\EntityFramework.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4CBBB579-6836-4650-8342-5525BB44F399}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VerifyWebApp</RootNamespace>
+    <AssemblyName>VerifyWebApp</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.3.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.3.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus, Version=5.0.4.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.5.0.4\lib\net45\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation, Version=11.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.11.1.0\lib\netstandard2.0\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <Private>True</Private>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1404.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1404.0\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1404.0\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1404.0\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebDesign, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1404.0\lib\net40\Microsoft.ReportViewer.WebDesign.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.1404.0\lib\net40\Microsoft.ReportViewer.WebForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.10.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.6.10.9\lib\net452\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data.Entity.EF6, Version=6.10.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.Entity.6.10.9\lib\net452\MySql.Data.Entity.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.7.15\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="Renci.SshNet">
+      <HintPath>..\packages\SSH.NET.2016.1.0\lib\net40\Renci.SshNet.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.SqlClient, Version=4.6.1.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SqlClient.4.8.1\lib\net461\System.Data.SqlClient.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite, Version=1.0.112.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.112.0\lib\net46\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.112.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.112.0\lib\net46\System.Data.SQLite.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.112.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.112.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.0.1\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Packaging, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Packaging.4.0.0\lib\net46\System.IO.Packaging.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Management" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Threading.Tasks" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.2\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.7\lib\net45\System.Web.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.7\lib\net45\System.Web.Http.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.2.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.6\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.2.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.2.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.2.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.2.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.2.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BusinessLogic\AssetGroupsRepository.cs" />
+    <Compile Include="BusinessLogic\AssetImportNew.cs" />
+    <Compile Include="BusinessLogic\AssetImportRepository.cs" />
+    <Compile Include="BusinessLogic\AssetTrackinReportRepository.cs" />
+    <Compile Include="BusinessLogic\AuditLog.cs" />
+    <Compile Include="BusinessLogic\BatchVerificationRepository.cs" />
+    <Compile Include="BusinessLogic\AssetImport.cs" />
+    <Compile Include="BusinessLogic\CostCenterScheduleRepository.cs" />
+    <Compile Include="BusinessLogic\DashboardRepository.cs" />
+    <Compile Include="BusinessLogic\DepreciationCalculationRepository.cs" />
+    <Compile Include="BusinessLogic\FASSummaryRepository.cs" />
+    <Compile Include="BusinessLogic\LocationRepository.cs" />
+    <Compile Include="BusinessLogic\SecurityToken.cs" />
+    <Compile Include="Common\DateUtil.cs" />
+    <Compile Include="Controllers\AdminReportController.cs" />
+    <Compile Include="Controllers\API\AccountsController.cs" />
+    <Compile Include="Controllers\API\AppUserController.cs" />
+    <Compile Include="Controllers\API\AssetAttachmentController.cs" />
+    <Compile Include="Controllers\API\AssetController.cs" />
+    <Compile Include="Controllers\API\ClientBatchController.cs" />
+    <Compile Include="Controllers\API\CostCenterController.cs" />
+    <Compile Include="Controllers\API\DashboardController.cs" />
+    <Compile Include="Controllers\API\EmployeeController.cs" />
+    <Compile Include="Controllers\API\GroupsController.cs" />
+    <Compile Include="Controllers\API\ITGroupController.cs" />
+    <Compile Include="Controllers\API\LocationController.cs" />
+    <Compile Include="Controllers\API\SupplierController.cs" />
+    <Compile Include="Controllers\API\VerificationController.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="BusinessLogic\AssetRepository.cs" />
+    <Compile Include="BusinessLogic\DisposalBL.cs" />
+    <Compile Include="BusinessLogic\Export_Repository.cs" />
+    <Compile Include="BusinessLogic\FARReportRepository.cs" />
+    <Compile Include="BusinessLogic\AccessRightsHelper.cs" />
+    <Compile Include="BusinessLogic\ReportRepository.cs" />
+    <Compile Include="Controllers\AccessRightsController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdditionAssetsController.cs" />
+    <Compile Include="Controllers\AmcController.cs" />
+    <Compile Include="Controllers\AssetController.cs" />
+    <Compile Include="Controllers\AssetFilterController.cs" />
+    <Compile Include="Controllers\AssetGroupsController.cs" />
+    <Compile Include="Controllers\AssetLocationController.cs" />
+    <Compile Include="Controllers\AssetTrackingReportController.cs" />
+    <Compile Include="Controllers\Asset_AttachmentsController.cs" />
+    <Compile Include="Controllers\BatchController.cs" />
+    <Compile Include="Controllers\BatchLocationController.cs" />
+    <Compile Include="Controllers\BatchVerificationController.cs" />
+    <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\CostCenterController.cs" />
+    <Compile Include="Controllers\CostCenterScheduleController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\DataTableAjaxPostModel.cs" />
+    <Compile Include="Controllers\DepreciationController.cs" />
+    <Compile Include="Controllers\DisposalController.cs" />
+    <Compile Include="Controllers\EmployeeAssetController.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\ExportAllAssetsController.cs" />
+    <Compile Include="Controllers\ExportLocationsController.cs" />
+    <Compile Include="Controllers\Export_All_ContentController.cs" />
+    <Compile Include="Controllers\Export_CostcenterController.cs" />
+    <Compile Include="Controllers\Export_GroupsController.cs" />
+    <Compile Include="Controllers\FARReportController.cs" />
+    <Compile Include="Controllers\FASSummaryController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImageGalleryController.cs" />
+    <Compile Include="Controllers\InsuranceController.cs" />
+    <Compile Include="Controllers\ITDepreciationController.cs" />
+    <Compile Include="Controllers\ITGroupController.cs" />
+    <Compile Include="Controllers\ItPeriodController.cs" />
+    <Compile Include="Controllers\LoanController.cs" />
+    <Compile Include="Controllers\LocationController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PeriodController.cs" />
+    <Compile Include="Controllers\RemoveDepreciationController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
+    <Compile Include="Controllers\SubPeriodController.cs" />
+    <Compile Include="Controllers\SupplierController.cs" />
+    <Compile Include="Controllers\UOMController.cs" />
+    <Compile Include="Controllers\ValidateAjaxAttribute.cs" />
+    <Compile Include="DTO\AssetfreeofcostDTO.cs" />
+    <Compile Include="DTO\ChildcostcenterDTO.cs" />
+    <Compile Include="DTO\ChildLocationDTO.cs" />
+    <Compile Include="DTO\AmcDTO.cs" />
+    <Compile Include="DTO\InsuranceDTO.cs" />
+    <Compile Include="DTO\LoanDTO.cs" />
+    <Compile Include="DTO\LocationDTO.cs" />
+    <Compile Include="DTO\Login.cs" />
+    <Compile Include="Filter\AuthUser.cs" />
+    <Compile Include="Filter\ValidateJsonAntiForgeryToken.cs" />
+    <Compile Include="Filter\ValidateJsonXssAttribute.cs" />
+    <Compile Include="Form.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccessRights.cs" />
+    <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\ACostCenter.cs" />
+    <Compile Include="Models\Addition.cs" />
+    <Compile Include="Models\AGroup.cs" />
+    <Compile Include="Models\ALocation.cs" />
+    <Compile Include="Models\AMC.cs" />
+    <Compile Include="Models\APIResponse.cs" />
+    <Compile Include="Models\Assetfreeofcost.cs" />
+    <Compile Include="Models\AssetImportDTO.cs" />
+    <Compile Include="Models\Assets.cs" />
+    <Compile Include="Models\AuditLog.cs" />
+    <Compile Include="Models\Batch.cs" />
+    <Compile Include="Models\BatchLocation.cs" />
+    <Compile Include="Models\BatchVerification.cs" />
+    <Compile Include="Models\BCostCenter.cs" />
+    <Compile Include="Models\BGroup.cs" />
+    <Compile Include="Models\BLocation.cs" />
+    <Compile Include="Models\CGroup.cs" />
+    <Compile Include="Models\Childcostcenter.cs" />
+    <Compile Include="Models\Childlocation.cs" />
+    <Compile Include="Models\Child_Asset_Attachment.cs" />
+    <Compile Include="Models\Client.cs" />
+    <Compile Include="Models\CLocation.cs" />
+    <Compile Include="Models\Company.cs" />
+    <Compile Include="Models\CompanyPermission.cs" />
+    <Compile Include="Models\DBContext.cs" />
+    <Compile Include="Models\Depreciation.cs" />
+    <Compile Include="Models\DepreciationCalculation.cs" />
+    <Compile Include="Models\DepreciationLog.cs" />
+    <Compile Include="Models\DepreciationRequest.cs" />
+    <Compile Include="Models\DGroup.cs" />
+    <Compile Include="Models\Disposal.cs" />
+    <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\EmployeeAsset.cs" />
+    <Compile Include="Models\Insurance.cs" />
+    <Compile Include="Models\ITDepreciation.cs" />
+    <Compile Include="Models\ITGroup.cs" />
+    <Compile Include="Models\ITPeriod.cs" />
+    <Compile Include="Models\JqueryDatatableParam.cs" />
+    <Compile Include="Models\License.cs" />
+    <Compile Include="Models\Loan.cs" />
+    <Compile Include="Models\Login.cs" />
+    <Compile Include="Models\Period.cs" />
+    <Compile Include="Models\SubAmc.cs" />
+    <Compile Include="Models\Subbatch.cs" />
+    <Compile Include="Models\SubInsurance.cs" />
+    <Compile Include="Models\SubLoan.cs" />
+    <Compile Include="Models\SubPeriod.cs" />
+    <Compile Include="Models\Supplier.cs" />
+    <Compile Include="Models\UOM.cs" />
+    <Compile Include="Models\UserEventLog.cs" />
+    <Compile Include="MyExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\Locationwise.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Locationwise.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="System\Web\Util\Security.cs" />
+    <Compile Include="Validators\AGroupValidator.cs" />
+    <Compile Include="Validators\AssetValidator.cs" />
+    <Compile Include="Validators\BGroupValidator.cs" />
+    <Compile Include="Validators\CGroupValidator.cs" />
+    <Compile Include="Validators\DGroupValidator.cs" />
+    <Compile Include="ViewModel\AmcViewmodel.cs" />
+    <Compile Include="DTO\AssetDTO.cs" />
+    <Compile Include="ViewModel\AssetGroupViewmodel.cs" />
+    <Compile Include="ViewModel\AssetImportError.cs" />
+    <Compile Include="ViewModel\AssetTrackingViewmodel.cs" />
+    <Compile Include="ViewModel\Asset_Import_Amc.cs" />
+    <Compile Include="ViewModel\BatchVerificationViewModel.cs" />
+    <Compile Include="ViewModel\BatchViewmodel.cs" />
+    <Compile Include="ViewModel\ChangeGroupViewModel.cs" />
+    <Compile Include="ViewModel\ComponentialReport_Viewmodel.cs" />
+    <Compile Include="ViewModel\CostCenterScheduleViewmodel.cs" />
+    <Compile Include="ViewModel\DashBoardViewModels.cs" />
+    <Compile Include="ViewModel\DepreciationViewModel.cs" />
+    <Compile Include="ViewModel\DisposalReportViewModel.cs" />
+    <Compile Include="ViewModel\DisposalViewModel.cs" />
+    <Compile Include="ViewModel\Disposal_ViewModel.cs" />
+    <Compile Include="ViewModel\EmployeeAssetReport.cs" />
+    <Compile Include="ViewModel\FARReportViewmodel.cs" />
+    <Compile Include="ViewModel\FASSummaryViewmodel.cs" />
+    <Compile Include="ViewModel\InsuranceViewmodel.cs" />
+    <Compile Include="ViewModel\JsTreeModel.cs" />
+    <Compile Include="ViewModel\LoanViewmodel.cs" />
+    <Compile Include="ViewModel\LocationReportViewModel.cs" />
+    <Compile Include="ViewModel\PeriodViewModel.cs" />
+    <Compile Include="ViewModel\RemoveDepreciationStatus_Viewmodel.cs" />
+    <Compile Include="ViewModel\SingleLocationParameter.cs" />
+    <Compile Include="ViewModel\UsefullifeReportViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\app_js\asset_add\asset_add_costcenter.js" />
+    <Content Include="Content\app_js\asset_add\asset_add_freeofcost.js" />
+    <Content Include="Content\app_js\asset_add\asset_add_location.js" />
+    <Content Include="Content\app_js\asset_add\asset_add_main.js" />
+    <Content Include="Content\app_js\asset_edit\asset_edit_costcenter.js" />
+    <Content Include="Content\app_js\asset_edit\asset_edit_freeofcost.js" />
+    <Content Include="Content\app_js\asset_edit\asset_edit_location.js" />
+    <Content Include="Content\app_js\asset_edit\asset_edit_main.js" />
+    <Content Include="Content\assets\css\argon-dashboard.css" />
+    <Content Include="Content\assets\css\argon-dashboard.min.css" />
+    <Content Include="Content\assets\css\button-themes.css" />
+    <Content Include="Content\assets\css\extra-util.css" />
+    <Content Include="Content\assets\css\nucleo-icons.css" />
+    <Content Include="Content\assets\css\nucleo-svg.css" />
+    <Content Include="Content\assets\fonts\nucleo-icons.svg" />
+    <Content Include="Content\assets\img\apple-icon.png" />
+    <Content Include="Content\assets\img\automotive.jpg" />
+    <Content Include="Content\assets\img\bruce-mars.jpg" />
+    <Content Include="Content\assets\img\crm.jpg" />
+    <Content Include="Content\assets\img\default.jpg" />
+    <Content Include="Content\assets\img\down-arrow-dark.svg" />
+    <Content Include="Content\assets\img\down-arrow-white.svg" />
+    <Content Include="Content\assets\img\down-arrow.svg" />
+    <Content Include="Content\assets\img\favicon.png" />
+    <Content Include="Content\assets\img\home-decor-1.jpg" />
+    <Content Include="Content\assets\img\home-decor-2.jpg" />
+    <Content Include="Content\assets\img\home-decor-3.jpg" />
+    <Content Include="Content\assets\img\icons\flags\AU.png" />
+    <Content Include="Content\assets\img\icons\flags\BR.png" />
+    <Content Include="Content\assets\img\icons\flags\DE.png" />
+    <Content Include="Content\assets\img\icons\flags\GB.png" />
+    <Content Include="Content\assets\img\icons\flags\US.png" />
+    <Content Include="Content\assets\img\illustrations\404.svg" />
+    <Content Include="Content\assets\img\illustrations\icon-documentation.svg" />
+    <Content Include="Content\assets\img\img-1-1200x1000.jpg" />
+    <Content Include="Content\assets\img\img-1.jpg" />
+    <Content Include="Content\assets\img\img-2.jpg" />
+    <Content Include="Content\assets\img\img-3.jpg" />
+    <Content Include="Content\assets\img\ivana-square.jpg" />
+    <Content Include="Content\assets\img\ivana-squares.jpg" />
+    <Content Include="Content\assets\img\ivancik.jpg" />
+    <Content Include="Content\assets\img\kal-visuals-square.jpg" />
+    <Content Include="Content\assets\img\logo-ct-dark.png" />
+    <Content Include="Content\assets\img\logo-ct.png" />
+    <Content Include="Content\assets\img\logos\bitcoin.jpg" />
+    <Content Include="Content\assets\img\logos\github.svg" />
+    <Content Include="Content\assets\img\logos\google.svg" />
+    <Content Include="Content\assets\img\logos\gray-logos\logo-coinbase.svg" />
+    <Content Include="Content\assets\img\logos\gray-logos\logo-nasa.svg" />
+    <Content Include="Content\assets\img\logos\gray-logos\logo-netflix.svg" />
+    <Content Include="Content\assets\img\logos\gray-logos\logo-pinterest.svg" />
+    <Content Include="Content\assets\img\logos\gray-logos\logo-spotify.svg" />
+    <Content Include="Content\assets\img\logos\gray-logos\logo-vodafone.svg" />
+    <Content Include="Content\assets\img\logos\mastercard.png" />
+    <Content Include="Content\assets\img\logos\visa.png" />
+    <Content Include="Content\assets\img\marie.jpg" />
+    <Content Include="Content\assets\img\meeting.jpg" />
+    <Content Include="Content\assets\img\office-dark.jpg" />
+    <Content Include="Content\assets\img\pricing-header-bg.jpg" />
+    <Content Include="Content\assets\img\shapes\pattern-left.png" />
+    <Content Include="Content\assets\img\shapes\pattern-right.png" />
+    <Content Include="Content\assets\img\small-logos\bootstrap.svg" />
+    <Content Include="Content\assets\img\small-logos\icon-bulb.svg" />
+    <Content Include="Content\assets\img\small-logos\icon-sun-cloud.png" />
+    <Content Include="Content\assets\img\small-logos\logo-asana.svg" />
+    <Content Include="Content\assets\img\small-logos\logo-atlassian.svg" />
+    <Content Include="Content\assets\img\small-logos\logo-invision.svg" />
+    <Content Include="Content\assets\img\small-logos\logo-jira.svg" />
+    <Content Include="Content\assets\img\small-logos\logo-slack.svg" />
+    <Content Include="Content\assets\img\small-logos\logo-spotify.svg" />
+    <Content Include="Content\assets\img\small-logos\logo-xd.svg" />
+    <Content Include="Content\assets\img\team-1.jpg" />
+    <Content Include="Content\assets\img\team-2.jpg" />
+    <Content Include="Content\assets\img\team-3.jpg" />
+    <Content Include="Content\assets\img\team-4.jpg" />
+    <Content Include="Content\assets\img\team-5.jpg" />
+    <Content Include="Content\assets\img\tesla.png" />
+    <Content Include="Content\assets\img\vr-bg.jpg" />
+    <Content Include="Content\assets\jstree\proton\30px.png" />
+    <Content Include="Content\assets\jstree\proton\32px.png" />
+    <Content Include="Content\assets\jstree\proton\fonts\titillium\titilliumweb-bold-webfont.svg" />
+    <Content Include="Content\assets\jstree\proton\fonts\titillium\titilliumweb-extralight-webfont.svg" />
+    <Content Include="Content\assets\jstree\proton\fonts\titillium\titilliumweb-regular-webfont.svg" />
+    <Content Include="Content\assets\jstree\proton\style.css" />
+    <Content Include="Content\assets\jstree\proton\style.min.css" />
+    <Content Include="Content\assets\jstree\proton\throbber.gif" />
+    <Content Include="Content\assets\js\argon-dashboard.js" />
+    <Content Include="Content\assets\js\argon-dashboard.min.js" />
+    <Content Include="Content\assets\js\core\bootstrap.bundle.min.js" />
+    <Content Include="Content\assets\js\core\bootstrap.min.js" />
+    <Content Include="Content\assets\js\core\popper.min.js" />
+    <None Include="Content\assets\js\jquery.validate-vsdoc.js" />
+    <Content Include="Content\assets\js\jquery.validate.js" />
+    <Content Include="Content\assets\js\jquery.validate.min.js" />
+    <Content Include="Content\assets\js\jquery.validate.unobtrusive.js" />
+    <Content Include="Content\assets\js\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Content\assets\js\jstree.js" />
+    <Content Include="Content\assets\js\jstree.min.js" />
+    <Content Include="Content\assets\js\plugins\amcharts\animated.js" />
+    <Content Include="Content\assets\js\plugins\amcharts\core.js" />
+    <Content Include="Content\assets\js\plugins\amcharts\maps.js" />
+    <Content Include="Content\assets\js\plugins\amcharts\worldLow.js" />
+    <Content Include="Content\assets\js\plugins\chartjs.min.js" />
+    <Content Include="Content\assets\js\plugins\choices.min.js" />
+    <Content Include="Content\assets\js\plugins\countup.min.js" />
+    <Content Include="Content\assets\js\plugins\datatables.js" />
+    <Content Include="Content\assets\js\plugins\dragula\dragula.js" />
+    <Content Include="Content\assets\js\plugins\dragula\dragula.min.js" />
+    <Content Include="Content\assets\js\plugins\dropzone.min.js" />
+    <Content Include="Content\assets\js\plugins\flatpickr.min.js" />
+    <Content Include="Content\assets\js\plugins\fullcalendar.min.js" />
+    <Content Include="Content\assets\js\plugins\jkanban\jkanban.js" />
+    <Content Include="Content\assets\js\plugins\jkanban\jkanban.min.js" />
+    <Content Include="Content\assets\js\plugins\leaflet.js" />
+    <Content Include="Content\assets\js\plugins\moment.min.js" />
+    <Content Include="Content\assets\js\plugins\multistep-form.js" />
+    <Content Include="Content\assets\js\plugins\nouislider.min.js" />
+    <Content Include="Content\assets\js\plugins\orbit-controls.js" />
+    <Content Include="Content\assets\js\plugins\perfect-scrollbar.min.js" />
+    <Content Include="Content\assets\js\plugins\photoswipe-ui-default.min.js" />
+    <Content Include="Content\assets\js\plugins\photoswipe.min.js" />
+    <Content Include="Content\assets\js\plugins\quill.min.js" />
+    <Content Include="Content\assets\js\plugins\round-slider.min.js" />
+    <Content Include="Content\assets\js\plugins\smooth-scrollbar.min.js" />
+    <Content Include="Content\assets\js\plugins\sweetalert.min.js" />
+    <Content Include="Content\assets\js\plugins\threejs.js" />
+    <Content Include="Content\assets\js\plugins\tilt.min.js" />
+    <Content Include="Content\assets\js\typeahead.js" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\clientlogo.jpg" />
+    <Content Include="Images\comlogo.png" />
+    <Content Include="Images\login2.jpg" />
+    <Content Include="Images\TurboLogo.jpeg" />
+    <Content Include="Images\verifylogo.png" />
+    <Content Include="libman.json" />
+    <Content Include="Scripts\Common\period.js" />
+    <Content Include="UI Changes.txt" />
+    <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="SqlServerTypes\x64\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\assets\css\argon-dashboard.css.map" />
+    <Content Include="Content\assets\fonts\nucleo-icons.eot" />
+    <Content Include="Content\assets\fonts\nucleo-icons.ttf" />
+    <Content Include="Content\assets\fonts\nucleo-icons.woff" />
+    <Content Include="Content\assets\fonts\nucleo-icons.woff2" />
+    <Content Include="Content\assets\fonts\nucleo.eot" />
+    <Content Include="Content\assets\fonts\nucleo.ttf" />
+    <Content Include="Content\assets\fonts\nucleo.woff" />
+    <Content Include="Content\assets\fonts\nucleo.woff2" />
+    <Content Include="Content\assets\js\argon-dashboard.js.map" />
+    <Content Include="Content\assets\scss\argon-dashboard.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\badges\_badge-circle.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\badges\_badge-dot.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\badges\_badge-floating.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\badges\_badge.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\bootstrap-grid.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\bootstrap-reboot.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\bootstrap-utilities.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\bootstrap.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\forms\_floating-labels.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\forms\_form-check.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\forms\_form-control.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\forms\_form-range.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\forms\_form-select.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\forms\_form-text.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\forms\_input-group.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\forms\_labels.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\forms\_validation.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\helpers\_clearfix.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\helpers\_color-bg.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\helpers\_colored-links.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\helpers\_position.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\helpers\_ratio.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\helpers\_stacks.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\helpers\_stretched-link.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\helpers\_text-truncation.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\helpers\_visually-hidden.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\helpers\_vr.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\mixins\_alert.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\mixins\_backdrop.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\mixins\_border-radius.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\mixins\_box-shadow.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\mixins\_breakpoints.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\mixins\_buttons.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\mixins\_caret.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\mixins\_clearfix.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\mixins\_color-scheme.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\mixins\_container.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\mixins\_deprecate.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\mixins\_forms.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\mixins\_gradients.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\mixins\_grid.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\mixins\_image.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\mixins\_list-group.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\mixins\_lists.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\mixins\_pagination.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\mixins\_reset-text.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\mixins\_resize.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\mixins\_table-variants.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\mixins\_text-truncate.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\mixins\_transition.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\mixins\_utilities.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\mixins\_visually-hidden.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\utilities\_api.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\vendor\_rfs.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_accordion.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_alert.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_badge.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_breadcrumb.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_button-group.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_buttons.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_card.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_carousel.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_close.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_containers.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_dropdown.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_forms.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_functions.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_grid.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_helpers.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_images.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_list-group.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_maps.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_mixins.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_modal.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_nav.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_navbar.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_offcanvas.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_pagination.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_placeholders.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_popover.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_progress.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_reboot.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_root.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_spinners.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_tables.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_toasts.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_tooltip.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_transitions.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_type.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_utilities.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\bootstrap\_variables.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\cards\card-background.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\cards\card-blog.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\cards\card-carousel.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\cards\card-horizontal.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\cards\card-pricing.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\cards\card-profile.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\custom\_styles.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\custom\_variables.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\forms\_form-check.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\forms\_form-select.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\forms\_form-switch.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\forms\_forms.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\forms\_input-group.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\forms\_inputs.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\forms\_labels.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\mixins\mixins.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\mixins\_badge.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\mixins\_colored-shadows.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\mixins\_hover.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\mixins\_social-buttons.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\plugins\free\plugins.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\plugins\free\_flatpickr.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\plugins\free\_nouislider.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\plugins\free\_perfect-scrollbar.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\plugins\free\_prism.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\plugins\pro\multi-step.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\plugins\pro\plugins-extend.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\plugins\pro\_carousel-slick.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\plugins\pro\_choices.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\plugins\pro\_datatable-extend.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\plugins\pro\_datatable.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\plugins\pro\_dragula.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\plugins\pro\_dropzone.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\plugins\pro\_fullcalendar-extend.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\plugins\pro\_fullcalendar.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\plugins\pro\_glidejs.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\plugins\pro\_highlight.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\plugins\pro\_kanban.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\plugins\pro\_leaflet.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\plugins\pro\_list-check.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\plugins\pro\_photoswipe.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\plugins\pro\_quill.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\plugins\pro\_rating-widget.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\plugins\pro\_sweetalert2-extend.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\plugins\pro\_sweetalert2.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\theme-pro.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\theme.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\variables\_animations.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\variables\_avatars.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\variables\_badge.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\variables\_breadcrumb.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\variables\_cards-extend.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\variables\_cards.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\variables\_choices.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\variables\_dark-version.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\variables\_dropdowns.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\variables\_fixed-plugin.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\variables\_form-switch.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\variables\_full-calendar.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\variables\_header.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\variables\_info-areas.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\variables\_misc-extend.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\variables\_misc.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\variables\_navbar-vertical.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\variables\_navbar.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\variables\_pagination.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\variables\_rtl.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\variables\_social-buttons.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\variables\_table.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\variables\_timeline.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\variables\_utilities-extend.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\variables\_utilities.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\variables\_virtual-reality.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_accordion.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_alert.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_avatars.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_backgrounds.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_badge.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_breadcrumbs.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_buttons.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_cards-extend.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_cards.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_components.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_dark-version.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_dropdown-extend.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_dropdown.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_dropup.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_fixed-plugin.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_floating-elements.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_footer.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_forms.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_gradients.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_header.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_info-areas.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_misc-extend.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_misc.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_nav.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_navbar-vertical.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_navbar.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_pagination.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_popovers.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_progress.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_rtl-extend.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_rtl.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_social-buttons.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_tables.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_tilt.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_timeline.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_tooltips.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_typography.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_utilities-extend.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_utilities.scss" />
+    <Content Include="Content\assets\scss\argon-dashboard\_variables.scss" />
+    <Content Include="Content\assets\jstree\proton\fonts\titillium\titilliumweb-bold-webfont.eot" />
+    <Content Include="Content\assets\jstree\proton\fonts\titillium\titilliumweb-bold-webfont.ttf" />
+    <Content Include="Content\assets\jstree\proton\fonts\titillium\titilliumweb-bold-webfont.woff" />
+    <Content Include="Content\assets\jstree\proton\fonts\titillium\titilliumweb-extralight-webfont.eot" />
+    <Content Include="Content\assets\jstree\proton\fonts\titillium\titilliumweb-extralight-webfont.ttf" />
+    <Content Include="Content\assets\jstree\proton\fonts\titillium\titilliumweb-extralight-webfont.woff" />
+    <Content Include="Content\assets\jstree\proton\fonts\titillium\titilliumweb-regular-webfont.eot" />
+    <Content Include="Content\assets\jstree\proton\fonts\titillium\titilliumweb-regular-webfont.ttf" />
+    <Content Include="Content\assets\jstree\proton\fonts\titillium\titilliumweb-regular-webfont.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Reports\Locationwise.xsc">
+      <DependentUpon>Locationwise.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\Locationwise.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Locationwise.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\Locationwise.xss">
+      <DependentUpon>Locationwise.xsd</DependentUpon>
+    </Content>
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Supplier\Index_old.cshtml" />
+    <Content Include="Views\Supplier\Add.cshtml" />
+    <Content Include="Views\Supplier\Edit.cshtml" />
+    <Content Include="Views\UOM\Index.cshtml" />
+    <Content Include="Views\UOM\Add.cshtml" />
+    <Content Include="Views\UOM\Edit.cshtml" />
+    <Content Include="Views\Period\Index.cshtml" />
+    <Content Include="Views\Period\AddNew.cshtml" />
+    <Content Include="Views\Period\Edit.cshtml" />
+    <Content Include="Views\SubPeriod\Index.cshtml" />
+    <Content Include="Views\SubPeriod\AddNew.cshtml" />
+    <Content Include="Views\SubPeriod\Edit.cshtml" />
+    <Content Include="Views\Period\EditNew.cshtml" />
+    <Content Include="Views\Period\EditPeriod.cshtml" />
+    <Content Include="Views\ItPeriod\Index.cshtml" />
+    <Content Include="Views\ItPeriod\AddNew.cshtml" />
+    <Content Include="Views\ItPeriod\Edit.cshtml" />
+    <Content Include="Views\Insurance\AddNew.cshtml" />
+    <Content Include="Views\Insurance\Index.cshtml" />
+    <Content Include="Views\Insurance\EditNew.cshtml" />
+    <Content Include="Views\Amc\Index.cshtml" />
+    <Content Include="Views\Amc\AddNew_old.cshtml" />
+    <Content Include="Views\Amc\EditNew.cshtml" />
+    <Content Include="Views\Insurance\ImportExcel.cshtml" />
+    <Content Include="Views\Amc\ImportExcel.cshtml" />
+    <Content Include="Views\Supplier\ImportExcel.cshtml" />
+    <Content Include="Views\AdditionAssets\Index.cshtml" />
+    <Content Include="Views\AdditionAssets\AddNew.cshtml" />
+    <Content Include="Views\AdditionAssets\EditNew.cshtml" />
+    <Content Include="Views\AdditionAssets\ImportExcel.cshtml" />
+    <Content Include="Views\Location\Index.cshtml" />
+    <Content Include="Views\Supplier\Index.cshtml" />
+    <Content Include="Views\Account\Add.cshtml" />
+    <Content Include="Views\Account\Edit.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\AssetGroups\Index.cshtml" />
+    <Content Include="Views\Asset\Add.cshtml" />
+    <Content Include="Views\Asset\changegroup.cshtml" />
+    <Content Include="Views\Asset\Edit.cshtml" />
+    <Content Include="Views\Asset\ImportExcel.cshtml" />
+    <Content Include="Views\Asset\Index.cshtml" />
+    <Content Include="Views\BatchLocation\Add.cshtml" />
+    <Content Include="Views\BatchLocation\Edit.cshtml" />
+    <Content Include="Views\BatchLocation\Index.cshtml" />
+    <Content Include="Views\Batch\Add.cshtml" />
+    <Content Include="Views\Batch\Edit.cshtml" />
+    <Content Include="Views\Batch\Index.cshtml" />
+    <Content Include="Views\Company\Add.cshtml" />
+    <Content Include="Views\Company\Edit.cshtml" />
+    <Content Include="Views\Company\Index.cshtml" />
+    <Content Include="Views\CostCenter\Index.cshtml" />
+    <Content Include="Views\ITGroup\Index.cshtml" />
+    <Content Include="Views\Loan\Add.cshtml" />
+    <Content Include="Views\Loan\Edit.cshtml" />
+    <Content Include="Views\Loan\Index.cshtml" />
+    <Content Include="Views\Login\Add.cshtml" />
+    <Content Include="Views\Login\Edit.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Asset_Attachments\Index.cshtml" />
+    <Content Include="Views\Asset_Attachments\UploadAttachments.cshtml" />
+    <Content Include="Views\ImageGallery\AssetGallery.cshtml" />
+    <Content Include="Views\Disposal\Index.cshtml" />
+    <Content Include="Views\Disposal\Add.cshtml" />
+    <Content Include="Views\Disposal\Edit.cshtml" />
+    <Content Include="Views\Disposal\ImportExcel.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Shared\Layout_login.cshtml" />
+    <Content Include="Views\Company\CompanySelection.cshtml" />
+    <Content Include="Views\Export_Groups\Agroup_Index.cshtml" />
+    <Content Include="Views\Export_Groups\importagroup.cshtml" />
+    <Content Include="Views\Export_Groups\Bgroup_Index.cshtml" />
+    <Content Include="Views\Export_Groups\importbgroup.cshtml" />
+    <Content Include="Views\Export_Groups\Cgroup_Index.cshtml" />
+    <Content Include="Views\Export_Groups\importcgroup.cshtml" />
+    <Content Include="Views\Export_Groups\Dgroup_Index.cshtml" />
+    <Content Include="Views\Export_Groups\importdgroup.cshtml" />
+    <Content Include="Views\Export_Costcenter\ACostcenter_Index.cshtml" />
+    <Content Include="Views\Export_Costcenter\importacostcenter.cshtml" />
+    <Content Include="Views\Export_Costcenter\BCostcenter_Index.cshtml" />
+    <Content Include="Views\Export_Costcenter\importbcostcenter.cshtml" />
+    <Content Include="Views\Reports\AllLocationWiseReport_Index.cshtml" />
+    <Content Include="Views\Reports\SingleLocationWiseReport_Index.cshtml" />
+    <Content Include="Views\Reports\Componential_Report_Index.cshtml" />
+    <Content Include="Views\ExportLocations\Alocation_Index.cshtml" />
+    <Content Include="Views\ExportLocations\importalocation.cshtml" />
+    <Content Include="Views\ExportLocations\importblocation.cshtml" />
+    <Content Include="Views\ExportLocations\importclocation.cshtml" />
+    <Content Include="Views\ExportLocations\Clocation_Index.cshtml" />
+    <Content Include="Views\ExportLocations\Blocation_Index.cshtml" />
+    <Content Include="Views\FARReport\GetFAReport_Index.cshtml" />
+    <Content Include="Views\ExportAllAssets\Index.cshtml" />
+    <Content Include="Views\Location\TestTree.cshtml" />
+    <Content Include="Views\Amc\AddNew.cshtml" />
+    <Content Include="Views\Depreciation\Add.cshtml" />
+    <Content Include="Views\Depreciation\CalculateDepreciation.cshtml" />
+    <Content Include="Views\Depreciation\Edit .cshtml" />
+    <Content Include="Views\Depreciation\ImportExcel .cshtml" />
+    <Content Include="Views\Depreciation\Index.cshtml" />
+    <Content Include="Views\AccessRights\Add.cshtml" />
+    <Content Include="Views\AccessRights\Edit.cshtml" />
+    <Content Include="Views\AccessRights\Index.cshtml" />
+    <Content Include="Views\FASSummary\FASSummaryDetailed_Index.cshtml" />
+    <Content Include="Views\FASSummary\GetFASSummaryReport_Index.cshtml" />
+    <Content Include="Views\CostCenterSchedule\GetCCScheduleReport_Index.cshtml" />
+    <Content Include="Views\RemoveDepreciation\Index.cshtml" />
+    <Content Include="Views\BatchVerification\GetAssetsExtraFound_Index.cshtml" />
+    <Content Include="Views\BatchVerification\GetAssetsFound_Index.cshtml" />
+    <Content Include="Views\BatchVerification\GetAssetsNotFound_Index.cshtml" />
+    <Content Include="Views\BatchVerification\GetVerifiedAssets_Index.cshtml" />
+    <Content Include="Views\Employee\Add.cshtml" />
+    <Content Include="Views\Employee\Edit.cshtml" />
+    <Content Include="Views\Employee\ImportExcel.cshtml" />
+    <Content Include="Views\Employee\Index.cshtml" />
+    <Content Include="Views\EmployeeAsset\Add.cshtml" />
+    <Content Include="Views\EmployeeAsset\Edit.cshtml" />
+    <Content Include="Views\EmployeeAsset\ImportExcel.cshtml" />
+    <Content Include="Views\EmployeeAsset\Index.cshtml" />
+    <Content Include="Views\AssetTrackingReport\AssetTrackinReport_Index.cshtml" />
+    <Content Include="Views\AssetTrackingReport\EmployeeAssetTrackinReport_Index.cshtml" />
+    <Content Include="Views\Amc\ImportAssetExcel.cshtml" />
+    <Content Include="Views\Depreciation\EditNew.cshtml" />
+    <Content Include="Views\Account\ImportExcel.cshtml" />
+    <Content Include="Views\Depreciation\ShowProgress.cshtml" />
+    <Content Include="Views\Home\NoRights.cshtml" />
+    <Content Include="Views\Login\ChangePassword.cshtml" />
+    <Content Include="Views\ITDepreciation\CalculateDepreciation.cshtml" />
+    <Content Include="Views\ITDepreciation\Index.cshtml" />
+    <Content Include="Views\ITDepreciation\RemoveDepreciationIndex.cshtml" />
+    <Content Include="Views\ITDepreciation\ViewITDepreciation.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\Reports\UsefullifeReport_Index.cshtml" />
+    <Content Include="Views\AdminReport\UserEventLogReport.cshtml" />
+    <Content Include="Views\AdminReport\Index.cshtml" />
+    <Content Include="Views\FARReport\FARReport.cshtml" />
+    <Content Include="Views\Asset\EditAsset.cshtml" />
+    <Content Include="Views\Reports\AssetAdditionReport.cshtml" />
+    <Content Include="Views\Reports\AssetDisposalReport.cshtml" />
+    <Content Include="Views\AssetLocation\ChangeLocation.cshtml" />
+    <Content Include="Views\FARReport\FARReportV1.cshtml" />
+    <Content Include="Views\Home\NoRightsAjax.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\EmployeeAsset\IssueAsset.cshtml" />
+    <Content Include="Views\Depreciation\AddNew.cshtml" />
+    <Content Include="Views\Asset\ShowImportError.cshtml" />
+    <Content Include="Views\Login\OTP.cshtml" />
+    <Content Include="Views\Login\ResetUserPassword.cshtml" />
+    <Content Include="Views\Asset\Partial_AssetList.cshtml" />
+    <Content Include="Views\Shared\_LayoutSelectCompany.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Scripts\AddAsset\" />
+    <Folder Include="Views\App_LocalResources\" />
+    <Folder Include="Views\AssetFilter\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Reports\Locationwisereport.rdlc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VerifyDepCalculator\VerifyDepCalculator.csproj">
+      <Project>{1a954645-d0bf-4434-8d76-ca579444e22f}</Project>
+      <Name>VerifyDepCalculator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VerifyLicenseV2\VerifyLicenseV2.csproj">
+      <Project>{9b32d8d3-4347-41c4-893e-81545ac2657b}</Project>
+      <Name>VerifyLicenseV2</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.NetAnalyzers.6.0.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.NetAnalyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.NetAnalyzers.6.0.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.NetAnalyzers.dll" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>54797</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:54797/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.1.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.3.0\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.3.0\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.3.0\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.3.0\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.112.0\build\net46\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.112.0\build\net46\System.Data.SQLite.Core.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeAnalysis.NetAnalyzers.6.0.0\build\Microsoft.CodeAnalysis.NetAnalyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeAnalysis.NetAnalyzers.6.0.0\build\Microsoft.CodeAnalysis.NetAnalyzers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeAnalysis.NetAnalyzers.6.0.0\build\Microsoft.CodeAnalysis.NetAnalyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeAnalysis.NetAnalyzers.6.0.0\build\Microsoft.CodeAnalysis.NetAnalyzers.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.3.0\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.3.0\build\EntityFramework.targets')" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.112.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.112.0\build\net46\System.Data.SQLite.Core.targets')" />
+  <Import Project="..\packages\Microsoft.CodeAnalysis.NetAnalyzers.6.0.0\build\Microsoft.CodeAnalysis.NetAnalyzers.targets" Condition="Exists('..\packages\Microsoft.CodeAnalysis.NetAnalyzers.6.0.0\build\Microsoft.CodeAnalysis.NetAnalyzers.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

@@ -1,0 +1,85 @@
+﻿/*Button Themes*/
+.addBtn {
+    background-color: #5e5c5c; /*main*/
+    color: navajowhite; /*main*/
+    /*background-color: cadetblue;
+    color: navajowhite*/
+
+    padding: 10px 16px; 
+    font-size: 6px; 
+
+}
+
+
+/*    .addBtn:hover{
+        background-color:navajowhite;
+        color:blue;
+        transition: 0.7s;
+    }*/
+
+
+
+.modBtn {
+    background-color: #946157; /*main*/
+    color: navajowhite; /*main*/
+    /*background-color: #556b2f;
+    color: navajowhite*/
+    padding: 10px 16px;
+    font-size: 6px;
+}
+
+    /*.modBtn:hover {*/           /*hover*/
+       /*background-color: #002ead;
+        transition: 0.7s;
+    }*/
+
+
+
+.delBtn {
+    background-color: #dc4646; /*main*/
+    color: navajowhite; /*main*/
+    /*background-color: #e12a2a;
+    color: navajowhite*/
+    padding: 10px 16px;
+    font-size: 6px;
+}
+
+  /*.delBtn:hover {*/ /*hover*/
+        /*background-color: navajowhite;
+        color: red;
+        transition: 1.0s;
+    }*/
+
+
+
+.xtraBtn {
+    background-color: #BB7F7F; /*main*/
+    color: navajowhite; /*main*/
+    /*    background-color: #5e5c5c;
+    color: navajowhite*/
+    padding: 8px 16px;
+    font-size:4px
+}
+
+/*.xtraBtn:hover {
+    background-color: #002ead;
+    transition: 0.7s;
+}*/
+
+.saveBtn {
+    background-color: #5e5c5c; /*main*/
+    color: navajowhite;
+}
+
+.clBtn {
+    background-color: #dc4646; /*main*/
+    color: navajowhite; /*main*/
+}
+.nBtn {
+    background-color: #946157; /*main*/
+    color: navajowhite;
+}
+.uBtn {
+    background-color: #BB7F7F; /*main*/
+    color: navajowhite;
+}

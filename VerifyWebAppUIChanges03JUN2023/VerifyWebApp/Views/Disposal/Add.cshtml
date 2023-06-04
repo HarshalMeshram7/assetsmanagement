@@ -1,0 +1,1232 @@
+﻿
+@{
+    ViewBag.Title = "Add";
+}
+
+@using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+{
+
+<div class="container-fluid rounded page border shadow">
+    <div class="card">
+        <div class="card-header pb-0">
+            <div class="row">
+                @*<div class="col-md-12 my-1">*@
+                    <div class="justify-content-center hborder">
+                        <div class="htitle"> <b> Add Disposal of Assets</b></div>
+                    </div>
+                </div>
+            </div>
+
+            @*<ul class="nav nav-pills nav-fill my-1">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#home">General Info</a>
+                    </li>
+
+
+
+                </ul>*@
+
+
+            <div class="tab-content container-fluid my-1">
+                <div class="tab-pane container active" id="home">
+                    <div class="container-fluid  border border-success rounded bg-light" style="border:  thin #32CD32 ;border-radius: 10px;margin-top: 15px;
+                        margin-bottom: 15px;">
+                        <div class="row col-lg-12" style="margin-top: 10px;">
+                            @*<div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label for="praticesname">Disposal No<span>*</span></label>
+                                        <input type='text' id="txtdispono" class="form-control" readonly tabindex="1" />
+
+                                    </div>
+                                </div>*@
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <input type='checkbox' id="checkflag" tabindex="2" />
+                                    <label for="praticesname">Asset no wise search</label>
+
+                                </div>
+
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label for="praticesname">Asset No</label>
+                                    <input type='text' placeholder="Enter Assetno and press enter" id="txtassetno" class="form-control" tabindex="3" required />
+
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Asset Name<span style="color:#CC0000;">*</span></label>
+                                    <div class='input-group dropdown ' id='dtasset' tabindex="4">
+
+                                        @Html.DropDownList("AssetId", (SelectList)ViewBag.Assestlist, "Select AssetNo", new { @class = "form-control", id = "AssetId", @required = "required", @onblur = "emptyfields();" })
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*<div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="praticesname">Add.Description</label>
+                                        <input type='text' id="adddesc" class="form-control" tabindex="5" required />
+
+                                    </div>
+                                </div>
+                            </div>*@
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label for="praticesname">VoucherNo</label>
+                                    <input type='text' id="txtvno" name="txtvno" class="form-control" tabindex="5" />
+
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="praticesname">Voucher Date<span style="color:#CC0000;">*</span></label>
+                                    <div class='input-group date' id='dtVDate'>
+                                        <input id="EndDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="praticesname">Disposal Date<span style="color:#CC0000;">*</span></label>
+
+                                    <div class='input-group date' id='dtDispoDate'>
+                                        <input id="EndDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="praticesname">Bill Date</label>
+
+                                    <div class='input-group date' id='dtbillDate'>
+                                        <input id="EndDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label for="praticesname">Asset Gross Block</label>
+                                    <input type='text' id="txtgrossvalue" class="form-control" readonly tabindex="9" />
+
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="praticesname">Disposal till date </label>
+                                    <input type='text' id="txtdisposaltilldate" name="txtdisposaltilldate" class="form-control" tabindex="10" readonly />
+
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="praticesname">Depreciation till date</label>
+                                    <input type='text' id="txtOpAccDepreciation" name="txtOpAccDepreciation" class="form-control" tabindex="11" readonly />
+
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label for="praticesname">Depreciation Rate</label>
+                                    <input type='text' id="txtdeprate" name="txtdeprate" class="form-control" readonly tabindex="12" />
+
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label for="praticesname">Depreciation Method</label>
+                                    <input type='text' id="txtdepmethod" name="txtdepmethod" class="form-control" readonly tabindex="13" />
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="txtOpQty">Opening Quantity</label>
+                                    <input type='text' id="txtOpQty" readonly="readonly" class="form-control" tabindex="14" />
+                                </div>
+
+                            </div>
+                            <div class="col-md-3">
+                                <label for="txtDisposedQty">Disposed Quantity</label>
+                                <input type='text' id="txtDisposedQty" readonly="readonly" class="form-control" tabindex="14" />
+                            </div>
+                            <div class="col-md-3">
+                                <label for="txtCurrentQty">Current Quantity</label>
+                                <input type='text' id="txtCurrentQty" readonly="readonly" class="form-control" tabindex="14" />
+                            </div>
+
+                        </div>
+                        <dv class="row">
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label for="praticesname">Bill No</label>
+                                    <input type='text' id="txtbillno" class="form-control" tabindex="14" />
+
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="praticesname">Quantity<span style="color:#CC0000;">*</span> </label>
+                                    <input type='number' id="txtqty" name="txtqty" class="form-control" tabindex="15" value="1" required />
+
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group col-md-4 ">
+                                <label for="praticesname">Disposal Category<span style="color:#CC0000;">*</span></label>
+                                <select id="AssetCategoryId" class="form-control" name="AssetCategory" required>
+                                    <option value="">Select Asset Category</option>
+                                    <option value="1">Sold</option>
+                                    <option value="2">Scraped</option>
+                                    <option value="3">Stolen</option>
+                                    <option value="4">Lost</option>
+                                    <option value="5">Replace</option>
+                                    <option value="6">Others</option>
+
+                                </select>
+                            </div>
+
+                    </div>
+
+
+                    <div class="row">
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="praticesname">Disposal Type<span style="color:#CC0000;">*</span></label>
+                                Full @Html.RadioButton("DisposalType", "Full", new { id = "full", @tabindex = "16", @onclick = "Getdepreciationreversed()" })
+                                Partial @Html.RadioButton("DisposalType", "Partial", new { id = "partial", @tabindex = "17", @onclick = "Getdepreciationreversed()" })
+                            </div>
+
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label for="praticesname">Asset sold to</label>
+                                <input type='text' id="txtcustomername" name="txtcustomername" class="form-control" tabindex="18" />
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="praticesname">Remarks</label>
+                                <input type='text' id="txtremarks" name="txtremarks" class="form-control" tabindex="19" />
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row border border-success rounded bg-light my-2 p-2">
+                        <!-- Col 1 -->
+                        <div class="col-md-7">
+                            <div class="row my-1">
+                                <div class="col">
+                                    <label for="txtgrossvalue" class="col-form-label">
+                                        Disposal Amount<span style="color:#CC0000;">*</span>
+                                    </label>
+                                </div>
+                                <div class="col">
+                                    <input type="number" tabindex="20"
+                                           class="form-control" id="txtdisposalamount" onblur="validdisposalamount();" />
+
+                                </div>
+                            </div>
+
+
+                            <div class="row my-1">
+                                <div class="col">
+                                    <label for="praticesname">Sale Value</label>
+                                </div>
+                                <div class="col">
+                                    <input type="number" tabindex="21"
+                                           class="form-control" id="txtsalevalue" />
+
+                                </div>
+                            </div>
+
+                            @*<div class="row my-1">
+                                        <div class="col">
+                                            <label for="praticesname">Op.Accumulated Dep.Till</label>
+                                        </div>
+                                        <div class="col">
+                                            <input type="number" tabindex="20"
+                                                   class="form-control" id="txtopAccDepTill" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row my-1">
+                                        <div class="col">
+                                            <label for="praticesname">Dep.charged FromDate-ToDate</label>
+                                        </div>
+                                        <div class="col">
+                                            <input type="number" tabindex="20"
+                                                   class="form-control" id="txtdepChargedfrom" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row my-1">
+                                        <div class="col">
+                                            <label for="praticesname">Op.Accumulated Depreciation</label>
+                                        </div>
+                                        <div class="col">
+                                            <input type="number" tabindex="20"
+                                                   class="form-control" id="txtOpAccDepreciation" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row my-1">
+                                        <div class="col">
+                                            <label for="praticesname">Depreciation For</label>
+                                        </div>
+                                        <div class="col">
+                                            <input type="number" tabindex="20"
+                                                   class="form-control" id="txtDepFor" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row my-1">
+                                        <div class="col">
+                                            <label for="praticesname">Total Depreciation</label>
+                                        </div>
+                                        <div class="col">
+                                            <input type="number" tabindex="20"
+                                                   class="form-control" id="txttotaldep" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row my-1">
+                                        <div class="col">
+                                            <label for="praticesname">Wdv of Assets Disposed Off</label>
+                                        </div>
+                                        <div class="col">
+                                            <input type="number" tabindex="20"
+                                                   class="form-control" id="txtwdvofasset" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row my-1">
+                                        <div class="col">
+                                            <label for="praticesname">Profit/Loss</label>
+                                        </div>
+                                        <div class="col">
+                                            <input type="number" tabindex="20"
+                                                   class="form-control" id="txtprofitloss" />
+                                        </div>
+                                    </div>
+
+                                </div>*@
+
+
+                        </div>
+                        @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="praticesname">Disposal Amount</label>
+                                        <input type="number" tabindex="14" class="form-control" id="txtdisposalamount" />
+                                    </div>
+                                </div>
+                            </div>*@
+                        @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="praticesname">Gross Value</label>
+                                        <input type="number" tabindex="15" class="form-control" id="txtgrossvalue" />
+                                    </div>
+                                </div>
+                            </div>*@
+                        @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="praticesname">Op.Accumulated Dep.Till </label>
+                                        <input type="number" tabindex="16" class="form-control" id="txtopAccDepTill" />
+                                    </div>
+                                </div>
+                            </div>*@
+
+                        @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="praticesname">Depreciation charged FromDate-ToDate </label>
+                                        <input type="number" tabindex="17" class="form-control" id="txtdepChargedfrom" />
+                                    </div>
+                                </div>
+                            </div>*@
+
+                        @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="praticesname">Op.Accumulated Depreciation</label>
+                                        <input type="number" tabindex="18" class="form-control" id="txtOpAccDepreciation" />
+                                    </div>
+                                </div>
+                            </div>*@
+
+                        @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="praticesname">Depreciation For</label>
+                                        <input type="number" tabindex="19" class="form-control" id="txtDepFor" />
+                                    </div>
+                                </div>
+                            </div>*@
+
+                        @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="praticesname">Total Depreciation</label>
+                                        <input type="number" tabindex="20" class="form-control" id="txttotaldep" />
+                                    </div>
+                                </div>
+                            </div>*@
+
+
+                        @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="praticesname">Wdv of Assets Disposed Off</label>
+                                        <input type="number" tabindex="21" class="form-control" id="txtwdvofasset" />
+                                    </div>
+                                </div>
+                            </div>*@
+
+                        @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Profit/Loss</label>
+                                    <input type="number" tabindex="22" class="form-control" id="txtprofitloss" />
+                                </div>
+                            </div>*@
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        @*<div class="row my-1">
+
+                <button type="submit" class="btn btn-primary" id="btnsave">	Save</button>
+                <button type="button" class="btn btn-default" onclick="close()">Close</button>
+
+            </div>*@
+
+        <div class="container">
+            <div class="row my-2">
+                <div class="modal-footer">
+   
+                        <button type="submit" class="btn btn-sm saveBtn" id="btnsave">	Save</button>
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+        </div>
+  
+
+        }
+
+
+        <div id="errorlist" class="modal fade" role="dialog" style="height: 670px;">
+            <div class="modal-dialog modal-lg">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <h4 class="modal-title">Error list</h4>
+                    </div>
+                    <div class="modal-body ">
+
+                        <div class="row" style="overflow:auto">
+                            <table width="100%" class="table table-striped table-bordered table-hover" style="overflow:auto" id="errtbl">
+
+                                <thead>
+                                    <tr>
+
+                                        <td>Srno</td>
+                                        <td>Errors</td>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+
+                            </table>
+                        </div>
+
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn delBtn" data-dismiss="modal">Close</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*</div>*@
+
+        <script type="text/javascript">
+        var isimportedflag;
+
+        $(document).ready(function ($) {
+            //voucherdate set to all other date
+          //  $("#txtaddno").val('@ViewBag.additionno');
+
+            $('#dtVDate').datetimepicker({
+                format: 'DD/MM/YYYY',
+                icons:
+                {
+                    next: 'fa fa-angle-right',
+                    previous: 'fa fa-angle-left'
+                },
+
+            });
+            $('#dtDispoDate').datetimepicker({
+                format: 'DD/MM/YYYY',
+                icons:
+                {
+                    next: 'fa fa-angle-right',
+                    previous: 'fa fa-angle-left'
+                },
+           });
+
+           $('#dtbillDate').datetimepicker({
+               format: 'DD/MM/YYYY',
+               icons:
+               {
+                   next: 'fa fa-angle-right',
+                   previous: 'fa fa-angle-left'
+               },
+           });
+
+           //$('input[id=txtVDate]').on('keydown', function (evt) {
+           //    if (evt.key === 'Tab' || evt.key === 'Enter') {
+           //        evt.preventDefault();
+
+           //        var vdate = $('#txtVDate').val();
+           //        $('#txtdispoDate').val(vdate)
+           //        $('#txtbillDate').val(vdate)
+
+           //    }
+           //});
+
+            /////////////
+
+
+            ///image display
+            function readIMG(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#preview').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#fileUploader").change(function () {
+                readIMG(this);
+            });
+
+            $("#btnAddattachment").click(function () {
+
+
+                $('#imagemodal').modal('show');
+
+
+            });
+
+            ///for enable disable assetno or search by
+            $("#txtassetno").prop("disabled", true);
+
+            $('#checkflag').change(function () {
+                if ($(this).prop("checked")) {
+                    $("#txtassetno").prop("disabled", false);
+                }
+                else {
+                    $("#txtassetno").prop("disabled", true);
+                }
+            });
+
+
+
+            //on assetno enter set assetname
+            $('#txtassetno').keypress(function () {
+
+                var assetno = $('#txtassetno').val();
+
+                $('#AssetId').val(assetno);
+
+               // GetdisplayFields();
+                //Getdepreciationreversed();
+
+               // getassetname(assetno);
+            });
+
+            $("#txtassetno").on('change keyup paste', function () {
+                console.log('text box changed');
+                var assetno = $('#txtassetno').val();
+
+                $('#AssetId').val(assetno);
+                $('#AssetId').refresh();
+
+            });
+
+
+            $('#AssetId').change(function () {
+
+                var index = $("#AssetId option:selected").val();
+
+                $('#txtassetno').val(index);
+
+               // getassetname(assetno);
+            });
+
+
+            $("#frmNewEmp").submit(function (e) {
+
+                SaveData();
+               e.preventDefault();
+                return false;
+
+            });
+
+
+
+        });
+            //emptyfields
+            function emptyfields() {
+
+                $("#txtVDate").val("");
+                $("#txtdispoDate").val("");
+                $("#txtbillDate").val("");
+                $("#txtcustomername").val("");
+                $("#remarks").val("");
+                $("#txtsalevalue").val("");
+
+                $("#txtdisposalamount").val("");
+                $("#txtqty").val("");
+                $("#txtbillno").val("");
+                $("#txtdepmethod").val("");
+
+                $("#txtdeprate").val("");
+                $("#txtdepmethod").val("");
+                $("#txtOpAccDepreciation").val("");
+
+                $("#txtgrossvalue").val("");
+                $("#txtdisposaltilldate").val("");//txtvno
+                $("#txtvno").val("");
+            }
+       //////////validate asset date with Disposal  date////
+        function validateassetdate() {
+           // alert("test")
+            var vdate = moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var ddate = moment($("#txtdispoDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var assetno = $("#txtassetno").val();
+            if (vdate != "" && assetno != "" && ddate!="")
+            {
+                //alert(assetno)
+
+                var ControllerURL = '@Url.Action("validateassetdate", "Disposal")';
+
+                var returnURL = '@Url.Action("Index", "Disposal")';
+                var url = ControllerURL;
+                + "?strvdate=" + vdate + "&strddate=" + ddate + "?assetno=" + assetno;
+               //  alert(ControllerURL)strvdate=" + vdate + "&strddate=" + ddate + "?assetno=" + assetno;
+                var data = {
+                    "strvdate": vdate,
+                    "strddate": ddate,
+                    "assetno": assetno
+
+                }
+                $.ajax({
+                    url: url,
+                    type: "GET",
+
+                    contentType: "application/json",
+                    data: data,
+                    success: function (res) {
+
+                        if (res.Data == "AssetYes") {
+                            swal({ title: "Disposal voucher date cannot be less date asset voucher date", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    document.getElementById("txtVDate").focus();
+
+                                }
+                                else {
+                                    document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+                        if (res.Data == "ChkDate") {
+                            swal({ title: "Disposal date cannot be less than asset voucher date", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    document.getElementById("txtdispoDate").focus();
+                                }
+                                else {
+                                    document.getElementById("txtdispoDate").focus();
+                                }
+                            });
+                        }
+                        if (res.Data == "ChkDDate") {
+                            swal({ title: "Disposal date cannot be less than disposal voucher date", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    document.getElementById("txtdispoDate").focus();
+                                }
+                                else {
+                                    document.getElementById("txtdispoDate").focus();
+                                }
+                            });
+                        }
+
+                        if (res.Data == "Noassetfound") {
+
+                        }
+                    },
+                    error: function (reponse) {
+
+                        alert("error : " + reponse);
+
+                    }
+                });
+            }
+
+//---------------------------------------------------------------------------------------
+            var ControllerURL = '@Url.Action("checkperiod_itperiod_exits", "Disposal")';
+             var returnURL = '@Url.Action("Index", "Disposal")';
+
+                $.ajax({
+                    url: ControllerURL,
+                    type: "GET",
+                    contentType: "application/json",
+                    success: function (res) {
+                       // alert(res.Data)
+                        if (res.Data == "Noperiodexists") {
+                            swal({ title: "No period found please enter period master first to add asset", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    window.location.replace(returnURL);
+                                }
+                                else {
+                                    //document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+
+                        else if (res.Data == "Noitperiodexists") {
+                            swal({
+                                title: "ItPeriod records not found,If you want Itperiod please  click outside dialgouebox and enter itperiod in master , or click on ok to ignore itperiod ", icon: "warning" }).then((result) => {
+                                    if (result == true) {
+                                        checkdatevalidation();
+                                 //   window.location.replace(returnURL);
+                                   // document.getElementById("txtVDate").focus();
+                                }
+                                else {
+                                    window.location.replace(returnURL);
+                                   // document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+                        else {
+                            checkdatevalidation();
+                        }
+                    },
+                    error: function (reponse) {
+                        alert("error : " + reponse);
+                    }
+                });
+        }
+
+           /////check lockperiod and itperiod lock see above function for calls
+          function checkdatevalidation() {
+              var vdate = moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+
+            if (vdate != "") {
+                var ControllerURL = '@Url.Action("Dateputtousevalidation", "Disposal")?strvdate=' + vdate;
+                var returnURL = '@Url.Action("Index", "Disposal")';
+                //var url = ControllerURL + "/" + vdate;
+                //  alert(ControllerURL)
+                $.ajax({
+                    url: ControllerURL,
+                    type: "GET",
+                    contentType: "application/json",
+                    success: function (res) {
+                      //  alert(res.Data)
+                        if (res.Data == "Yes") {
+                            swal({ title: "This period is locked you cannot add record", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    window.location.replace(returnURL);
+                                }
+                                else {
+                                    document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+                        if (res.Data == "No") {
+                            // alert("no")
+                           // $('#txtdispoDate').val($("#txtVDate").val());
+                            GetdisplayFields();
+
+                        }
+                        if (res.Data == "Nomainperiod")
+                        {
+                            swal({ title: "No current  financial period found  ", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    window.location.replace(returnURL);
+                                }
+                                else {
+                                    document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+                        if (res.Data == "Depalreadycalculated") {
+                            swal({ title: "Already Depriciation is calculated remove it to add this asset  ", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    window.location.replace(returnURL);
+                                }
+                                else {
+                                    document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+
+                    },
+                    error: function (reponse) {
+                        alert("error : " + reponse);
+                    }
+                });
+            }
+        }
+//---------------------------------------------------------------------------------------
+ function GetdisplayFields() {
+
+
+           var vdate = moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var ddate =  moment($("#txtdispoDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var assetno = $("#txtassetno").val();
+            var disposalType = $("input[name='DisposalType']:checked").val();
+
+
+            if (ddate != "" && assetno != "" )
+            {
+
+
+                var ControllerURL = '@Url.Action("GetdisplayFields", "Disposal")';
+
+                var returnURL = '@Url.Action("Index", "Disposal")';
+                var url = ControllerURL + "?strddate=" + ddate + "&assetno=" + assetno;
+                 // alert(ControllerURL)
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    contentType: "application/json",
+                    success: function (res1) {
+
+                        // if (res1.Data == "Yes") { //IsValid
+                        if (res1.IsValid == false) {
+                            swal({ title: "Disposal voucher date cannot be less than  asset voucher date", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    document.getElementById("txtdispoDate").focus();
+                                }
+                                else
+                                {
+                                    //document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+                        else
+                        {
+
+
+
+                            var Agrossval = parseFloat(res1.model.AssetAmtCapitalised).toFixed(2);
+                            var disposaltilldate = parseFloat(res1.model.disposaltilldate).toFixed(2);
+                            var depreciationtilldate = parseFloat(res1.model.depreciationtilldate).toFixed(2);
+
+                            var totrate = parseFloat(res1.model.TotalRate).toFixed(2);
+                            var depmethod = res1.model.DepMethod;
+                            var opqty = res1.model.OpeningQty
+                            var disposedqtytilldate = res1.model.DisposedQtyTillDate
+
+                            // Mandar
+
+                            $('#txtgrossvalue').val(Agrossval);
+                            $('#txtdisposaltilldate').val(disposaltilldate);
+                            $('#txtOpAccDepreciation').val(depreciationtilldate);
+                            $('#txtdeprate').val(totrate);
+                            $('#txtdepmethod').val(depmethod);
+
+                            $('#txtOpQty').val(opqty);
+                            $('#txtDisposedQty').val(disposedqtytilldate);
+
+                            $('#txtCurrentQty').val((opqty - disposedqtytilldate).toFixed(0));
+
+                          //  $('#txttotaldep').val(totalDepreciation)
+                            //$('#txtwdvofasset').val(NetAmount)
+                            //$('#txtDepFor').val(DepTillDate)
+
+
+                        }
+
+
+
+                    },
+                    error: function (reponse) {
+                        alert("error : " + reponse);
+                    }
+                });
+            } else {
+
+
+            }
+        }
+
+
+
+//------------------------------------Get Assets depreciationreversed()------
+    function Getdepreciationreversed()
+    {
+
+                    var vdate = moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+                    var ddate = moment($("#txtdispoDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+                    var assetno = $("#txtassetno").val();
+                    var disposalType = $("input[name='DisposalType']:checked").val();
+
+
+
+
+                    var amount = $("#txtgrossvalue").val();
+                    var currentQty = $("#txtCurrentQty").val();
+
+
+
+                    if (disposalType == "Full") {
+
+                        document.getElementById('txtdisposalamount').readOnly = true;
+                        $('#txtdisposalamount').val(amount);
+                        $('#txtqty').val(currentQty);
+                        document.getElementById('txtqty').readOnly = true;
+
+                    }
+                    else {
+                        document.getElementById('txtdisposalamount').readOnly = false;
+                        $('#txtdisposalamount').val("");
+
+                        document.getElementById('txtqty').readOnly = false;
+                    }
+
+
+
+    }
+
+            function validdisposalamount() {
+
+                var grossval = parseFloat($('#txtgrossvalue').val()).toFixed(2);
+                var dispotill = parseFloat($('#txtdisposaltilldate').val()).toFixed(2);
+               var dispoamount = parseFloat($('#txtdisposalamount').val()).toFixed(2);
+
+               if (grossval != 0) {
+                   if (dispotill == 0) {
+
+                       if (grossval < dispoamount) {
+
+                         //  $('#txtdisposalamount').val("");
+                           swal("Alert", "Disposal gross block cannot be greater than asset gross block", "warning");
+                          // return;
+
+                       }
+                   }
+                   else {
+
+                       if (dispotill < dispoamount) {
+                           $('#txtdisposalamount').val("");
+                           swal("Alert", "Disposal gross block cannot be greater than disposal till date block ", "warning");
+                           return;
+                       }
+                   }
+
+               }
+
+
+
+
+            }
+
+//--------------------------------disposal date validation-----------------------------
+        @*function validateDisposaldate() {
+           // alert("test")
+            var vdate = $("#txtVDate").val();
+            var ddate = $("#txtdispoDate").val();
+            if (vdate != "" && ddate != "")
+            {
+
+                var ControllerURL = '@Url.Action("validateDisposaldate", "Disposal")';
+
+                var returnURL = '@Url.Action("Index", "Disposal")';
+                var url = ControllerURL + "?strvdate=" + vdate + "&strddate=" + ddate;
+                //  alert(ControllerURL)
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    contentType: "application/json",
+                    success: function (res) {
+
+                        if (res.Data == "Yes") {
+                            swal({ title: "Disposal date cannot be less date voucher date", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    document.getElementById("txtdispoDate").focus();
+                                }
+                                else {
+                                    document.getElementById("txtdispoDate").focus();
+                                }
+                            });
+                        }
+
+                    },
+                    error: function (reponse) {
+                        alert("error : " + reponse);
+                    }
+                });
+            }
+        }*@
+    //------------------------------------------------------
+            function validateform() {
+
+            var errorlist = [];
+            var AssetName = $("#AssetId option:selected").text()
+           // var AdditionAssetName = $('#adddesc').val();
+            var AssetNo = $('#txtassetno').val();
+            var VoucherDate = $('#txtVDate').val();
+            var DisposalDate = $('#txtdpucomDate').val();
+            var Qty = $('#txtqty').val();
+            var DisposalType = $("input[name='DisposalType']:checked").val();
+            var grossVal = $('#txtgrossvalue').val();
+            var disposalamt = $('#txtdisposalamount').val();
+            var Assetcategory = $('#AssetCategoryId option:selected').val();
+
+            if (VoucherDate == "") {
+                errorlist.push("Voucher Date not entered");
+            }
+
+            if (DisposalDate == "") {
+                errorlist.push("Disposal Date not entered");
+            }
+
+            if (Qty == "") {
+                errorlist.push("Quantity  not entered");
+            }
+            if (AssetName == "") {
+                errorlist.push("Asset Name is not entered");
+            }
+            if (grossVal == "") {
+                errorlist.push("Gross value is not entered");
+            }
+
+            if (AssetNo == "") {
+                errorlist.push("Asset No is not entered");
+            }
+            if (disposalamt == "") {
+                errorlist.push("Disposal gross block is not entered");
+            }
+            if (Assetcategory == "") {
+                errorlist.push("Disposal Asset Category is not entered");
+            }
+
+            // alert(errorlist)
+            return errorlist;
+        }
+//-------------------------------------------------------------------------------
+        function getassetname(id) {
+            if (id == "") {
+                id = 0;
+                $("#AssetId").prop('selectedIndex', id);
+
+            }
+            else {
+                var ControllerURL = '@Url.Action("getassetinfo", "Disposal")';
+                      var url = ControllerURL + "/" + id;
+                        $.ajax({
+                                type: 'GET',
+                                url: url,
+                                contentType: "application/json",
+                                // data: JSON.stringify(getdata),
+                                success: function (result) {
+                                    console.log(result)
+                                    var ID = result.Data[0].ID;
+                                    alert(ID)
+                                    $("#AssetId").prop('selectedIndex',ID);
+                                  //  $("#txtassetdesc").val(result.Data[0].Id);
+
+
+                                },
+                                failure: function () { alert("Error"); }
+
+                            });
+                   }
+
+        }
+            function SaveData() {
+                //var grossval = $('#txtgrossvalue').val();
+                //var dispotill = $('#txtdisposaltilldate').val();
+                //var dispoamount = $('#txtdisposalamount').val();
+                //if (grossval != 0) {
+                //    if (dispotill == 0) {
+
+                //        if (dispoamount > grossval) {
+                //            swal("Alert", "Disposal gross block cannot be greater than asset gross block", "warning");
+                //            return;
+                //        }
+                //    }
+                //    else {
+
+                //        if (dispoamount > dispotill) {
+                //            swal("Alert", "Disposal gross block cannot be greater than disposal till date block ", "warning");
+                //            return;
+                //        }
+                //    }
+
+                //}
+
+            var validateformz = validateform();
+            if (validateformz.length != 0) {
+
+
+                var srno = 1;
+
+                for (var i = 0; i < validateformz.length; i++) {
+
+                    $('#errtbl').last().append('<tr><td>' + srno + '</td><td>' + validateformz[i] + '</td></tr>');
+                    srno++
+                }
+
+                $('#errorlist').modal('show');
+            }
+
+            //var vdate = moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            //var Ddate = moment($("#txtdispoDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+
+            //if (new Date(Ddate) < new Date(vdate))
+            //{
+
+            //    swal("Alert", "Disposaldate is less than voucher date ", "warning");
+            //}
+            else
+            {
+
+
+                var AssetNo = $("#txtassetno").val();
+                var AssetName = $('#AssetId option:selected').text();
+
+                var VoucherNo = $('#txtvno').val();
+                var VoucherDate =  moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+                var DisposalDate =  moment($("#txtdispoDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+                var BillDate = moment($("#txtbillDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+                var BillNo = $('#txtbillno').val();
+                var DisposalType = $("input[name='DisposalType']:checked").val();
+                var Qty = $('#txtqty').val();
+                var AssetCategory = $("#AssetCategoryId option:selected").text();
+                var DisposalAmt = $('#txtdisposalamount').val();
+                var GrossValue = $('#txtgrossvalue').val();
+                var OPAccDepreciation = $('#txtOpAccDepreciation').val();
+
+               // var Profitloss = $('#txtprofitloss').val();
+                var Remarks = $('#txtremarks').val();
+              //  var WdvAsset = $('#txtwdvofasset').val();
+                var CustomerName = $('#txtcustomername').val();
+
+                var salevalue = $('#txtsalevalue').val();
+
+             //   var TotalDepreciation = $('#txttotaldep').val();
+
+               // var additionno = $('#txtaddno').val();
+
+                var postdata =
+                    {
+                        "SaleValue": salevalue,
+                        "AssetNo": AssetNo,
+                        "AssetName": AssetName,
+                        "VoucherNo": VoucherNo,
+                        "VoucherDate": VoucherDate,
+                        "DisposalDate": DisposalDate,
+                        "BillDate": BillDate,
+                        "BillNo": BillNo,
+                        "DisposalType": DisposalType,
+                        "Qty": Qty,
+                        "AssetCategory": AssetCategory,
+                        "DisposalAmount": DisposalAmt,
+                        "GrossAmount": GrossValue,
+                        "OpAccumulatedDep": OPAccDepreciation,
+                      //  "ProfitLoss": Profitloss,
+                        "Remarks": Remarks,
+                      ///  "WDvDisposedOff": WdvAsset,
+                        "CustomerName": CustomerName
+
+
+
+
+                    };
+
+                console.log(postdata)
+                swal({
+                    title: "Are You Sure?", text: "You won't be able to revert this!",
+                    icon: "warning", buttons: true, dangerMode: true
+                }).then((result) => {
+                    if (result == true) {
+
+                        var ControllerURL = '@Url.Action("Add", "Disposal")';
+
+
+                        var returnURL = '@Url.Action("Index", "Disposal")';
+                        $.ajax({
+                            type: 'POST',
+                            url: ControllerURL,
+                            contentType: "application/json",
+                            data: JSON.stringify(postdata),
+                            success: function (res) {
+                                if (res == "Failed") {
+                                    swal("Alert", "You Cannot Add this Record", "warning");
+                                }
+                                else {
+                                    swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
+                                        if (result == true) {
+                                            window.location.replace(returnURL);
+                                        }
+                                    });
+                                }
+
+                            },
+
+                            failure: function () { alert("Error"); }
+
+                        });
+                    }
+                });
+            }
+        }
+
+        </script>
+
