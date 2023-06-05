@@ -455,6 +455,7 @@ namespace VerifyWebApp.Controllers
         [HttpPost]
   
         [ValidateJsonAntiForgeryToken]
+        [ValidateJsonXssAttribute]
         public ActionResult Edit(Login login)
         {
             JsonResult res;
