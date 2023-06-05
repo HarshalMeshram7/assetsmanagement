@@ -322,6 +322,7 @@ namespace VerifyWebApp.Controllers
         [HttpPost]
    
         [ValidateJsonAntiForgeryToken]
+        [ValidateJsonXssAttribute]
         public ActionResult Add(Login login)
         {
             int userid = 0;
