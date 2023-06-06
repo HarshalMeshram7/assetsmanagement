@@ -244,6 +244,8 @@ namespace VerifyWebApp.Controllers
         }
         [HttpPost]
         [AllowAnonymous]
+        [ValidateJsonAntiForgeryToken]
+        [ValidateJsonXssAttribute]
 
         public ActionResult Add(Supplier supplier)
         {
@@ -315,6 +317,8 @@ namespace VerifyWebApp.Controllers
         }
         [HttpPost]
         [AllowAnonymous]
+        [ValidateJsonAntiForgeryToken]
+        [ValidateJsonXssAttribute]
 
         public ActionResult Edit(Supplier supplier)
         {
