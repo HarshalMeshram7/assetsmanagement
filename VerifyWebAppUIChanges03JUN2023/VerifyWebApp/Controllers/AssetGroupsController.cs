@@ -401,6 +401,7 @@ namespace VerifyWebApp.Controllers
         [HttpPost]
 
         [ValidateJsonAntiForgeryToken]
+        [ValidateJsonXssAttribute]
         public ActionResult EditSaveAssetGroupNode(JsAssetGroupTreeNode node)
         {
             int userid = 0;

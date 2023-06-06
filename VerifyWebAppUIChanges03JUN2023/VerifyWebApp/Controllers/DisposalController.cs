@@ -342,6 +342,8 @@ namespace VerifyWebApp.Controllers
         }
 
         [HttpPost]
+        [ValidateJsonAntiForgeryToken]
+        [ValidateJsonXssAttribute]
         public ActionResult Add(Disposal disposal)
         {
             int userid = 0;
@@ -1423,6 +1425,8 @@ namespace VerifyWebApp.Controllers
         }
 
         [HttpPost]
+        [ValidateJsonAntiForgeryToken]
+        [ValidateJsonXssAttribute]
         public ActionResult Edit(Disposal disposal)
         {
             int userid = 0;

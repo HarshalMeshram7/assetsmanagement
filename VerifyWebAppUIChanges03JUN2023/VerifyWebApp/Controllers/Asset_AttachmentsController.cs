@@ -276,6 +276,9 @@ namespace VerifyWebApp.Controllers
         }
         [HttpPost]
 
+        [ValidateJsonAntiForgeryToken]
+        [ValidateJsonXssAttribute]
+
         public ActionResult Post_UploadAttachments(int id,string SourceEvent,int assetno)
         {
             int userid = 0;

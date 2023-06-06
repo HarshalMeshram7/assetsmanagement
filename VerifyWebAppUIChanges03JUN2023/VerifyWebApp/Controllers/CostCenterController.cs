@@ -53,6 +53,7 @@ namespace VerifyWebApp.Controllers
         [AuthUser]
         [HttpPost]
         [ValidateJsonAntiForgeryToken]
+        [ValidateJsonXssAttribute]
         public ActionResult SaveCostCenterNode(JsCostCenterTreeNode node)
         {
             int userid = 0;
@@ -293,6 +294,7 @@ namespace VerifyWebApp.Controllers
         [HttpPost]
 
         [ValidateJsonAntiForgeryToken]
+        [ValidateJsonXssAttribute]
         public ActionResult EditSaveCostCenterNode(JsCostCenterTreeNode node)
         {
             int userid = 0;

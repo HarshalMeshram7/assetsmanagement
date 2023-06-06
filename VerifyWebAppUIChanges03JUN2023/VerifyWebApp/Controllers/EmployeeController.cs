@@ -89,6 +89,7 @@ namespace VerifyWebApp.Controllers
 
         [AuthUser]
         [HttpPost]
+        [ValidateJsonAntiForgeryToken]
         [ValidateJsonXssAttribute]   
         public ActionResult Add(Employee employee)
         {
@@ -222,6 +223,7 @@ namespace VerifyWebApp.Controllers
         [AuthUser]
         [HttpPost]
         [AllowAnonymous]
+        [ValidateJsonAntiForgeryToken]
         [ValidateJsonXssAttribute]
         
         public ActionResult Edit(Employee employee)

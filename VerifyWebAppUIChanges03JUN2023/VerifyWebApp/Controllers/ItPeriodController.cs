@@ -126,6 +126,8 @@ namespace VerifyWebApp.Controllers
 
         // GET: Brand/Create
         [HttpPost]
+        [ValidateJsonAntiForgeryToken]
+        [ValidateJsonXssAttribute]
         public ActionResult AddNew(ITPeriod itperiod)
         {
             int userid = 0;
@@ -259,6 +261,8 @@ namespace VerifyWebApp.Controllers
         }
         // [AuthUser]
         [HttpPost]
+        [ValidateJsonAntiForgeryToken]
+        [ValidateJsonXssAttribute]
         public ActionResult Edit(ITPeriod period)
         {
             int userid = 0;

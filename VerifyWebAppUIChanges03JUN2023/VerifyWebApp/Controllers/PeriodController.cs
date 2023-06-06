@@ -148,6 +148,7 @@ namespace VerifyWebApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateJsonAntiForgeryToken]
+        [ValidateJsonXssAttribute]
         public ActionResult AddNew(PeriodViewModel period)
         {
             int userid = 0;
@@ -396,6 +397,7 @@ namespace VerifyWebApp.Controllers
         [HttpPost]
         [AllowAnonymousAttribute]
         [ValidateJsonAntiForgeryToken]
+        [ValidateJsonXssAttribute]
         public ActionResult Edit(PeriodViewModel period)
         {
             int userid = 0;

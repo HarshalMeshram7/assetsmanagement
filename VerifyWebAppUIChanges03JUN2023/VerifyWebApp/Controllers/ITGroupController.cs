@@ -52,6 +52,7 @@ namespace VerifyWebApp.Controllers
         [HttpPost]
 
         [ValidateJsonAntiForgeryToken]
+        [ValidateJsonXssAttribute]
         public ActionResult SaveLocationNode(JsITGroupTreeNode node)
         {
             int userid = 0;
@@ -197,6 +198,7 @@ namespace VerifyWebApp.Controllers
         [HttpPost]
 
         [ValidateJsonAntiForgeryToken]
+        [ValidateJsonXssAttribute]
         public ActionResult EditSaveLocationNode(JsITGroupTreeNode node)
         {
             int userid = 0;
