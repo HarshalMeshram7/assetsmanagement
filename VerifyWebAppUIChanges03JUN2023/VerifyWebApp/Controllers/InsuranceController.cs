@@ -128,6 +128,7 @@ namespace VerifyWebApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateJsonAntiForgeryToken]
+        [ValidateJsonXssAttribute]
         public ActionResult AddNew(InsuranceViewmodel insuranceViewmodel)
         {
             int userid = 0;
@@ -327,6 +328,7 @@ namespace VerifyWebApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateJsonAntiForgeryToken]
+        [ValidateJsonXssAttribute]
         public ActionResult Edit(InsuranceViewmodel insurance)
         {
             int userid = 0;

@@ -166,19 +166,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Mandar\\.nuget\\packages\\": {}
+    "C:\\Users\\Micro_Soft\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Source\\Verify\\VerifyWebAppUIChanges\\VerifyTest\\VerifyTest.csproj",
+      "projectUniqueName": "D:\\AssetManagement\\assetmanagement_latest\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj",
       "projectName": "VerifyTest",
-      "projectPath": "D:\\Source\\Verify\\VerifyWebAppUIChanges\\VerifyTest\\VerifyTest.csproj",
-      "packagesPath": "C:\\Users\\Mandar\\.nuget\\packages\\",
-      "outputPath": "D:\\Source\\Verify\\VerifyWebAppUIChanges\\VerifyTest\\obj\\",
+      "projectPath": "D:\\AssetManagement\\assetmanagement_latest\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj",
+      "packagesPath": "C:\\Users\\Micro_Soft\\.nuget\\packages\\",
+      "outputPath": "D:\\AssetManagement\\assetmanagement_latest\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Mandar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Micro_Soft\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -186,7 +190,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "http://nuget.grapecity.com/nuget": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -217,8 +220,7 @@
             "target": "Package",
             "version": "[3.16.1, )"
           }
-        },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+        }
       }
     }
   }

@@ -215,7 +215,14 @@ namespace VerifyWebApp.Controllers
             //  List<SubPeriod> splist = new List<SubPeriod>();
             string checkdepexists = "";
             //check if deprecaition there validation message
-            var itlist = db.ITPeriods.Where(x => x.Companyid == companyid && x.DepFlag == "Y").OrderByDescending(x => x.ToDate).First();
+            //var itlist = db.ITPeriods.Where(x => x.Companyid == companyid && x.DepFlag == "Y").OrderByDescending(x => x.ToDate).First();
+            ITPeriod itlist = null;
+            if (db.ITPeriods.Where(x => x.Companyid == companyid && x.DepFlag == "Y").Count() > 0)
+            {
+               itlist= db.ITPeriods.Where(x => x.Companyid == companyid && x.DepFlag == "Y").OrderByDescending(x => x.ToDate).First();
+                 
+
+            }
 
             if (itlist != null)
             {

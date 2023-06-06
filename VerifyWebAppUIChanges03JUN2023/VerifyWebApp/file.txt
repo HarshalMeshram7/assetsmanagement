@@ -5442,3 +5442,5 @@ Parameter name: keyValues|System.Data.Entity.Core.EntitySqlException: The argume
    at VerifyWebApp.Controllers.AssetController.GetAssetList(DataTableAjaxPostModel filter, String id) in D:\Source\Verify\VerifyWebAppUIChanges\VerifyWebApp\Controllers\AssetController.cs:line 452
 2022-10-01 12:07:15.5799|ERROR|VerifyWebApp.Controllers.AssetController|System.NullReferenceException: Object reference not set to an instance of an object.
    at VerifyWebApp.Controllers.AssetController.GetAssetList(DataTableAjaxPostModel filter, String id) in D:\Source\Verify\VerifyWebAppUIChanges\VerifyWebApp\Controllers\AssetController.cs:line 452
+2023-06-05 17:07:27.1555|ERROR|VerifyWebApp.Controllers.EmployeeController|The file is not an valid Package file. If the file is encrypted, please supply the password in the constructor.|
+2023-06-05 17:07:35.1611|ERROR|VerifyWebApp.Controllers.EmployeeController|The file is not an valid Package file. If the file is encrypted, please supply the password in the constructor.|
