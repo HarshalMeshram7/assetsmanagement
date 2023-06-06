@@ -227,7 +227,8 @@ namespace VerifyWebApp.Controllers
         [AuthUser]
         [HttpPost]
         [AllowAnonymous]
-        
+        [ValidateJsonAntiForgeryToken]
+        [ValidateJsonXssAttribute]
         public ActionResult Add(EmployeeAsset employee)
         {
             int userid = 0;
@@ -400,7 +401,9 @@ namespace VerifyWebApp.Controllers
         [AuthUser]
         [HttpPost]
         [AllowAnonymous]
-        
+        [ValidateJsonAntiForgeryToken]
+        [ValidateJsonXssAttribute]
+
         public ActionResult Edit(EmployeeAsset employee)
         {
             JsonResult res;

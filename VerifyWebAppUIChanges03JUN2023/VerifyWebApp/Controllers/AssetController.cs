@@ -2170,6 +2170,8 @@ namespace VerifyWebApp.Controllers
         }
         [HttpPost]
         [AllowAnonymous]
+        [ValidateJsonAntiForgeryToken]
+        [ValidateJsonXssAttribute]
 
         public ActionResult Addassetgroup(AssetGroupViewmodel assetGroup)
         {

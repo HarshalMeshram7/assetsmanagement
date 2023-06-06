@@ -462,6 +462,7 @@ namespace VerifyWebApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateJsonAntiForgeryToken]
+        [ValidateJsonXssAttribute]
         public ActionResult Add(Depreciation depreciation)
         {
             int userid = 0;
@@ -626,6 +627,7 @@ namespace VerifyWebApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateJsonAntiForgeryToken]
+        [ValidateJsonXssAttribute]
         public ActionResult Edit(Depreciation depreciation)
         {
             int userid = 0;
