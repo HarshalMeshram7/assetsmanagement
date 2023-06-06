@@ -89,7 +89,7 @@ namespace VerifyWebApp.Controllers
 
         [AuthUser]
         [HttpPost]
-        [ValidateJsonXssAttribute]
+        [ValidateJsonXssAttribute]   
         public ActionResult Add(Employee employee)
         {
             int userid = 0;

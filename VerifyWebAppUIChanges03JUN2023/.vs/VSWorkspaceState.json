@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\VerifyWebApp"
+    "\\VerifyWebApp",
+    "\\VerifyWebApp\\Controllers"
   ],
+  "SelectedNode": "\\VerifyWebApp\\Controllers\\LoginController.cs",
   "PreviewInSolutionExplorer": false
 }

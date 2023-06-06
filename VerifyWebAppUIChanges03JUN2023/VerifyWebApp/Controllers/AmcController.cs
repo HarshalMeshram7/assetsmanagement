@@ -124,7 +124,7 @@ namespace VerifyWebApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateJsonAntiForgeryToken]
-        [ValidateJsonXssAttribute]
+        [ValidateJsonXssAttribute]                             
         public ActionResult AddNew(AmcViewmodel amcViewmodel)
         {
 

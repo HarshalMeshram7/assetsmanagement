@@ -120,7 +120,7 @@ namespace VerifyWebApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateJsonAntiForgeryToken]
-        [ValidateJsonXssAttribute]
+        [ValidateJsonXssAttribute]                    
         public ActionResult Add(LoanViewmodel loanViewmodel)
         {
             int userid = 0;
