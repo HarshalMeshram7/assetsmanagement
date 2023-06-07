@@ -4,113 +4,128 @@
     ViewBag.Title = "Index";
 }
 
-<div id="page-wrapper" class="container-fluid rounded page border shadow">
-    <div class="row border-bottom">
+@*<div id="page-wrapper" class="container-fluid rounded page border shadow">*@
+<div class="container-fluid">
+    @*<div class="row border-bottom">
         <div class="col-lg-12">
 
             <div class="row justify-content-md-center title">
                 <strong> <h4>Batch Master</h4></strong>
             </div>
-        </div>
-        <!-- /.col-lg-12 -->
-    </div>
-@using (@Html.BeginForm(null, null, FormMethod.Get, new { id = "frmNewEmp", name = "frmNewEmp" }))
-{@Html.AntiForgeryToken()}
-    <div class="pageconent">
-        <div class="row">
-            <div class="col-lg-12 ">
-                <button type="button" id="btnnew" value="New Practice"
-                        class="btn btn-sm btn-primary pull-right m-1 order-1"
-                        onclick="opennewdialog();">
-                    <i class="fa fa-plus-square"></i>
-                    Add New Batch
-                </button>
+        </div>*@
+    <div class="row my-0">
+        <div class="card">
+            <div class="card-header pb-0">
+                <div class="row">
+                    <div class="d-sm-flex justify-content-between hborder">
+                        <div class="htitle"> <b>Verification Batch Details </b> </div>
+                    </div>
+                
+            
 
+            <!-- /.col-lg-12 -->
+        </div>
+        @using (@Html.BeginForm(null, null, FormMethod.Get, new { id = "frmNewEmp", name = "frmNewEmp" }))
+        {@Html.AntiForgeryToken()}
+        <div class="pageconent">
+            <div class="row">
+                <div class="col-lg-12 ">
+                    <button type="button" id="btnnew" value="New Practice"
+                            class="btn btn-sm btn-primary pull-right m-1 order-1"
+                            onclick="opennewdialog();">
+                        <i class="fa fa-plus-square"></i>
+                        Add New Batch
+                    </button>
+
+                </div>
             </div>
-        </div>
 
-        <div class="row" style="padding-top:3px">
-            <div class="col-lg-12">
-                <table width="100%" class="table table-striped table-bordered table-hover" id="tblbatch">
-                    <thead>
-                        <tr>
-                            <td>
-                                Batch No.
-                            </td>
-                            <td>
-                                Start Date
-                            </td>
-                            <td>
-                                End Date
-                            </td>
-                            <td>
-                                Batch Description
-                            </td>
-                            <td>
-                                Is batch open
-                            </td>
-                            <td align="center">
-                                Edit
-                            </td>
-                            <td align="center">
-                                Delete
-                            </td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model.Count() == 0)
-                        {
+            <div class="row" style="padding-top:3px">
+                <div class="col-lg-12">
+                    <table width="100%" class="table table-striped table-bordered table-hover" id="tblbatch">
+                        <thead>
                             <tr>
-                                <td colspan="6">No Rows Found</td>
+                                <td>
+                                    Batch No.
+                                </td>
+                                <td>
+                                    Start Date
+                                </td>
+                                <td>
+                                    End Date
+                                </td>
+                                <td>
+                                    Batch Description
+                                </td>
+                                <td>
+                                    Is batch open
+                                </td>
+                                <td align="center">
+                                    Edit
+                                </td>
+                                <td align="center">
+                                    Delete
+                                </td>
                             </tr>
-                        }
-                        else
-                        {
-                            foreach (var item in Model)
+                        </thead>
+                        <tbody>
+                            @if (Model.Count() == 0)
                             {
                                 <tr>
-                                    <td>@Html.DisplayFor(modelitem => item.ID)</td>
-
-                                    <td>@Html.DisplayFor(modelitem => item.str_fromdate)</td>
-
-                                    <td>@Html.DisplayFor(modelitem => item.str_todate)</td>
-
-                                    <td>@Html.DisplayFor(modelitem => item.BatchDescription)</td>
-                                    <td>@Html.DisplayFor(modelitem => item.IsBatchOpen)</td>
-
-                                    <td align="center">
-                                        <button type="button" class="btn btn-primary btn-sm"
-                                                aria-label="Left Align"
-                                                onclick="EditBatch(@item.ID);">
-                                            <i class="fa fa-edit"></i>Edit
-                                        </button>
-
-                                    </td>
-                                    <td align="center">
-                                        <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" onclick="Delete(@item.ID);">
-                                            <i class="fa fa-remove"></i>Delete
-                                        </button>
-
-                                    </td>
+                                    <td colspan="6">No Rows Found</td>
                                 </tr>
-
-
                             }
-                        }
-                    </tbody>
-                </table>
+                            else
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelitem => item.ID)</td>
 
+                                        <td>@Html.DisplayFor(modelitem => item.str_fromdate)</td>
+
+                                        <td>@Html.DisplayFor(modelitem => item.str_todate)</td>
+
+                                        <td>@Html.DisplayFor(modelitem => item.BatchDescription)</td>
+                                        <td>@Html.DisplayFor(modelitem => item.IsBatchOpen)</td>
+
+                                        <td align="center">
+                                            <button type="button" class="btn btn-primary btn-sm"
+                                                    aria-label="Left Align"
+                                                    onclick="EditBatch(@item.ID);">
+                                                <i class="fa fa-edit"></i>Edit
+                                            </button>
+
+                                        </td>
+                                        <td align="center">
+                                            <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" onclick="Delete(@item.ID);">
+                                                <i class="fa fa-remove"></i>Delete
+                                            </button>
+
+                                        </td>
+                                    </tr>
+
+
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="modal fade" tabindex="-1" role="dialog" id="divUpload" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-xl" role="document" id="divUploadContent">
 
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<script type="text/javascript">
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="divUpload" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-xl" role="document" id="divUploadContent">
+            </div>
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    
+    <script type="text/javascript">
     $(document).ready(function () {
 
         $('#tblbatch').DataTable();
@@ -179,4 +194,4 @@
         }
 
 
-</script>
+    </script>
