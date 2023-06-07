@@ -4,113 +4,133 @@
     ViewBag.Title = "Index";
 }
 
-<div id="page-wrapper" class="container-fluid rounded page border shadow" >
-    <div class="row border-bottom">
-        <div class="col-lg-12">
-            <div class="row title">
-                <strong> <h4>Unit Of Measurement List</h4></strong>
+<!--<div id="page-wrapper" class="container-fluid rounded page border shadow" >-->
+<div class="container-fluid">
+    <div class="row my-0">
+        <div class="card">
+            <div class="card-header pb-0">
+                <div class="row">
+                    <div class="d-sm-flex justify-content-between hborder">
+                        <div class="htitle"> <b>UOM </b> </div>
+
+
+
+                        <!--<div class="row border-bottom">
+                           <div class="col-lg-12">
+                               <div class="row title">
+                                   <strong> <h4>Unit Of Measurement List</h4></strong>
+                               </div>
+                           </div>
+                           <!-- /.col-lg-12 -->
+                    </div>
+                    @using (@Html.BeginForm(null, null, FormMethod.Get, new { id = "frmNewEmp", name = "frmNewEmp" }))
+                    {@Html.AntiForgeryToken();
+                }
+
+                    <div class="pageconent">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <div style="width:800px">
+                                <div class="row">
+                                    <div class="col-md-12 ">
+                                        <button type="button" id="btnnew" value="New Practice"
+                                                class="btn btn-sm btn-primary pull-right"
+                                                onclick="opennewdialog();">
+
+                                            <i class="fa fa-plus-square"></i>
+
+                                            Add New UOM
+                                        </button>
+                                    </div>
+                                </div>
+
+
+                                <div class="row" style="padding-top:3px">
+                                    <div class="col-lg-12">
+                                        <table class="table table-bordered table-striped table-hover"
+                                               id="tbluom">
+                                            <thead>
+                                                <tr>
+                                                    <td>
+                                                        Uom
+                                                    </td>
+
+                                                    <td align="center">
+                                                        Edit
+                                                    </td>
+                                                    <td align="center">
+                                                        Delete
+                                                    </td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (Model.Count() == 0)
+                                                {
+                                                    <tr>
+                                                        <td colspan="3">No Rows Found</td>
+                                                    </tr>
+                                                }
+                                                else
+                                                {
+                                                    foreach (var item in Model)
+                                                    {
+                                                        <tr>
+                                                            <td>@Html.DisplayFor(modelitem => item.Unit)</td>
+
+
+
+                                                            <td align="center">
+                                                                <button type="button" class="btn btn-primary btn-sm"
+                                                                        aria-label="Left Align"
+                                                                        onclick="EditUOM(@item.ID);">
+                                                                    <i class="fa fa-edit"></i>
+                                                                    Edit
+                                                                </button>
+
+                                                            </td>
+                                                            <td align="center">
+                                                                <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" onclick="Delete(@item.ID);">
+                                                                    <i class="fa fa-remove"></i>Delete
+                                                                </button>
+
+                                                            </td>
+                                                        </tr>
+
+
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" tabindex="-1" role="dialog" id="divNew">
+                    <div class="modal-dialog modal-sm" role="document" id="divNewContent">
+
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+
+                <div class="modal fade" tabindex="-1" role="dialog" id="divEdit">
+                    <div class="modal-dialog modal-sm" role="document" id="divEditContent">
+
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+
+
             </div>
         </div>
-        <!-- /.col-lg-12 -->
-    </div>
-    @using (@Html.BeginForm(null, null, FormMethod.Get, new { id = "frmNewEmp", name = "frmNewEmp" }))
-    {@Html.AntiForgeryToken();
-    }
-
-    <div class="pageconent">
-        <div class="d-flex align-items-center justify-content-center">
-            <div style="width:800px">
-                <div class="row">
-                    <div class="col-md-12 ">
-                        <button type="button" id="btnnew" value="New Practice"
-                                class="btn btn-sm btn-primary pull-right"
-                                onclick="opennewdialog();">
-
-                            <i class="fa fa-plus-square"></i>
-
-                            Add New UOM
-                        </button>
-                    </div>
-                </div>
-
-
-                <div class="row" style="padding-top:3px">
-                    <div class="col-lg-12">
-                        <table class="table table-bordered table-striped table-hover"
-                               id="tbluom">
-                            <thead>
-                                <tr>
-                                    <td>
-                                        Uom
-                                    </td>
-
-                                    <td align="center">
-                                        Edit
-                                    </td>
-                                    <td align="center">
-                                        Delete
-                                    </td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (Model.Count() == 0)
-                        {
-                                    <tr>
-                                        <td colspan="3">No Rows Found</td>
-                                    </tr>
-                        }
-                        else
-                        {
-                            foreach (var item in Model)
-                            {
-                                        <tr>
-                                            <td>@Html.DisplayFor(modelitem => item.Unit)</td>
-
-
-
-                                            <td align="center">
-                                                <button type="button" class="btn btn-primary btn-sm"
-                                                        aria-label="Left Align"
-                                                        onclick="EditUOM(@item.ID);">
-                                                    <i class="fa fa-edit"></i>
-                                                    Edit
-                                                </button>
-
-                                            </td>
-                                            <td align="center">
-                                                <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" onclick="Delete(@item.ID);">
-                                                    <i class="fa fa-remove"></i>Delete
-                                                </button>
-
-                                            </td>
-                                        </tr>
-
-
-                            }
-                        }
-                            </tbody>
-                        </table>
-
-                    </div>
-                </div>
-            </div>
-            </div>
     </div>
 </div>
 
-    <div class="modal fade" tabindex="-1" role="dialog" id="divNew">
-        <div class="modal-dialog modal-sm" role="document" id="divNewContent">
 
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
 
-    <div class="modal fade" tabindex="-1" role="dialog" id="divEdit">
-        <div class="modal-dialog modal-sm" role="document" id="divEditContent">
 
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script type="text/javascript">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
     $(document).ready(function () {
 
         $('#tbluom').DataTable();
@@ -184,5 +204,5 @@
      }
 
 
-    </script>
+</script>
 
