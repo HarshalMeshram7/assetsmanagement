@@ -127,6 +127,8 @@ namespace VerifyWebApp.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+        [ValidateJsonAntiForgeryToken]
+        [ValidateJsonXssAttribute]
         public ActionResult Add(UOM uom)
         {
             int userid = 0;
@@ -197,7 +199,9 @@ namespace VerifyWebApp.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        
+        [ValidateJsonAntiForgeryToken]
+        [ValidateJsonXssAttribute]
+
         public ActionResult Edit(UOM uom)
         {
             int userid = 0;
