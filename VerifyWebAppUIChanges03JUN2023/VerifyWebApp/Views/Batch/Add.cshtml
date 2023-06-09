@@ -1,9 +1,8 @@
-﻿
+﻿@model VerifyWebApp.Models.Subbatch
 
 @{
     ViewBag.Title = "Add";
 }
-
 
 @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
 {
@@ -14,7 +13,7 @@
             height: 20px;
         }
     </style>
-<div class="container-fluid rounded page border shadow">
+    <div class="container-fluid rounded page border shadow">
         <div class="row border-bottom">
             <div class="col-lg-12">
                 <div class="row justify-content-md-center title">
@@ -28,15 +27,17 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="form-group">
-                        <label for="praticesname">From Date<span>*</span></label>
+                        @*<label for="praticesname">From Date<span>*From Date</span></label>*@
 
                         <div class='input-group date' id='dtStartDate'>
+                            <label for="praticesname">From Date</label>
+                        </div>
+                        <div class='input-group date' id='dtStartDate'>
+                            <input type="date" id="txtStartDate" class="form-control" required />
+                            @*<div class="input-group-addon">
+                <span class="input-group-text"><span class="fa fa-calendar"></span></span>
 
-                            <input id="txtStartDate" class="form-control" required />
-                            <div class="input-group-addon">
-                                <span class="input-group-text"><span class="fa fa-calendar"></span></span>
-
-                            </div>
+            </div>*@
 
                         </div>
 
@@ -48,15 +49,18 @@
 
                 <div class="col-lg-3">
                     <div class="form-group">
-                        <label for="praticesname">To Date<span>*</span></label>
+                        @*<label for="praticesname">To Date<span>*</span></label>*@
 
-                        <div class='input-group date' id='dtEndDate'>
-                            <input type='text' id="txtEndDate" class="form-control" required />
+                        <div class='input-group date' id='dtStartDate'>
+                            <label for="praticesname">To Date</label>
+                        </div>
+                        <div class='input-group date' id='dtStartDate'>
+                            <input type="date" id="txtStartDate" class="form-control" required />
 
-                            <div class="input-group-addon">
-                                <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                            @*<div class="input-group-addon">
+                <span class="input-group-text"><span class="fa fa-calendar"></span></span>
 
-                            </div>
+            </div>*@
 
                         </div>
                         <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
@@ -69,7 +73,7 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="praticesname">Batch Description</label>
+                        <label for="praticesname" style="position:relative;color:white;z-index:1000000;">Batch Description</label>
                         <div class='input-group date'>
                             <input id="BatchDescription" class="form-control" />
                             @*@Html.TextBoxFor(m => m.BatchDescription, new { @class = "form-control", required = "required", id = "BatchDescription" })*@
@@ -165,10 +169,11 @@
 
         <div class="modal-footer">
             @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
-            <button type="button" class="btn btn-default" onclick="close()">Close</button>
-            <button type="submit" class="btn btn-primary" id="btnSave">Save</button>
+            <button type="button" class="btn btn-sm clBtn" data-bs-dismiss="modal" onclick="close()">Close</button>
+            @*<button type="button" class="btn btn-primary" id="btnSave" onabort="click">Save</button>*@
+            <button type="button" class="btn btn-primary" onclick="save()">Save</button>
         </div>
-        }
+        
         <!-- /.modal-content -->
         @*</div>*@
         <div id="locationmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
@@ -208,8 +213,8 @@
 
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" onclick="saveloc();">Save</button>
+                        <button type="button" class="btn btn-default " data-dismiss="modal" onclick="closeeditloc();">Close</button>
+                        <button type="button" class="btn btn-primary"  id="btnSave" onclick="saveloc();">Save</button>
                     </div>
                 </div>
             </div>
@@ -255,16 +260,22 @@
 
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeeditloc();">Close</button>
-                        <button type="button" class="btn btn-primary" onclick="saveeditloc();">Save</button>
+                        <button type="button" class="btn btn-sm clBtn" data-bs-dismiss="modal" onclick="closeeditloc();">Close</button>
+                        <button type="button" class="btn btn-primary" id="btnSave" onclick="saveeditloc();">Save</button>
                     </div>
                 </div>
             </div>
         </div>
-</div>
+    </div>
 }
-
-        <script type="text/javascript">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
+    $('#btnSave').click(function (event) {
+        debugger;
+        SaveData();
+        e.preventDefault();
+        return false;
+    });
     var srnocnt = 1;
     var srnocccnt = 1;
     var srnoassetfcnt = 1;
@@ -296,22 +307,22 @@
     $(document).ready(function ($) {
 
 
-        $("#frmNewEmp").submit(function (e) {
-            SaveData();
-            e.preventDefault();
-            return false;
+        //$("#frmNewEmp").submit(function (e) {
+        //    SaveData();
+        //    e.preventDefault();
+        //    return false;
         });
 
-        $('#IsBatchOpen').change(function () {
-            if ($(this).prop("checked")) {
-                isbatchopenflag = "yes";
+        //$('#IsBatchOpen').change(function () {
+        //    if ($(this).prop("checked")) {
+        //        isbatchopenflag = "yes";
 
-            }
-            else {
+        //    }
+        //    else {
 
-                isbatchopenflag = "no";
-            }
-        });
+        //        isbatchopenflag = "no";
+        //    }
+        //});
 
 //--------------------loc---------------------------------------------------------------
 
@@ -906,10 +917,10 @@ function getlocationb(id) {
              return false;
          }///--------------------else---------------------------------
 
-        }
- }
+        
+ 
 
 
 
-        </script>
+</script>
 
