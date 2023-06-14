@@ -125,7 +125,7 @@
         var empid;
 
        console.log("Save Data");
-     
+
         middlename = $('#MiddleName').val();
         FirstName = $('#FirstName').val();
         LastName = $('#LastName').val();
@@ -167,16 +167,19 @@
                                 headers: headers,
                                 data: JSON.stringify(postdata),
                                 success: function (res) {
-                                     console.log(res);
-                                    if (res == "Failed") {
+                                    /*console.log(res);*/
+                                    debugger;
+                                     if(res == "Success")
+                                     {
+                                        swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
+                                            window.location.replace(returnURL);
+                                        });
+                                    }
+                                     else {
+
                                         swal("Alert", "You Cannot Add this Record", "warning");
                                     }
-                                    else if (res == "Success")
-                                    {
-                                            swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
-                                                window.location.replace(returnURL);
-                                            });
-                                    }
+
 
                                 },
                                 failure: function ()

@@ -155,7 +155,7 @@
                     </div>
 
                     <div class="modal-footer">
-                      <button type="button" class="btn saveBtn btn-sm" id="btnSave">
+                      <button type="button" class="btn saveBtn btn-sm" id="btnSave">               @*//.........*@
                                     Save                                                                                                                                                              
                                 </button>
                             </div>
@@ -374,8 +374,9 @@
             geteditAssetDetails();
 
             $("#btnSave").click(function (e) {
-                e.preventDefault();
+             
                 SaveData();
+                e.preventDefault();
                 return false;
             });
 
@@ -563,8 +564,14 @@
                             contentType: "application/json",
                             data: JSON.stringify(postdata),
                             success: function (res) {
-                                if (res == "Failed") {
-                                    swal("Alert", "You Cannot Add this Record", "warning");
+                                debugger;
+                                if (res == "True") {
+                                   swal("Alert", "You Cannot Add this Record", "warning");*/
+                                    //swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
+                                    //    if (result == true) {
+                                    //        window.location.replace(returnURL);
+                                    //    }
+                                    //});
                                 }
                                 else {
                                     swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
@@ -572,6 +579,7 @@
                                             window.location.replace(returnURL);
                                         }
                                     });
+                                   /* swal("Alert", "You Cannot Add this Record", "warning");*/
                                 }
 
                             },

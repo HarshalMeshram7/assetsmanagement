@@ -4,6 +4,8 @@
 
 }
 
+@*...................New Latest 3rd................*@
+
 <div class="container-fluid py-4">
     <div class="row my-1">
         <div class="col-12">
@@ -36,118 +38,118 @@
                             </div>
                             <div><label style="font-size:10px;color:red "><span>*</span> Mandatory Fields</label></div>
                             <div class="modal-footer">
-                                
-                                    <button type="submit" class="btn saveBtn btn-sm" id="btngetreport">Show Report</button>
-                                </div>
-                                
-                            </div>
-                        
-                    }
-                    </div>
 
-             </div>
+                                <button type="submit" class="btn saveBtn btn-sm" id="btngetreport">Show Report</button>
+                            </div>
+
+                        </div>
+
+                    }
+                </div>
+
             </div>
-     </div>
+        </div>
+    </div>
 </div>
 
 
-              
 
-                <!--
-    <div class="row" style="padding-top:3px">
-        <div class="col-12">
-            <div>
-                Toggle column: <a class="toggle-vis" data-column="0">AGroupName</a> - <a class="toggle-vis" data-column="1">BGroupName</a> - <a class="toggle-vis" data-column="2">CGroupName</a> - <a class="toggle-vis" data-column="3">DGroupName</a>
-                - <a class="toggle-vis" data-column="4">AssetNo</a> - <a class="toggle-vis" data-column="5">AssetIdentificationNo</a>
+
+<!--
+<div class="row" style="padding-top:3px">
+    <div class="col-12">
+        <div>
+            Toggle column: <a class="toggle-vis" data-column="0">AGroupName</a> - <a class="toggle-vis" data-column="1">BGroupName</a> - <a class="toggle-vis" data-column="2">CGroupName</a> - <a class="toggle-vis" data-column="3">DGroupName</a>
+            - <a class="toggle-vis" data-column="4">AssetNo</a> - <a class="toggle-vis" data-column="5">AssetIdentificationNo</a>
+        </div>
+
+    </div>
+</div>
+<div>
+    <table id="tblreport" width="100%"
+           class="table table-bordered small">
+        <thead>
+            <tr>
+                <td>
+                    AGroupName
+                </td>
+                <td>
+                    BGroupName
+                </td>
+                <td>
+                    CGroupName
+                </td>
+                <td>
+                    DGroupName
+                </td>
+                <td>
+                    AssetNo
+                </td>
+                <td>
+                    AssetIdentificationNo
+                </td>
+                <td>
+                    AssetName
+                </td>
+                <td>
+                    Voucherdate
+                </td>
+                <td>
+                    OpGross
+                </td>
+                <td>
+                    Addition
+                </td>
+                <td>
+                    Disposal
+                </td>
+                <td>
+                    ClGross
+                </td>
+                <td>
+                    OpDep
+                </td>
+                <td>
+                    DepForPeriod
+                </td>
+                <td>
+                    DispoDep
+                </td>
+                <td>
+                    TotDep
+                </td>
+                <td>
+                    NetBalance
+                </td>
+
+            </tr>
+        </thead>
+    </table>
+</div>
+-->
+<div id="progressbar" class="modal fade" role="dialog" style="height: auto;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lx">
+
+        <!-- Modal content-->
+        <div class="modal-content" style="height:auto;width:auto;overflow:auto">
+            <div class="modal-header">
+                <label style="color:red;text-align: center;">Please wait........</label>
+
             </div>
+            <div class="modal-body ">
 
+                <div class="row col-6" style="overflow:auto;align-content:center">
+                    <label style="color:darkred;text-align: center;"> Report is in progress........</label>
+
+                </div>
+            </div>
         </div>
     </div>
-    <div>
-        <table id="tblreport" width="100%"
-               class="table table-bordered small">
-            <thead>
-                <tr>
-                    <td>
-                        AGroupName
-                    </td>
-                    <td>
-                        BGroupName
-                    </td>
-                    <td>
-                        CGroupName
-                    </td>
-                    <td>
-                        DGroupName
-                    </td>
-                    <td>
-                        AssetNo
-                    </td>
-                    <td>
-                        AssetIdentificationNo
-                    </td>
-                    <td>
-                        AssetName
-                    </td>
-                    <td>
-                        Voucherdate
-                    </td>
-                    <td>
-                        OpGross
-                    </td>
-                    <td>
-                        Addition
-                    </td>
-                    <td>
-                        Disposal
-                    </td>
-                    <td>
-                        ClGross
-                    </td>
-                    <td>
-                        OpDep
-                    </td>
-                    <td>
-                        DepForPeriod
-                    </td>
-                    <td>
-                        DispoDep
-                    </td>
-                    <td>
-                        TotDep
-                    </td>
-                    <td>
-                        NetBalance
-                    </td>
-
-                </tr>
-            </thead>
-        </table>
-    </div>
-    -->
-                <div id="progressbar" class="modal fade" role="dialog" style="height: auto;" data-backdrop="static" data-keyboard="false">
-                    <div class="modal-dialog modal-lx">
-
-                        <!-- Modal content-->
-                        <div class="modal-content" style="height:auto;width:auto;overflow:auto">
-                            <div class="modal-header">
-                                <label style="color:red;text-align: center;">Please wait........</label>
-
-                            </div>
-                            <div class="modal-body ">
-
-                                <div class="row col-6" style="overflow:auto;align-content:center">
-                                    <label style="color:darkred;text-align: center;"> Report is in progress........</label>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <script type="text/javascript">
+</div>
+<script type="text/javascript">
 
 
-    $(document).ready(function ($) {
+    $(document).ready(function () {                                          //......changes 1 $
         $('#progressbar').modal('hide');
         //voucherdate set to all other date
 
@@ -323,18 +325,18 @@
 
     }
 
-                </script>
-                <style>
-                    /* Ensure that the demo table scrolls */
-                    th, td {
-                        white-space: nowrap;
-                    }
+</script>
+<style>
+    /* Ensure that the demo table scrolls */
+    th, td {
+        white-space: nowrap;
+    }
 
-                    div.dataTables_wrapper {
-                        margin: 0 auto;
-                    }
+    div.dataTables_wrapper {
+        margin: 0 auto;
+    }
 
-                    div.container {
-                        width: 80%;
-                    }
-                </style>
+    div.container {
+        width: 80%;
+    }
+</style>

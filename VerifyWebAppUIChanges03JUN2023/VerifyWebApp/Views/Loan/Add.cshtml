@@ -342,7 +342,11 @@
 
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
+
+
     <script type="text/javascript">
+
     var srnocnt = 1;
         var editindex = 0;
     $(document).ready(function () {
@@ -580,6 +584,7 @@
                             contentType: "application/json",
                             data: JSON.stringify(postdata),
                             success: function (res) {
+                                debugger;
                                 if (res == "Failed") {
                                     swal("Alert", "You Cannot Add this Record", "warning");
                                 }

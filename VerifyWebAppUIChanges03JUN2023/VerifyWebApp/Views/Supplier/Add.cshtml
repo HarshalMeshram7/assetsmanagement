@@ -268,19 +268,25 @@
                 contentType: "application/json",
                 data: JSON.stringify(postdata),
 
-                success: function (res) {
-
-                console.log(res);
-                if (res == "Failed") {
-                        swal("Alert", "You Cannot Add this Record", "warning");
+                    success: function (res) {
+                        debugger;
+               // console.log(res);
+                if (res == "True") {
+                   /* swal("Alert", "You Cannot Add this Record", "warning");*/
+                    swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
+                        if (result == true) {
+                            window.location.replace(returnURL);
+                        }
+                    });
                 }
                 else
                 {
-                    swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
-                    if (result == true) {
-                        window.location.replace(returnURL);
-                    }
-                });
+                    swal("Alert", "You Cannot Add this Record", "warning");
+                //    swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
+                //    if (result == true) {
+                //        window.location.replace(returnURL);
+                //    }
+                //});
                 }
 
                 },
