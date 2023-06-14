@@ -302,11 +302,17 @@
                                 contentType: "application/json",
                                 headers: getHeaders(),
                                 data: JSON.stringify(postdata),
-                                success: function () {
-                                    $('#myModal_Add').modal('hide');
-                                    //window.location = ApptURL;
-                                    //reloadevents();
-                                    $('#jstree').jstree(true).refresh();
+                                success: function (res) {
+                                    //
+                                    if (res == "Failed") {
+                                        swal("Alert", "You Cannot Add this Record", "warning");
+                                    }
+                                    else {
+                                        $('#myModal_Add').modal('hide');
+                                        //window.location = ApptURL;
+                                        //reloadevents();
+                                        $('#jstree').jstree(true).refresh();
+                                    }
                                 },
                                 failure: function () { alert("Error"); }
                             });
@@ -513,12 +519,18 @@
                                 contentType: "application/json",
                                 headers: getHeaders(),
                                 data: JSON.stringify(postdata),
-                                success: function () {
-                                    $('#myModal_Edit').modal('hide');
-                                    //window.location = ApptURL;
-                                    //reloadevents();
-                                    $('#jstree').jstree(true).refresh();
-                                },
+                                success: function (res) {
+                                   //
+                                if(res == "Failed") {
+                            swal("Alert", "You Cannot Add this Record", "warning");
+                        }
+                                else {
+                            $('#myModal_Edit').modal('hide');
+                            //window.location = ApptURL;
+                            //reloadevents();
+                            $('#jstree').jstree(true).refresh();
+                        }
+                        },
                                 failure: function () { alert("Error"); }
                             });
                                         }
