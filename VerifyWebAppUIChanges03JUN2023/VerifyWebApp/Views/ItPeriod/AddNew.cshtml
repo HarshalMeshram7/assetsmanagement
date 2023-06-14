@@ -1,5 +1,4 @@
-﻿
-
+﻿@model VerifyWebApp.Models.ITPeriod
 @{
     ViewBag.Title = "AddNew";
 }
@@ -12,15 +11,16 @@
 </style>
 
 <div class="modal-content">
-    <div class="modal-header">
+    <div class="modal-header" style="background-color:Highlight" >
        
         <div class="modal-title htitle"><b>Add Income Tax Period</b></div>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     </div>
     @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
     {@Html.AntiForgeryToken();
         <div class="modal-body">
 
+            @Html.ValidationSummary(true)
             <div class="form-group">
                 <label for="praticesname">Start Date<span>*</span></label>
                 <input id="stDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
@@ -42,16 +42,25 @@
             <label id="invaliddate" style="color:#CC0000;font-weight:400" class="text-danger error"></label>
             </div>
         <div class="modal-footer">
-            <button type="submit" class="btn saveBtn btn-sm" onclick="addsubperiod();">Save</button>
-            <button type="button" class="btn btn-sm clBtn" onclick="closeaddperiod();">Close</button>
+            <button type="button" class="btn btn-primary" id="btnSave">Save</button>
+            
+            <button type="button" class="btn btn-sm clBtn" id="btnClose">Close</button>
         </div>
     }
 </div><!-- /.modal-content -->
-<script src="~/Scripts/moment.js"></script>
+@*<script src="~/Scripts/moment.js"></script>
 <link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
-<script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.js"></script>*@
 
+
+@*<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>*@
 <script type="text/javascript">
+    $('#btnSave').click(function (event) {
+        debugger;
+        SaveData();
+        e.preventDefault();
+        return false;
+    });
 
     $('#dtStartDate').datetimepicker({
         format: 'DD/MM/YYYY',
@@ -78,32 +87,32 @@
 
 
         // setting bydefault dates
-        setdefaultdates();
+        //setdefaultdates();
 
 
         ////////////////
 
-        $("#startdateerror,#enddateerror").hide();
-        $("#btnSave").click(function () {
+        //$("#startdateerror,#enddateerror").hide();
+        //$("#btnSave").click(function () {
 
-            var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-            var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+        //    var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+        //    var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
 
-            if (new Date(startdate) > new Date(enddate)) {
+        //    if (new Date(startdate) > new Date(enddate)) {
 
-                $("#invaliddate").html(" * To Date must be greater than From Date");
-                $("#invaliddate").show();
-            }
-            else {
+        //        $("#invaliddate").html(" * To Date must be greater than From Date");
+        //        $("#invaliddate").show();
+        //    }
+        //    else {
 
-                $("#invaliddate").hide();
-                //     alert("test");
-                SaveData();
-            }
+        //        $("#invaliddate").hide();
+        //        //     alert("test");
+        //        SaveData();
+        //    }
 
 
 
-        });
+        //});
 
 
     });
@@ -202,27 +211,24 @@
                 contentType: "application/json",
                 headers: headers,
                 data: JSON.stringify(postdata),
-                success: function (res) {
-                if (res == "Failed") {
-                swal("Alert", "You Cannot Add this Record", "warning");
-                }
-                else
-                {
-                swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
-                if (result == true) {
-                window.location.replace(returnURL);
-                }
-                });
-                }
+                    success: function (res) {
+                        debugger;
+                        if (res == true) {
+                            $('#myModal_Add').modal('hide');
+                            //window.location = ApptURL;
+                            //reloadevents();
+                            $('#jstree').jstree(true).refresh();
+                        }
+                        else {
+                            swal("Alert", "You Cannot Add this Record", "warning");
+                        }
+                    },
+                    failure: function () {
+                        alert("Error");
+                    }
 
-                },
-
-                failure: function () { alert("Error"); }
-
                 });
-                }
-                });
-                }
+                
 
             // window.location.replace(returnURL);
 
