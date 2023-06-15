@@ -276,27 +276,30 @@
                 contentType: "application/json",
                 data: JSON.stringify(postdata),
 
-                    success: function (res) {
-                        debugger;
-
-                //console.log(res);
-                if (res == true) {
-                    $('#myModal_Add').modal('hide');
-                    //window.location = ApptURL;
-                    //reloadevents();
-                    $('#jstree').jstree(true).refresh();
+                success: function (res) {
+                        
+                if (res == "True") {
+                   /* swal("Alert", "You Cannot Add this Record", "warning");*/
+                    swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
+                        if (result == true) {
+                            window.location.replace(returnURL);
+                        }
+                    });
                 }
                 else
                 {
                     swal("Alert", "You Cannot Add this Record", "warning");
+                
                 }
                 },
-
-                },
-
                 failure: function () { alert("Error"); }
 
-                });
+                }),
+
+
+                }
+            }
+                )};
 
 
 

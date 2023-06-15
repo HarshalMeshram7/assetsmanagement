@@ -32,7 +32,11 @@
 
 
 @*script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>*@
+
+
 <script type="text/javascript">
+
+
     $('#btnSave').click(function (event) {
         
         SaveData();
@@ -115,18 +119,25 @@
                 headers: headers,
                 contentType: "application/json",
                 data: JSON.stringify(postdata),
-                success: function (res) {
-                if (res == "Failed") {
-                swal("Alert", "You Cannot Add this Record", "warning");
+                    success: function (res) {
+                        //.........debugger;
+                if (res == "True") {
+                    /* swal("Alert", "You Cannot Add this Record", "warning");*/
+                        swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
+                        if (result == true) {
+                        window.location.replace(returnURL);
+                        }
+                        });
                 }
                 else
                 {
-                swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
-                if (result == true) {
-                window.location.replace(returnURL);
-                }
-                });
-                }
+                //swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
+                //if (result == true) {
+                //window.location.replace(returnURL);
+                //}
+                //});
+                    swal("Alert", "You Cannot Add this Record", "warning");
+              }
 
                 },
 

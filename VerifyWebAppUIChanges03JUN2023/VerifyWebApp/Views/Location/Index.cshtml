@@ -3,7 +3,7 @@
         width: 400px;
         overflow: hidden;
         text-overflow: ellipsis;
-     
+
     }
 
     #normal_div {
@@ -15,7 +15,7 @@
         white-space: nowrap;
     }
 
-    .jstree-node > a {
+    .jstree-node>a {
         /* 100% - (the width of the presentation node : the line - the left padding of the <a> node - the right padding of the <a> node)*/
         width: calc(100% - (100px + 1px + 4px));
         text-overflow: ellipsis;
@@ -24,7 +24,9 @@
 </style>
 
 @using (@Html.BeginForm(null, null, FormMethod.Get, new { id = "frmNewEmp", name = "frmNewEmp" }))
-{@Html.AntiForgeryToken();
+{
+    @Html.AntiForgeryToken()
+    ;
 }
 <div class="container-fluid py-4">
     <div class="row my-2">
@@ -43,35 +45,32 @@
             <div class="row my-2" style="padding-left:10px">
                 <div class="col-md-12">
                     <button type="button" id="mnuAdd" value="New Practice"
-                            class="btn btn-sm addBtn pull-left m-1 order-1"
-                            data-toggle="tooltip" data-placement="top" title="Add New"
-                            data-delay='{"show":"2000", "hide":"1500"}'>
+                        class="btn btn-sm addBtn pull-left m-1 order-1" data-toggle="tooltip" data-placement="top"
+                        title="Add New" data-delay='{"show":"2000", "hide":"1500"}'>
                         <i class="fa fa-plus" aria-hidden="true"></i>
-                     
+
                     </button>
                     <button type="button" id="mnuEdit" value="New Practice"
-                            class="btn btn-sm modBtn pull-left m-1 order-1"
-                            data-toggle="tooltip" data-placement="top" title="Modify">
+                        class="btn btn-sm modBtn pull-left m-1 order-1" data-toggle="tooltip" data-placement="top"
+                        title="Modify">
                         <i class="fa fa-edit"></i>
-                       
+
                     </button>
                     <button type="button" id="mnuDelete" value="New Practice"
-                            class="btn btn-sm delBtn pull-left m-1 order-1"
-                            data-toggle="tooltip" data-placement="top" title="Delete">
+                        class="btn btn-sm delBtn pull-left m-1 order-1" data-toggle="tooltip" data-placement="top"
+                        title="Delete">
                         <i class="fa fa-trash-o"></i>
-                 
+
                     </button>
-                    <button type="button" id="mnuExpand" value=""
-                            class="btn btn-sm xtraBtn pull-left m-1 order-1"
-                            data-toggle="tooltip" data-placement="top" title="Expand all locations"
-                            data-delay='{"show":"2000", "hide":"1500"}'>
+                    <button type="button" id="mnuExpand" value="" class="btn btn-sm xtraBtn pull-left m-1 order-1"
+                        data-toggle="tooltip" data-placement="top" title="Expand all locations"
+                        data-delay='{"show":"2000", "hide":"1500"}'>
                         <i class="fa fa-expand"></i>
 
                     </button>
-                    <button type="button" id="mnuContract" value=""
-                            class="btn btn-sm xtraBtn pull-left m-1 order-1"
-                            data-toggle="tooltip" data-placement="top" title="Contract all locations"
-                            data-delay='{"show":"2000", "hide":"1500"}'>
+                    <button type="button" id="mnuContract" value="" class="btn btn-sm xtraBtn pull-left m-1 order-1"
+                        data-toggle="tooltip" data-placement="top" title="Contract all locations"
+                        data-delay='{"show":"2000", "hide":"1500"}'>
                         <i class="fa fa-compress"></i>
 
                     </button>
@@ -105,8 +104,7 @@
                 <div class="col-md-8">
 
                     <div class="table-responsive text-xs font-weight-bold">
-                        <table class="table table-flush table-hover "
-                               style="width:100%;font-weight:bold" id="tblasset">
+                        <table class="table table-flush table-hover " style="width:100%;font-weight:bold" id="tblasset">
                             <thead class="hcol text-uppercase" style="font-weight:bold">
                                 <tr>
 
@@ -139,270 +137,274 @@
         </div>
     </div>
 </div>
-    <!-- Modal -->
+<!-- Modal -->
 
 
-    <div id="myModal_Add" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
+<div id="myModal_Add" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
 
-            <!-- Modal content-->
+        <!-- Modal content-->
 
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title htitle">Add Location</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row ">
-                        <div class="col-md-2"><label id="plbl" class="form-control-sm" >Parent Loaction:</label></div>
-                        <div class="col-md-8"> <input id="parentlocname" class="form-control form-control-sm" readonly /></div>
-
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title htitle">Add Location</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row ">
+                    <div class="col-md-2"><label id="plbl" class="form-control-sm">Parent Loaction:</label></div>
+                    <div class="col-md-8"> <input id="parentlocname" class="form-control form-control-sm" readonly />
                     </div>
-                    <br />
-                    <div class="row">
-                        <div class="col-md-2"><label class="form-control-sm">Location </label> <span style="color:#CC0000;">*</span></div>
-                        <div class="col-md-8"><input id="txtLocation" class="form-control form-control-sm" /></div>
-                    </div>
+
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-sm saveBtn" id="btnSave">Save</button>
-                    <button type="button" class="btn btn-sm clBtn" id="btnClose" data-bs-dismiss="modal">Close</button>
+                <br />
+                <div class="row">
+                    <div class="col-md-2"><label class="form-control-sm">Location </label> <span
+                            style="color:#CC0000;">*</span></div>
+                    <div class="col-md-8"><input id="txtLocation" class="form-control form-control-sm" /></div>
                 </div>
             </div>
-
-
-        </div>
-    </div>
-    <div id="myModal_Edit" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
-
-            <!-- Modal content-->
-
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title htitle">Edit Location</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row ">
-                        <div class="col-md-2"><label id="eplbl" class="form-control-sm" >Parent Location:</label></div>
-                        <div class="col-md-8"> <input id="editparentlocname" class="form-control form-control-sm" readonly /></div>
-
-                    </div>
-                    <br />
-                    <div class="row">
-                        <div class="col-md-2"><label class="form-control-sm">Location</label> <span style="color:#CC0000;">*</span></div>
-                        <div class="col-md-8"><input id="txteditLocation" class="form-control form-control-sm" /></div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-sm saveBtn" id="btneditSave">Save</button>
-                    <button type="button" class="btn btn-sm clBtn" id="btnClose" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-
-
-        </div>
-    </div>
-    <div id="progressbar" class="modal fade" role="dialog" style="height: auto;" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog modal-lx">
-
-            <!-- Modal content-->
-            <div class="modal-content" style="height:auto;width:auto;overflow:auto">
-                <div class="modal-header">
-                    <label style="color:red;text-align: center;">Loading........</label>
-
-                </div>
-                <div class="modal-body ">
-
-                    <div class="row col-6" style="overflow:auto;align-content:center">
-                        <label style="color:darkred;text-align: center;">Please wait while we load your report........</label>
-
-                    </div>
-                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm saveBtn" id="btnSave">Save</button>
+                <button type="button" class="btn btn-sm clBtn" id="btnClose" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
+
+
     </div>
+</div>
+<div id="myModal_Edit" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
 
-    <script type="text/javascript">
-        var editnode;
+        <!-- Modal content-->
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title htitle">Edit Location</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row ">
+                    <div class="col-md-2"><label id="eplbl" class="form-control-sm">Parent Location:</label></div>
+                    <div class="col-md-8"> <input id="editparentlocname" class="form-control form-control-sm"
+                            readonly /></div>
+
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-2"><label class="form-control-sm">Location</label> <span
+                            style="color:#CC0000;">*</span></div>
+                    <div class="col-md-8"><input id="txteditLocation" class="form-control form-control-sm" /></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm saveBtn" id="btneditSave">Save</button>
+                <button type="button" class="btn btn-sm clBtn" id="btnClose" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
 
 
-        function getHeaders() {
-            var form = $('#frmNewEmp');
-            var token = $('input[name="__RequestVerificationToken"]', form).val();
-            var headers = {};
-            headers['__RequestVerificationToken'] = token;
-            return headers;
-        }
+    </div>
+</div>
+<div id="progressbar" class="modal fade" role="dialog" style="height: auto;" data-backdrop="static"
+    data-keyboard="false">
+    <div class="modal-dialog modal-lx">
 
-          $(document).ready(function () {
+        <!-- Modal content-->
+        <div class="modal-content" style="height:auto;width:auto;overflow:auto">
+            <div class="modal-header">
+                <label style="color:red;text-align: center;">Loading........</label>
 
-              $('#progressbar').modal('hide');
-              //for loading assets list on page laod
+            </div>
+            <div class="modal-body ">
 
-              showasset('L0-0');
+                <div class="row col-6" style="overflow:auto;align-content:center">
+                    <label style="color:darkred;text-align: center;">Please wait while we load your
+                        report........</label>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var editnode;
+
+
+    function getHeaders() {
+        var form = $('#frmNewEmp');
+        var token = $('input[name="__RequestVerificationToken"]', form).val();
+        var headers = {};
+        headers['__RequestVerificationToken'] = token;
+        return headers;
+    }
+
+    $(document).ready(function () {
+
+        $('#progressbar').modal('hide');
+        //for loading assets list on page laod
+
+        showasset('L0-0');
 
         ////
 
-                $('[data-toggle="tooltip"]').tooltip()
+        $('[data-toggle="tooltip"]').tooltip()
 
-                $('#btnSave').click(function (event) {
+        $('#btnSave').click(function (event) {
 
-                    var node = $('#jstree').jstree().get_selected(true)[0];
+            var node = $('#jstree').jstree().get_selected(true)[0];
 
-                    var location = $('#txtLocation').val();
-
-
-                        var ControllerURL = '@Url.Action("SaveLocationNode", "Location")';
-                        if (location != "" && node.id != "") {
-                            var postdata =
-                                {
-                                    "id": node.id,
-                                    "location": location,
-                                };
-
-                            $.ajax({
-                                type: 'POST',
-                                url: ControllerURL,
-                                contentType: "application/json",
-                                headers: getHeaders(),
-                                data: JSON.stringify(postdata),
-                                success: function (res) {
-                                    //
-                                    if (res == true)
-                                        {
-                                        $('#myModal_Add').modal('hide');
-                                        //window.location = ApptURL;
-                                        //reloadevents();
-                                        $('#jstree').jstree(true).refresh();
-                                    }
-                                    else {
-                                        swal("Alert", "You Cannot Add this Record", "warning");
-                                    }
-                                },
-                                failure: function () { alert("Error"); }
-                            });
+            var location = $('#txtLocation').val();
 
 
-                        }
+            var ControllerURL = '@Url.Action("SaveLocationNode", "Location")';
+            if (location != "" && node.id != "") {
+                var postdata =
+                {
+                    "id": node.id,
+                    "location": location,
+                };
 
-                        else {
-                            swal("Alert", "Please check mandatory fields!", "warning");
-                        }
-
-                    });
-
-
-                $('#mnuAdd').click(function (event) {
-                    var node = $('#jstree').jstree().get_selected(true)[0];
-
-                    if (node == null) {
-                        swal("Alert", "Please Select location level to add location!", "warning");
-
-
-                    } else {
-
-                        //------------blank fields----------------------------------------
-
-
-                        var parentnode = $('#jstree').jstree(true).get_text(node.parent);
-                       // alert(parentnode)
-
-
-                        if (parentnode == "Location List" || parentnode == false ) {
-                           // alert("if")
-                            document.getElementById('plbl').hidden = true;
-                            document.getElementById('parentlocname').hidden = true;
+                $.ajax({
+                    type: 'POST',
+                    url: ControllerURL,
+                    contentType: "application/json",
+                    headers: getHeaders(),
+                    data: JSON.stringify(postdata),
+                    success: function (res) {
+                        // 
+                        if (res == true) {
+                            $('#myModal_Add').modal('hide');
+                            //window.location = ApptURL;
+                            //reloadevents();
+                            $('#jstree').jstree(true).refresh();
                         }
                         else {
-                            document.getElementById('plbl').hidden = false;
-                            document.getElementById('parentlocname').hidden = false;
-                            $('#parentlocname').val(parentnode);
+                            swal("Alert", "You Cannot Add this Record", "warning");
                         }
-
-                        $("#txtLocation").val('');
-
-                        //---------------------------------------------
-                        $('#myModal_Add').modal('show');
-                    }
-
-                    //alert("Add");
+                    },
+                    failure: function () { alert("Error"); }
                 });
-                $('#mnuEdit').click(function (event) {
-                    //alert("Add");
-                    var node = $('#jstree').jstree().get_selected(true)[0];
-                  //  alert(node)
-                    //alert($('#jstree').jstree(true).get_parent(node.text))
-                    if (node == null) {
-                        swal("Alert", "Please Select location level to edit location name!", "warning");
 
 
-                    }
-                    else {
-                        var parentnode = $('#jstree').jstree(true).get_text(node.parent);
+            }
 
-                        if (parentnode == "Location List" || parentnode == false) {
-                            document.getElementById('eplbl').hidden = true;
-                            document.getElementById('editparentlocname').hidden = true;
-                        }
-                        else {
-                            document.getElementById('eplbl').hidden = false;
-                            document.getElementById('editparentlocname').hidden = false;
-                            $('#editparentlocname').val(parentnode);
-                        }
-                        editnode = node.id;
+            else {
+                swal("Alert", "Please check mandatory fields!", "warning");
+            }
 
-                        $('#txteditLocation').val(node.text)
-                        $('#myModal_Edit').modal('show');
-
-                    }
-                });
-                //----------------delete location--
-                $('#mnuDelete').click(function (event) {
-                    //alert("Add");
-                    var node = $('#jstree').jstree().get_selected(true)[0];
-                    if (node == null) {
-                        swal("Alert", "Please Select location level to delete location name!", "warning");
+        });
 
 
-                    }
-                    else
-                    {
-                        DeleteLocation();
-                        //editnode = node.id;
-                        //$('#myModal_Add').modal('show');
-                        //$('#txteditLocation').val(node.text)
-                        //$('#myModal_Edit').modal('show');
+        $('#mnuAdd').click(function (event) {
+            var node = $('#jstree').jstree().get_selected(true)[0];
 
-                    }
-                });
-                //----------------------------------------
+            if (node == null) {
+                swal("Alert", "Please Select location level to add location!", "warning");
 
 
-              //  $('#jstree').jstree();
-                // AJAX
+            } else {
 
-                InitTree();
-              // InitTree_sample();
+                //------------blank fields----------------------------------------
 
-                // 7 bind to events triggered on the tree
-                $('#jstree').on("changed.jstree", function (e, data) {
-                    console.log(data.selected);
-                    var node = $('#jstree').jstree().get_selected(true)[0];
-                    showasset(node.id);
 
-                });
-                // 8 interact with the tree - either way is OK
-                $('button').on('click', function () {
-                    $('#jstree').jstree(true).select_node('child_node_1');
-                    $('#jstree').jstree('select_node', 'child_node_1');
-                    $.jstree.reference('#jstree').select_node('child_node_1');
-                });
-                $('#mnuExpand').on('click', function () {
-                    $('#jstree').jstree("open_all");
-                });
-                $('#mnuContract').on('click', function () {
-                    $('#jstree').jstree("close_all");
-                });
+                var parentnode = $('#jstree').jstree(true).get_text(node.parent);
+                // alert(parentnode)
+
+
+                if (parentnode == "Location List" || parentnode == false) {
+                    // alert("if")
+                    document.getElementById('plbl').hidden = true;
+                    document.getElementById('parentlocname').hidden = true;
+                }
+                else {
+                    document.getElementById('plbl').hidden = false;
+                    document.getElementById('parentlocname').hidden = false;
+                    $('#parentlocname').val(parentnode);
+                }
+
+                $("#txtLocation").val('');
+
+                //---------------------------------------------
+                $('#myModal_Add').modal('show');
+            }
+
+            //alert("Add");
+        });
+        $('#mnuEdit').click(function (event) {
+            //alert("Add");
+            var node = $('#jstree').jstree().get_selected(true)[0];
+            //  alert(node)
+            //alert($('#jstree').jstree(true).get_parent(node.text))
+            if (node == null) {
+                swal("Alert", "Please Select location level to edit location name!", "warning");
+
+
+            }
+            else {
+                var parentnode = $('#jstree').jstree(true).get_text(node.parent);
+
+                if (parentnode == "Location List" || parentnode == false) {
+                    document.getElementById('eplbl').hidden = true;
+                    document.getElementById('editparentlocname').hidden = true;
+                }
+                else {
+                    document.getElementById('eplbl').hidden = false;
+                    document.getElementById('editparentlocname').hidden = false;
+                    $('#editparentlocname').val(parentnode);
+                }
+                editnode = node.id;
+
+                $('#txteditLocation').val(node.text)
+                $('#myModal_Edit').modal('show');
+
+            }
+        });
+        //----------------delete location--
+        $('#mnuDelete').click(function (event) {
+            //alert("Add");
+            var node = $('#jstree').jstree().get_selected(true)[0];
+            if (node == null) {
+                swal("Alert", "Please Select location level to delete location name!", "warning");
+
+
+            }
+            else {
+                DeleteLocation();
+                //editnode = node.id;
+                //$('#myModal_Add').modal('show');
+                //$('#txteditLocation').val(node.text)
+                //$('#myModal_Edit').modal('show');
+
+            }
+        });
+        //----------------------------------------
+
+
+        //  $('#jstree').jstree();
+        // AJAX
+
+        InitTree();
+        // InitTree_sample();
+
+        // 7 bind to events triggered on the tree
+        $('#jstree').on("changed.jstree", function (e, data) {
+            console.log(data.selected);
+            var node = $('#jstree').jstree().get_selected(true)[0];
+            showasset(node.id);
+
+        });
+        // 8 interact with the tree - either way is OK
+        $('button').on('click', function () {
+            $('#jstree').jstree(true).select_node('child_node_1');
+            $('#jstree').jstree('select_node', 'child_node_1');
+            $.jstree.reference('#jstree').select_node('child_node_1');
+        });
+        $('#mnuExpand').on('click', function () {
+            $('#jstree').jstree("open_all");
+        });
+        $('#mnuContract').on('click', function () {
+            $('#jstree').jstree("close_all");
+        });
 
 
     });
@@ -425,266 +427,260 @@
 
         });
     }
-        function InitTree() {
-            var url = '@Url.Action("GetLocations", "Location")';
+    function InitTree() {
+        var url = '@Url.Action("GetLocations", "Location")';
 
-            $('#jstree').jstree({
-              'core': {
-                  'data': {
-                      "url": url,
-                       headers: getHeaders(),
-                        "dataType": "json" // needed only if you do not supply JSON headers
-                    },
+        $('#jstree').jstree({
+            'core': {
+                'data': {
+                    "url": url,
+                    headers: getHeaders(),
+                    "dataType": "json" // needed only if you do not supply JSON headers
+                },
 
-                  'themes': {
-                      'name': 'proton',
-                      'responsive': true
-                  }
-                    }
+                'themes': {
+                    'name': 'proton',
+                    'responsive': true
+                }
+            }
 
-            });
-            $('#jstree').jstree("open_all");
+        });
+        $('#jstree').jstree("open_all");
 
-            $("#jstree").bind("hover_node.jstree", function (e, data) {
+        $("#jstree").bind("hover_node.jstree", function (e, data) {
 
-                $("#" + data.node.id).prop("title", data.node.text);
-            });
+            $("#" + data.node.id).prop("title", data.node.text);
+        });
 
     }
     //EditSaveLocationNode
-     $('#btneditSave').click(function (event) {
+    $('#btneditSave').click(function (event) {
 
-                     var node = $('#jstree').jstree().get_selected(true)[0];
+        var node = $('#jstree').jstree().get_selected(true)[0];
 
-                     var location = $('#txteditLocation').val();
+        var location = $('#txteditLocation').val();
 
-                     var ControllerURL = '@Url.Action("EditSaveLocationNode", "Location")';
-                     if (node == null) {
-                         swal("Alert", "Please Select location level to edit location name!", "warning");
+        var ControllerURL = '@Url.Action("EditSaveLocationNode", "Location")';
+        if (node == null) {
+            swal("Alert", "Please Select location level to edit location name!", "warning");
 
-
-                     }
-                     else {
-                         if (node != "" && location != "") {
-
-                             var postdata =
-                                 {
-                                     "id": node.id,
-                                     "location": location,
-                                 };
-                             var form = $('#frmNewEmp');
-                             var token = $('input[name="__RequestVerificationToken"]', form).val();
-                             var headers = {};
-                             headers['__RequestVerificationToken'] = token;
-                             $.ajax({
-                                 type: 'POST',
-                                 url: ControllerURL,
-                                 contentType: "application/json",
-                                 headers: headers,
-                                 data: JSON.stringify(postdata),
-                                 success: function (res) {
-                                     //
-                                     if (res == "Failed") {
-                                         swal("Alert", "You Cannot Add this Record", "warning");
-                                     }
-                                     else {
-                                         $('#myModal_Edit').modal('hide');
-                                         //window.location = ApptURL;
-                                         //reloadevents();
-                                         editnode = "";
-                                         //  $('#jstree').jstree("destroy");
-                                         //  InitTree();
-                                         $('#jstree').jstree(true).refresh();
-
-
-                                     }
-                                 },
-                                 failure: function () { alert("Error"); }
-                             });
-
-                         }
-                         else {
-
-                             alert("Please check whether you have entered location and selected the level");
-                             return;
-
-                         }
-                     }
-     });
-
-        function showasset(id) {
-           // alert(getHeaders());
-
-            let form = $('#frmNewEmp');
-            let token = $('input[name="__RequestVerificationToken"]', form).val();
-
-            var ControllerURL = '@Url.Action("GetAssetData", "Location")';
-           // ControllerURL = ControllerURL + "&id=" +
-
-         var table = $('#tblasset').DataTable({
-             "destroy": true,
-             "paging": true,
-             "info": false,
-             "searching": true,
-             "pagingType": 'numbers',
-             "proccessing": true,
-             'language': {
-                 "loadingRecords": "&nbsp;",
-                 "decimal": ",",
-                 "thousands": ","
-         },
-         "serverSide": true,
-         "filter": true,
-
-         "ajax": {
-             "url": ControllerURL,
-             "type": 'POST',
-             "headers": getHeaders(),
-             "data": function (d) {
-                      d.id = id
-             }
-         },
-
-             "columns": [
-                 { "data": "AssetNo", "autoWidth": true },
-                 { "data": "AssetIdentificationNo", "autoWidth": true },
-                 { "data": "AssetName", "autoWidth": true },
-                 { "data": "str_VoucherDate", "autoWidth": true },
-                 {
-                     "data": "AmountCapitalisedCompany",
-                     render: $.fn.dataTable.render.number(',', '.', 2)
-                     , "autoWidth": true
-                 }
-             ],
-             columnDefs: [
-                 {
-                     "targets": 0,
-                     "className": "text-xs",
-                     "width": "8%"
-
-                 },
-                 {
-                     "targets": 1,
-                     "className": "text-xs",
-                     "width": "20%"
-                 },
-                 {
-                     "targets": 2,
-                     "className": "text-xs text-wrap",
-                     "width": "30%"
-                 },
-                 {
-                     "targets": 3,
-                     "className": "text-xs",
-                     "width": "10%"
-                 },
-
-                 {
-                     "targets": 4,
-                     "className": "text-end text-xs",
-                     "width": "10%"
-                 },
-
-
-             ]
-
-     });
 
         }
-     function LocationassetExport()
-     {
-         $('#progressbar').modal('show');
-         var node = $('#jstree').jstree().get_selected(true)[0];
-         var id = 0;
+        else {
+            if (node != "" && location != "") {
 
-         if (node == null) {
-             id = 0;
-         }
-         else {
-             if (node.id == "L0-0") {
-                 id = 0;
-             }
-             else {
-                 id = node.id;
-             }
+                var postdata =
+                {
+                    "id": node.id,
+                    "location": location,
+                };
+                var form = $('#frmNewEmp');
+                var token = $('input[name="__RequestVerificationToken"]', form).val();
+                var headers = {};
+                headers['__RequestVerificationToken'] = token;
+                $.ajax({
+                    type: 'POST',
+                    url: ControllerURL,
+                    contentType: "application/json",
+                    headers: headers,
+                    data: JSON.stringify(postdata),
+                    success: function (res) {
+                        //
+                        if (res == "Failed") {
+                            swal("Alert", "You Cannot Add this Record", "warning");
+                        }
+                        else {
+                            $('#myModal_Edit').modal('hide');
+                            //window.location = ApptURL;
+                            //reloadevents();
+                            editnode = "";
+                            //  $('#jstree').jstree("destroy");
+                            //  InitTree();
+                            $('#jstree').jstree(true).refresh();
 
-         }
+                        }
+                    },
+                    failure: function () { alert("Error"); }
+                });
 
-        var data={"id":id}
-             @*var ControllerURL = '@Url.Action("LocationassetExport", "Location")';
-             ControllerURL = ControllerURL + "/" + id;
+            }
+            else {
+
+                alert("Please check whether you have entered location and selected the level");
+                return;
+
+            }
+        }
+    });
+
+    function showasset(id) {
+        // alert(getHeaders());
+
+        let form = $('#frmNewEmp');
+        let token = $('input[name="__RequestVerificationToken"]', form).val();
+
+        var ControllerURL = '@Url.Action("GetAssetData", "Location")';
+        // ControllerURL = ControllerURL + "&id=" +
+
+        var table = $('#tblasset').DataTable({
+            "destroy": true,
+            "paging": true,
+            "info": false,
+            "searching": true,
+            "pagingType": 'numbers',
+            "proccessing": true,
+            'language': {
+                "loadingRecords": "&nbsp;",
+                "decimal": ",",
+                "thousands": ","
+            },
+            "serverSide": true,
+            "filter": true,
+
+            "ajax": {
+                "url": ControllerURL,
+                "type": 'POST',
+                "headers": getHeaders(),
+                "data": function (d) {
+                    d.id = id
+                }
+            },
+
+            "columns": [
+                { "data": "AssetNo", "autoWidth": true },
+                { "data": "AssetIdentificationNo", "autoWidth": true },
+                { "data": "AssetName", "autoWidth": true },
+                { "data": "str_VoucherDate", "autoWidth": true },
+                {
+                    "data": "AmountCapitalisedCompany",
+                    render: $.fn.dataTable.render.number(',', '.', 2)
+                    , "autoWidth": true
+                }
+            ],
+            columnDefs: [
+                {
+                    "targets": 0,
+                    "className": "text-xs",
+                    "width": "8%"
+
+                },
+                {
+                    "targets": 1,
+                    "className": "text-xs",
+                    "width": "20%"
+                },
+                {
+                    "targets": 2,
+                    "className": "text-xs text-wrap",
+                    "width": "30%"
+                },
+                {
+                    "targets": 3,
+                    "className": "text-xs",
+                    "width": "10%"
+                },
+
+                {
+                    "targets": 4,
+                    "className": "text-end text-xs",
+                    "width": "10%"
+                },
+
+
+            ]
+
+        });
+
+    }
+    function LocationassetExport() {
+        $('#progressbar').modal('show');
+        var node = $('#jstree').jstree().get_selected(true)[0];
+        var id = 0;
+
+        if (node == null) {
+            id = 0;
+        }
+        else {
+            if (node.id == "L0-0") {
+                id = 0;
+            }
+            else {
+                id = node.id;
+            }
+
+        }
+
+        var data = { "id": id }
+    @*var ControllerURL = '@Url.Action("LocationassetExport", "Location")';
+            ControllerURL = ControllerURL + "/" + id;
             // alert(ControllerURL)
-             window.location.href = ControllerURL;*@
+            window.location.href = ControllerURL;*@
         var ControllerURL = '@Url.Action("LocationassetExport", "Location")';
 
         var DownloadURL = '@Url.Action("Download", "Location")';
 
-            $.ajax({
-                type: 'POST',
-                url: ControllerURL,
-                contentType: "application/json",
-                headers: getHeaders(),
-                data: JSON.stringify(data),
-                success: function (data) {
-                    var fileurl = DownloadURL + '?fileGuid=' + data.FileGuid
-                        + '&filename=' + data.FileName;
-                    $('#progressbar').modal('hide');
-                    //alert(fileurl);
+        $.ajax({
+            type: 'POST',
+            url: ControllerURL,
+            contentType: "application/json",
+            headers: getHeaders(),
+            data: JSON.stringify(data),
+            success: function (data) {
+                var fileurl = DownloadURL + '?fileGuid=' + data.FileGuid
+                    + '&filename=' + data.FileName;
+                $('#progressbar').modal('hide');
+                //alert(fileurl);
 
-                    window.location = fileurl;
+                window.location = fileurl;
 
-                },
-                failure: function () { alert("Error"); }
-            });
+            },
+            failure: function () { alert("Error"); }
+        });
+
+
+    }
+
+    function DeleteLocation() {
+        var node = $('#jstree').jstree().get_selected(true)[0];
+
+        var id = node.id;
+        if (node == null) {
+            swal("Alert", "Please Select location level to delete location!", "warning");
 
 
         }
-
-        function DeleteLocation()
-        {
-         var node = $('#jstree').jstree().get_selected(true)[0];
-
-         var id = node.id;
-         if (node == null) {
-             swal("Alert", "Please Select location level to delete location!", "warning");
-
-
-         }
-         else
-         {
+        else {
 
             swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
-            if (result == true) {
+                if (result == true) {
 
-                var url = '@Url.Action("Deletelocation", "Location")';
-                url = url + "/" + id;
+                    var url = '@Url.Action("Deletelocation", "Location")';
+                    url = url + "/" + id;
                     $.ajax({
                         type: 'POST',
                         headers: getHeaders(),
-                    url: url,
-                    contentType: "application/json",
-                    success: function (res) {
-                        if (res == "Failed")
-                        {
-                            swal("Alert", "You Cannot Delete this Record", "warning");
-                        }
-                        else
-                        {
-                            swal({ title:  "Successfully Deleted!", icon: "success" }).then((result) => {
-                                if (result == true) {
-                                    $('#jstree').jstree(true).refresh();
-                                }
-                            });
-                         }
-                    },
+                        url: url,
+                        contentType: "application/json",
+                        success: function (res) {
+                            if (res == "Failed") {
+                                swal("Alert", "You Cannot Delete this Record", "warning");
+                            }
+                            else {
+                                swal({ title: "Successfully Deleted!", icon: "success" }).then((result) => {
+                                    if (result == true) {
+                                        $('#jstree').jstree(true).refresh();
+                                    }
+                                });
+                            }
+                        },
 
-                    failure: function () { alert("Error"); }
+                        failure: function () { alert("Error"); }
 
-                 });
-            }
-        });
-         }
-
+                    });
+                }
+            });
         }
 
-    </script>
+    }
+
+</script>
