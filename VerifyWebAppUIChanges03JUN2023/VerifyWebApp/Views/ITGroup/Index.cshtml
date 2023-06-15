@@ -303,18 +303,23 @@
                                 headers: getHeaders(),
                                 data: JSON.stringify(postdata),
                                 success: function (res) {
-                                    //
-                                    if (res == "Failed") {
-                                        swal("Alert", "You Cannot Add this Record", "warning");
-                                    }
-                                    else {
+                                    debugger;
+                                    if (res == true) {                                     
+
                                         $('#myModal_Add').modal('hide');
                                         //window.location = ApptURL;
                                         //reloadevents();
                                         $('#jstree').jstree(true).refresh();
+                                        swal({ title: "Successfully Added!", icon: "success" });
+                                    }
+                                    else {
+                                        swal("Alert", "You Cannot Add this Record", "warning");
                                     }
                                 },
-                                failure: function () { alert("Error"); }
+                                failure: function ()
+                                {
+                                    alert("Error");
+                                }
                             });
 
 
