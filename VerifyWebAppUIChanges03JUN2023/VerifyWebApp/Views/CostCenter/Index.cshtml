@@ -289,12 +289,14 @@
                                 headers: getHeaders(),
                                 data: JSON.stringify(postdata),
                                 success: function (res) {
-                                    //
+                                  //  debugger;
                                     if (res == true) {
                                         $('#myModal_Add').modal('hide');
                                         //window.location = ApptURL;
                                         //reloadevents();
-                                        $('#jstree').jstree(true).refresh();
+                                        $('#jstree').jstree("destroy");
+                                        swal({ title: "Successfully Added!", icon: "success" });
+                                        InitTree();
                                     }
                                     else {
                                         swal("Alert", "You Cannot Add this Record", "warning");
@@ -514,12 +516,16 @@
                                  headers: headers,
                                  data: JSON.stringify(postdata),
                                  success: function (res) {
-                                     //
+                                     //debugger;
                                      if (res == true) {
-                                         $('#myModal_Add').modal('hide');
+                                         $('#myModal_Edit').modal('hide');
                                          //window.location = ApptURL;
                                          //reloadevents();
+
+                                         editnode = "";
+                                         // $('#jstree').jstree("destroy");
                                          $('#jstree').jstree(true).refresh();
+                                   //  InitTree();
                                      }
                                      else {
                                          swal("Alert", "You Cannot Add this Record", "warning");
