@@ -129,20 +129,28 @@
                 contentType: "application/json",
                 headers: headers,
                 data: JSON.stringify(postdata),
-                    success: function (res) {
+                success: function (res) {
                        //... debugger;          
                   
-                if (res == "Failed") {
-                      swal("Alert", "You Cannot Add this Record", "warning");
-                }
-                else
-                {
-                    swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
-                        if (result == true) {
-                            window.location.replace(returnURL);
-                        }
-                    });
+                    if (res == "Success")
+                    {
+                        /*swal("Alert", "You Cannot Add this Record", "warning");*/
+                        swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
+                            if (result == true) {
+                                window.location.replace(returnURL);
+                            }
+                        });
                     }
+                    else
+                    {
+                        //swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
+                        //    if (result == true) {
+                        //        window.location.replace(returnURL);
+                        //    }
+                        //});
+                        swal("Alert", "You Cannot Add this Record", "warning");
+                    }
+                      
 
                 },
 

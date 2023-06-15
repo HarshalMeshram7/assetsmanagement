@@ -23,7 +23,7 @@ namespace VerifyWebApp.Models
         public string EMailID { get; set; }
         public string PolicyDetails { get; set; }
         public string Remarks { get; set; }
-        public int ClientID { get; set; }
+        public int? ClientID { get; set; }
         [NotMapped]
         public string str_fromdate { get; set; }
         [NotMapped]
