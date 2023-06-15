@@ -352,25 +352,26 @@
                             headers: getToken(),
                             data: JSON.stringify(postdata),
                             success: function (res) {
-                                //
+                               // debugger;
                                 if (res == true) {
                                     $('#myModal_Add').modal('hide');
                                     //window.location = ApptURL;
                                     //reloadevents();
                                     $('#jstree').jstree(true).refresh();
+                                    swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
+                                        if (result == true) {
+                                            window.location.replace(returnURL);
+                                        }
+                                    });
+                                }
+                                else {
+                                    swal("Alert", "You Cannot Add this Record", "warning");
                                 }
                                 
-                                 else {
-                                swal("Alert", "You Cannot Add this Record", "warning");
-                            }
                             },
                             failure: function () { alert("Error"); }
                         });
-
-
                     }
-
-
                     else {
                         swal("Alert", "Please Enter mandatory fields!", "warning");
                     }
@@ -600,21 +601,22 @@
                                 headers: getToken(),
                                 data: JSON.stringify(postdata),
                                 success: function (res) {
-                                    //
-                                    if (res == "Failed") {
-                                        swal("Alert", "You Cannot Add this Record", "warning");
-                                    }
-                                    else {
-                                        $('#myModal_Edit').modal('hide');
+                                    debugger;
+                                    IF(RES == true)
+                                    {
+                                        $('#myModal_Add').modal('hide');
                                         //window.location = ApptURL;
                                         //reloadevents();
                                         $('#jstree').jstree(true).refresh();
+                                        
                                     }
+                                    else
+                                    {}
                                 },
                                 failure: function () { alert("Error"); }
                             });
-                                        }
-                                        else {
+                            }
+                            else {
 
                         swal("Alert", "Please enter mandatory fields!", "warning");
 
