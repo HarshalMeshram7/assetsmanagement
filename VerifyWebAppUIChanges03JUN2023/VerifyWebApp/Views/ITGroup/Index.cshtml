@@ -303,13 +303,13 @@
                                 headers: getHeaders(),
                                 data: JSON.stringify(postdata),
                                 success: function (res) {
-                                    //debugger;
+                                   // debugger;
                                     if (res == true) {                                     
-
                                         $('#myModal_Add').modal('hide');
                                         //window.location = ApptURL;
                                         //reloadevents();
-                                        $('#jstree').jstree(true).refresh();
+                                        $('#jstree').jstree("destroy");
+                                        InitTree();
                                         swal({ title: "Successfully Added!", icon: "success" });
                                     }
                                     else {
@@ -525,12 +525,14 @@
                                 headers: getHeaders(),
                                 data: JSON.stringify(postdata),
                                 success: function (res) {
-                                    debugger;
+                                   // debugger;
                                 if(res == true) {
-
-                                    $('#myModal_Add').modal('hide');
+                                    $('#myModal_Edit').modal('hide');
                                     //window.location = ApptURL;
                                     //reloadevents();
+                                    editnode = "";
+                                    //  $('#jstree').jstree("destroy");
+                                    //  InitTree();
                                     $('#jstree').jstree(true).refresh();
                                     swal({ title: "Successfully Added!", icon: "success" });
                         }
