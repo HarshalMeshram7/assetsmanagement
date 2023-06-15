@@ -271,12 +271,13 @@
                     headers: getHeaders(),
                     data: JSON.stringify(postdata),
                     success: function (res) {
-                        // 
+                        debugger;
                         if (res == true) {
                             $('#myModal_Add').modal('hide');
                             //window.location = ApptURL;
                             //reloadevents();
                             $('#jstree').jstree(true).refresh();
+                            swal({ title: "Successfully Added!", icon: "success" });
                         }
                         else {
                             swal("Alert", "You Cannot Add this Record", "warning");
@@ -485,18 +486,16 @@
                     headers: headers,
                     data: JSON.stringify(postdata),
                     success: function (res) {
-                        //
-                        if (res == "Failed") {
-                            swal("Alert", "You Cannot Add this Record", "warning");
-                        }
-                        else {
-                            $('#myModal_Edit').modal('hide');
+                        debugger;
+                        if (res ==true) {
+                            $('#myModal_Add').modal('hide');
                             //window.location = ApptURL;
                             //reloadevents();
-                            editnode = "";
-                            //  $('#jstree').jstree("destroy");
-                            //  InitTree();
                             $('#jstree').jstree(true).refresh();
+                            swal({ title: "Successfully Added!", icon: "success" });
+                        }
+                        else {
+                            swal("Alert", "You Cannot Add this Record", "warning");
 
                         }
                     },
