@@ -22,123 +22,125 @@
     }
 </style>
 
-    
+
+
 @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 }
-    <div class="container-fluid">
-        
-        <div class="row my-0">
-           
-            <div class="card">
+<div class="container-fluid">
 
-                <div class="card-header pb-0">
-                    <div class="row">
-                        <div class="d-sm-flex justify-content-between hborder">
-                            <div class="htitle"> <b>Company Law Groups </b> </div>
-                        </div>
-                    </div>
-                </div>
+    <div class="row my-0">
 
-                <div class="row my-2" style="padding-left:10px">
-                    <div class="col-md-12">
-                        <button type="button" id="mnuAdd" value="New Practice"
-                                class="btn btn-sm addBtn pull-left m-1 order-1"
-                                data-toggle="tooltip" data-placement="top" title="Add New"
-                                data-delay='{"show":"2000", "hide":"1500"}'>
-                            <i class="fa fa-plus" aria-hidden="true"></i>
-                        </button>
-                        <button type="button" id="mnuEdit" value="New Practice"
-                                class="btn btn-sm modBtn pull-left m-1 order-1"
-                                data-toggle="tooltip" data-placement="top" title="Modify">
-                            <i class="fa fa-edit"></i>
-                          
-                        </button>
-                        <button type="button" id="mnuDelete" value="New Practice"
-                                class="btn btn-sm delBtn pull-left m-1 order-1"
-                                data-toggle="tooltip" data-placement="top" title="Delete">
-                            <i class="fa fa-trash-o"></i>
-                           
-                        </button>
-                        <button type="button" id="mnuExpand" value=""
-                                class="btn btn-sm xtraBtn pull-left m-1 order-1"
-                                data-toggle="tooltip" data-placement="top" title="Expand all locations"
-                                data-delay='{"show":"2000", "hide":"1500"}'>
-                            <i class="fa fa-expand"></i>
+        <div class="card">
 
-                        </button>
-                        <button type="button" id="mnuContract" value=""
-                                class="btn btn-sm xtraBtn pull-left m-1 order-1"
-                                data-toggle="tooltip" data-placement="top" title="Contract all locations"
-                                data-delay='{"show":"2000", "hide":"1500"}'>
-                            <i class="fa fa-compress"></i>
-
-                        </button>
-                    </div>
-                </div>
-
+            <div class="card-header pb-0">
                 <div class="row">
+                    <div class="d-sm-flex justify-content-between hborder">
+                        <div class="htitle"> <b>Company Law Groups </b> </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row my-2" style="padding-left:10px">
+                <div class="col-md-12">
+                    <button type="button" id="mnuAdd" value="New Practice"
+                            class="btn btn-sm addBtn pull-left m-1 order-1"
+                            data-toggle="tooltip" data-placement="top" title="Add New"
+                            data-delay='{"show":"2000", "hide":"1500"}'>
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" id="mnuEdit" value="New Practice"
+                            class="btn btn-sm modBtn pull-left m-1 order-1"
+                            data-toggle="tooltip" data-placement="top" title="Modify">
+                        <i class="fa fa-edit"></i>
+
+                    </button>
+                    <button type="button" id="mnuDelete" value="New Practice"
+                            class="btn btn-sm delBtn pull-left m-1 order-1"
+                            data-toggle="tooltip" data-placement="top" title="Delete">
+                        <i class="fa fa-trash-o"></i>
+
+                    </button>
+                    <button type="button" id="mnuExpand" value=""
+                            class="btn btn-sm xtraBtn pull-left m-1 order-1"
+                            data-toggle="tooltip" data-placement="top" title="Expand all locations"
+                            data-delay='{"show":"2000", "hide":"1500"}'>
+                        <i class="fa fa-expand"></i>
+
+                    </button>
+                    <button type="button" id="mnuContract" value=""
+                            class="btn btn-sm xtraBtn pull-left m-1 order-1"
+                            data-toggle="tooltip" data-placement="top" title="Contract all locations"
+                            data-delay='{"show":"2000", "hide":"1500"}'>
+                        <i class="fa fa-compress"></i>
+
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
 
 
-                    <div class="col-md-4">
-                        <div class="tree m-1">
-                            <div class="row" style=" overflow-y: scroll;max-height:initial;height:550px;width:370px">
-                                <div class="col-md-12">
-                                    <div id="jstree">
-                                        <!-- in this example the tree is populated from inline HTML -->
-                                        <ul>
-                                            <li>
-                                                Root node 1
-                                                <ul>
-                                                    <li id="child_node_1">Child node 1</li>
-                                                    <li>Child node 2</li>
-                                                </ul>
-                                            </li>
-                                            <li style="margin-top:3px">Root node 2</li>
-                                        </ul>
-                                    </div>
+                <div class="col-md-4">
+                    <div class="tree m-1">
+                        <div class="row" style=" overflow-y: scroll;max-height:initial;height:550px;width:370px">
+                            <div class="col-md-12">
+                                <div id="jstree">
+                                    <!-- in this example the tree is populated from inline HTML -->
+                                    <ul>
+                                        <li>
+                                            Root node 1
+                                            <ul>
+                                                <li id="child_node_1">Child node 1</li>
+                                                <li>Child node 2</li>
+                                            </ul>
+                                        </li>
+                                        <li style="margin-top:3px">Root node 2</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8">
+                </div>
+                <div class="col-md-8">
 
-                        <div class="table-responsive text-xs font-weight-bold ">
-                            <table class="table table-flush table-hover "
-                                   style="width:100%; align-items:center" id="tblasset">
-                                <thead class="hcol text-uppercase" style="font-weight:bold">
-                                    <tr>
+                    <div class="table-responsive text-xs font-weight-bold ">
+                        <table class="table table-flush table-hover "
+                               style="width:100%; align-items:center" id="tblasset">
+                            <thead class="hcol text-uppercase" style="font-weight:bold">
+                                <tr>
 
-                                        <td  width="5%">
-                                            Asset No
-                                        </td>
-                                        <td width="5%">
-                                            Identification No
-                                        </td>
-                                        <td width="25%">
-                                            Asset Name
-                                        </td>
-                                        <td width="5%">
-                                            Voucher Date
-                                        </td>
-                                        <td class="text-end" width="15%">
-                                            Amount Capitalised
-                                        </td>
+                                    <td width="5%">
+                                        Asset No
+                                    </td>
+                                    <td width="5%">
+                                        Identification No
+                                    </td>
+                                    <td width="25%">
+                                        Asset Name
+                                    </td>
+                                    <td width="5%">
+                                        Voucher Date
+                                    </td>
+                                    <td class="text-end" width="15%">
+                                        Amount Capitalised
+                                    </td>
 
 
-                                    </tr>
-                                </thead>
-                                <tbody style="font-weight: bold; color: black">
-                                </tbody>
-                            </table>
-                        </div>
+                                </tr>
+                            </thead>
+                            <tbody style="font-weight: bold; color: black">
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-            
         </div>
-        </div>
+
+    </div>
+</div>
+
 
 <div id="myModal_Add" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg">
@@ -150,70 +152,70 @@
                 <div class="modal-title htitle"><b>Add Company Law Group</b></div>
             </div>
             <div class="modal-body">
-                    <div class="row">
-                            <div class="col-md-3"><label id="plbl" for="parentgrpname" class="form-control-sm" >Parent Group:</label></div>
-                            <div class="col-md-6"> <input id="parentgrpname" class="form-control form-control-sm" readonly /></div>
-                     </div>
-                    
-                        <div class="row">
-                            <div class="col-md-3">
-                                 <label for="inputPassword6" class="form-control-sm">Group Name</label>
+                <div class="row">
+                    <div class="col-md-3"><label id="plbl" for="parentgrpname" class="form-control-sm">Parent Group:</label></div>
+                    <div class="col-md-6"> <input id="parentgrpname" class="form-control form-control-sm" readonly /></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="inputPassword6" class="form-control-sm">Group Name</label>
+                    </div>
+                    <div class="col-md-6">
+                        <input id="txtAGroupName" class="form-control form-control-sm" />
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="txtNRate" class="form-control-sm">Normal Rate</label>
+                    </div>
+                    <div class="col-md-2"><input id="txtNRate" class="form-control form-control-sm" onblur="totaladdition()" /></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="txtARate" class="form-control-sm">Additional Rate</label>
+                    </div>
+                    <div class="col-md-2"><input id="txtARate" class="form-control form-control-sm" onblur="totaladdition()" /></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="txtARate" class="form-control-sm">Total Rate</label>
+                    </div>
+
+                    <div class="col-md-2"><input id="txtTRate" readonly class="form-control form-control-sm" /></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <label class="form-control-sm">
+                            Depreciation Method<span style="color:#CC0000;">*</span>
+                        </label>
+
+                    </div>
+                    <div class="col-md-4">
+
+                        <div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="DepreciationMethod" id="wdv" tabindex="28">
+                                <label class="custom-control-label" for="customRadio1">WDV</label>
                             </div>
-                            <div class="col-md-6">
-                                <input id="txtAGroupName" class="form-control form-control-sm" />
+                        </div>
+
+                        <div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="DepreciationMethod" id="slm" tabindex="28">
+                                <label class="custom-control-label" for="customRadio2">SLM</label>
                             </div>
+                        </div>
 
-                         </div>
-                        
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label for="txtNRate" class="form-control-sm">Normal Rate</label>
-                                </div>
-                                <div class="col-md-2"><input id="txtNRate" class="form-control form-control-sm" onblur="totaladdition()" /></div>
-                            </div>
-                   
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <label for="txtARate" class="form-control-sm">Additional Rate</label>
-                                    </div>
-                                    <div class="col-md-2"><input id="txtARate" class="form-control form-control-sm" onblur="totaladdition()" /></div>
-                                </div>
-                         
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <label for="txtARate" class="form-control-sm">Total Rate</label>
-                                    </div>
-
-                                    <div class="col-md-2"><input id="txtTRate" readonly class="form-control form-control-sm" /></div>
-                                </div>
-                
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <label class="form-control-sm">
-                                            Depreciation Method<span style="color:#CC0000;">*</span>
-                                        </label>
-
-                                        </div>
-                                    <div class="col-md-4">
-
-                                        <div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="DepreciationMethod" id="wdv" tabindex="28">
-                                                <label class="custom-control-label" for="customRadio1">WDV</label>
-                                            </div>
-                                        </div>
-
-                                        <div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="DepreciationMethod" id="slm" tabindex="28">
-                                                <label class="custom-control-label" for="customRadio2">SLM</label>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
-                            </div>
+                    </div>
+                </div>
+                <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm saveBtn" id="btnSave">Save</button>
                 <button type="button" class="btn btn-sm clBtn" id="btnClose" data-bs-dismiss="modal">Close</button>
@@ -261,8 +263,8 @@
                     <div class="col-md-2"><input id="txteditTRate" class="form-control form-control-sm" readonly /></div>
                 </div>
 
-                
-                
+
+
                 <div class="row">
                     <div class="col-md-3">
                         <label class="form-control-sm">
@@ -325,7 +327,7 @@
                     var additionalrate = $('#txtARate').val();
                     var totalrate = $('#txtTRate').val();
                     var depmethod = $("input[name='DepreciationMethod']:checked").val();
-            
+
                     var ControllerURL = '@Url.Action("SaveAssetGroupNode", "AssetGroups")';
                     //console.log(node)
                     console.log(groupname, normalrate, totalrate, node.id, depmethod);
@@ -352,26 +354,25 @@
                             headers: getToken(),
                             data: JSON.stringify(postdata),
                             success: function (res) {
-                               // debugger;
+                                debugger;
                                 if (res == true) {
                                     $('#myModal_Add').modal('hide');
                                     //window.location = ApptURL;
                                     //reloadevents();
                                     $('#jstree').jstree(true).refresh();
-                                    swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
-                                        if (result == true) {
-                                            window.location.replace(returnURL);
-                                        }
-                                    });
+                                    swal({ title: "Successfully Added!", icon: "success" });
                                 }
                                 else {
                                     swal("Alert", "You Cannot Add this Record", "warning");
                                 }
-                                
                             },
                             failure: function () { alert("Error"); }
                         });
+
+
                     }
+
+
                     else {
                         swal("Alert", "Please Enter mandatory fields!", "warning");
                     }
@@ -602,21 +603,21 @@
                                 data: JSON.stringify(postdata),
                                 success: function (res) {
                                     debugger;
-                                    IF(RES == true)
-                                    {
-                                        $('#myModal_Add').modal('hide');
-                                        //window.location = ApptURL;
-                                        //reloadevents();
+                                    if (res == true) {
+                                    $('#myModal_Edit').modal('hide');
+                                    //window.location = ApptURL;
+                                    //reloadevents();
                                         $('#jstree').jstree(true).refresh();
-                                        
+                                        swal({ title: "Successfully Added!", icon: "success" });
                                     }
-                                    else
-                                    {}
+                                    else {
+                                        swal("Alert", "You Cannot Add this Record", "warning");
+                                    }
                                 },
                                 failure: function () { alert("Error"); }
                             });
-                            }
-                            else {
+                                        }
+                                        else {
 
                         swal("Alert", "Please enter mandatory fields!", "warning");
 
@@ -867,7 +868,7 @@
                          "className": "text-end text-xs",
                          "width": "10%"
                      },
-                    
+
 
                  ]
 
@@ -877,7 +878,7 @@
 
     }
      function returnDropdownButton(AssetNo) {
-        
+
          var option_Edit;
          var strButton;
          console.log("AssetNo" + AssetNo)
@@ -889,7 +890,7 @@
 
          link = view_link + edit_link + delete_link;
          return link;
-        
+
      }
 
 </script>
