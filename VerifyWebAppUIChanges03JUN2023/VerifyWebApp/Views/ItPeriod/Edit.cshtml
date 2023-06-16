@@ -180,8 +180,9 @@
 
                 $("#startdateerror,#enddateerror").hide();
 
-                var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-                var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+                var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
+                var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
+
                 var postdata =
                     {
                         "FromDate": startdate,
