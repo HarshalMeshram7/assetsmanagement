@@ -18,7 +18,7 @@ namespace VerifyWebApp.Filter
 
             var rd = filterContext.HttpContext.Request.RequestContext.RouteData;
 
-            string currentAction = rd.GetRequiredString("action").ToUpper(); ;
+            string currentAction = rd.GetRequiredString("action").ToUpper(); 
             string currentController = rd.GetRequiredString("controller").ToUpper();
             string currentArea = rd.Values["area"] as string;
 

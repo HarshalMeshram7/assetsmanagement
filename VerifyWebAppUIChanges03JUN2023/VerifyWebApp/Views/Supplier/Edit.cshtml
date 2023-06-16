@@ -174,7 +174,7 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
     $('#btnSave').click(function (event) {
-        debugger;
+      
         SaveData();
         e.preventDefault();
         return false;
@@ -195,7 +195,7 @@
     });
 
 
-   function SaveData() {
+    function SaveData() {
 
         var result;
 
@@ -237,68 +237,72 @@
         var msemeno = $('#Msemeno').val();
 
         var postdata =
-            {
-                "Msemeno": msemeno,
-                    "SupplierName": SupplierName,
-                    "SupplierCode": SupplierCode,
-                    "Address": Address,
-                    "Address2": Address2,
-                    "Address3": Address3,
-                    "City": City,
-                    "MobileNo": MobileNo,
-                    "EmailID": EmailId,
-                    "ShopActLicence": ShopActLicence,
-                    "ContactPerson": ContactPerson,
+        {
+            "Msemeno": msemeno,
+            "SupplierName": SupplierName,
+            "SupplierCode": SupplierCode,
+            "Address": Address,
+            "Address2": Address2,
+            "Address3": Address3,
+            "City": City,
+            "MobileNo": MobileNo,
+            "EmailID": EmailId,
+            "ShopActLicence": ShopActLicence,
+            "ContactPerson": ContactPerson,
 
-                    "ExciseRegNo": ExciseRegNo,
-                    "ServiceTaxRegNo": ServiceTaxRegNo,
-                    "VATRegNo": VATRegNo,
-                    "GSTNo": GSTNo,
-                    "PANNo": PANNo,
-                    "TANNo": TANNo
+            "ExciseRegNo": ExciseRegNo,
+            "ServiceTaxRegNo": ServiceTaxRegNo,
+            "VATRegNo": VATRegNo,
+            "GSTNo": GSTNo,
+            "PANNo": PANNo,
+            "TANNo": TANNo
 
-            };
-            //
+        };
+        //
         var form = $('#frmNewEmp');
         var token = $('input[name="__RequestVerificationToken"]', form).val();
         var headers = {};
         headers['__RequestVerificationToken'] = token;
 
-            swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
-                if (result == true) {
-                 var ControllerURL = '@Url.Action("Edit", "Supplier")';
+        swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+            if (result == true) {
+                var ControllerURL = '@Url.Action("Edit", "Supplier")';
 
 
                 var returnURL = '@Url.Action("Index", "Supplier")';
 
                 $.ajax({
-                type: 'POST',
-                url: ControllerURL,
-                contentType: "application/json",
-                headers: headers,
-                data: JSON.stringify(postdata),
+                    type: 'POST',
+                    url: ControllerURL,
+                    contentType: "application/json",
+                    headers: headers,
+                    data: JSON.stringify(postdata),
                     success: function (res) {
-                        debugger;
-                if (res == true) {
-                    $('#myModal_Add').modal('hide');
-                    //window.location = ApptURL;
-                    //reloadevents();
-                    $('#jstree').jstree(true).refresh();
-                }
-                else
-                {
-                    swal("Alert", "You Cannot Add this Record", "warning");
-                }
+                       //..... debugger;
+                        if (res == "Success") {
+                            //$('#myModal_Add').modal('hide');
+                            ////window.location = ApptURL;
+                            ////reloadevents();
+                            //$('#jstree').jstree(true).refresh();
+                    
+                            swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
+                                if (result == true) {
+                                    window.location.replace(returnURL);
+                                }
+                            });
+                        }
+                        else {
 
+                            swal("Alert", "You Cannot Add this Record", "warning");
 
-
-                },
-
-                failure: function () { alert("Error"); }
-
+                           
+                        }
+                    },
+                    failure: function () { alert("Error"); }
                 });
-
-
+            }
+        });
+    }
 
 </script>
 

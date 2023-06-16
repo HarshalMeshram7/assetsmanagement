@@ -160,6 +160,7 @@ namespace VerifyWebApp.Controllers
 
             JsonResult res;
             res = new JsonResult();
+            bool bResult = true;
 
             TimeZoneInfo istZone = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
 
@@ -187,6 +188,7 @@ namespace VerifyWebApp.Controllers
                         insobj.CreatedUserId = userid;
                         insobj.CreatedDate = istDate;
                         insobj.Companyid = companyid;
+                        insobj.ClientID = null;
                         db.Insurances.Add(insobj);
                         db.SaveChanges();
                         //var insuranceid = db.Insurances.Max(x => x.ID && x.Companyid==companyid);
@@ -214,7 +216,7 @@ namespace VerifyWebApp.Controllers
                             }
                         }
                         transaction.Commit();
-                        return RedirectToAction("Index", "Insurance");
+                      //...  return RedirectToAction("Index", "Insurance");
                         // res.Data = "Success";
                         //return res;
 
@@ -225,20 +227,24 @@ namespace VerifyWebApp.Controllers
                         strError = ex.Message + "|" + ex.InnerException;
                         // logger.Log(LogLevel.Error, strError);
                         transaction.Rollback();
-                        return RedirectToAction("Index", "Insurance");
+                       //... return RedirectToAction("Index", "Insurance");
                         // res.Data = "Failed";
                         //return res;
+                        bResult = false;
 
                     }
                 }
             }
             else
             {
-                return RedirectToAction("Index", "Insurance");
+               //... return RedirectToAction("Index", "Insurance");
                 //res.Data = "ERR";
                 //return res;
+                bResult = false;
 
             }
+            return new JsonResult { Data = bResult, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
         }
 
 

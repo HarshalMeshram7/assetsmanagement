@@ -151,6 +151,7 @@ namespace VerifyWebApp.Controllers
 
             JsonResult res;
             res = new JsonResult();
+            bool bResult = true;
 
             TimeZoneInfo istZone = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
 
@@ -202,7 +203,7 @@ namespace VerifyWebApp.Controllers
                             }
                         }
                         transaction.Commit();
-                        return RedirectToAction("Index", "Loan");
+                        //return RedirectToAction("Index", "Loan");
                         //res.Data = "Success";
                         //return res;
 
@@ -213,9 +214,10 @@ namespace VerifyWebApp.Controllers
                         strError = ex.Message + "|" + ex.InnerException;
                         // logger.Log(LogLevel.Error, strError);
                         transaction.Rollback();
-                        return RedirectToAction("Index", "Loan");
+                        //return RedirectToAction("Index", "Loan");
                         //res.Data = "Failed";
                         //return res;
+                        bResult = false;
 
                     }
 
@@ -223,11 +225,14 @@ namespace VerifyWebApp.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Loan");
+                //return RedirectToAction("Index", "Loan");
                 //res.Data = "ERR";
                 //return res;
+                bResult = false;
 
             }
+
+            return new JsonResult { Data = bResult, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         private DateTime ParseExact(string str_fromdate, string v, CultureInfo invariantCulture)
@@ -460,7 +465,7 @@ namespace VerifyWebApp.Controllers
 
 
         }
-        //------------------------
+       
         [AuthUser]
         [AllowAnonymous]
         [ValidateJsonAntiForgeryToken]
@@ -530,7 +535,7 @@ namespace VerifyWebApp.Controllers
             }
 
         }
-        //----------------------------
+        
         [AuthUser]
         [HttpGet]
         public ActionResult LoanExport()

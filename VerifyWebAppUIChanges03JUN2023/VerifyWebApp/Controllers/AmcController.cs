@@ -676,9 +676,9 @@ namespace VerifyWebApp.Controllers
                 excel.Workbook.Worksheets.Add("Worksheet2");
 
                 var headerRow = new List<string[]>()
-                  {
+                {
                     new string[] { "Sr No", "FromDate", "ToDate","Reminder Mail","Send Reminder Mail to CC","Amc Details","Remarks",}
-                  };
+                };
 
 
                 // Determine the header range (e.g. A1:D1)

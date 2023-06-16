@@ -142,17 +142,21 @@
                 headers: headers,
                 data: JSON.stringify(postdata),
                     success: function (res) {
-                     //..........   debugger;
-                if (res == "Failed") {
-                swal("Alert", "You Cannot Add this Record", "warning");
+                  //...........  debugger;
+                if (res == "Success") {
+
+                    swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
+                        if (result == true) {
+                            window.location.replace(returnURL);
+
+                        }
+                    });
+
                 }
                 else
                 {
-                swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
-                if (result == true) {
-                window.location.replace(returnURL);
-                }
-                });
+                
+                    swal("Alert", "You Cannot Add this Record", "warning");
                 }
 
                 },

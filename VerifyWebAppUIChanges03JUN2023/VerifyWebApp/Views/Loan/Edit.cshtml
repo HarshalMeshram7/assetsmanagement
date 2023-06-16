@@ -1,194 +1,194 @@
 ﻿@model IEnumerable<VerifyWebApp.Models.SubLoan>
 @{
-                /**/
+    /**/
 
-                /**/
+    /**/
 
-                Layout = "~/Views/Shared/_Layout.cshtml";
-                ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit";
 }
 
 
 @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
 {
-    
+
     @Html.AntiForgeryToken();
 
-<div id="page-wrapper" class="container-fluid rounded page border shadow">
-    <div class="card">
-        <div class="card-header pb-0">
-            <div class="row">
-                <div class="d-sm-flex justify-content-between hborder">
-                    <div class="htitle"> <b>Edit Loan</b> </div>
-                </div>
-            </div>
-        </div>
-        <div class="card-body">
-
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label for="praticesname">From Date<span>*</span></label>
-
-                        <input id="stDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
-                        <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label for="praticesname">To Date<span>*</span></label>
-                        <input id="EndDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
-                        <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label for="praticesname">Loan taken from</label>
-
-                        <input id="BankName" class="form-control" required />
-
+    <div id="page-wrapper" class="container-fluid rounded page border shadow">
+        <div class="card">
+            <div class="card-header pb-0">
+                <div class="row">
+                    <div class="d-sm-flex justify-content-between hborder">
+                        <div class="htitle"> <b>Edit Loan</b> </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label for="praticesname">Loan Period (No of years)</label>
-                        <input id="Year" class="form-control" required />
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="praticesname">From Date<span>*</span></label>
+
+                            <input id="stDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
+                            <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="praticesname">To Date<span>*</span></label>
+                            <input id="EndDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
+                            <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="praticesname">Loan taken from</label>
+
+                            <input id="BankName" class="form-control" required />
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="praticesname">Loan Period (No of years)</label>
+                            <input id="Year" class="form-control" required />
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-4">
+                        <div class="form-group">
+
+                            <label for="praticesname">Amount</label>
+                            <input id="Amount" class="form-control" type="number" required />
+
+                        </div>
+
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+
+                            <label for="praticesname">Interest %</label>
+                            <input id="Percentage" type="number" required class="form-control" />
+
+                        </div>
 
                     </div>
                 </div>
 
-
-                <div class="col-lg-4">
-                    <div class="form-group">
-
-                        <label for="praticesname">Amount</label>
-                        <input id="Amount" class="form-control" type="number" required />
-
-                    </div>
-
-                </div>
-                <div class="col-lg-4">
-                    <div class="form-group">
-
-                        <label for="praticesname">Interest %</label>
-                        <input id="Percentage" type="number" required class="form-control" />
-
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    Assets List for Loan
-                </div>
-            </div>
-
-            
-            <div class="row">
-                <div class="col-lg-12 ">
-                    <button type="button" id="btnexport" value="New Practice"
-                            class="btn btn-sm xtraBtn pull-right m-1 order-2"
-                            onclick="assetexport();"  data-bs-toggle="tooltip" data-bs-placement="top" title="Export">
-                        <i class="fa fa-file-excel-o"></i>
-                    </button>
-
-                    <button type="button" id="btnimport" value="Upload"
-                            class="btn btn-sm xtraBtn pull-right  m-1 order-4"
-                            onclick="Importassetexcel();"  data-bs-toggle="tooltip" data-bs-placement="top" title="Import">
-                        <i class="fa fa-upload"></i>
-                    </button>
-                    <button type="button" value="New Practice"
-                            class="btn btn-sm addBtn pull-right m-1 order-1"
-                            id="btnAddSubloan"  data-bs-toggle="tooltip" data-bs-placement="top" title="Add New">
-                        <i class="fa fa-plus-square"></i>
-
-                    </button>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="table-responsive">
-                        <table width="100%" class="table table-hover text-uppercase text-xs" id="tblsubloan">
-                            <thead class="hcol" style="font-weight:bold">
-                                <tr>
-
-                                    <td>
-                                        SrNo
-                                    </td>
-                                    <td>
-                                        AssetNo
-                                    </td>
-                                    <td>Asset Description</td>
-
-                                    <td align="right">Asset Capitalised Amount</td>
-                                    <td align="center">
-                                        Edit
-                                    </td>
-                                    <td align="center">
-                                        Delete
-                                    </td>
-                                </tr>
-                            </thead>
-                            <tbody style="font-weight:bold;color:black">
-                                @if (Model.Count() == 0)
-                                {
-
-                                }
-                                else
-                                {
-                                    foreach (var item in Model)
-                                    {
-                                        <tr>
-                                            <td>@item.Srno</td>
-
-                                            <td>@Html.DisplayFor(modelitem => item.AssetNo)</td>
-
-                                            <td>@Html.DisplayFor(modelitem => item.AssetDescription)</td>
-                                            <td align="right">@Html.DisplayFor(modelitem => item.CapitalisedAmount)</td>
-
-                                            <td align="center">
-                                                <button type="button" class="btn modBtn btn-sm"
-                                                        aria-label="Left Align"
-                                                        onclick="Editsubloan(this,@item.Srno);">
-                                                    <i class="fa fa-edit"></i>
-                                                </button>
-
-                                            </td>
-                                            <td align="center">
-                                                <button type="button" class="btn delBtn btn-sm" aria-label="Left Align" onclick="deletesubloan(this);">
-                                                    <i class="fa fa-remove"></i>
-                                                </button>
-
-                                            </td>
-                                        </tr>
-
-
-                                    }
-                                }
-                            </tbody>
-                        </table>
-
+                <div class="row">
+                    <div class="col-md-12">
+                        Assets List for Loan
                     </div>
                 </div>
-            </div>
 
-            <div class="modal-footer">
 
-                        <button type="submit"
-                                class="btn saveBtn btn-sm" id="btnSave">
-                            Save
+                <div class="row">
+                    <div class="col-lg-12 ">
+                        <button type="button" id="btnexport" value="New Practice"
+                                class="btn btn-sm xtraBtn pull-right m-1 order-2"
+                                onclick="assetexport();" data-bs-toggle="tooltip" data-bs-placement="top" title="Export">
+                            <i class="fa fa-file-excel-o"></i>
+                        </button>
+
+                        <button type="button" id="btnimport" value="Upload"
+                                class="btn btn-sm xtraBtn pull-right  m-1 order-4"
+                                onclick="Importassetexcel();" data-bs-toggle="tooltip" data-bs-placement="top" title="Import">
+                            <i class="fa fa-upload"></i>
+                        </button>
+                        <button type="button" value="New Practice"
+                                class="btn btn-sm addBtn pull-right m-1 order-1"
+                                id="btnAddSubloan" data-bs-toggle="tooltip" data-bs-placement="top" title="Add New">
+                            <i class="fa fa-plus-square"></i>
+
                         </button>
                     </div>
-
                 </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table width="100%" class="table table-hover text-uppercase text-xs" id="tblsubloan">
+                                <thead class="hcol" style="font-weight:bold">
+                                    <tr>
+
+                                        <td>
+                                            SrNo
+                                        </td>
+                                        <td>
+                                            AssetNo
+                                        </td>
+                                        <td>Asset Description</td>
+
+                                        <td align="right">Asset Capitalised Amount</td>
+                                        <td align="center">
+                                            Edit
+                                        </td>
+                                        <td align="center">
+                                            Delete
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody style="font-weight:bold;color:black">
+                                    @if (Model.Count() == 0)
+                                    {
+
+                                    }
+                                    else
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>@item.Srno</td>
+
+                                                <td>@Html.DisplayFor(modelitem => item.AssetNo)</td>
+
+                                                <td>@Html.DisplayFor(modelitem => item.AssetDescription)</td>
+                                                <td align="right">@Html.DisplayFor(modelitem => item.CapitalisedAmount)</td>
+
+                                                <td align="center">
+                                                    <button type="button" class="btn modBtn btn-sm"
+                                                            aria-label="Left Align"
+                                                            onclick="Editsubloan(this,@item.Srno);">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+
+                                                </td>
+                                                <td align="center">
+                                                    <button type="button" class="btn delBtn btn-sm" aria-label="Left Align" onclick="deletesubloan(this);">
+                                                        <i class="fa fa-remove"></i>
+                                                    </button>
+
+                                                </td>
+                                            </tr>
+
+
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="submit"
+                            class="btn saveBtn btn-sm" id="btnSave">
+                        Save
+                    </button>
+                </div>
+
             </div>
         </div>
-    
+    </div>
+
 
 
     <div id="subloanmodal" class="modal fade" role="dialog" style="height: 570px;">
@@ -233,7 +233,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn saveBtn btn-sm" onclick="addasset();">Save</button>
                     <button type="button" class="btn clBtn btn-sm" onclick="closeaddloan();">Close</button>
-               
+
                 </div>
 
 
@@ -287,7 +287,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-sm saveBtn" onclick="editsubloan();">Save</button>
                     <button type="button" class="btn btn-sm clBtn" onclick="closeeditloan();" data-dismiss="modal">Close</button>
-                    
+
                 </div>
             </div>
         </div>
@@ -328,7 +328,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn saveBtn btn-sm" id="btnupload">Upload</button>
                         <button type="button" class="btn clBtn btn-sm" data-dismiss="modal">Close</button>
-                        
+
                         @*@ViewBag.Message*@
 
                     </div>
@@ -349,7 +349,7 @@
                 <div class="modal-body ">
 
                     <div class="row" style="overflow:auto">
-                        <table width="100%" class=""table table-hover text-uppercase text-xs"" style="overflow:auto" id="errtbl">
+                        <table width="100%" class="" table table-hover text-uppercase text-xs"" style="overflow:auto" id="errtbl">
 
                             <thead class="hcol" style="font-weight:bold">
                                 <tr>
@@ -377,7 +377,7 @@
 
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-<script type="text/javascript">
+    <script type="text/javascript">
     var srnocnt = '@ViewBag.Srno';
 
         var editindex = 0;
@@ -613,16 +613,18 @@
                             headers: headers,
                             data: JSON.stringify(postdata),
                             success: function (res) {
-                              //.....  debugger;
-                                if (res == "Failed") {
-                                    swal("Alert", "You Cannot Add this Record", "warning");
-                                }
-                                else {
+                            //... debugger;
+                                if (res == "Success") {
+                                   
                                     swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
                                         if (result == true) {
                                             window.location.replace(returnURL);
                                         }
                                     });
+                                }
+                                else {
+                                   
+                                    swal("Alert", "You Cannot Add this Record", "warning");
                                 }
 
                             },
@@ -888,11 +890,12 @@
         $('#errorlist').modal('show');
 
     }
-    function closeerrorlist() {
+    function closeerrorlist()
+    {
         $('#errorlist').modal('hide');
          var returnURL = '@Url.Action("Index", "Amc")';
         window.location.replace(returnURL);
     }
-</script>
+    </script>
 
-}
+ }

@@ -14,341 +14,338 @@
 
 
 
-   <div class="container-fluid py-4">
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header pb-0">
-                    <div class="d-sm-flex justify-content-between hborder">
-                        <div class="htitle"> <b>Add New Insurance</b></div>
-                    </div>
-                </div>
-                <div class="card-body" id="divTableData">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label for="praticesname" class="form-control-sm">From Date<span>*</span></label>
-
-                                <input type='date' id="txtStartDate"
-                                       name="FromDate"
-                                       class="form-control form-control-sm" required />
-                            </div>
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header pb-0">
+                        <div class="d-sm-flex justify-content-between hborder">
+                            <div class="htitle"> <b>Add New Insurance</b></div>
                         </div>
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label for="praticesname">To Date<span>*</span></label>
+                    </div>
+                    <div class="card-body" id="divTableData">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="praticesname" class="form-control-sm">From Date<span>*</span></label>
 
-                                <div class='input-group date' id='dtEndDate'>
-                                    <input type='date' id="txtEndDate"
-                                           name="ToDate"
+                                    <input type='date' id="txtStartDate"
+                                           name="FromDate"
                                            class="form-control form-control-sm" required />
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="praticesname">To Date<span>*</span></label>
+
+                                    <div class='input-group date' id='dtEndDate'>
+                                        <input type='date' id="txtEndDate"
+                                               name="ToDate"
+                                               class="form-control form-control-sm" required />
+
+                                    </div>
 
                                 </div>
-
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label for="praticesname">Send Reminder mail to</label>
-                                <input id="ReminderEmail" type="email" class="form-control" />
-
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label for="praticesname">Send Reminder mail to(CC)</label>
-                                <input id="CCReminderEmail" type="email" class="form-control" />
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="praticesname">Policy details</label>
-                                <textarea id="PolicyDetails" class="form-control" rows="3"></textarea>
-
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-
-                                <label for="praticesname">Remark</label>
-                                <textarea id="Remark" class="form-control" rows="3"></textarea>
                             </div>
 
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Send Reminder mail to</label>
+                                    <input id="ReminderEmail" type="email" class="form-control" />
 
-                        </div>
-
-                    </div>
-
-                    <div class="pageconent">
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <b> Assets List for Insurance</b>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-8">
-                                <button type="button" id="btnexport" value="New Practice"
-                                        class="btn btn-sm xtraBtn pull-right m-1 order-2"
-                                        onclick="assetexport();"  data-bs-toggle="tooltip" data-bs-placement="top" title="Export">
-                                    <i class="fa fa-file-excel-o"></i>
-                                </button>
-
-                                <button type="button" id="btnimport" value="Upload"
-                                        class="btn btn-sm xtraBtn pull-right m-1 order-4"
-                                        onclick="Importassetexcel();" data-bs-toggle="tooltip" data-bs-placement="top" title="Import">
-                                    <i class="fa fa-upload"></i>
-                                </button>
-                                <button type="button" value="New Practice"
-                                        class="btn btn-sm addBtn pull-right m-1 order-1"
-                                        id="btnAddSubinsurance" data-bs-toggle="tooltip" data-bs-placement="top" title="Add New">
-                                    <i class="fa fa-plus-square"></i>
-                                
-                                </button>
-                            </div>
-                        </div>
-                        <div class="row">
-
-                            <div class="col-lg-12">
-                                <div class="table-responsive">
-                                    <table class="table table-hover text-uppercase text-xs" id="tblSubinsurance">
-                                        <thead class="hcol" style="font-weight:bold">
-                                            <tr>
-
-                                                <td>
-                                                    Sr No
-                                                </td>
-                                                <td>
-                                                    Asset No.
-                                                </td>
-                                                <td>Asset Description</td>
-
-                                                <td align="right">Asset Capitalised Amount</td>
-                                                <td align="center">
-                                                    Edit
-                                                </td>
-                                                <td align="center">
-                                                    Delete
-                                                </td>
-                                            </tr>
-                                        </thead>
-                                        <tbody style="font-weight:bold;color:black"></tbody>
-                                    </table>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Send Reminder mail to(CC)</label>
+                                    <input id="CCReminderEmail" type="email" class="form-control" />
 
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="praticesname">Policy details</label>
+                                    <textarea id="PolicyDetails" class="form-control" rows="3"></textarea>
 
-                        <div class="modal-footer">
-                            <button type="submit" class="btn saveBtn btn-sm" id="btnSave">
-                                        Save
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+
+                                    <label for="praticesname">Remark</label>
+                                    <textarea id="Remark" class="form-control" rows="3"></textarea>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                        <div class="pageconent">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <b> Assets List for Insurance</b>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <button type="button" id="btnexport" value="New Practice"
+                                            class="btn btn-sm xtraBtn pull-right m-1 order-2"
+                                            onclick="assetexport();" data-bs-toggle="tooltip" data-bs-placement="top" title="Export">
+                                        <i class="fa fa-file-excel-o"></i>
+                                    </button>
+
+                                    <button type="button" id="btnimport" value="Upload"
+                                            class="btn btn-sm xtraBtn pull-right m-1 order-4"
+                                            onclick="Importassetexcel();" data-bs-toggle="tooltip" data-bs-placement="top" title="Import">
+                                        <i class="fa fa-upload"></i>
+                                    </button>
+                                    <button type="button" value="New Practice"
+                                            class="btn btn-sm addBtn pull-right m-1 order-1"
+                                            id="btnAddSubinsurance" data-bs-toggle="tooltip" data-bs-placement="top" title="Add New">
+                                        <i class="fa fa-plus-square"></i>
+
                                     </button>
                                 </div>
-
                             </div>
-                        </div>
-                    </div>
+                            <div class="row">
 
-                </div>
-     </div>
-    
-
-
-
-      
-
-</div>
-}
-                    <div id="subinsurancemodal" class="modal fade" role="dialog" style="height: 570px;">
-                        <div class="modal-dialog modal-lg">
-
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title htitle">Add Asset to Insurance</h4>
-                                </div>
-                                <div class="modal-body ">
-                                    <div class="row">
-                                        <div class="form-group col-lg-6">
-                                            <label for="praticesname" class="form-control-sm">Asset No<span>*</span></label>
-
-                                            <div class='input-group dropdown' id='dtasset'>
-                                                @Html.DropDownList("AssetNo", (SelectList)ViewBag.Assestlist, "Select AssetNo", new { @class = "form-control form-control-sm" })
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-lg-6">
-                                            <label for="praticesname" class="form-control-sm">Asset Description<span>*</span></label>
-
-                                            <input type='text' id="txtassetdesc" class="form-control form-control-sm" required readonly />
-
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-lg-6">
-                                            <label for="praticesname" class="form-control-sm">Asset Capitalised Amount<span>*</span></label>
-
-                                            <input type='text' id="txtassetamount" class="form-control form-control-sm" required readonly />
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
-
-
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-sm saveBtn" onclick="addasset();">Save</button>
-                                    <button type="button" class="btn btn-sm clBtn" onclick="closeaddinsurance();">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="editsubinsurancemodal" class="modal fade" role="dialog" style="height: 570px;" data-backdrop="static" data-keyboard="false">
-                        <div class="modal-dialog modal-lg">
-
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-
-                                    <h4 class="modal-title">Edit SubInsurance</h4>
-                                </div>
-                                <div class="modal-body ">
-                                    <div class="row">
-                                        <div class="form-group col-lg-6">
-                                            <label for="praticesname">Asset No<span>*</span></label>
-
-                                            <div class='input-group dropdown' id='dtasset'>
-
-                                                @Html.DropDownList("edAssetNo", (SelectList)ViewBag.Assestlist, "Select AssetNo", new { @class = "form-control" })
-
-
-                                            </div>
-                                            <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-lg-6">
-                                            <label for="praticesname">Asset Description<span>*</span></label>
-
-                                            <input type='text' id="txtedassetdesc" class="form-control" required readonly />
-
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-lg-6">
-                                            <label for="praticesname">Asset Capitalised Amount<span>*</span></label>
-
-                                            <input type='text' id="txtedassetamount" class="form-control" required readonly />
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
-
-
-                                <div class="modal-footer">
-                                    <button type="button" class="btn saveBtn" onclick="editsubinsurance();">Save</button>
-                                    <button type="button" class="btn clBtn" onclick="closeeditinsurance();">Close</button>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="importmodal" class="modal fade" role="dialog" style="height: 570px;" data-backdrop="static" data-keyboard="false">
-                        <div class="modal-dialog modal-lg">
-
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-
-                                    <h4 class="modal-title">Import Sub insurance List</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                </div>
-                            
-                                @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "frmupload" }))
-                                {
-                                    <div class="modal-body">
-
-                                        @Html.ValidationSummary(true)
-
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <label for="praticesname"><span>*</span>Select File to be uploaded </label>
-                                                    @Html.TextBox("File", "", new { type = "file", id = "fileupload", name = "fileupload" })
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-
-
-
-                                        <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn delBtn" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn addBtn" id="btnupload">Upload</button>
-                                        
-
-                                    </div>
-                                }
-                            </div><!-- /.modal-content -->
-                        </div>
-                    </div>
-
-                    <div id="errorlist" class="modal fade" role="dialog" style="height: 670px;" data-backdrop="static" data-keyboard="false">
-                        <div class="modal-dialog modal-lg">
-
-                            <!-- Modal content-->
-                            <div class="modal-content" style="height:530px;width:900px;overflow:auto">
-                                <div class="modal-header">
-
-                                    <h4 class="modal-title">Error list</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                </div>
-                                <div class="modal-body ">
-
-                                    <div class="row" style="overflow:auto">
-                                        <table width="100%" class="table table-hover text-uppercase text-xs" style="overflow:auto" id="errtbl">
-
+                                <div class="col-lg-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover text-uppercase text-xs" id="tblSubinsurance">
                                             <thead class="hcol" style="font-weight:bold">
                                                 <tr>
 
-                                                    <td>Srno</td>
-                                                    <td>Errors</td>
+                                                    <td>
+                                                        Sr No
+                                                    </td>
+                                                    <td>
+                                                        Asset No.
+                                                    </td>
+                                                    <td>Asset Description</td>
+
+                                                    <td align="right">Asset Capitalised Amount</td>
+                                                    <td align="center">
+                                                        Edit
+                                                    </td>
+                                                    <td align="center">
+                                                        Delete
+                                                    </td>
                                                 </tr>
                                             </thead>
-                                            <tbody style="font-weight:bold"></tbody>
-
+                                            <tbody style="font-weight:bold;color:black"></tbody>
                                         </table>
-                                    </div>
-
-
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" onclick="closeerrorlist();">Close</button>
 
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn saveBtn btn-sm" id="btnSave">
+                                    Save
+                                </button>
+                            </div>
+
                         </div>
                     </div>
-                    <div class="modal fade" tabindex="-1" role="dialog" id="divUpload" data-backdrop="static" data-keyboard="false">
-                        <div class="modal-dialog modal-lx" role="document" id="divUploadContent">
+                </div>
 
-                        </div><!-- /.modal-dialog -->
-                    </div><!-- /.modal -->
+            </div>
+        </div>
+    </div>
+}
+<div id="subinsurancemodal" class="modal fade" role="dialog" style="height: 570px;">
+    <div class="modal-dialog modal-lg">
 
-                    <script type="text/javascript">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title htitle">Add Asset to Insurance</h4>
+            </div>
+            <div class="modal-body ">
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname" class="form-control-sm">Asset No<span>*</span></label>
+
+                        <div class='input-group dropdown' id='dtasset'>
+                            @Html.DropDownList("AssetNo", (SelectList)ViewBag.Assestlist, "Select AssetNo", new { @class = "form-control form-control-sm" })
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname" class="form-control-sm">Asset Description<span>*</span></label>
+
+                        <input type='text' id="txtassetdesc" class="form-control form-control-sm" required readonly />
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname" class="form-control-sm">Asset Capitalised Amount<span>*</span></label>
+
+                        <input type='text' id="txtassetamount" class="form-control form-control-sm" required readonly />
+
+                    </div>
+                </div>
+            </div>
+            <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm saveBtn" onclick="addasset();">Save</button>
+                <button type="button" class="btn btn-sm clBtn" onclick="closeaddinsurance();">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="editsubinsurancemodal" class="modal fade" role="dialog" style="height: 570px;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Edit SubInsurance</h4>
+            </div>
+            <div class="modal-body ">
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Asset No<span>*</span></label>
+
+                        <div class='input-group dropdown' id='dtasset'>
+
+                            @Html.DropDownList("edAssetNo", (SelectList)ViewBag.Assestlist, "Select AssetNo", new { @class = "form-control" })
+
+
+                        </div>
+                        <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Asset Description<span>*</span></label>
+
+                        <input type='text' id="txtedassetdesc" class="form-control" required readonly />
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="praticesname">Asset Capitalised Amount<span>*</span></label>
+
+                        <input type='text' id="txtedassetamount" class="form-control" required readonly />
+
+                    </div>
+                </div>
+            </div>
+            <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn saveBtn" onclick="editsubinsurance();">Save</button>
+                <button type="button" class="btn clBtn" onclick="closeeditinsurance();">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="importmodal" class="modal fade" role="dialog" style="height: 570px;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Import Sub insurance List</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "frmupload" }))
+            {
+                <div class="modal-body">
+
+                    @Html.ValidationSummary(true)
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="praticesname"><span>*</span>Select File to be uploaded </label>
+                                @Html.TextBox("File", "", new { type = "file", id = "fileupload", name = "fileupload" })
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn delBtn" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn addBtn" id="btnupload">Upload</button>
+
+
+                </div>
+            }
+        </div><!-- /.modal-content -->
+    </div>
+</div>
+
+<div id="errorlist" class="modal fade" role="dialog" style="height: 670px;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content" style="height:530px;width:900px;overflow:auto">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Error list</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body ">
+
+                <div class="row" style="overflow:auto">
+                    <table width="100%" class="table table-hover text-uppercase text-xs" style="overflow:auto" id="errtbl">
+
+                        <thead class="hcol" style="font-weight:bold">
+                            <tr>
+
+                                <td>Srno</td>
+                                <td>Errors</td>
+                            </tr>
+                        </thead>
+                        <tbody style="font-weight:bold"></tbody>
+
+                    </table>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" onclick="closeerrorlist();">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="divUpload" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lx" role="document" id="divUploadContent">
+
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+<script type="text/javascript">
         var srnocnt = 1;
         var editindex = 0;
         $(document).ready(function () {
@@ -546,16 +543,19 @@
                         headers: headers,
                         data: JSON.stringify(postdata),
                         success: function (res) {
-                          //......  debugger;
-                            if (res == "Failed") {
-                                swal("Alert", "You Cannot Add this Record", "warning");
+                        // debugger;
+                            if (res == "true") {
+                               swal("Alert", "You Cannot Add this Record", "warning");
+                              
                             }
                             else {
+
                                 swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
                                     if (result == true) {
                                         window.location.replace(returnURL);
                                     }
                                 });
+                                
                             }
 
                         },
@@ -806,7 +806,7 @@
          var returnURL = '@Url.Action("Index", "Amc")';
         window.location.replace(returnURL);
     }
-                    </script>
-                    
+</script>
+
 
 
