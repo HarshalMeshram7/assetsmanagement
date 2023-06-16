@@ -21,7 +21,7 @@
         @Html.AntiForgeryToken();
         <div class="modal-body">
 
-            @Html.ValidationSummary(true)
+            @*@Html.ValidationSummary(true)*@
             <div class="form-group">
                 <label for="praticesname">Start Date<span>*</span></label>
                 <input id="stDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
@@ -63,7 +63,7 @@
 
         $('#btnSave').click(function (event)
         {
-            debugger;
+            //debugger;
             SaveData();
             e.preventDefault();
             return false;
@@ -203,6 +203,9 @@
                     "PeriodlockFlag": periodlock
                 };
 
+                swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+
+
                 if (result == true) {
                     var ControllerURL = '@Url.Action("AddNew", "ItPeriod")';
 
@@ -219,9 +222,9 @@
                         headers: headers,
                         data: JSON.stringify(postdata),
                         success: function (res) {
-                            debugger;
+                          //  debugger;
 
-                            if (res ==true) {                                
+                            if (res == "Success") {
                                 swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
                                     if (result == true) {
                                         window.location.replace(returnURL);
@@ -231,21 +234,17 @@
                             else {
                                 swal("Alert", "You Cannot Add this Record", "warning");
                             }
+
                         },
 
                         failure: function () { alert("Error"); }
 
                     });
-                }
-            });
-        }
-
-
-
+                    }
+                });
                 // window.location.replace(returnURL);
-
-
-                else {
+            }
+ else {
                     if (StartDateStatus == true && EndDateStatus == false) {
                         $('#enddateerror').show();
 
@@ -267,7 +266,7 @@
                     return false;
                 }
             }
-        }
+        
 
 </script>
 
