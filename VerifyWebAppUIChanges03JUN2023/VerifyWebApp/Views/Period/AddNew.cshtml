@@ -316,8 +316,8 @@
     }
 
     function SaveData() {
-      var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-        var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+      var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
+        var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
 
         if (new Date(startdate) > new Date(enddate)) {
 
@@ -364,9 +364,10 @@
                     var Tableenddate = $td.eq(2).html();
                     var Tableperiodlock = $td.eq(3).html();
                     var Tabledepriciation = $td.eq(4).html();
-                    var Strstartdate = moment(Tablestartdate, "DD/MM/YYYY").format("YYYY/MM/DD");
 
+                    var Strstartdate = moment(Tablestartdate, "DD/MM/YYYY").format("YYYY/MM/DD");
                     var StrEnddate = moment(Tableenddate, "DD/MM/YYYY").format("YYYY/MM/DD");
+
                     return {
                         FromDate: Strstartdate,
                         ToDate: StrEnddate,
@@ -376,9 +377,11 @@
                 }).get();
 
 
-                var Strstartdate = moment(StartDate, "DD/MM/YYYY").format("YYYY/MM/DD");
+                //var Strstartdate = moment(StartDate, "DD/MM/YYYY").format("YYYY/MM/DD");
+                //var StrEnddate = moment(EndDate, "DD/MM/YYYY").format("YYYY/MM/DD");
 
-                var StrEnddate = moment(EndDate, "DD/MM/YYYY").format("YYYY/MM/DD");
+                var Strstartdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
+                var StrEnddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
 
                 var postdata =
                     {
