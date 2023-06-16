@@ -4,30 +4,30 @@
 }
 <div class="modal-content">
     <div class="modal-header" style="color:blue">
-       
+
         <h4 class="modal-title">Edit Unit Of Measurement</h4>
         <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     </div>
     @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
     {@Html.AntiForgeryToken();
-        <div class="modal-body">
+    <div class="modal-body">
 
-            @Html.ValidationSummary(true)
-            <div class="form-group">
-                <label for="UOM">Unit Of Measurement<span>*</span></label>
-                @Html.TextBoxFor(m => m.Unit, new { @class = "form-control", @required = "required" })
-                <div style="color:#CC0000;font-weight:400" class="text-danger error">@Html.ValidationMessageFor(m => m.Unit)</div>
-                @Html.AntiForgeryToken()
-            </div>
-
-
-            <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
+        @Html.ValidationSummary(true)
+        <div class="form-group">
+            <label for="UOM">Unit Of Measurement<span>*</span></label>
+            @Html.TextBoxFor(m => m.Unit, new { @class = "form-control", @required = "required" })
+            <div style="color:#CC0000;font-weight:400" class="text-danger error">@Html.ValidationMessageFor(m => m.Unit)</div>
+            @Html.AntiForgeryToken()
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-sm clBtn"  id="btnClose" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" id="btnSave">Save</button>
-        </div>
-    }
+
+
+        <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-sm clBtn" id="btnClose" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="btnSave">Save</button>
+    </div>
+}
 </div><!-- /.modal-content -->
 
 
@@ -35,7 +35,7 @@
 <script type="text/javascript">
 
     $('#btnSave').click(function (event) {
-        debugger;
+      //.....  debugger;
         SaveData();
         e.preventDefault();
         return false;
@@ -77,7 +77,7 @@
     //});
 
    function SaveData() {
-       
+
        var result;
 
        var UOM;
@@ -113,17 +113,20 @@
                 headers: headers,
                 contentType: "application/json",
                 data: JSON.stringify(postdata),
-                success: function (res) {
-                if (res == "Failed") {
-                swal("Alert", "You Cannot Add this Record", "warning");
+                    success: function (res) {
+                        //.....debugger;
+                if (res == "Success") {
+
+                    swal({ title: "Successfully Edited!", icon: "success" }).then((result) => {
+                        if (result == true) {
+                            window.location.replace(returnURL);
+                        }
+                    });
                 }
                 else
                 {
-                swal({ title: "Successfully Edited!", icon: "success" }).then((result) => {
-                if (result == true) {
-                window.location.replace(returnURL);
-                }
-                });
+               
+                    swal("Alert", "You Cannot Add this Record", "warning");
                 }
 
                 },
