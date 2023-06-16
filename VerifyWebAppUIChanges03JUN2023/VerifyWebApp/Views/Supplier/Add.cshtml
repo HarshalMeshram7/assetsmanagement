@@ -10,7 +10,7 @@
             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
         @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
-        {
+         {
             @Html.AntiForgeryToken();
             <div class="card-body">
                 @Html.ValidationSummary(true)
@@ -159,21 +159,25 @@
 
             <div class="col-md-2"><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
             <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="btnSave">Save</button>
-                    <button type="button" class="btn btn-sm clBtn" id="btnClose" onclick="btnCloseClick();" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnSave">Save</button>
+                <button type="button" class="btn btn-sm clBtn" id="btnClose"  data-bs-dismiss="modal">Close</button>
             </div>
-        }
+         }
     </div><!-- /.modal-content -->
 </div>
+
+
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <script type="text/javascript">
+
     $('#btnSave').click(function (event) {
-        debugger;
+       //... debugger;
         SaveData();
         e.preventDefault();
         return false;
     });
-    
+
     $(document).ready(function () {
 
         /*
@@ -197,7 +201,8 @@
     }
 
 
-   function SaveData() {
+    function SaveData()
+    {
         var result;
 
         var SupplierName;
@@ -237,72 +242,67 @@
         TANNo = $('#TANNo').val();
         var msemeno = $('#Msemeno').val();
 
-            var postdata =
-                {
-                    "Msemeno": msemeno,
-                    "SupplierName": SupplierName,
-                    "SupplierCode": SupplierCode,
-                    "Address": Address,
-                    "Address2": Address2,
-                    "Address3": Address3,
-                    "City": City,
-                    "MobileNo": MobileNo,
-                    "EmailID": EmailId,
-                    "ShopActLicence": ShopActLicence,
-                    "ContactPerson": ContactPerson,
+        var postdata =
+        {
+            "Msemeno": msemeno,
+            "SupplierName": SupplierName,
+            "SupplierCode": SupplierCode,
+            "Address": Address,
+            "Address2": Address2,
+            "Address3": Address3,
+            "City": City,
+            "MobileNo": MobileNo,
+            "EmailID": EmailId,
+            "ShopActLicence": ShopActLicence,
+            "ContactPerson": ContactPerson,
 
-                    "ExciseRegNo": ExciseRegNo,
-                    "ServiceTaxRegNo": ServiceTaxRegNo,
-                    "VATRegNo": VATRegNo,
-                    "GSTNo": GSTNo,
-                    "PANNo": PANNo,
-                    "TANNo": TANNo
+            "ExciseRegNo": ExciseRegNo,
+            "ServiceTaxRegNo": ServiceTaxRegNo,
+            "VATRegNo": VATRegNo,
+            "GSTNo": GSTNo,
+            "PANNo": PANNo,
+            "TANNo": TANNo
 
-            };
-            //
-            var form = $('#frmNewEmp');
-            var token = $('input[name="__RequestVerificationToken"]', form).val();
-            var headers = {};
-            headers['__RequestVerificationToken'] = token;
-            swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
-                if (result == true) {
-                     var ControllerURL = '@Url.Action("Add", "Supplier")';
-                    var returnURL = '@Url.Action("Index", "Supplier")';
+        };
+        //
+        var form = $('#frmNewEmp');
+        var token = $('input[name="__RequestVerificationToken"]', form).val();
+        var headers = {};
+        headers['__RequestVerificationToken'] = token;
+
+        swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+            if (result == true) {
+                var ControllerURL = '@Url.Action("Add", "Supplier")';
+                var returnURL = '@Url.Action("Index", "Supplier")';
 
                 $.ajax({
-                type: 'POST',
-                url: ControllerURL,
-                headers: headers,
-                contentType: "application/json",
-                data: JSON.stringify(postdata),
-
+                    type: 'POST',
+                    url: ControllerURL,
+                    headers: headers,
+                    contentType: "application/json",
+                    data: JSON.stringify(postdata),
                     success: function (res) {
-                        //...........debugger;
-               // console.log(res);
-                if (res == "True") {
-                   /* swal("Alert", "You Cannot Add this Record", "warning");*/
-                    swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
-                        if (result == true) {
-                            window.location.replace(returnURL);
+                       //.. debugger;
+                        // console.log(res);
+                        if (res == "Success") {
+
+                            swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
+                                if (result == true) {
+                                    window.location.replace(returnURL);
+                                }
+                            });
+                            
                         }
-                    });
-                }
-                else
-                {
-                    swal("Alert", "You Cannot Add this Record", "warning");
-                
-                }
-                },
-                failure: function () { alert("Error"); }
+                        else {
+                            swal("Alert", "You Cannot Add this Record", "warning");
 
-                }),
-
-
-                }
+                        }
+                    },
+                    failure: function () { alert("Error"); }
+                });
             }
-                )};
-
-
+        });
+    }
 
 </script>
 
