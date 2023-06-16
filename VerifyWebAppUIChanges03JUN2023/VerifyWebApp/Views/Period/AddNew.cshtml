@@ -409,19 +409,19 @@
                             ,
 
                             success: function (res) {
-                                //
-                                if (res == "Failed") {
-                                    swal("Alert", "You Cannot Add this Record", "warning");
-                                }
-                                else {
+                              //  debugger;
+                                if (res == "Success") {
                                     swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
                                         if (result == true) {
                                             window.location.replace(returnURL);
                                         }
                                     });
                                 }
-
+                                else {
+                                    swal("Alert", "You Cannot Add this Record", "warning");
+                                }
                             },
+
 
                             failure: function () { alert("Error"); }
 

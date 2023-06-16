@@ -196,16 +196,16 @@
                         contentType: "application/json",
                         data: JSON.stringify(postdata),
                         success: function (res) {
-                            //
-                            if (res == "Failed") {
-                                swal("Alert", "You Cannot Add this Record", "warning");
-                            }
-                            else {
-                                swal({ title: "Successfully Edited!", icon: "success" }).then((result) => {
+                          //  debugger;
+                            if (res == "Success") {
+                                swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
                                     if (result == true) {
                                         window.location.replace(returnURL);
                                     }
                                 });
+                            }
+                            else {
+                                swal("Alert", "You Cannot Add this Record", "warning");
                             }
 
                         },

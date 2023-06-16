@@ -26,12 +26,12 @@
             <label for="praticesname">Start Date<span>*</span></label>
 
             <div class='input-group date' id='dtStartDate'>
-                <input type='text' id="txtStartDate" class="form-control" required />
+                <input type='date' id="txtStartDate" class="form-control" required />
 
-                <div class="input-group-addon">
+                @*<div class="input-group-addon">
                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
 
-                </div>
+                </div>*@
 
             </div>
             <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
@@ -39,11 +39,11 @@
         <div class="form-group">
             <label for="praticesname">End Date<span>*</span></label>
             <div class='input-group date' id='dtEndDate'>
-                <input type='text' id="txtEndDate" class="form-control" required />
-                <div class="input-group-addon">
+                <input type='date' id="txtEndDate" class="form-control" required />
+                @*<div class="input-group-addon">
                     <span class="input-group-text"><span class="fa fa-calendar"></span></span>
 
-                </div>
+                </div>*@
 
             </div>
             <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
@@ -63,13 +63,13 @@
     </div>
 }
 </div><!-- /.modal-content -->
-<
 
 
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+@*<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>*@
 <script type="text/javascript">
     $('#btnSave').click(function (event) {
-        debugger;
+       // debugger;
         SaveData();
         e.preventDefault();
         return false;
@@ -209,16 +209,16 @@
                             headers: headers,
                             data: JSON.stringify(postdata),
                             success: function (res) {
-                                debugger;
-                                if (res == "Failed") {
-                                    swal("Alert", "You Cannot Add this Record", "warning");
-                                }
-                                else {
-                                    swal({ title: "Successfully Edited!", icon: "success" }).then((result) => {
+                              //  debugger;
+                                if (res =="Success") {
+                                    swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
                                         if (result == true) {
                                             window.location.replace(returnURL);
                                         }
                                     });
+                                }
+                                else {
+                                    swal("Alert", "You Cannot Add this Record", "warning");
                                 }
 
                             },
@@ -231,19 +231,24 @@
                 // window.location.replace(returnURL);
             }
 
-            else {
-                if (StartDateStatus == true && EndDateStatus == false) {
+            else
+            {
+                if (StartDateStatus == true && EndDateStatus == false)
+                {
                     $('#enddateerror').show();
 
                     $('#startdateerror').hide();
 
-                } else if (EndDateStatus == true && StartDateStatus == false) {
+                }
+                else if (EndDateStatus == true && StartDateStatus == false)
+                {
                     $('#enddateerror').hide();
 
                     $('#startdateerror').show();
                 }
 
-                else {
+                else
+                {
                     $('#enddateerror').show();
 
                     $('#startdateerror').show();
