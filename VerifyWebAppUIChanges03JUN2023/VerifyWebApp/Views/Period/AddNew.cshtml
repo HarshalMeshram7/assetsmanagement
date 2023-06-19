@@ -1,4 +1,4 @@
-﻿
+﻿@model VerifyWebApp.Models.Period
 @{
     /**/
 
@@ -9,235 +9,235 @@
 
 
 @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
-    {
-        @Html.AntiForgeryToken()
-<div id="page-wrapper" class="container-fluid rounded page border shadow">
-    <div class="card">
-        <div class="card-header pb-0">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="row justify-content-md-center title hborder">
-                        <div class="htitle"> <b>Add New Period</b></div>
+{
+    @Html.AntiForgeryToken()
+    <div id="page-wrapper" class="container-fluid rounded page border shadow">
+        <div class="card">
+            <div class="card-header pb-0">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row justify-content-md-center title hborder">
+                            <div class="htitle"> <b>Add New Period</b></div>
+                        </div>
                     </div>
+                    <!-- /.col-lg-12 -->
                 </div>
-                <!-- /.col-lg-12 -->
-            </div>
-            <div class="pageconent">
-                <div class="card-body">
-                    <div class="row">
+                <div class="pageconent">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="praticesname">Start Date<span>*</span></label>
+
+                                    <input id="txtStartDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
+
+                                </div>
+                                <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
+                            </div>
+                        </div>
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label for="praticesname">Start Date<span>*</span></label>
-
-                                <input id="txtStartDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
+                                <label for="praticesname">End Date<span>*</span></label>
+                                <input id="txtEndDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
 
                             </div>
-                            <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
+                            <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
+                            <div></div>
                         </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="form-group">
-                            <label for="praticesname">End Date<span>*</span></label>
-                            <input id="txtEndDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
 
-                        </div>
-                        <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
-                        <div></div>
+                        @*<div style="color:#CC0000;font-weight:400" id="invalideparentdateerror">Select Date</div>*@
                     </div>
 
-                    <div style="color:#CC0000;font-weight:400" id="invalideparentdateerror">Select Date</div>
                 </div>
 
+
             </div>
 
-
-        </div>
-
-        <div class="row" style="padding-left:30px">
-            <div class="col-md-12">
-                Sub-Period List
-            </div>
-        </div>
-
-        <div class="row my-1" style="padding-left:30px">
-            <div class="col-md-12">
-                <div class="pull-right">
-                    <button type="button" class="btn btn-sm nBtn" id="btnAddSubPeiod"
-                            data-toggle="modal">
-                        Add Sub-Period
-                    </button>
+            <div class="row" style="padding-left:30px">
+                <div class="col-md-12">
+                    Sub-Period List
                 </div>
             </div>
-        </div>
 
-        <div class="row" style="padding-left:30px">
-            <div class="col-lg-12">
-                <div class="table-responsive">
-                    <table width="100%" class="table table-hover text-uppercase text-xs" id="tblSubPeriod">
-                        <thead class="hcol" style="font-weight:bold">
-                            <tr>
-
-                                <td>
-                                    SrNo
-                                </td>
-                                <td>
-                                    Start Date
-                                </td>
-                                <td>End Date</td>
-                                <td>
-                                    Period Lock
-                                </td>
-                                <td>Depreciation calculated or not</td>
-
-                                <td align="center">
-                                    Edit
-                                </td>
-                                <td align="center">
-                                    Delete
-                                </td>
-                            </tr>
-                        </thead>
-                        <tbody style="font-weight:bold;color:black"></tbody>
-                    </table>
-
+            <div class="row my-1" style="padding-left:30px">
+                <div class="col-md-12">
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-sm nBtn" id="btnAddSubPeiod"
+                                data-toggle="modal">
+                            Add Sub-Period
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="modal-footer">
+            <div class="row" style="padding-left:30px">
+                <div class="col-lg-12">
+                    <div class="table-responsive">
+                        <table width="100%" class="table table-hover text-uppercase text-xs" id="tblSubPeriod">
+                            <thead class="hcol" style="font-weight:bold">
+                                <tr>
+
+                                    <td>
+                                        SrNo
+                                    </td>
+                                    <td>
+                                        Start Date
+                                    </td>
+                                    <td>End Date</td>
+                                    <td>
+                                        Period Lock
+                                    </td>
+                                    <td>Depreciation calculated or not</td>
+
+                                    <td align="center">
+                                        Edit
+                                    </td>
+                                    <td align="center">
+                                        Delete
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody style="font-weight:bold;color:black"></tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
 
 
 
-            <button type="submit"
-                    class="btn btn-sm saveBtn" id="btnSave">
-                Save
-            </button>
+                <button type="submit"
+                        class="btn btn-sm saveBtn" id="btnSave">
+                    Save
+                </button>
+            </div>
         </div>
     </div>
-</div>    
-                
-           
-       
+
+
+
 
 }
-    <div id="subperiodmodal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog modal-lg">
+<div id="subperiodmodal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
 
-                    <h4 class="modal-title">Add SubPeriod</h4>
+                <h4 class="modal-title">Add SubPeriod</h4>
+            </div>
+            <div class="modal-body ">
+
+                <div class="form-group col-lg-6">
+                    <label for="praticesname">Start Date<span>*</span></label>
+
+                    <div class='input-group date' id='dtspStartDate'>
+                        <input type='date' id="txtspStartDate" class="form-control" required />
+
+                    </div>
+
                 </div>
-                <div class="modal-body ">
 
-                    <div class="form-group col-lg-6">
-                        <label for="praticesname">Start Date<span>*</span></label>
 
-                        <div class='input-group date' id='dtspStartDate'>
-                            <input type='date' id="txtspStartDate" class="form-control" required />
+                <div class="form-group col-lg-6">
 
-                        </div>
+                    <label for="praticesname">End Date<span>*</span></label>
+
+                    @*@Html.TextBoxFor(m => m.LeaveDate, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.LeaveDate, "", new { @class = "text-danger  " })*@
+                    <div class='input-group date' id='dtspEndDate'>
+                        <input type='date' id="txtspEndDate" class="form-control" required />
+
 
                     </div>
 
-
-                    <div class="form-group col-lg-6">
-                        
-                        <label for="praticesname">End Date<span>*</span></label>
-
-                        @*@Html.TextBoxFor(m => m.LeaveDate, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.LeaveDate, "", new { @class = "text-danger  " })*@
-                        <div class='input-group date' id='dtspEndDate'>
-                            <input type='date' id="txtspEndDate" class="form-control" required />
-
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="form-group col-lg-6">
-                        <label>Lock this period so entries cannot be made<span>*</span></label>
-                        @Html.CheckBox("isPeriodlockFlag", false)
-
-                    </div>
-                    <div style="color:#CC0000;font-weight:400" id="spinvaliddateerror"></div>
                 </div>
+
+
+                <div class="form-group col-lg-6">
+                    <label>Lock this period so entries cannot be made</label>
+                    @Html.CheckBox("isPeriodlockFlag", false)
+
+                </div>
+                @*<div style="color:#CC0000;font-weight:400" id="spinvaliddateerror"></div>*@
+            </div>
+
+            <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm clBtn" onclick="addsubperiod();">Save</button>
+                <button type="button" class="btn btn-sm saveBtn" onclick="closeaddperiod();">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="editsubperiodmodal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Edit SubPeriod</h4>
+            </div>
+            <div class="modal-body ">
+                <div class="form-group col-lg-6">
+                    <label for="praticesname">Start Date<span>*</span></label>
+
+                    <div class='input-group date' id='dtedspStartDate'>
+                        <input type='date' id="txtedspStartDate" class="form-control" required />
+                        @*<div class="input-group-addon">
+                            <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                        </div>*@
+
+                    </div>
+
+                </div>
+                <div class="form-group col-lg-6">
+                    <label for="praticesname">End Date<span>*</span></label>
+                    @*@Html.TextBoxFor(m => m.LeaveDate, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.LeaveDate, "", new { @class = "text-danger  " })*@
+                    <div class='input-group date' id='dtedspEndDate'>
+                        <input type='date' id="txtedspEndDate" class="form-control" required />
+
+                        @*<div class="input-group-addon">
+                            <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                        </div>*@
+
+                    </div>
+
+                    <div class="form-group col-lg-6">
+                        <label>Lock this period so entries cannot be made</label>
+                        @Html.CheckBox("edisPeriodlockFlag", false)
+
+                    </div>
+                    @*<div style="color:#CC0000;font-weight:400" id="edspinvaliddateerror"></div>*@
+                </div>
+
 
                 <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
-
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-sm clBtn" onclick="addsubperiod();">Save</button>
-                    <button type="button" class="btn btn-sm saveBtn" onclick="closeaddperiod();">Close</button>
-                   
-                </div>
             </div>
-        </div>
-    </div>
-
-
-    <div id="editsubperiodmodal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog modal-lg">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-
-                    <h4 class="modal-title">Edit SubPeriod</h4>
-                </div>
-                <div class="modal-body ">
-                    <div class="form-group col-lg-6">
-                        <label for="praticesname">Start Date<span>*</span></label>
-
-                        <div class='input-group date' id='dtedspStartDate'>
-                            <input type='text' id="txtedspStartDate" class="form-control" required />
-                            <div class="input-group-addon">
-                                <span class="input-group-text"><span class="fa fa-calendar"></span></span>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <div class="form-group col-lg-6">
-                        <label for="praticesname">End Date<span>*</span></label>
-                        @*@Html.TextBoxFor(m => m.LeaveDate, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.LeaveDate, "", new { @class = "text-danger  " })*@
-                        <div class='input-group date' id='dtedspEndDate'>
-                            <input type='text' id="txtedspEndDate" class="form-control" required />
-
-                            <div class="input-group-addon">
-                                <span class="input-group-text"><span class="fa fa-calendar"></span></span>
-
-                            </div>
-
-                        </div>
-
-                        <div class="form-group col-lg-6">
-                            <label>Lock this period so entries cannot be made<span>*</span></label>
-                            @Html.CheckBox("edisPeriodlockFlag", false)
-
-                        </div>
-                        <div style="color:#CC0000;font-weight:400" id="edspinvaliddateerror"></div>
-                    </div>
-
-
-                    <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn delBtn" onclick="closeeditsubperiod();">Close</button>
-                    <button type="submit" class="btn addBtn" onclick="editsubperiod();">Save</button>
-                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm saveBtn" onclick="closeeditsubperiod();">Close</button>
+                <button type="button" class="btn btn-sm clBtn" onclick="editsubperiod();">Save</button>
             </div>
-
         </div>
 
     </div>
 
+</div>
 
 
-    <script type="text/javascript">
+
+<script type="text/javascript">
         var srnocnt = 1;
 
         var editindex = 0;
@@ -265,7 +265,7 @@
 
         $("#txtStartDate").val('@ViewBag.fromdate');
          //   $("#stDate").val('@ViewBag.fromdate');
-            
+
 
 
               $("#btnAddSubPeiod").click(function () {
@@ -498,10 +498,10 @@
 
             }
             ////check whether the subperiod date is between period date range
-            var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-            var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-            var checkspstartdate = moment($("#txtspStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-            var checkspenddate = moment($("#txtspEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
+            var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
+            var checkspstartdate = moment($("#txtspStartDate").val()).format('YYYY-MM-DD');
+            var checkspenddate = moment($("#txtspEndDate").val()).format('YYYY-MM-DD');
             if (new Date(checkspstartdate) < new Date(startdate)) {
 
 
@@ -540,8 +540,8 @@
 
             ////////////////////////////////////////////////////////////////////
 
-            var errorstartdate = moment($("#txtspStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-            var errorenddate = moment($("#txtspEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var errorstartdate = moment($("#txtspStartDate").val()).format('YYYY-MM-DD');
+            var errorenddate = moment($("#txtspEndDate").val()).format('YYYY-MM-DD');
 
             if (new Date(errorstartdate) > new Date(errorenddate)) {
 
@@ -619,10 +619,10 @@
             var spenddate = $("#txtedspEndDate").val();
 
             ////check whether the subperiod date is between period date range
-            var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-            var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-            var checkspstartdate = moment($("#txtedspStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-            var checkspenddate = moment($("#txtedspEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
+            var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
+            var checkspstartdate = moment($("#txtedspStartDate").val()).format('YYYY-MM-DD');
+            var checkspenddate = moment($("#txtedspEndDate").val()).format('YYYY-MM-DD');
             if (new Date(checkspstartdate) < new Date(startdate)) {
 
 
@@ -662,8 +662,8 @@
 
 
 
-            var errorstartdate = moment($("#txtspStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-            var errorenddate = moment($("#txtspEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var errorstartdate = moment($("#txtspStartDate").val()).format('YYYY-MM-DD');
+            var errorenddate = moment($("#txtspEndDate").val()).format('YYYY-MM-DD');
 
             if (new Date(errorstartdate) > new Date(errorenddate)) {
 
@@ -687,7 +687,7 @@
 
         }
 
-    </script>
+</script>
 
 
 
