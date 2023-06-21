@@ -103,10 +103,11 @@ namespace VerifyWebApp.Controllers
             {
                 return RedirectToAction("CompanySelection", "Company");
             }
-            Insurance ins = new Insurance();
+            // Insurance ins = new Insurance();
+            AMC amc = new AMC();
 
 
-            ViewBag.Assestlist = new SelectList(db.Assetss.Where(x=>x.DisposalFlag==0 &&x.Companyid==companyid).OrderBy(e => e.ID), "AssetNo", "AssetNo");
+            ViewBag.Assestlist = new SelectList(db.Assetss.Where(x=>x.DisposalFlag==0 && x.Companyid==companyid).OrderBy(e => e.ID), "AssetNo", "AssetNo");
             //  @Html.DropDownList("DesignationID", (SelectList)ViewBag.DesignationList, new { @class = "form-control" })
 
 
@@ -153,7 +154,18 @@ namespace VerifyWebApp.Controllers
             {
                 return RedirectToAction("CompanySelection", "Company");
             }
-          
+
+            JsonResult res;
+            res = new JsonResult();
+            bool bResult = true;
+
+
+            TimeZoneInfo istZone = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+
+            var tnow = System.DateTime.Now.ToUniversalTime();
+            DateTime istDate = TimeZoneInfo.ConvertTimeFromUtc(tnow.Date, istZone);
+
+
             if (ModelState.IsValid)
             {
                 AMC amcobj = new AMC();
@@ -161,12 +173,12 @@ namespace VerifyWebApp.Controllers
                 {
                     try
                     {
-                        TimeZoneInfo istZone = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+                       //TimeZoneInfo istZone = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
 
-                        var tnow = System.DateTime.Now.ToUniversalTime();
-                        DateTime istDate = TimeZoneInfo.ConvertTimeFromUtc(tnow.Date, istZone);
+                       // var tnow = System.DateTime.Now.ToUniversalTime();
+                       // DateTime istDate = TimeZoneInfo.ConvertTimeFromUtc(tnow.Date, istZone);
                         amcobj.CreatedDate = istDate;
-                        amcobj.Companyid = companyid;
+                        amcobj.Companyid = companyid; 
                         amcobj.CreatedUserId = userid;
                         amcobj.FromDate = amcViewmodel.FromDate;
                         amcobj.ToDate = amcViewmodel.ToDate;
@@ -185,7 +197,7 @@ namespace VerifyWebApp.Controllers
                             {
 
                                 subamc.AmcId = amcid;
-                                if (item.AssetNo !="")
+                                if (item.AssetNo != "")
                                 {
                                     var assetid = db.Assetss.Where(x => x.AssetNo == item.AssetNo && x.Companyid==companyid).FirstOrDefault().ID;
 
@@ -203,7 +215,7 @@ namespace VerifyWebApp.Controllers
                             }
                         }
                         transaction.Commit();
-                        return RedirectToAction("Index", "Amc");
+                       // return RedirectToAction("Index", "Amc");
 
 
                     }
@@ -213,19 +225,22 @@ namespace VerifyWebApp.Controllers
                         strError = ex.Message + "|" + ex.InnerException;
                         // logger.Log(LogLevel.Error, strError);
                         transaction.Rollback();
-                        return RedirectToAction("Index", "Amc");
+                        //return RedirectToAction("Index", "Amc");
+                        bResult = false;
                     }
 
                 }
             }
             else
             {
-                return RedirectToAction("Index", "Amc");
+                // return RedirectToAction("Index", "Amc");
                 /// todo redirect to common error page
+                bResult = false;
 
             }
+            return new JsonResult { Data = bResult, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 
-       }
+        }
 
 
 
@@ -350,7 +365,7 @@ namespace VerifyWebApp.Controllers
                 try
                 {
                     AMC amcobj = new AMC();
-                    amcobj = db.AMCss.Where(x => x.ID == amcViewmodel.ID).FirstOrDefault();
+                    amcobj = db.AMCss.Where(x => x.ID == amcViewmodel.ID && x.Companyid == companyid).FirstOrDefault();
                     amcobj.FromDate = amcViewmodel.FromDate;
                     amcobj.ToDate = amcViewmodel.ToDate;
                     amcobj.ReminderEMail = amcViewmodel.ReminderEMailID;
@@ -368,24 +383,25 @@ namespace VerifyWebApp.Controllers
                     slist = db.SubAmc.Where(x => x.AmcId == amcViewmodel.ID && x.Companyid==companyid).ToList();
                     db.SubAmc.RemoveRange(slist);
                     db.SaveChanges();
-                    SubAmc subins = new SubAmc();
+                    //SubAmc subins=new SubAmc();
+                    SubAmc subamc = new SubAmc();
                     if (amcViewmodel.AmcViewModellist.Count() != 0)
                     {
                         foreach (var item in amcViewmodel.AmcViewModellist)
                         {
-                            subins.AmcId = amcViewmodel.ID;
+                            subamc.AmcId = amcViewmodel.ID;
                             if (item.AssetNo != "")
                             {
                                 var assetid = db.Assetss.Where(x => x.AssetNo == item.AssetNo && x.Companyid==companyid).FirstOrDefault().ID;
                                 item.AssetId = assetid;
                             }
-                            subins.AssetId = item.AssetId;
-                            subins.AssetDescription = item.AssetDescription;
-                            subins.CapitalisedAmount = item.CapitalisedAmount;
-                            subins.Modified_Userid = userid;
-                            subins.ModifiedDate = istDate;
-                            subins.Companyid = amcobj.Companyid;
-                            db.SubAmc.Add(subins);
+                            subamc.AssetId = item.AssetId;
+                            subamc.AssetDescription = item.AssetDescription;
+                            subamc.CapitalisedAmount = item.CapitalisedAmount;
+                            subamc.Modified_Userid = userid;
+                            subamc.ModifiedDate = istDate;
+                            subamc.Companyid = amcobj.Companyid;
+                            db.SubAmc.Add(subamc);
                             db.SaveChanges();
 
                         }
