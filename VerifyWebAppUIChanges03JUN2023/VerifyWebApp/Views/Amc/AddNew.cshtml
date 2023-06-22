@@ -10,162 +10,160 @@
                    new { id = "frmNewEmp", name = "frmNewEmp" }))
 {
     @Html.AntiForgeryToken()
-}
+
 
 <div class="container-fluid py-4">
     <div class="row my-2">
-        <div class="card">
-            <div class="card-header pb-0">
-                <div class="row">
-                    <div class="d-sm-flex justify-content-between hborder">
-                        <div class="htitle"> <b>Add New AMC </b> </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="card-body" id="divTableData">
-
-
-
-                <div class="row">
-                    <div class="col-lg-2">
-                        <div class="form-group">
-                            <label for="praticesname">From Date<span>*</span></label>
-
-                            <input type='date' id="txtStartDate"
-                                   name="FromDate"
-                                   class="form-control form-control-sm" required />
-
-
-
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header pb-0">
+                    <div class="row">
+                        <div class="d-sm-flex justify-content-between hborder">
+                            <div class="htitle"> <b>Add New AMC </b> </div>
                         </div>
                     </div>
-                    <div class="col-lg-2">
-                        <div class="form-group">
-                            <label for="praticesname">To Date<span>*</span></label>
+                </div>
 
 
-                            <div class='input-group date' id='dtEndDate'>
-                                <input type='date' id="txtEndDate"
-                                       name="ToDate"
+                <div class="card-body" id="divTableData">
+
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label for="praticesname">From Date<span>*</span></label>
+
+                                <input type='date' id="txtStartDate"
+                                       name="FromDate"
                                        class="form-control form-control-sm" required />
+
                             </div>
                         </div>
-                    </div>
 
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            <label for="praticesname" class="form-control-sm">Send Reminder mail to</label>
-                            <input id="Email" type="email" class="form-control form-control-sm" />
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label for="praticesname">To Date<span>*</span></label>
 
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            <label for="praticesname" class=" form-control-sm">Send Reminder  mail  to (CC)</label>
-                            <input id="CCEmail" type="email" class="form-control form-control-sm" />
-
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="praticesname" class="form-control-sm">Amc Details</label>
-                            <textarea id="AmcDetails" class="form-control form-control-sm" rows="3"></textarea>
-
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-group">
-
-                            <label for="praticesname" class="form-control-sm">Remark</label>
-                            <textarea id="Remark" class="form-control form-control-sm" rows="3"></textarea>
+                                <div class='input-group date' id='dtEndDate'>
+                                    <input type='date' id="txtEndDate"
+                                           name="ToDate"
+                                           class="form-control form-control-sm" required />
+                                </div>
+                            </div>
                         </div>
 
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="praticesname" class="form-control-sm">Send Reminder mail to</label>
+                                <input id="Email" type="email" class="form-control form-control-sm" />
 
-                    </div>
-
-                </div>
-
-                <div class="pageconent">
-                    <div class="row">
-                        <div class="col-md-12">
-                            Assets List for AMC
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-8">
 
-                            <button type="button" id="btnexport" value="New Practice"
-                                    class="btn btn-sm xtraBtn pull-right m-1 order-2"
-                                    onclick="assetexport();" data-bs-toggle="tooltip" data-bs-placement="top" title="Export">
-                                <i class="fa fa-file-excel-o"></i>
-                            </button>
-
-                            <button type="button" id="btnimport" value="Upload"
-                                    class="btn btn-sm xtraBtn pull-right m-1 order-4"
-                                    onclick="Importassetexcel();" data-bs-toggle="tooltip" data-bs-placement="top" title="Import">
-                                <i class="fa fa-upload"></i>
-                            </button>
-                            <button type="button" value="New Practice"
-                                    class="btn btn-sm addBtn pull-right m-1 order-1"
-                                    id="btnAddSubamc" data-bs-toggle="tooltip" data-bs-placement="top" title="Add New">
-                                <i class="fa fa-plus-square"></i>
-
-                            </button>
-
-                        </div>
-                    </div>
-
-                    <div class="row">
-
-                        <div class="col-lg-12">
-                            <div class="table-responsive">
-                                <table class="table table-hover text-uppercase text-xs" id="tblSubamc">
-                                    <thead class="hcol" style="font-weight:bold">
-                                        <tr>
-
-                                            <td>
-                                                Sr No
-                                            </td>
-                                            <td>
-                                                Asset No.
-                                            </td>
-                                            <td>Asset Description</td>
-
-                                            <td align="right">Asset Capitalised Amount</td>
-                                            <td align="center">
-                                                Edit
-                                            </td>
-                                            <td align="center">
-                                                Delete
-                                            </td>
-                                        </tr>
-                                    </thead>
-                                    <tbody style="font-weight:bold;color:black"></tbody>
-                                </table>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="praticesname" class=" form-control-sm">Send Reminder  mail  to (CC)</label>
+                                <input id="CCEmail" type="email" class="form-control form-control-sm" />
 
                             </div>
                         </div>
                     </div>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn saveBtn btn-sm" id="btnSave">
-                            @*//.........*@
-                            Save
-                        </button>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="praticesname" class="form-control-sm">Amc Details</label>
+                                <textarea id="AmcDetails" class="form-control form-control-sm" rows="3"></textarea>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+
+                                <label for="praticesname" class="form-control-sm">Remark</label>
+                                <textarea id="Remark" class="form-control form-control-sm" rows="3"></textarea>
+                            </div>
+
+                        </div>
+
                     </div>
-                </div>
+
+                    <div class="pageconent">
+                        <div class="row">
+                            <div class="col-md-12">
+                                Assets List for AMC
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-8">
+
+                                <button type="button" id="btnexport" value="New Practice"
+                                        class="btn btn-sm xtraBtn pull-right m-1 order-2"
+                                        onclick="assetexport();" data-bs-toggle="tooltip" data-bs-placement="top" title="Export">
+                                    <i class="fa fa-file-excel-o"></i>
+                                </button>
+
+                                <button type="button" id="btnimport" value="Upload"
+                                        class="btn btn-sm xtraBtn pull-right m-1 order-4"
+                                        onclick="Importassetexcel();" data-bs-toggle="tooltip" data-bs-placement="top" title="Import">
+                                    <i class="fa fa-upload"></i>
+                                </button>
+                                <button type="button" value="New Practice"
+                                        class="btn btn-sm addBtn pull-right m-1 order-1"
+                                        id="btnAddSubamc" data-bs-toggle="tooltip" data-bs-placement="top" title="Add New">
+                                    <i class="fa fa-plus-square"></i>
+
+                                </button>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="table-responsive">
+                                    <table class="table table-hover text-uppercase text-xs" id="tblSubamc">
+                                        <thead class="hcol" style="font-weight:bold">
+                                            <tr>
+
+                                                <td>
+                                                    Sr No
+                                                </td>
+                                                <td>
+                                                    Asset No.
+                                                </td>
+                                                <td>Asset Description</td>
+
+                                                <td align="right">Asset Capitalised Amount</td>
+                                                <td align="center">
+                                                    Edit
+                                                </td>
+                                                <td align="center">
+                                                    Delete
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody style="font-weight:bold;color:black"></tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn saveBtn btn-sm" id="btnSave">
+                                @*<button type="submit" class="btn saveBtn btn-sm" id="btnSave">
+                                *@
+                                Save
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
     </div>
-</div>
+ </div>
 }
-
-
 
 
 <div id="subamcmodal" class="modal fade" role="dialog" style="height: 570px;" data-backdrop="static" data-keyboard="false">
@@ -361,7 +359,7 @@
 
     function InitUI()
     {
-           $("#startdateerror,#enddateerror").hide();    /*commented .....*/
+          // $("#startdateerror,#enddateerror").hide();    /*commented .....*/
 
             $("#btnAddSubamc").click(function () {
                 $("#AssetNo").val(0);
@@ -374,20 +372,21 @@
             getAssetDetails();
             geteditAssetDetails();
 
-        //$("#btnSave").click(function (e) {
-        // //   debugger;
-        //        SaveData();
-        //        e.preventDefault();
-        //        return false;
-        //    });
-
-
-            $("#frmNewEmp").submit(function (e) {
-                e.preventDefault();
+        $("#btnSave").click(function (e) {
+            debugger;
+            e.preventDefault();
                 SaveData();
                 return false;
+        });
 
-            });          /*  .......commented alredy*/
+
+        //$("#frmNewEmp").submit(function (e) {
+        //    debugger;
+        //        e.preventDefault();
+        //        SaveData();
+        //        return false;
+
+        //});          /*  .......commented alredy*/
     }
 
     function getAssetDetails()
@@ -473,15 +472,15 @@
 
             }
     }
-   function closeaddamc()
-    {
-            $('#subamcmodal').modal('hide');
-    }
+   //function closeaddamc()
+   // {
+   //         $('#subamcmodal').modal('hide');
+   // }
 
-    function closeeditamc()
-    {
-            $('#editsubamcmodal').modal('hide');
-    }
+    //function closeeditamc()
+    //{
+    //        $('#editsubamcmodal').modal('hide');
+    //}
 
     function SaveData()
     {
@@ -532,11 +531,10 @@
             else
             {
                 //$('#assignError').hide();
-                EndDateStatus = false;
+                EndDateStatus = true;
             }
 
-            if (StartDateStatus == true && EndDateStatus == true)
-            {
+            if (StartDateStatus == true && EndDateStatus == true) {
 
                 $("#startdateerror,#enddateerror").hide();
 
@@ -545,10 +543,9 @@
                     var Tableassetno = $td.eq(1).html();
                     var Tableassetdesc = $td.eq(2).html();
                     var Tableassetamt = $td.eq(3).html();
-                    return
-                    {
-                        AssetNo: Tableassetno;
-                        AssetDescription: Tableassetdesc;
+                    return {
+                        AssetNo: Tableassetno,
+                        AssetDescription: Tableassetdesc,
                         CapitalisedAmount: Tableassetamt
                     }
                 }).get();
@@ -558,8 +555,8 @@
 
                 var postdata =
                     {
-                    "FromDate": startdate,
-                    "ToDate": enddate,
+                    "FromDate": StartDate,
+                    "ToDate": EndDate,
                         "AmcDetails": amcdetails,
                         "ReminderEMailID": email,
                         "Senderccemailid": ccemail,
@@ -589,7 +586,7 @@
                                 debugger;
                                 if (res == "true")
                                 {
-                                   swal("Alert", "You Cannot Add this Record", "warning");
+                                    swal("Alert", "You Cannot Add this Record", "warning");
                                     //swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
                                     //    if (result == true) {
                                     //        window.location.replace(returnURL);
@@ -604,7 +601,7 @@
                                             window.location.replace(returnURL);
                                         }
                                     });
-                                   /* swal("Alert", "You Cannot Add this Record", "warning");*/
+                                //    swal("Alert", "You Cannot Add this Record", "warning");
                                 }
 
                             },
@@ -621,21 +618,21 @@
             {
                 if (StartDateStatus == true && EndDateStatus == false)
                 {
-                    $('#enddateerror').show();
-                    $('#startdateerror').hide();
+                    //$('#enddateerror').show();
+                    //$('#startdateerror').hide();
 
                 }
                 else if (EndDateStatus == true && StartDateStatus == false)
                 {
-                    $('#enddateerror').hide();
+                   // $('#enddateerror').hide();
 
-                   $('#startdateerror').show();
+                   //$('#startdateerror').show();
                 }
                 else
                 {
-                    $('#enddateerror').show();
+                    //$('#enddateerror').show();
 
-                    $('#startdateerror').show();
+                    //$('#startdateerror').show();
 
                 }
 
@@ -677,56 +674,56 @@
             });
     }
 
-    function Editsubamc(id, editcnt)
-    {
-            //$(id).parent();
-            editindex = editcnt;
-            var tr = $(id).parent().parent();
-            var assetno = $(tr).find("td").eq(1).html();
-            var assetdesc = $(tr).find("td").eq(2).html();
-            var assetamt = $(tr).find("td").eq(3).html();
-            //  $("#txtedassetno").val(assetno);
+   // function Editsubamc(id, editcnt)
+    //{
+    //        //$(id).parent();
+    //        editindex = editcnt;
+    //        var tr = $(id).parent().parent();
+    //        var assetno = $(tr).find("td").eq(1).html();
+    //        var assetdesc = $(tr).find("td").eq(2).html();
+    //        var assetamt = $(tr).find("td").eq(3).html();
+    //        //  $("#txtedassetno").val(assetno);
 
-            $("#edAssetNo").val(assetno);
+    //        $("#edAssetNo").val(assetno);
 
-            //    $("#edAssetNo").prop('selectedIndex', assetno);
+    //        //    $("#edAssetNo").prop('selectedIndex', assetno);
 
-            $('#txtedassetdesc').val(assetdesc);
-            $('#txtedassetamount').val(assetamt);
-            $('#editsubamcmodal').modal('show');
-    }
+    //        $('#txtedassetdesc').val(assetdesc);
+    //        $('#txtedassetamount').val(assetamt);
+    //        $('#editsubamcmodal').modal('show');
+    //}
 
-        function editsubamc() {
+      //  function editsubamc() {
 
-            if ($("#edAssetNo").val() != '' && $("#txtedassetdesc").val() != '' && $("#txtedassetamount").val() != '')
-            {
-                // alert("if")
-                Subamcedittable();
-                $('#editsubamcmodal').modal('hide');
+            //if ($("#edAssetNo").val() != '' && $("#txtedassetdesc").val() != '' && $("#txtedassetamount").val() != '')
+            //{
+            //    // alert("if")
+            //    Subamcedittable();
+            //    $('#editsubamcmodal').modal('hide');
 
-            }
+            //}
 
-        }
-        function Subamcedittable() {
-            var assetno = $("#edAssetNo").val();
+       // }
+        //function Subamcedittable() {
+        //    var assetno = $("#edAssetNo").val();
 
-            var assetdesc = $("#txtedassetdesc").val(); //// txtedassetdesc
-            var assetamt = $("#txtedassetamount").val();
-            //alert(assetno)
-            //alert(assetdesc)
-            //alert(assetamt)
-            var tbl = $('#tblSubamc tbody tr:has(td)').each(function () {
-                var srno = $(this).find("td").eq(0).html();
-                if (srno == editindex)
-                {
-                    //alert('check');
-                    $(this).find("td").eq(1).html(assetno);
-                    $(this).find("td").eq(2).html(assetdesc);
-                    $(this).find("td").eq(3).html(assetamt);
+        //    var assetdesc = $("#txtedassetdesc").val(); //// txtedassetdesc
+        //    var assetamt = $("#txtedassetamount").val();
+        //    //alert(assetno)
+        //    //alert(assetdesc)
+        //    //alert(assetamt)
+        //    var tbl = $('#tblSubamc tbody tr:has(td)').each(function () {
+        //        var srno = $(this).find("td").eq(0).html();
+        //        if (srno == editindex)
+        //        {
+        //            //alert('check');
+        //            $(this).find("td").eq(1).html(assetno);
+        //            $(this).find("td").eq(2).html(assetdesc);
+        //            $(this).find("td").eq(3).html(assetamt);
 
-                }
-            })
-        }
+        //        }
+        //    })
+      //  }
     function assetexport()
     {
               window.location.href = '@Url.Action("Assetexport", "Amc")';
