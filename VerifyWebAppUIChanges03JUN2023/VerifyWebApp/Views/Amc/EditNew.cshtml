@@ -347,10 +347,6 @@
                         </div>
                     </div>
 
-
-
-
-
                     <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
                 </div>
                 <div class="modal-footer">
@@ -402,24 +398,27 @@
 </div>
 
 <script type="text/javascript">
-     var srnocnt = '@ViewBag.Srno';
-
+    @*var srnocnt = '@ViewBag.Srno';*@
+    var srnocnt = 1;
     var editindex = 0;
 
-
-
-
-    var EndDateStatus = false;
-    var StartDateStatus = false;
-
     $(document).ready(function () {
+        InitUI();
+    });
+
+    //var EndDateStatus = false;
+    //var StartDateStatus = false;
+
+    //$(document).ready(function () {
+    function InitUI() {
 
         var startdate = moment('@ViewBag.FromDate', 'DD/MM/YYYY').format('YYYY-MM-DD');
         var enddate = moment('@ViewBag.ToDate', 'DD/MM/YYYY').format('YYYY-MM-DD');
 
 
         $('#txtStartDate').val(startdate);
-          $('#txtEndDate').val(enddate);
+        $('#txtEndDate').val(enddate);
+
           $('#Email').val('@ViewBag.Email');
                $('#CCEmail').val('@ViewBag.Senderccemail');
           $('#AmcDetails').val('@ViewBag.amcdetails');
@@ -435,91 +434,125 @@
                   $("#txtassetamount").val('');
                   $('#subamcmodal').modal('show');
 
-
               });
-                     $("#startdateerror,#enddateerror").hide();
+        $("#startdateerror,#enddateerror").hide();
 
+        //getAssetDetails();
+        //editgetAssetDetails();
 
-             });
+        $("#frmNewEmp").submit(function (e) {
+            debugger;
+            e.preventDefault();
+            SaveData();
+            return false;
 
-                    $("[name='AssetNo']").change(function () {
-                        var assetno = $("#AssetNo").val();
+        });
+    }
+  
 
-                        if (assetno == "") {
-                            $("#txtassetdesc").val("");
-                            $("#txtassetamount").val("");
+    function getAssetDetails() {
+        $("[name='AssetNo']").change(function () {
+            var assetno = $("#AssetNo").val();
 
-                        }
-                        else {
-                            var ControllerURL = '@Url.Action("getassetinfo", "Insurance")';
-                            var url = ControllerURL + "/" + assetno;
-                            $.ajax({
-                                type: 'GET',
-                                url: url,
+            if (assetno == "") {
+                $("#txtassetdesc").val("");
+                $("#txtassetamount").val("");
 
-                                contentType: "application/json",
-                                // data: JSON.stringify(getdata),
-                                success: function (result) {
+            }
+            else {
+                var ControllerURL = '@Url.Action("getassetinfo", "Amc")';
+                var url = ControllerURL + "/" + assetno;
+                $.ajax({
+                    type: 'GET',
+                    url: url,
 
-                                    $("#txtassetdesc").val(result.Data[0].AssetName);
-                                    $("#txtassetamount").val(result.Data[0].AmountCapitalised);
+                    contentType: "application/json",
+                    // data: JSON.stringify(getdata),
+                    success: function (result) {
 
-                                },
-                                failure: function () { alert("Error"); }
+                        $("#txtassetdesc").val(result.Data[0].AssetName);
+                        $("#txtassetamount").val(result.Data[0].AmountCapitalised);
 
-                            });
-                        }
-                    });
-                     $("[name='edAssetNo']").change(function () {
-                        var assetno = $("#edAssetNo").val();
+                    },
+                    failure: function () { alert("Error"); }
 
-                        if (assetno == "") {
-                            $("#txtedassetdesc").val("");
-                            $("#txtedassetamount").val("");
+                });
+            }
 
-                        }
-                        else {
-                            var ControllerURL = '@Url.Action("getassetinfo", "Insurance")';
-                            var url = ControllerURL + "/" + assetno;
-                            $.ajax({
-                                type: 'GET',
-                                url: url,
+        });
+    }
 
-                                contentType: "application/json",
-                                // data: JSON.stringify(getdata),
-                                success: function (result) {
+    function editgetAssetDetails() {
+        $("[name='edAssetNo']").change(function () {
+            var assetno = $("#edAssetNo").val();
 
-                                    $("#txtedassetdesc").val(result.Data[0].AssetName);
-                                    $("#txtedassetamount").val(result.Data[0].AmountCapitalised);
+            if (assetno == "") {
+                $("#txtedassetdesc").val("");
+                $("#txtedassetamount").val("");
 
-                                },
-                                failure: function () { alert("Error"); }
+            }  
+            else
+            {
+                var ControllerURL = '@Url.Action("getassetinfo", "Amc")';
+                var url = ControllerURL + "/" + assetno;
+                $.ajax({
+                    type: 'GET',
+                    url: url,
 
-                            });
-                        }
-                    });
+                    contentType: "application/json",
+                    // data: JSON.stringify(getdata),
+                    success: function (result) {
 
-                     $("#frmNewEmp").submit(function (e) {
+                        $("#txtedassetdesc").val(result.Data[0].AssetName);
+                        $("#txtedassetamount").val(result.Data[0].AmountCapitalised);
 
-                         SaveData();
-                         e.preventDefault();
-                         return false;
+                    },
+                    failure: function () { alert("Error"); }
 
-                     });
+                });
+            }
+        });
+    }
+
+                     //$("#frmNewEmp").submit(function (e) {
+                     //    debugger;
+                     //    e.preventDefault();
+                     //    SaveData();
+                     //    return false;
+
+                     //});
+
+    function addasset() {
+        if ($("#AssetNo").val() != '' && $("#txtassetdesc").val() != '' && $("#txtassetamount").val() != '') {
+
+            AddAssettotable();
+            $("#txtEndDate").focus();
+            $('#subamcmodal').modal('hide');
+
+        }
+    }
+    function closeaddamc()
+    {
+            $('#subamcmodal').modal('hide');
+    }
+    function closeeditamc()
+    {
+            $('#editsubamcmodal').modal('hide');
+    }
 
     function SaveData() {
 
         // alert('Save');
+        debugger;
         var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
         var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
 
         if (new Date(startdate) >= new Date(enddate)) {
 
-
             swal("Alert", "To Date must be greater than From Date", "warning");
+            return;
         }
         else {
-
                     var StartDate;
                     var EndDate;
                     var email;
@@ -528,8 +561,8 @@
                     var remark;
         var Editid = '@ViewBag.ID';
 
-            //StartDate = $('#txtStartDate').val();
-            //EndDate = $('#txtEndDate').val();
+            StartDate = $('#txtStartDate').val();
+            EndDate = $('#txtEndDate').val();
 
         email = $('#Email').val();
             ccemail = $('#CCEmail').val();
@@ -566,8 +599,8 @@
                     CapitalisedAmount: Tableassetamt
                 }
             }).get();
-           // var Strstartdate = moment(StartDate, "DD/MM/YYYY").format("YYYY/MM/DD");
-           //var StrEnddate = moment(EndDate, "DD/MM/YYYY").format("YYYY/MM/DD");
+            var Strstartdate = moment(StartDate, "DD/MM/YYYY").format("YYYY-MM-DD");
+            var StrEnddate = moment(EndDate, "DD/MM/YYYY").format("YYYY-MM-DD");
             //alert(tbl)
 
             var postdata =
@@ -580,7 +613,8 @@
                     "Remarks": remark,
                     "AmcViewModellist": tbl,
                     "ID": Editid
-                };
+            };
+
             var form = $('#frmNewEmp');
             var token = $('input[name="__RequestVerificationToken"]', form).val();
             var headers = {};
@@ -625,17 +659,17 @@
 
             if (StartDateStatus == true && EndDateStatus == false) {
 
-             //   $('#enddateerror').show();
-               // $('#startdateerror').hide();
+              $('#enddateerror').show();
+                $('#startdateerror').hide();
 
             } else if (EndDateStatus == true && StartDateStatus == false) {
-                //$('#enddateerror').hide();
+               $('#enddateerror').hide();
 
-                //$('#startdateerror').show();
+                $('#startdateerror').show();
             } else {
-               // $('#enddateerror').show();
+               $('#enddateerror').show();
 
-                //$('#startdateerror').show();
+                $('#startdateerror').show();
 
             }
 
@@ -645,36 +679,30 @@
     }
 
 
-    function closeaddamc() {
-        $('#subamcmodal').modal('hide');
-    }
+    //function closeaddamc() {
+    //    $('#subamcmodal').modal('hide');
+    //}
 
-    function closeeditamc() {
-        $('#editsubamcmodal').modal('hide');
-    }
+    //function closeeditamc() {
+    //    $('#editsubamcmodal').modal('hide');
+    //}
 
-    function addasset()
-    {
+    //function addasset()
+    //{
+    //   // $('#myModal').modal('hide');
+    //    if ($("#AssetNo").val() != '' &&
+    //        $("#txtassetdesc").val() != '' && $("#txtassetamount").val() != '') {
 
+    //        AddAssettotable();
 
+    //        $("#txtEndDate").focus();
+    //        $('#subamcmodal').modal('hide');
 
-       // $('#myModal').modal('hide');
-        if ($("#AssetNo").val() != '' &&
-            $("#txtassetdesc").val() != '' && $("#txtassetamount").val() != '') {
-
-            AddAssettotable();
-
-
-            $("#txtEndDate").focus();
-            $('#subamcmodal').modal('hide');
-
-        }
-    }
+    //    }
+    //}
 
     function AddAssettotable()
     {
-
-
         var assetno = $("#AssetNo").val();
         var assetdesc = $("#txtassetdesc").val();
         var assetamt = parseFloat($("#txtassetamount").val()).toFixed(2);
@@ -751,7 +779,7 @@
               window.location.href = '@Url.Action("Assetexport", "Amc")';
 
 
-        }
+     }
         function Importassetexcel() {
             $('#importmodal').modal('show');
         }
@@ -852,11 +880,6 @@
                     }
                 });
             }
-
-
-
-
-
         });
 
         @*function Importassetexcel() {
@@ -873,7 +896,8 @@
          function showerrorlist(result) {
         var srno = 1;
 
-        for (var i = 0; i < result.length; i++) {
+             for (var i = 0; i < result.length; i++)
+             {
 
             $('#errtbl').last().append('<tr><td>' + srno + '</td><td>' + result[i] + '</td></tr>');
             srno++
