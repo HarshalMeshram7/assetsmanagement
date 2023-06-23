@@ -19,6 +19,7 @@ namespace VerifyWebApp.Controllers
         [AuthUser]
         public ActionResult Index()
         {
+            
             int userid = 0;
             Login user = (Login)(Session["PUser"]);
 
@@ -521,7 +522,7 @@ namespace VerifyWebApp.Controllers
             }
             JsonResult res;
             res = new JsonResult();
-            int int_id = Convert.ToInt32(id);
+          //  int int_id = Convert.ToInt32(id);
             List<Assets> list = new List<Assets>();
 
 
@@ -556,6 +557,7 @@ namespace VerifyWebApp.Controllers
             {
                 ViewBag.LoggedCompany = company.CompanyName;
                 companyid = company.ID;
+                ViewBag.companyid = companyid;
             }
             else
             {
@@ -566,7 +568,7 @@ namespace VerifyWebApp.Controllers
             Response.ClearContent();
             Response.BinaryWrite(generateinsuranceexcel(companyid));
             string excelName = "Amc";
-            Response.AddHeader("content-dispostion", "attachment;filename="+excelName+".xlsx");
+            Response.AddHeader("content-dispostion", "attachment;filename=" + excelName + ".xlsx");
             Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
             Response.Flush();
             Response.End();
@@ -577,10 +579,10 @@ namespace VerifyWebApp.Controllers
         {
             
 
-            List<AMC> lstins = new List<AMC>();
             int srno = 1;
 
 
+            List<AMC> lstins = new List<AMC>();
             lstins = db.AMCss.Where(x=>x.Companyid==companyid).ToList();
 
             foreach (var item in lstins)
@@ -602,9 +604,9 @@ namespace VerifyWebApp.Controllers
                 excel.Workbook.Worksheets.Add("Worksheet2");
 
                 var headerRow = new List<string[]>()
-                  {
+                {
                     new string[] { "Sr No", "FromDate", "ToDate","Reminder Mail","Send Reminder mail to CC","Amc Details","Remarks",}
-                  };
+                };
 
 
                 // Determine the header range (e.g. A1:D1)
@@ -658,6 +660,7 @@ namespace VerifyWebApp.Controllers
             {
                 ViewBag.LoggedCompany = company.CompanyName;
                 companyid = company.ID;
+                ViewBag.companyid = companyid;
             }
             else
             {
@@ -678,8 +681,9 @@ namespace VerifyWebApp.Controllers
         {
           
             int srno = 1;
-            Login user = (Login)(Session["PUser"]);
-            Company company = (Company)(Session["Cid"]);
+
+            //Login user = (Login)(Session["PUser"]);
+            //Company company = (Company)(Session["Cid"]);
 
             var memoryStream = new MemoryStream();
             byte[] data;
@@ -738,6 +742,7 @@ namespace VerifyWebApp.Controllers
             {
                 ViewBag.LoggedCompany = company.CompanyName;
                 companyid = company.ID;
+                ViewBag.companyid = companyid;
             }
             else
             {
@@ -771,6 +776,7 @@ namespace VerifyWebApp.Controllers
             {
                 ViewBag.LoggedCompany = company.CompanyName;
                 companyid = company.ID;
+                ViewBag.companyid = companyid;
             }
             else
             {
