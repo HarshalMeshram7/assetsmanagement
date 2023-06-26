@@ -46,7 +46,7 @@
                                 <div></div>
                             </div>
                         </div>
-                        <div style="color:#CC0000;font-weight:400" id="invalideparentdateerror">Select Date</div>
+                        @*<div style="color:#CC0000;font-weight:400" id="invalideparentdateerror">Select Date</div>*@
                     </div>
 
 
@@ -138,7 +138,7 @@
 
                                 </table>
                                 <div class="modal-footer">
-                                    <button type="submit"
+                                    <button type="button"
                                             class="btn btn-sm saveBtn" id="btnSave">
                                         Save
                                     </button>
@@ -217,14 +217,14 @@
                     <label for="praticesname">Start Date<span>*</span></label>
 
                     <div class='input-group date' id='dtedspStartDate'>
-                        <input id="txtedspStartDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date"   required />
+                        <input id="txtedspStartDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" onfocus="focused(this)" onfocusout="defocused(this)"  required />
                     </div>
 
                 </div>
                 <div class="form-group col-lg-6">
                     <label for="praticesname">End Date<span>*</span></label>
                     <div class='input-group date' id='dtedspEndDate'>
-                        <input id="txtedspEndDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date"   required />
+                        <input id="txtedspEndDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" onfocus="focused(this)" onfocusout="defocused(this)"   required />
                     </div>
 
                     <div class="form-group col-lg-6">
@@ -239,8 +239,9 @@
                 <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn saveBtn btn-sm" onclick="addsubperiod();">Save</button>
-                <button type="button" class="btn btn-sm clBtn" onclick="closeaddperiod();">Close</button>
+                <button type="button" class="btn btn-sm saveBtn" id="btneditSave">Save</button>
+                <button type="button" class="btn btn-sm clBtn" id="btnClose" data-bs-dismiss="modal">Close</button>
+
             </div>
         </div>
 
@@ -251,9 +252,16 @@
 
 
 <script type="text/javascript">
-           var srnocnt = '@ViewBag.Srno';
+    $('#btneditSave').click(function (event) {
+        // debugger;
+        SaveData();
+        e.preventDefault();
+        return false;
+    });
 
-    var editindex = 0;
+     var srnocnt = '@ViewBag.Srno';
+
+     var editindex = 0;
 
         var EndDateStatus = false;
         var StartDateStatus = false;
@@ -295,15 +303,16 @@
               $("#btnAddSubPeiod").click(function () {
                   var startdate = $('#txtStartDate').val();
                   var enddate = $('#txtEndDate').val();
+                 // debugger;
                   if (startdate != "" && enddate != "") {
 
                       var lastTr = $('#tblSubPeriod tr:last').find('td:eq(2)').html()
                      // alert(lastTr)
                       var spstartdate = $('#txtStartDate').val();
                     //  alert(spstartdate)
-                      if (lastTr != "End Date") {/////tr thname end date null is not working
+                      if (lastTr.trim() != "End Date") {/////tr thname end date null is not working
                           //    alert(lastTr);
-                          if (lastTr == "End Date") {
+                          if (lastTr.trim() == "End Date") {
 
                               let _fromdate = moment('@ViewBag.fromdate', 'DD/MM/YYYY').format('YYYY-MM-DD');
                               //$("#txtspStartDate").val('@ViewBag.fromdate');
@@ -314,7 +323,7 @@
                           }
                           else {
                               var myDate = moment(lastTr, "DD/MM/YYYY");
-                              var date = moment(myDate).add('1', 'day').format("DD/MM/YYYY");
+                              var date = moment((myDate).add('1', 'day')).format('YYYY-MM-DD');
                               $('#txtspStartDate').val(date);
                               document.getElementById('txtspStartDate').readOnly = true;
                               $('#txtspEndDate').val("");
@@ -346,8 +355,8 @@
    function SaveData() {
 
         // alert('Save');
-        var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-        var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+        var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
+        var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
 
         if (new Date(startdate) > new Date(enddate)) {
 
@@ -394,9 +403,11 @@
                     var Tableenddate = $td.eq(2).html();
                     var Tableperiodlock = $td.eq(3).html();
                     var Tabledepriciation = $td.eq(4).html();
-                    var Strstartdate = moment(Tablestartdate, "DD/MM/YYYY").format("YYYY/MM/DD");
+                    //var Strstartdate = moment(Tablestartdate, "DD/MM/YYYY").format("YYYY/MM/DD");
+                    //var StrEnddate = moment(Tableenddate, "DD/MM/YYYY").format("YYYY/MM/DD");
 
-                    var StrEnddate = moment(Tableenddate, "DD/MM/YYYY").format("YYYY/MM/DD");
+                    var Strstartdate = moment($("#txtedspStartDate").val()).format('YYYY-MM-DD');
+                    var StrEnddate = moment($("#txtedspEndDate").val()).format('YYYY-MM-DD');
                     return {
                         FromDate: Strstartdate,
                         ToDate: StrEnddate,
@@ -422,15 +433,18 @@
                 //    });
 
                 //}
-                var Strstartdate = moment(StartDate, "DD/MM/YYYY").format("YYYY/MM/DD");
-
-                var StrEnddate = moment(EndDate, "DD/MM/YYYY").format("YYYY/MM/DD");
+                
+                var Strstartdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');                
+                var StrEnddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
 
                 var postdata =
                     {
                         "ID": @ViewBag.id,
-                        "FromDate": Strstartdate,
-                        "ToDate": StrEnddate,
+                    "FromDate": Strstartdate,
+                    //"FromDate": startdate,
+                    "ToDate": StrEnddate,
+                    //"ToDate": enddate,
+
                         "PeriodViewModellist": tbl
                     };
                 var form = $('#frmNewEmp');
@@ -451,16 +465,21 @@
                             headers: headers,
                             data: JSON.stringify(postdata),
                             success: function (res) {
-                                if (res == "Failed") {
-                                    swal("Alert", "You Cannot Add this Record", "warning");
-                                }
-                                else {
+                                //by me
+                               // debugger;
+                                if (res == "Success") {
                                     swal({ title: "Successfully Edited!", icon: "success" }).then((result) => {
                                         if (result == true) {
                                             window.location.replace(returnURL);
                                         }
                                     });
                                 }
+
+                                else {
+                                    swal("Alert", "You Cannot Add this Record", "warning");
+                                }
+
+
 
                             },
 
@@ -543,10 +562,10 @@
 
         }
         ////check whether the subperiod date is between period date range
-        var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-        var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-        var checkspstartdate = moment($("#txtspStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-        var checkspenddate = moment($("#txtspEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+        var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
+        var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
+        var checkspstartdate = moment($("#txtspStartDate").val()).format('YYYY-MM-DD');
+        var checkspenddate = moment($("#txtspEndDate").val()).format('YYYY-MM-DD');
         if (new Date(checkspstartdate) < new Date(startdate)) {
 
 
@@ -586,8 +605,8 @@
         ////////////////////////////////////////////////////////////////////
 
 
-        var errorstartdate = moment($("#txtspStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-        var errorenddate = moment($("#txtspEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+        var errorstartdate = moment($("#txtspStartDate").val()).format('YYYY-MM-DD');
+        var errorenddate = moment($("#txtspEndDate").val()).format('YYYY-MM-DD');
 
         if (new Date(errorstartdate) > new Date(errorenddate)) {
 
@@ -629,7 +648,10 @@
         else {
             $("#edisPeriodlockFlag").prop("checked", false);
         }
+
+        startDate =  moment(startDate, 'DD/MM/YYYY').format('YYYY-MM-DD');
         $("#txtedspStartDate").val(startDate);
+        endDate = moment(endDate, 'DD/MM/YYYY').format('YYYY-MM-DD');
         $('#txtedspEndDate').val(endDate);
 
         if (Deplock == "Y") {
@@ -648,7 +670,17 @@
             $('#editsubperiodmodal').modal('hide');
 
         }
+
     }
+
+    // by me
+     let _startdate = moment('@ViewBag.StartDate', 'DD/MM/YYYY').format('YYYY-MM-DD');
+    let _enddate = moment('@ViewBag.EndDate', 'DD/MM/YYYY').format('YYYY-MM-DD');
+
+    $("#txtedspStartDate").val(_startdate);
+    $("#txtedspEndDate").val(_enddate);
+
+
     function Subperiodedittable() {
         var periodlock = "";
         var depriciation = "";
@@ -665,10 +697,10 @@
         var spenddate = $("#txtedspEndDate").val();
         // alert(spenddate)
         ////check whether the subperiod date is between period date range
-        var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-        var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-        var checkspstartdate = moment($("#txtedspStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-        var checkspenddate = moment($("#txtedspEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+        var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
+        var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
+        var checkspstartdate = moment($("#txtedspStartDate").val()).format('YYYY-MM-DD');
+        var checkspenddate = moment($("#txtedspEndDate").val()).format('YYYY-MM-DD');
         if (new Date(checkspstartdate) < new Date(startdate)) {
 
 
@@ -708,8 +740,8 @@
 
 
 
-        var errorstartdate = moment($("#txtspStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-        var errorenddate = moment($("#txtspEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+        var errorstartdate = moment($("#txtspStartDate").val()).format('YYYY-MM-DD');
+        var errorenddate = moment($("#txtspEndDate").val()).format('YYYY-MM-DD');
 
         if (new Date(errorstartdate) > new Date(errorenddate)) {
 
@@ -736,3 +768,45 @@
         }
     }
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    

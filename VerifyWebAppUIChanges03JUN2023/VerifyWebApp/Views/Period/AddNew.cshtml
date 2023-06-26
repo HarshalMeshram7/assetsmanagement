@@ -25,7 +25,7 @@
                 <div class="pageconent">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-lg-3">
+                            @*<div class="col-lg-3">
                                 <div class="form-group">
                                     <label for="praticesname">Start Date<span>*</span></label>
 
@@ -33,7 +33,16 @@
 
                                 </div>
                                 <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
+                            </div>*@
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label for="praticesname">Start Date<span>*</span></label>
+                                <input id="txtStartDate" tabindex="6" class="form-control form-control-sm" type="date" />
+
                             </div>
+                            <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
+                            <div></div>
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
@@ -83,11 +92,15 @@
                                     <td>
                                         Start Date
                                     </td>
-                                    <td>End Date</td>
+                                    <td>
+                                        End Date
+                                    </td>
                                     <td>
                                         Period Lock
                                     </td>
-                                    <td>Depreciation calculated or not</td>
+                                    <td>
+                                        Depreciation calculated or not
+                                    </td>
 
                                     <td align="center">
                                         Edit
@@ -109,7 +122,7 @@
 
 
                 <button type="submit"
-                        class="btn btn-sm saveBtn" id="btnSave">
+                        class="btn btn-primary" id="btnSave">
                     Save
                 </button>
             </div>
@@ -162,7 +175,7 @@
                     @Html.CheckBox("isPeriodlockFlag", false)
 
                 </div>
-                @*<div style="color:#CC0000;font-weight:400" id="spinvaliddateerror"></div>*@
+                <div style="color:#CC0000;font-weight:400" id="spinvaliddateerror"></div>
             </div>
 
             <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
@@ -219,7 +232,7 @@
                         @Html.CheckBox("edisPeriodlockFlag", false)
 
                     </div>
-                    @*<div style="color:#CC0000;font-weight:400" id="edspinvaliddateerror"></div>*@
+                    <div style="color:#CC0000;font-weight:400" id="edspinvaliddateerror"></div>
                 </div>
 
 
@@ -271,15 +284,16 @@
               $("#btnAddSubPeiod").click(function () {
                   var startdate = $('#txtStartDate').val();
                   var enddate = $('#txtEndDate').val();
+                 // debugger;
                   if (startdate != "" && enddate != "") {
 
                       var lastTr = $('#tblSubPeriod tr:last').find('td:eq(2)').html()
                      // alert(lastTr)
                       var spstartdate = $('#txtStartDate').val();
                     //  alert(spstartdate)
-                      if (lastTr != "End Date") {/////tr thname end date null is not working
+                      if (lastTr.trim() != "End Date") {/////tr thname end date null is not working
                           //    alert(lastTr);
-                          if (lastTr == "End Date") {
+                          if (lastTr.trim() == "End Date") {
                               $("#txtspStartDate").val('@ViewBag.fromdate');
                               document.getElementById('txtspStartDate').readOnly = true;
                               $('#txtspEndDate').val("");
@@ -294,6 +308,7 @@
                       }
                       else {
                           //alert("else")
+                        //  debugger;
                           $('#txtspStartDate').val(spstartdate);
                           document.getElementById('txtspStartDate').readOnly = true;
                           $('#txtspEndDate').val();
