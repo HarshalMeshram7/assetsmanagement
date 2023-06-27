@@ -18,7 +18,8 @@
         <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     </div>
     @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
-    {@Html.AntiForgeryToken();
+    {
+        @Html.AntiForgeryToken();
     <div class="modal-body">
 
 
