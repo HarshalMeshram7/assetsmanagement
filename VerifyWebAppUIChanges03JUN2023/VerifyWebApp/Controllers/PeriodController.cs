@@ -128,7 +128,7 @@ namespace VerifyWebApp.Controllers
             if (period != null)
             {
 
-                str_fromDate = period.ToDate.AddDays(1).ToString("yyyy-MM-dd");
+                str_fromDate = period.ToDate.AddDays(1).ToString("dd/MM/yyyy");
                 ViewBag.fromdate = str_fromDate;
 
             }
@@ -345,9 +345,7 @@ namespace VerifyWebApp.Controllers
             {
                 return RedirectToAction("CompanySelection", "Company");
             }
-
-
-
+        
             Period period = new Period();
             List<SubPeriod> splist = new List<SubPeriod>();
             try
@@ -363,8 +361,8 @@ namespace VerifyWebApp.Controllers
                 foreach (SubPeriod item in splist)
                 {
                     item.Srno = srno;
-                    item.str_fromdate = item.FromDate.ToString("dd/MM/yyyy"); ;
-                    item.str_todate = item.ToDate.ToString("dd/MM/yyyy"); ;
+                    item.str_fromdate = item.FromDate.ToString("dd/MM/yyyy"); 
+                    item.str_todate = item.ToDate.ToString("dd/MM/yyyy"); 
                     if(item.DepFlag=="Y" && item.PeriodLockFlag == "Y")
                     {
                         depcnt = 1+depcnt;
