@@ -50,8 +50,8 @@ namespace VerifyWebApp.Controllers
                 foreach (var item in lstitperiod)
                 {
                     item.Srno = srno;
-                    item.str_fromdate = item.FromDate.ToString("dd/MM/yyyy"); ;
-                    item.str_todate = item.ToDate.ToString("dd/MM/yyyy"); ;
+                    item.str_fromdate = item.FromDate.ToString("dd/MM/yyyy"); 
+                    item.str_todate = item.ToDate.ToString("dd/MM/yyyy"); 
                     srno++;
 
                 }
@@ -101,8 +101,14 @@ namespace VerifyWebApp.Controllers
 
 
             ITPeriod itperiod = new ITPeriod();
-            string str_fromDate = "";
-            string str_ToDate = "";
+            var lYear = System.DateTime.Now.ToUniversalTime().Year;
+            string str_fromDate = "01/04/ "+ lYear;
+            var FYear = System.DateTime.Now.ToUniversalTime().Year+1;
+            string str_ToDate = "31/03/"+ FYear;
+
+            
+       
+
             //  var period = "";
             itperiod = db.ITPeriods.Where(x => x.Companyid == companyid).OrderByDescending(x => x.ID).FirstOrDefault();//needs to do validation if no period is added all ready
 
@@ -110,16 +116,21 @@ namespace VerifyWebApp.Controllers
             if (itperiod != null)
             {
 
-                str_fromDate = itperiod.FromDate.AddYears(1).ToString("dd/MM/yyyy");
-                str_ToDate = itperiod.ToDate.AddYears(1).ToString("dd/MM/yyyy");
+                //str_fromDate = itperiod.FromDate.AddYears(1).ToString("dd/MM/yyyy");
+                //str_ToDate = itperiod.ToDate.AddYears(1).ToString("dd/MM/yyyy");
+
+                //str_fromDate = itperiod.FromDate.ToString(str_fromDate);
+                //str_ToDate = itperiod.ToDate.ToString(str_ToDate);
+
+
                 ViewBag.fromdate = str_fromDate;
                 ViewBag.todate = str_ToDate;
 
             }
             else
             {
-                ViewBag.fromdate = "01/04/";
-                ViewBag.todate = "31/03/";
+                ViewBag.fromdate = str_fromDate;
+                ViewBag.todate = str_ToDate;
             }
             return PartialView();
         }

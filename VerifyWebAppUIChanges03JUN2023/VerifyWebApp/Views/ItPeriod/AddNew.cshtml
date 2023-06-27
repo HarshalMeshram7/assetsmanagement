@@ -24,12 +24,13 @@
             @*@Html.ValidationSummary(true)*@
             <div class="form-group">
                 <label for="praticesname">Start Date<span>*</span></label>
-                <input id="stDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
+                <input id="stDate" tabindex="6" class="form-control form-control-sm" placeholder="" value="{{ Date.now()}}" type="date" />
                 <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
+
             </div>
             <div class="form-group">
                 <label for="praticesname">End Date<span>*</span></label>
-                <input id="EndDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
+                <input id="EndDate" tabindex="6" class="form-control form-control-sm" placeholder="31-03" value="" type="date" />
 
                 <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
             </div>
@@ -134,13 +135,13 @@
      /*   });*/
 
 
-        function setdefaultdates() {
+        @*function setdefaultdates() {
             var todate = '@ViewBag.todate';
             var fromdate = '@ViewBag.fromdate';
             if (fromdate=="01/04/" && todate=="31/03/")
             {
                 $("#txtEndDate").prop("readonly", false);
-                $("#txtStartDate").prop("readonly", false);
+                $("#txtStartDate").prop("readonly", false);s
                  $("#txtStartDate").val(fromdate);
                  $("#txtEndDate").val(todate);
 
@@ -156,7 +157,7 @@
                  $("#txtStartDate").val(fromdate);
                   $("#txtEndDate").val(todate);
             }
-        }
+        }*@
 
         function SaveData() {
             // alert('Save');
