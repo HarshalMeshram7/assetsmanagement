@@ -20,11 +20,11 @@
                             <div class="htitle"> <b>Edit Period</b></div>
                         </div>
                     </div>
-                    </div>
-                    <!-- /.col-lg-12 -->
                 </div>
-                <div class="pageconent">
-                    <div class="card-body">
+                <!-- /.col-lg-12 -->
+            </div>
+            <div class="pageconent">
+                <div class="card-body">
                     <div class="row">
                         <div class="col-lg-3">
                             <div class="form-group">
@@ -32,125 +32,125 @@
 
                                 <input id="txtStartDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
 
-                                </div>
-                                <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
                             </div>
+                            <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
                         </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label for="praticesname">End Date<span>*</span></label>
-                                @*@Html.TextBoxFor(m => m.LeaveDate, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.LeaveDate, "", new { @class = "text-danger  " })*@
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label for="praticesname">End Date<span>*</span></label>
+                            @*@Html.TextBoxFor(m => m.LeaveDate, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.LeaveDate, "", new { @class = "text-danger  " })*@
                             <input id="txtEndDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
-                                <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
-                                <div></div>
-                            </div>
-                        </div>
-                        @*<div style="color:#CC0000;font-weight:400" id="invalideparentdateerror">Select Date</div>*@
-                    </div>
-
-
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            Sub-Period List
+                            <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
+                            <div></div>
                         </div>
                     </div>
+                    @*<div style="color:#CC0000;font-weight:400" id="invalideparentdateerror">Select Date</div>*@
+                </div>
 
-                    <div class="row my-1">
-                        <div class="col-md-12">
-                            <div class="pull-right">
-                                <button type="button" class="btn btn-sm nBtn" id="btnAddSubPeiod"
-                                        data-toggle="modal">
-                                    Add Sub-Period
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        Sub-Period List
+                    </div>
+                </div>
+
+                <div class="row my-1">
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <button type="button" class="btn btn-sm nBtn" id="btnAddSubPeiod"
+                                    data-toggle="modal">
+                                Add Sub-Period
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table width="100%" class="table table-hover text-uppercase text-xs" id="tblSubPeriod">
+                                <thead class="hcol" style="font-weight:bold">
+                                    <tr>
+
+                                        <td>
+                                            SrNo
+                                        </td>
+                                        <td>
+                                            Start Date
+                                        </td>
+                                        <td>End Date</td>
+                                        <td>
+                                            Period Lock
+                                        </td>
+                                        <td>Depreciation calculated or not</td>
+
+                                        <td align="center">
+                                            Edit
+                                        </td>
+                                        <td align="center">
+                                            Delete
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody style="font-weight:bold;color:black">
+                                    @if (Model.Count() == 0)
+                                    {
+
+                                    }
+                                    else
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>@item.Srno</td>
+
+                                                <td>@Html.DisplayFor(modelitem => item.str_fromdate)</td>
+
+                                                <td>@Html.DisplayFor(modelitem => item.str_todate)</td>
+
+
+                                                <td>@Html.DisplayFor(modelitem => item.PeriodLockFlag)</td>
+
+                                                <td>@Html.DisplayFor(modelitem => item.DepFlag)</td>
+                                                <td align="center">
+                                                    <button type="button" class="btn modBtn btn-sm"
+                                                            aria-label="Left Align"
+                                                            onclick="Editsubperiod(this,@item.Srno);">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+
+                                                </td>
+                                                <td align="center">
+                                                    <button type="button" class="btn delBtn btn-sm" aria-label="Left Align" onclick="deletesubperiod(this);">
+                                                        <i class="fa fa-remove"></i>
+                                                    </button>
+
+                                                </td>
+                                            </tr>
+
+
+                                        }
+                                    }
+                                </tbody>
+
+                            </table>
+                            <div class="modal-footer">
+                                <button type="submit"
+                                        class="btn btn-sm saveBtn" id="btnSave">
+                                    Save
                                 </button>
                             </div>
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="table-responsive">
-                                <table width="100%" class="table table-hover text-uppercase text-xs" id="tblSubPeriod">
-                                    <thead class="hcol" style="font-weight:bold">
-                                        <tr>
-
-                                            <td>
-                                                SrNo
-                                            </td>
-                                            <td>
-                                                Start Date
-                                            </td>
-                                            <td>End Date</td>
-                                            <td>
-                                                Period Lock
-                                            </td>
-                                            <td>Depreciation calculated or not</td>
-
-                                            <td align="center">
-                                                Edit
-                                            </td>
-                                            <td align="center">
-                                                Delete
-                                            </td>
-                                        </tr>
-                                    </thead>
-                                    <tbody style="font-weight:bold;color:black">
-                                        @if (Model.Count() == 0)
-                                        {
-
-                                        }
-                                        else
-                                        {
-                                            foreach (var item in Model)
-                                            {
-                                                <tr>
-                                                    <td>@item.Srno</td>
-
-                                                    <td>@Html.DisplayFor(modelitem => item.str_fromdate)</td>
-
-                                                    <td>@Html.DisplayFor(modelitem => item.str_todate)</td>
-
-
-                                                    <td>@Html.DisplayFor(modelitem => item.PeriodLockFlag)</td>
-
-                                                    <td>@Html.DisplayFor(modelitem => item.DepFlag)</td>
-                                                    <td align="center">
-                                                        <button type="button" class="btn modBtn btn-sm"
-                                                                aria-label="Left Align"
-                                                                onclick="Editsubperiod(this,@item.Srno);">
-                                                            <i class="fa fa-edit"></i>
-                                                        </button>
-
-                                                    </td>
-                                                    <td align="center">
-                                                        <button type="button" class="btn delBtn btn-sm" aria-label="Left Align" onclick="deletesubperiod(this);">
-                                                            <i class="fa fa-remove"></i>
-                                                        </button>
-
-                                                    </td>
-                                                </tr>
-
-
-                                            }
-                                        }
-                                    </tbody>
-
-                                </table>
-                                <div class="modal-footer">
-                                    <button type="button"
-                                            class="btn btn-sm saveBtn" id="btnSave">
-                                        Save
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
                 </div>
+            </div>
+        </div>
 
-                </div>
-      
+    </div>
+
 
 }
 <div id="subperiodmodal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
@@ -168,7 +168,7 @@
                     <label for="praticesname">Start Date<span>*</span></label>
 
                     <div class='input-group date' id='dtspStartDate'>
-                        <input  id="txtspStartDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date"   required />
+                        <input id="txtspStartDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" required />
                     </div>
                 </div>
 
@@ -178,7 +178,7 @@
                     @*@Html.TextBoxFor(m => m.LeaveDate, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.LeaveDate, "", new { @class = "text-danger  " })*@
                     <div class='input-group date' id='dtspEndDate'>
-                        <input  id="txtspEndDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date"  required />
+                        <input id="txtspEndDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" required />
                     </div>
 
                 </div>
@@ -217,14 +217,14 @@
                     <label for="praticesname">Start Date<span>*</span></label>
 
                     <div class='input-group date' id='dtedspStartDate'>
-                        <input id="txtedspStartDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" onfocus="focused(this)" onfocusout="defocused(this)"  required />
+                        <input id="txtedspStartDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" onfocus="focused(this)" onfocusout="defocused(this)" required />
                     </div>
 
                 </div>
                 <div class="form-group col-lg-6">
                     <label for="praticesname">End Date<span>*</span></label>
                     <div class='input-group date' id='dtedspEndDate'>
-                        <input id="txtedspEndDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" onfocus="focused(this)" onfocusout="defocused(this)"   required />
+                        <input id="txtedspEndDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" onfocus="focused(this)" onfocusout="defocused(this)" required />
                     </div>
 
                     <div class="form-group col-lg-6">
@@ -271,7 +271,8 @@
 
         function InitUI() {
             $("#frmNewEmp").submit(function (e) {
-                 e.preventDefault();
+                e.preventDefault();
+                alert('yes');
                 SaveData();
                 return false;
 
@@ -433,8 +434,8 @@
                 //    });
 
                 //}
-                
-                var Strstartdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');                
+
+                var Strstartdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
                 var StrEnddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
 
                 var postdata =
@@ -809,4 +810,3 @@
 
 
 
-    
