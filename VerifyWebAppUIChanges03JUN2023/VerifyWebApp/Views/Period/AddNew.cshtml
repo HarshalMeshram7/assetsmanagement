@@ -273,8 +273,8 @@
 
             });
 
-
-        $("#txtStartDate").val('@ViewBag.fromdate');
+             let _startdate = moment('@ViewBag.fromdate', 'DD/MM/YYYY').format('YYYY-MM-DD');
+            $("#txtStartDate").val(_startdate);
          //   $("#stDate").val('@ViewBag.fromdate');
 
 
