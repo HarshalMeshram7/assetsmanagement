@@ -94,9 +94,10 @@
             },
         });
         var EndDateStatus = false;
-        var StartDateStatus = false;
+    var StartDateStatus = false;
+
         $(document).ready(function () {
-            @*$("#txtStartDate").val('@Model.str_fromdate');
+            $("#txtStartDate").val('@Model.str_fromdate');
             $("#txtEndDate").val('@Model.str_todate');
             var checkperiod='@Model.PeriodlockFlag';
             if (checkperiod == 1)
@@ -109,7 +110,7 @@
             }
             $("#startdateerror,#enddateerror").hide();
 
-            $("#invaliddate").hide();*@
+            $("#invaliddate").hide();
 
             //$("#btnSave").click(function () {
 

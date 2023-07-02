@@ -52,10 +52,9 @@
         </div>
     }
 </div><!-- /.modal-content -->
-
 @*<script src="~/Scripts/moment.js"></script>
-<link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
-<script src="~/Scripts/bootstrap-datetimepicker.js"></script>*@
+    <link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap-datetimepicker.js"></script>*@
 
 
 @*<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>*@
@@ -64,29 +63,29 @@
 
         $('#btnSave').click(function (event)
         {
-            //debugger;
+            //;
             SaveData();
             e.preventDefault();
             return false;
         });
 
-        $('#dtStartDate').datetimepicker({
-            format: 'DD/MM/YYYY',
-            icons:
-            {
-                next: 'fa fa-angle-right',
-                previous: 'fa fa-angle-left'
-            },
-        });
+        //$('#dtStartDate').datetimepicker({
+        //    format: 'DD/MM/YYYY',
+        //    icons:
+        //    {
+        //        next: 'fa fa-angle-right',
+        //        previous: 'fa fa-angle-left'
+        //    },
+        //});
 
-        $('#dtEndDate').datetimepicker({
-            format: 'DD/MM/YYYY',
-            icons:
-            {
-               next: 'fa fa-angle-right',
-               previous: 'fa fa-angle-left'
-           },
-        });
+        //$('#dtEndDate').datetimepicker({
+        //    format: 'DD/MM/YYYY',
+        //    icons:
+        //    {
+        //       next: 'fa fa-angle-right',
+        //       previous: 'fa fa-angle-left'
+        //   },
+        //});
 
         var EndDateStatus = false;
         var StartDateStatus = false;
@@ -135,29 +134,26 @@
      /*   });*/
 
 
-        @*function setdefaultdates() {
+        function setdefaultdates() {
             var todate = '@ViewBag.todate';
             var fromdate = '@ViewBag.fromdate';
-            if (fromdate=="01/04/" && todate=="31/03/")
+            if (fromdate == "01/04/" && todate=="31/03/")
             {
                 $("#txtEndDate").prop("readonly", false);
-                $("#txtStartDate").prop("readonly", false);s
+                $("#txtStartDate").prop("readonly", false);
                  $("#txtStartDate").val(fromdate);
                  $("#txtEndDate").val(todate);
-
-
             }
 
             if (fromdate != "01/04/" && todate != "31/03/")
             {
-
                 $("#txtEndDate").prop("readonly", true);
                 $("#txtStartDate").prop("readonly", true);
 
                  $("#txtStartDate").val(fromdate);
                   $("#txtEndDate").val(todate);
             }
-        }*@
+        }
 
         function SaveData() {
             // alert('Save');
@@ -225,7 +221,7 @@
                         headers: headers,
                         data: JSON.stringify(postdata),
                         success: function (res) {
-                          //  debugger;
+                          //  ;
 
                             if (res == "Success") {
                                 swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
@@ -269,7 +265,7 @@
                     return false;
                 }
             }
-        
+
 
 </script>
 
