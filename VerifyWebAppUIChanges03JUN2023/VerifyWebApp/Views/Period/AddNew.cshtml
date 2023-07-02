@@ -282,7 +282,7 @@
               $("#btnAddSubPeiod").click(function () {
                   var startdate = $('#txtStartDate').val();
                   var enddate = $('#txtEndDate').val();
-                 // debugger;
+                 // ;
                   if (startdate != "" && enddate != "") {
 
                       var lastTr = $('#tblSubPeriod tr:last').find('td:eq(2)').html()
@@ -306,7 +306,7 @@
                       }
                       else {
                           //alert("else")
-                        //  debugger;
+                        //  ;
                           $('#txtspStartDate').val(spstartdate);
                           document.getElementById('txtspStartDate').readOnly = true;
                           $('#txtspEndDate').val();
@@ -425,7 +425,7 @@
                             ,
 
                             success: function (res) {
-                              //  debugger;
+                              //  ;
                                 if (res == "Success") {
                                     swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
                                         if (result == true) {
