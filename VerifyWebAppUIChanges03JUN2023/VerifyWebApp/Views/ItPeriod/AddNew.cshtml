@@ -24,14 +24,23 @@
             @*@Html.ValidationSummary(true)*@
             <div class="form-group">
                 <label for="praticesname">Start Date<span>*</span></label>
-                <input id="stDate" tabindex="6" class="form-control form-control-sm" placeholder="" value="{{ Date.now()}}" type="date" />
+                <div class='input-group date' id='dtStartDate'>
+                    <input id="txtStartDate" tabindex="6" class="form-control form-control-sm" type="text" />
+                    <div class="input-group-addon">
+                        <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                    </div>
+                </div>
                 <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
 
             </div>
             <div class="form-group">
                 <label for="praticesname">End Date<span>*</span></label>
-                <input id="EndDate" tabindex="6" class="form-control form-control-sm" placeholder="31-03" value="" type="date" />
-
+                <div class='input-group date' id='dtEndDate'>
+                    <input id="txtEndDate" tabindex="6" class="form-control form-control-sm" type="text" />
+                    <div class="input-group-addon">
+                        <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                    </div>
+                </div>
                 <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
             </div>
             <div class="form-group">
@@ -61,13 +70,13 @@
 
 <script type="text/javascript">
 
-        $('#btnSave').click(function (event)
-        {
-            //;
-            SaveData();
-            e.preventDefault();
-            return false;
-        });
+        ////$('#btnSave').click(function (event)
+        ////{
+        ////    //;
+        ////    SaveData();
+        ////    e.preventDefault();
+        ////    return false;
+        ////});
 
         //$('#dtStartDate').datetimepicker({
         //    format: 'DD/MM/YYYY',
@@ -126,15 +135,17 @@
                 }
                 else {
                     $("#invaliddate").hide();
-                    //     alert("test");
+                         /*alert("test");*/
                     SaveData();
+
                 }
             });
         });
      /*   });*/
 
 
-        function setdefaultdates() {
+    function setdefaultdates() {
+       
             var todate = '@ViewBag.todate';
             var fromdate = '@ViewBag.fromdate';
             if (fromdate == "01/04/" && todate=="31/03/")
@@ -147,6 +158,7 @@
 
             if (fromdate != "01/04/" && todate != "31/03/")
             {
+               
                 $("#txtEndDate").prop("readonly", true);
                 $("#txtStartDate").prop("readonly", true);
 
@@ -170,7 +182,7 @@
 
             StartDate = $('#txtStartDate').val();
             EndDate = $('#txtEndDate').val();
-
+           
             if (StartDate == '') {
                 StartDateStatus = false;
             }
@@ -188,13 +200,16 @@
             }
 
             if (StartDateStatus == true && EndDateStatus == true) {
-
+             
                 $("#startdateerror,#enddateerror").hide();
                 // alert("test");
-                //var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-                //var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-                var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
-                var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
+                var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+                var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+
+                //var _enddate = moment(EndDate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+                //var _startdate = moment(StartDate).format('YYYY-MM-DD');
+               
+                                         
                 var postdata =
                 {
                     "FromDate": startdate,
@@ -213,7 +228,8 @@
                     var form = $('#frmNewEmp');
                     var token = $('input[name="__RequestVerificationToken"]', form).val();
                     var headers = {};
-                    headers['__RequestVerificationToken'] = token;
+                    headers['__RequestVerificationToken'] = token;                  
+
                     $.ajax({
                         type: 'POST',
                         url: ControllerURL,

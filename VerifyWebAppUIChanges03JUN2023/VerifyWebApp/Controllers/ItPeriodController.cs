@@ -101,10 +101,10 @@ namespace VerifyWebApp.Controllers
 
 
             ITPeriod itperiod = new ITPeriod();
-            var lYear = System.DateTime.Now.ToUniversalTime().Year;
-            string str_fromDate = "01/04/ "+ lYear;
-            var FYear = System.DateTime.Now.ToUniversalTime().Year+1;
-            string str_ToDate = "31/03/"+ FYear;
+            //var lYear = System.DateTime.Now.ToUniversalTime().Year;
+            string str_fromDate = "01/04/"; // + lYear;
+            //var FYear = System.DateTime.Now.ToUniversalTime().Year+1;
+            string str_ToDate = "31/03/"; // + FYear;
 
             
        
@@ -116,8 +116,8 @@ namespace VerifyWebApp.Controllers
             if (itperiod != null)
             {
 
-                //str_fromDate = itperiod.FromDate.AddYears(1).ToString("dd/MM/yyyy");
-                //str_ToDate = itperiod.ToDate.AddYears(1).ToString("dd/MM/yyyy");
+                str_fromDate = itperiod.FromDate.AddYears(1).ToString("dd/MM/yyyy");
+                str_ToDate = itperiod.ToDate.AddYears(1).ToString("dd/MM/yyyy");
 
                 //str_fromDate = itperiod.FromDate.ToString(str_fromDate);
                 //str_ToDate = itperiod.ToDate.ToString(str_ToDate);
@@ -138,7 +138,7 @@ namespace VerifyWebApp.Controllers
         // GET: Brand/Create
         [HttpPost]
         [ValidateJsonAntiForgeryToken]
-        [ValidateJsonXssAttribute]
+        [ValidateJsonXssAttribute] 
         public ActionResult AddNew(ITPeriod itperiod)
         {
             int userid = 0;
@@ -215,8 +215,6 @@ namespace VerifyWebApp.Controllers
 
             }
         }
-
-
 
         // GET: Brand/Edit/5
         [AuthUser]
