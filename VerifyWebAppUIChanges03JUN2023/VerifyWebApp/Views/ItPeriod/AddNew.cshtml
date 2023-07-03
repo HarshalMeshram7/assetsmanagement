@@ -37,6 +37,7 @@
                 <label for="praticesname">End Date<span>*</span></label>
                 <div class='input-group date' id='dtEndDate'>
                     <input id="txtEndDate" tabindex="6" class="form-control form-control-sm" type="text" />
+                    @*<input id="txtEndDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />*@
                     <div class="input-group-addon">
                         <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                     </div>
@@ -122,6 +123,7 @@
             //            SaveData();
             //        }
             //    });
+
             $("#startdateerror,#enddateerror").hide();
             $("#btnSave").click(function () {
 
@@ -168,7 +170,7 @@
         }
 
         function SaveData() {
-            // alert('Save');
+           
             var periodlock;
             if ($('#isPeriodlockFlag').is(':checked')) {
                 periodlock = 1;
@@ -237,8 +239,6 @@
                         headers: headers,
                         data: JSON.stringify(postdata),
                         success: function (res) {
-                          //  ;
-
                             if (res == "Success") {
                                 swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
                                     if (result == true) {
