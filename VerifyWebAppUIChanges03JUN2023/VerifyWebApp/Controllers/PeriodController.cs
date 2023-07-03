@@ -124,11 +124,11 @@ namespace VerifyWebApp.Controllers
             //    ViewBag.fromdate = "";
             //}
 
-            DateTime fromdate;
+           // DateTime fromdate;
             if (period != null)
             {
 
-                str_fromDate = period.ToDate.AddDays(1).ToString("dd/MM/yyyy");
+                str_fromDate = period.ToDate.AddDays(1).ToString("yyyy/MM/dd");
                 ViewBag.fromdate = str_fromDate;
 
             }

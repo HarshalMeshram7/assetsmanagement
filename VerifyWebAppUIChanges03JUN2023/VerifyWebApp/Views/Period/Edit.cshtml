@@ -65,7 +65,7 @@
 
 <script type="text/javascript">
     $('#btnSave').click(function (event) {
-        debugger;
+       // debugger;
         SaveData();
         e.preventDefault();
         return false;
@@ -89,8 +89,10 @@
             previous: 'fa fa-angle-left'
         },
     });
+
     var EndDateStatus = false;
     var StartDateStatus = false;
+
     $(document).ready(function () {
         @*$("#txtStartDate").val('@Model.str_fromdate');
         $("#txtEndDate").val('@Model.str_todate');
