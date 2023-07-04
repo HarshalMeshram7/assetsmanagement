@@ -369,7 +369,9 @@
          console.log(ControllerURL);
          var table = $('#tblasset')
              .on('processing.dt', function (e, settings, processing) {
-             $('#divspinner').css('display', processing ? 'block' : 'none');
+
+                 $('#divspinner').css('display', processing ? 'block' : 'none');
+
              }).DataTable({
                  "destroy": true,
                  "paging": true,

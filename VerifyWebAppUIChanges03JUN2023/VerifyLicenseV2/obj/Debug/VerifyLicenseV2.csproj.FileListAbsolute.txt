@@ -9,3 +9,9 @@ D:\Source\Verify\VerifyWebAppUIChanges\VerifyLicenseV2\bin\Debug\VerifyLicenseV2
 D:\Source\Verify\VerifyWebAppUIChanges\VerifyLicenseV2\obj\Debug\VerifyLicenseV2.csproj.CoreCompileInputs.cache
 D:\Source\Verify\VerifyWebAppUIChanges\VerifyLicenseV2\obj\Debug\VerifyLicenseV2.dll
 D:\Source\Verify\VerifyWebAppUIChanges\VerifyLicenseV2\obj\Debug\VerifyLicenseV2.pdb
+D:\E-Forum\assetmanagement_latest\VerifyWebAppUIChanges03JUN2023\VerifyLicenseV2\bin\Debug\VerifyLicenseV2.dll
+D:\E-Forum\assetmanagement_latest\VerifyWebAppUIChanges03JUN2023\VerifyLicenseV2\bin\Debug\VerifyLicenseV2.pdb
+D:\E-Forum\assetmanagement_latest\VerifyWebAppUIChanges03JUN2023\VerifyLicenseV2\obj\Debug\VerifyLicenseV2.csproj.AssemblyReference.cache
+D:\E-Forum\assetmanagement_latest\VerifyWebAppUIChanges03JUN2023\VerifyLicenseV2\obj\Debug\VerifyLicenseV2.csproj.CoreCompileInputs.cache
+D:\E-Forum\assetmanagement_latest\VerifyWebAppUIChanges03JUN2023\VerifyLicenseV2\obj\Debug\VerifyLicenseV2.dll
+D:\E-Forum\assetmanagement_latest\VerifyWebAppUIChanges03JUN2023\VerifyLicenseV2\obj\Debug\VerifyLicenseV2.pdb
