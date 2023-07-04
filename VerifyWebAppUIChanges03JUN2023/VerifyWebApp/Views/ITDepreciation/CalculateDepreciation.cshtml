@@ -17,7 +17,8 @@
     <div class="modal-header hborder">
 
         <div class="htitle">Calculate IT Depreciation </div>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
     </div>
     @*@using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))*@
     @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "frmupload" }))
@@ -78,7 +79,8 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn saveBtn btn-sm " onclick="getdepreciation()">Calculate</button>
-            <button type="button" class="btn clBtn btn-sm" data-dismiss="modal">Close</button>
+            @*<button type="button" class="btn clBtn btn-sm" data-dismiss="modal">Close</button>*@
+            <button type="button" class="btn btn-sm clBtn" id="btnClose" data-bs-dismiss="modal">Close</button>
 
             @*@ViewBag.Message*@
 
