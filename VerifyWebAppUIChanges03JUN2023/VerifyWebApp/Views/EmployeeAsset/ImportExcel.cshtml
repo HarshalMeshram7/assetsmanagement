@@ -22,7 +22,8 @@
     <div class="modal-header">
 
         <h4 class="modal-title htitle">Import Employee Assets List</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     </div>
     @*@using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))*@
     @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "frmupload" }))
@@ -49,8 +50,9 @@
         </div>
         <div class="modal-footer">
             <button type="submit" class="btn saveBtn btn-sm" id="btnSave">Upload</button>
-            <button type="button" class="btn clBtn btn-sm" data-dismiss="modal">Close</button>
-            
+            @*<button type="button" class="btn clBtn btn-sm" data-dismiss="modal">Close</button>*@
+            <button type="button" class="btn btn-sm clBtn" id="btnClose" data-bs-dismiss="modal">Close</button>
+
 
             @*@ViewBag.Message*@
 
