@@ -133,9 +133,10 @@ namespace VerifyWebApp.BusinessLogic
                 }
                 else
                 {
-
-                    item.uom_name = db.UOMs.Where(x => x.ID == item.UOMNo && x.Companyid == companyid).FirstOrDefault().Unit;
-
+                    if (db.UOMs.Where(x => x.ID == item.UOMNo && x.Companyid == companyid).Count() > 0)
+                    {
+                        item.uom_name = db.UOMs.Where(x => x.ID == item.UOMNo && x.Companyid == companyid).FirstOrDefault().Unit;
+                    }
                 }
                 if (item.LocAID == 0 || item.LocAID == null)
                 {

@@ -109,6 +109,7 @@ namespace VerifyWebApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateJsonAntiForgeryToken]
+        [ValidateJsonXssAttribute]
         public ActionResult Add(AccessRights accessrights)
         {
             int userid = 0;
@@ -152,7 +153,6 @@ namespace VerifyWebApp.Controllers
 
                 int controller_code = -1;
                 controller_code = accessRightsHelper.controller_codemap[accessrights.ControllerName.ToUpper()];
-
 
 
                 var check_controllerentryexists = db.AccessRights.Where(x => x.Companyid == companyid 

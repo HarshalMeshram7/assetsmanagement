@@ -4,151 +4,155 @@
 @{
     ViewBag.Title = "Index";
 }
-<div class="container-fluid py-4">
-    <div class="row my-1">
-        <div class="col-12">
-            <div class="card">
 
-                <div class="card-header pb-0">
-                    <div class="row">
-                        <div class="d-sm-flex justify-content-between">
-                            <h4>Assets Extra Found Report </h4>
+
+@using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+{
+    @Html.AntiForgeryToken()
+
+    // rest
+}
+
+<div class="pageconent">
+    <div class="container-fluid py-4">
+        <div class="row my-1">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title" style="text-align:center; color:cornflowerblue"><b>AssetsRights List</b></h5>
+                        @*<div class="card-header pb-0">
+                                <div class="row">
+                                    <div class="d-sm-flex justify-content-between">
+                                        <h4>AssetsRights List </h4>
+                                    </div>
+                                </div>
+                            </div>*@
+
+                        <div class="row d-flex justify-content-center align-items-center">
+                            <div class="col-md-12">
+                                <button type="button" id="btnnew" value="New Practice"
+                                        class="btn btn-sm btn-primary pull-right"
+                                        onclick="add();">
+                                    Add
+                                </button>
+                            </div>
                         </div>
+
+                        <div class="row" style="padding-top:3px">
+                            <div class="col">
+                                <table class="display compact table small table-striped table-bordered table-hover"
+                                       id="tblaccessrights">
+                                    <thead>
+                                        <tr>
+                                            <td hidden>
+                                                SrNo
+                                            </td>
+                                            <td align="center">
+                                                Username
+                                            </td>
+                                            <td align="center">
+                                                Page
+                                            </td>
+                                            <td>
+                                                Index
+                                            </td>
+                                            <td>
+                                                Add
+                                            </td>
+                                            <td>
+                                                Edit
+                                            </td>
+                                            <td>
+                                                Delete
+                                            </td>
+                                            <td>
+                                                Import
+                                            </td>
+                                            <td>
+                                                Export
+                                            </td>
+
+                                            <td align="center">
+                                                Edit Accessrights
+                                            </td>
+                                            <td align="center">
+                                                Delete Accessrights
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.Count() == 0)
+                                        {
+                                            <tr>
+                                                <td colspan="11">No Rows Found</td>
+                                            </tr>
+                                        }
+                                        else
+                                        {
+                                            foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                    <td hidden>@Html.DisplayFor(modelitem => item.Id)</td>
+                                                    <td>@Html.DisplayFor(modelitem => item.username)</td>
+                                                    <td>@Html.DisplayFor(modelitem => item.ControllerName)</td>
+                                                    <td>@Html.DisplayFor(modelitem => item.Index)</td>
+                                                    <td>@Html.DisplayFor(modelitem => item.Add)</td>
+                                                    <td>@Html.DisplayFor(modelitem => item.Edit)</td>
+                                                    <td>@Html.DisplayFor(modelitem => item.Delete)</td>
+                                                    <td>@Html.DisplayFor(modelitem => item.Import)</td>
+                                                    <td>@Html.DisplayFor(modelitem => item.Export)</td>
+
+
+                                                    <td align="center">
+                                                        <button type="button" class="btn btn-primary btn-sm"
+                                                                aria-label="Left Align"
+                                                                onclick="Editaccessrights(@item.Id);">
+                                                            <i class="fa fa-edit"></i>
+                                                        </button>
+
+                                                    </td>
+                                                    <td align="center">
+                                                        <button type="button" class="btn btn-danger btn-sm"
+                                                                aria-label="Left Align"
+                                                                onclick="Deleteaccessrights(@item.Id);">
+                                                            <i class="fa fa-remove"></i>
+                                                        </button>
+
+                                                    </td>
+                                                </tr>
+
+
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
                     </div>
-                </div>
-                <div class="card-body">
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-                @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
-                {
-                    @Html.AntiForgeryToken()
 
-                    // rest
-                }
+<div class="modal fade" tabindex="-1" role="dialog" id="divNew">
+    <div class="modal-dialog modal-lg" role="document" id="divNewContent">
 
-                <div class="pageconent">
-                    <div class="row d-flex justify-content-center align-items-center">
-                        <div class="col-md-12">
-                            <button type="button" id="btnnew" value="New Practice"
-                                    class="btn btn-sm btn-primary pull-right"
-                                    onclick="add();">
-                                Add
-                            </button>
-                        </div>
-                    </div>
-                    <div class="row" style="padding-top:3px">
-                        <div class="col">
-                            <table class="display compact table small table-striped table-bordered table-hover"
-                                   id="tblaccessrights">
-                                <thead>
-                                    <tr>
-                                        <td hidden>
-                                            SrNo
-                                        </td>
-                                        <td align="center">
-                                            Username
-                                        </td>
-                                        <td align="center">
-                                            Page
-                                        </td>
-                                        <td>
-                                            Index
-                                        </td>
-                                        <td>
-                                            Add
-                                        </td>
-                                        <td>
-                                            Edit
-                                        </td>
-                                        <td>
-                                            Delete
-                                        </td>
-                                        <td>
-                                            Import
-                                        </td>
-                                        <td>
-                                            Export
-                                        </td>
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
-                                        <td align="center">
-                                            Edit Accessrights
-                                        </td>
-                                        <td align="center">
-                                            Delete Accessrights
-                                        </td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if (Model.Count() == 0)
-                                    {
-                                        <tr>
-                                            <td colspan="11">No Rows Found</td>
-                                        </tr>
-                                    }
-                                    else
-                                    {
-                                        foreach (var item in Model)
-                                        {
-                                            <tr>
-                                                <td hidden>@Html.DisplayFor(modelitem => item.Id)</td>
-                                                <td>@Html.DisplayFor(modelitem => item.username)</td>
-                                                <td>@Html.DisplayFor(modelitem => item.ControllerName)</td>
-                                                <td>@Html.DisplayFor(modelitem => item.Index)</td>
-                                                <td>@Html.DisplayFor(modelitem => item.Add)</td>
-                                                <td>@Html.DisplayFor(modelitem => item.Edit)</td>
-                                                <td>@Html.DisplayFor(modelitem => item.Delete)</td>
-                                                <td>@Html.DisplayFor(modelitem => item.Import)</td>
-                                                <td>@Html.DisplayFor(modelitem => item.Export)</td>
+<div class="modal fade" tabindex="-1" role="dialog" id="divEdit">
+    <div class="modal-dialog modal-lg" role="document" id="divEditContent">
+
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
-                                                <td align="center">
-                                                    <button type="button" class="btn btn-primary btn-sm"
-                                                            aria-label="Left Align"
-                                                            onclick="Editaccessrights(@item.Id);">
-                                                        <i class="fa fa-edit"></i>
-                                                    </button>
-
-                                                </td>
-                                                <td align="center">
-                                                    <button type="button" class="btn btn-danger btn-sm"
-                                                            aria-label="Left Align"
-                                                            onclick="Deleteaccessrights(@item.Id);">
-                                                        <i class="fa fa-remove"></i>
-                                                    </button>
-
-                                                </td>
-                                            </tr>
-
-
-                                        }
-                                    }
-                                </tbody>
-                            </table>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade" tabindex="-1" role="dialog" id="divNew">
-                <div class="modal-dialog modal-lg" role="document" id="divNewContent">
-
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
-
-            <div class="modal fade" tabindex="-1" role="dialog" id="divEdit">
-                <div class="modal-dialog modal-lg" role="document" id="divEditContent">
-
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
-
-
-            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-            <script type="text/javascript">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
     $(document).ready(function () {
 
         $('#tblaccessrights').DataTable({
@@ -166,19 +170,22 @@
         }
     });
 
-
     function add() {
         var url = '@Url.Action("Add","AccessRights")';
-
-            window.location.href = url;
-
-
+            $.get(url, function (data) {
+                $("#divNewContent").html(data);
+                // alert(data);
+                $('#divNew').modal('show')
+            });
     }
     function Editaccessrights(id)
     {
         var url = '@Url.Action("Edit","AccessRights")';
         url = url + "/" + id;
-            window.location.href = url;
+            $.get(url, function (data) {
+                $("#divEditContent").html(data);
+                $('#divEdit').modal('show')
+            });
     }
     function Deleteaccessrights(id)
     {
@@ -220,7 +227,7 @@
 
 
     }
-            </script>
+</script>
 
 
 
