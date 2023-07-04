@@ -23,198 +23,195 @@
 </style>
 
 
-    
-    @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
-    {
-        @Html.AntiForgeryToken()
-    }
-    <div class="container-fluid py-4">
-        <div class="row my-1">
-            <div class="col-12">
-                <div class="card">
-                    <!-- Card header -->
-                    <div class="card-header pb-0">
-                        <div class="row">
-                            <div class="d-sm-flex justify-content-between hborder">
-                                <div class="htitle"> <b>Assets Purchased</b></div>
-                                </div>
 
-                                <div style="padding:10px">
-                                    <button type="button" id="btnnew" value="New"
-                                            class="btn addBtn btn-sm mb-0 btn-tooltip"
-                                            data-bs-toggle="tooltip" data-bs-placement="top" title="New Asset Entry"
-                                            onclick="AddNew();">
-                                        <i class="fa fa-plus" aria-hidden="true"></i>
-                                    </button>
-                                    <button class="btn btn-sm xtraBtn mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Download Template" data-container="body" data-animation="true"><i class="fa fa-download" aria-hidden="true"></i></button>
-                                    <button class="btn btn-sm xtraBtn mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Upload Assets List" data-container="body" data-animation="true"><i class="fa fa-upload" aria-hidden="true"></i></button>
-                                    <button class="btn btn-sm modBtn mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Export Assets List" data-container="body" data-animation="true"><i class="fa fa-file-excel-o" aria-hidden="true"></i></button>
-                                </div>
-
-
-                            </div>
-                     
-                        <form class="row">
-                                <div class="col-sm-2 p-1">
-                                    <select class="form-control form-control-sm" id="cboSearchBy">
-                                        <option value="1">Search By Asset No</option>
-                                        <option value="2">Search By Asset Name</option>
-                                        <option value="3">Search By Asset Sr No</option>
-                                        <option value="4">Search By Asset Id No</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-3 p-1">
-                                    <input type="text" class="form-control form-control-sm"
-                                           id="txtsearch" placeholder="Enter Asset No ..">
-                                 </div>
-                                <div class="col-sm-1 p-1">
-                                    <button type="button" id="btnsearch" value="Search"
-                                            class="btn btn-xs addBtn"
-                                            onclick="showasset('L0-0');">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-
-                                </div>
-                                <div class="col-sm-1 p-1">
-                                    <div id="divspinner">
-                                                    <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
-                                    </div>
-
-                                </div>
-
-                           
-                            </form>
-
-                        </div>
-                   
-                        <div class="card-body"  id="divTableData">
-                            
-                            <table class="table table-flush table-hover text-xs "
-                                 style="width:100%"  id="tblasset">
-                                <thead class="hcol text-uppercase" style="font-weight:bold">
-                                    <tr>
-
-                                        <td width="5%">
-                                            Asset No
-                                        </td>
-                                        <td width="5%">
-                                            Identification No
-                                        </td>
-                                        <td width="25%">
-                                            Asset Name
-                                        </td>
-                                        <td width="5%">
-                                            Voucher Date
-                                        </td>
-                                        <td class="text-end" width="15%">
-                                            Amount Capitalised
-                                        </td>
-                                        <td  class="text-center" width="5%">Action </td>
-                                      
-
-                                    </tr>
-                                </thead>
-                                <tbody style="font-weight:bold;color:black">
-                                   
-                                </tbody>
-                            </table>
+@using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+{
+    @Html.AntiForgeryToken()
+}
+<div class="container-fluid py-4">
+    <div class="row my-1">
+        <div class="col-12">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header pb-0">
+                    <div class="row">
+                        <div class="d-sm-flex justify-content-between hborder">
+                            <div class="htitle"> <b>Assets Purchased</b></div>
                         </div>
 
-                    <div>
-
-
-                       
-                        
-
-                    </div>
-                    </div>
-
-                    </div>
-
-                    </div>
-            </div>
-     
-        
-            <!-- Modal -->
-
-            <div id="myModal_Add" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
-                <div class="modal-dialog modal-lg">
-
-                    <!-- Modal content-->
-
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Add Location</h4>
+                        <div style="padding:10px">
+                            <button type="button" id="btnnew" value="New"
+                                    class="btn addBtn btn-sm mb-0 btn-tooltip"
+                                    data-bs-toggle="tooltip" data-bs-placement="top" title="New Asset Entry"
+                                    onclick="AddNew();">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
+                            <button class="btn btn-sm xtraBtn mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Download Template" data-container="body" data-animation="true"><i class="fa fa-download" aria-hidden="true"></i></button>
+                            <button class="btn btn-sm xtraBtn mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Upload Assets List" data-container="body" data-animation="true"><i class="fa fa-upload" aria-hidden="true"></i></button>
+                            <button class="btn btn-sm modBtn mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Export Assets List" data-container="body" data-animation="true"><i class="fa fa-file-excel-o" aria-hidden="true"></i></button>
                         </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-md-4">Location</div>
-                                <div class="col-md-8"><input id="txtLocation" /></div>
+
+
+                    </div>
+
+                    <form class="row">
+                        <div class="col-sm-2 p-1">
+                            <select class="form-control form-control-sm" id="cboSearchBy">
+                                <option value="1">Search By Asset No</option>
+                                <option value="2">Search By Asset Name</option>
+                                <option value="3">Search By Asset Sr No</option>
+                                <option value="4">Search By Asset Id No</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3 p-1">
+                            <input type="text" class="form-control form-control-sm"
+                                   id="txtsearch" placeholder="Enter Asset No ..">
+                        </div>
+                        <div class="col-sm-1 p-1">
+                            <button type="button" id="btnsearch" value="Search"
+                                    class="btn btn-xs addBtn"
+                                    onclick="showasset('L0-0');">
+                                <i class="fa fa-search"></i>
+                            </button>
+
+                        </div>
+                        <div class="col-sm-1 p-1">
+                            <div id="divspinner">
+                                <div class="fa-3x">
+                                    <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+                                </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" id="btnSave">Save</button>
-                            <button type="button" class="btn btn-default" id="btnClose" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
 
+                    </form>
 
                 </div>
-            </div>
-            <div id="myModal_Edit" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
-                <div class="modal-dialog modal-lg">
 
-                    <!-- Modal content-->
+                <div class="card-body" id="divTableData">
 
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Add Location</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-md-4">Location</div>
-                                <div class="col-md-8"><input id="txteditLocation" /></div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" id="btneditSave">Save</button>
-                            <button type="button" class="btn btn-default" id="btnClose" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
+                    <table class="table table-flush table-hover text-xs "
+                           style="width:100%" id="tblasset">
+                        <thead class="hcol text-uppercase" style="font-weight:bold">
+                            <tr>
+
+                                <td width="5%">
+                                    Asset No
+                                </td>
+                                <td width="5%">
+                                    Identification No
+                                </td>
+                                <td width="25%">
+                                    Asset Name
+                                </td>
+                                <td width="5%">
+                                    Voucher Date
+                                </td>
+                                <td class="text-end" width="15%">
+                                    Amount Capitalised
+                                </td>
+                                <td class="text-center" width="5%">Action </td>
+
+
+                            </tr>
+                        </thead>
+                        <tbody style="font-weight:bold;color:black">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div>
+
+
+
 
 
                 </div>
             </div>
 
-            <div id="Edit_changegroup_modal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
-                <div class="modal-dialog modal-lg">
+        </div>
 
-                    <!-- Modal content-->
-
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Actions</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row ">
+    </div>
+</div>
 
 
-                                <button style="display:inline-block; margin-left:10px" type="button" class="btn btn-primary btn-md" id="btnedit">
-                                    Edit Asset
-                                </button>
+<!-- Modal -->
+
+<div id="myModal_Add" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Location</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4">Location</div>
+                    <div class="col-md-8"><input id="txtLocation" /></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="btnSave">Save</button>
+                <button type="button" class="btn btn-default" id="btnClose" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<div id="myModal_Edit" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Location</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4">Location</div>
+                    <div class="col-md-8"><input id="txteditLocation" /></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="btneditSave">Save</button>
+                <button type="button" class="btn btn-default" id="btnClose" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<div id="Edit_changegroup_modal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Actions</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row ">
+
+
+                    <button style="display:inline-block; margin-left:10px" type="button" class="btn btn-primary btn-md" id="btnedit">
+                        Edit Asset
+                    </button>
 
 
 
-                                <button style="display:inline-block ; margin-left:10px" type="button" class="btn btn-secondary btn-md" id="btnchangegroup">
-                                    Change Asset Group
-                                </button>
-                                <button style="display:inline-block; margin-left:10px" type="button" class="btn btn-danger btn-md" id="btndeleteasset">
-                                    Delete Asset
-                                </button>
+                    <button style="display:inline-block ; margin-left:10px" type="button" class="btn btn-secondary btn-md" id="btnchangegroup">
+                        Change Asset Group
+                    </button>
+                    <button style="display:inline-block; margin-left:10px" type="button" class="btn btn-danger btn-md" id="btndeleteasset">
+                        Delete Asset
+                    </button>
 
-                            </div>
-
-
+                </div>
 
 
 
@@ -224,47 +221,49 @@
 
 
 
-                        </div>
-                        <div class="modal-footer">
 
-                            <button type="button" class="btn btn-default" id="btnClose" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
 
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-default" id="btnClose" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="divchangegroup" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-xl" role="document" id="divNewContent">
+
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" tabindex="-1" role="dialog" id="divUpload" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-xl" role="document" id="divUploadContent">
+
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div id="progressbar" class="modal fade" role="dialog" style="height: auto;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lx">
+
+        <!-- Modal content-->
+        <div class="modal-content" style="height:auto;width:auto;overflow:auto">
+            <div class="modal-header">
+                <label style="color:red;text-align: center;">page is Loading...................</label>
+
+            </div>
+            <div class="modal-body ">
+
+                <div class="row col-6" style="overflow:auto;align-content:center">
+                    <label style="color:darkred;text-align: center;">Please wait while we load your report........</label>
 
                 </div>
             </div>
-            <div class="modal fade" tabindex="-1" role="dialog" id="divchangegroup" data-backdrop="static" data-keyboard="false">
-                <div class="modal-dialog modal-xl" role="document" id="divNewContent">
+        </div>
+    </div>
+</div>
 
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
-
-            <div class="modal fade" tabindex="-1" role="dialog" id="divUpload" data-backdrop="static" data-keyboard="false">
-                <div class="modal-dialog modal-xl" role="document" id="divUploadContent">
-
-                </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
-            <div id="progressbar" class="modal fade" role="dialog" style="height: auto;" data-backdrop="static" data-keyboard="false">
-                <div class="modal-dialog modal-lx">
-
-                    <!-- Modal content-->
-                    <div class="modal-content" style="height:auto;width:auto;overflow:auto">
-                        <div class="modal-header">
-                            <label style="color:red;text-align: center;">page is Loading...................</label>
-
-                        </div>
-                        <div class="modal-body ">
-
-                            <div class="row col-6" style="overflow:auto;align-content:center">
-                                <label style="color:darkred;text-align: center;">Please wait while we load your report........</label>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
 <script type="text/javascript">
     var editnode;
     var edit_changegroupassetno;
@@ -281,7 +280,7 @@
         $('#cboSearchBy').on('change', function (e) {
             showasset('L0-0');
         });
-       
+
 
                 InitTree();
 
@@ -370,7 +369,7 @@
          console.log(ControllerURL);
          var table = $('#tblasset')
              .on('processing.dt', function (e, settings, processing) {
-               //  $('#divspinner').css('display', processing ? 'block' : 'none');
+             $('#divspinner').css('display', processing ? 'block' : 'none');
              }).DataTable({
                  "destroy": true,
                  "paging": true,
@@ -564,7 +563,7 @@
            ControllerURL = ControllerURL + "/" + "L1-1";
             window.location.href = ControllerURL;
 
-      
+
      }
 
     function Edit(id) {
@@ -664,4 +663,4 @@
         }
 
 
-            </script>
+</script>
