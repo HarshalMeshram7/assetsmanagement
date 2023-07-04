@@ -275,7 +275,6 @@ namespace VerifyWebApp.Controllers
             return View(calist);
         }
         [HttpPost]
-
         [ValidateJsonAntiForgeryToken]
         [ValidateJsonXssAttribute]
 
