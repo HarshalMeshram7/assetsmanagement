@@ -275,8 +275,8 @@ namespace VerifyWebApp.Controllers
             return View(calist);
         }
         [HttpPost]
-        [ValidateJsonAntiForgeryToken]
-        [ValidateJsonXssAttribute]
+        //[ValidateJsonAntiForgeryToken]
+        //[ValidateJsonXssAttribute]
 
         public ActionResult Post_UploadAttachments(int id,string SourceEvent,int assetno)
         {

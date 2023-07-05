@@ -190,7 +190,7 @@
         $('#btnUpload').click(function (e) {
 
          if (window.FormData !== undefined) {
-             
+
              var formData = new FormData();
              e.preventDefault();
              var formData = new FormData();
@@ -214,7 +214,7 @@
              else{
                  swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
                      if (result == true) {
-                         
+
                          var ControllerURL = '@Url.Action("Post_UploadAttachments", "Asset_Attachments")';
                          var returnURL='@Url.Action("Index", "Asset_Attachments")';
                          $.ajax({
@@ -253,8 +253,9 @@
 
     });
 
-     @*function Delete(id)
+     function Delete(id)
      {
+         //alert("hi");
          var form = $('#frmNewEmp');
          var token = $('input[name="__RequestVerificationToken"]', form).val();
          var headers = {};
@@ -262,6 +263,7 @@
          //alert(token);
 
          swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+             
             if (result == true) {
                 var returnURL='@Url.Action("Index", "Asset_Attachments")';
                 var url = '@Url.Action("Delete", "Asset_Attachments")';
@@ -292,11 +294,11 @@
             }
         });
 
-        }*@
+        }
 
 
         function download(id) {
-            alert("hi");
+           /* alert("hi");*/
             var ControllerURL = '@Url.Action("Download", "Asset_Attachments")';
             ControllerURL = ControllerURL + "/" + id;
             window.location.href = ControllerURL;
