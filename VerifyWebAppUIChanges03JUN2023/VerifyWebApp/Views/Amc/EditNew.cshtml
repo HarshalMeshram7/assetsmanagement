@@ -437,8 +437,8 @@
               });
         $("#startdateerror,#enddateerror").hide();
 
-        //getAssetDetails();
-        //editgetAssetDetails();
+        getAssetDetails();
+        editgetAssetDetails();
 
         $("#frmNewEmp").submit(function (e) {
             debugger;
@@ -687,19 +687,19 @@
     //    $('#editsubamcmodal').modal('hide');
     //}
 
-    //function addasset()
-    //{
-    //   // $('#myModal').modal('hide');
-    //    if ($("#AssetNo").val() != '' &&
-    //        $("#txtassetdesc").val() != '' && $("#txtassetamount").val() != '') {
+    function addasset()
+    {
+       // $('#myModal').modal('hide');
+        if ($("#AssetNo").val() != '' &&
+            $("#txtassetdesc").val() != '' && $("#txtassetamount").val() != '') {
 
-    //        AddAssettotable();
+            AddAssettotable();
 
-    //        $("#txtEndDate").focus();
-    //        $('#subamcmodal').modal('hide');
+            $("#txtEndDate").focus();
+            $('#subamcmodal').modal('hide');
 
-    //    }
-    //}
+        }
+    }
 
     function AddAssettotable()
     {
