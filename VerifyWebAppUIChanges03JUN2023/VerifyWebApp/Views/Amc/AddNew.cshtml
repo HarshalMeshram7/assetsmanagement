@@ -262,8 +262,8 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn saveBtn btn-sm" onclick="editsubamc();">Save</button>
-                <button type="button" class="btn clBtn btn-sm" onclick="closeeditamc();">Close</button>
-
+                @*<button type="button" class="btn clBtn btn-sm" onclick="closeeditamc();">Close</button>*@
+                <button type="button" class="btn btn-sm clBtn" id="btnEditClose" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -384,7 +384,7 @@
             geteditAssetDetails();
 
         $("#btnSave").click(function (e) {
-            debugger;
+             
             e.preventDefault();
                 SaveData();
                 return false;
@@ -392,7 +392,7 @@
 
 
         //$("#frmNewEmp").submit(function (e) {
-        //    debugger;
+        //     
         //        e.preventDefault();
         //        SaveData();
         //        return false;
@@ -497,7 +497,7 @@
     {
 
         // alert('Save');
-        debugger;
+         
        // $("#invaliddate").hide();
         var startdate = moment($("#txtStartDate").val()).format('DD-MM-YYYY');
         var enddate = moment($("#txtEndDate").val()).format('DD-MM-YYYY');
@@ -594,7 +594,7 @@
                             contentType: "application/json",
                             data: JSON.stringify(postdata),
                             success: function (res) {
-                                debugger;
+                                 
                                 if (res == true)
                                 {
                                    
@@ -699,37 +699,37 @@
             $('#editsubamcmodal').modal('show');
     }
 
-      //  function editsubamc() {
+        function editsubamc() {
 
-            //if ($("#edAssetNo").val() != '' && $("#txtedassetdesc").val() != '' && $("#txtedassetamount").val() != '')
-            //{
-            //    // alert("if")
-            //    Subamcedittable();
-            //    $('#editsubamcmodal').modal('hide');
+            if ($("#edAssetNo").val() != '' && $("#txtedassetdesc").val() != '' && $("#txtedassetamount").val() != '')
+            {
+                // alert("if")
+                Subamcedittable();
+                $('#editsubamcmodal').modal('hide');
 
-            //}
+            }
 
-       // }
-        //function Subamcedittable() {
-        //    var assetno = $("#edAssetNo").val();
+        }
+        function Subamcedittable() {
+            var assetno = $("#edAssetNo").val();
 
-        //    var assetdesc = $("#txtedassetdesc").val(); //// txtedassetdesc
-        //    var assetamt = $("#txtedassetamount").val();
-        //    //alert(assetno)
-        //    //alert(assetdesc)
-        //    //alert(assetamt)
-        //    var tbl = $('#tblSubamc tbody tr:has(td)').each(function () {
-        //        var srno = $(this).find("td").eq(0).html();
-        //        if (srno == editindex)
-        //        {
-        //            //alert('check');
-        //            $(this).find("td").eq(1).html(assetno);
-        //            $(this).find("td").eq(2).html(assetdesc);
-        //            $(this).find("td").eq(3).html(assetamt);
+            var assetdesc = $("#txtedassetdesc").val(); //// txtedassetdesc
+            var assetamt = $("#txtedassetamount").val();
+            //alert(assetno)
+            //alert(assetdesc)
+            //alert(assetamt)
+            var tbl = $('#tblSubamc tbody tr:has(td)').each(function () {
+                var srno = $(this).find("td").eq(0).html();
+                if (srno == editindex)
+                {
+                    //alert('check');
+                    $(this).find("td").eq(1).html(assetno);
+                    $(this).find("td").eq(2).html(assetdesc);
+                    $(this).find("td").eq(3).html(assetamt);
 
-        //        }
-        //    })
-      //  }
+                }
+            })
+        }
     function assetexport()
     {
               window.location.href = '@Url.Action("Assetexport", "Amc")';
