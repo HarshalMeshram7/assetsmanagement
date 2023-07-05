@@ -30,8 +30,8 @@
                             <div class="form-group">
                                 <label for="praticesname">Start Date<span>*</span></label>
 
-                                <input id="txtStartDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
-
+                                <input id="txtStartDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" type="date" />
+                                @*<input id="txtStartDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" type="date" />*@
                             </div>
                             <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
                         </div>
@@ -41,7 +41,7 @@
                             <label for="praticesname">End Date<span>*</span></label>
                             @*@Html.TextBoxFor(m => m.LeaveDate, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.LeaveDate, "", new { @class = "text-danger  " })*@
-                            <input id="txtEndDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
+                            <input id="txtEndDate" tabindex="6" class="form-control form-control-sm" type="date" />
                             <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
                             <div></div>
                         </div>
@@ -168,7 +168,7 @@
                     <label for="praticesname">Start Date<span>*</span></label>
 
                     <div class='input-group date' id='dtspStartDate'>
-                        <input id="txtspStartDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" required />
+                        <input id="txtspStartDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="dd-mm-yyyy" type="date" required />
                     </div>
                 </div>
 
@@ -178,7 +178,7 @@
                     @*@Html.TextBoxFor(m => m.LeaveDate, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.LeaveDate, "", new { @class = "text-danger  " })*@
                     <div class='input-group date' id='dtspEndDate'>
-                        <input id="txtspEndDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" required />
+                        <input id="txtspEndDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="dd-mm-yyyy" type="date" required />
                     </div>
 
                 </div>
@@ -253,6 +253,7 @@
 
 <script type="text/javascript">
     $('#btneditSave').click(function (event) {
+      //  debugger;
         SaveData();
         e.preventDefault();
         return false;
@@ -262,8 +263,9 @@
 
      var editindex = 0;
 
-        var EndDateStatus = false;
-        var StartDateStatus = false;
+    var EndDateStatus = false;
+    var StartDateStatus = false;
+
     $(document).ready(function () {
         InitUI();
     });
@@ -285,8 +287,8 @@
             let _enddate = moment('@ViewBag.EndDate', 'DD/MM/YYYY').format('YYYY-MM-DD');
             $("#txtStartDate").val(_startdate);
             $("#txtEndDate").val(_enddate);
+            debugger;
 
-//
             //if dep is calculated then readonly start date and end date parent
          if ('@ViewBag.depflag' == "Y") {
 
@@ -444,7 +446,7 @@
 
                 var postdata =
                     {
-                        "ID": @ViewBag.id,
+                       ID": @ViewBag.id,
                     "FromDate": Strstartdate,
                     //"FromDate": startdate,
                     "ToDate": StrEnddate,

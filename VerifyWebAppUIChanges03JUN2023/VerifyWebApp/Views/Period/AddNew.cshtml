@@ -46,9 +46,9 @@
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label for="praticesname">End Date<span>*</span></label>
-                                <input id="txtEndDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
 
+                                <label for="praticesname">Start Date<span>*</span></label>
+                                <input id="txtStartDate" tabindex="6" class="form-control form-control-sm" type="date" />
                             </div>
                             <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
                             <div></div>
@@ -145,7 +145,8 @@
                     <label for="praticesname">Start Date<span>*</span></label>
 
                     <div class='input-group date' id='dtspStartDate'>
-                        <input type='date' id="txtspStartDate" class="form-control" required />
+                        <input type='text' id="txtspStartDate" class="form-control form-control-sm" required />
+                        @*<input id="txtStartDate" tabindex="6" class="form-control form-control-sm" type="date" />*@
 
                     </div>
 
@@ -215,7 +216,7 @@
                     @*@Html.TextBoxFor(m => m.LeaveDate, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.LeaveDate, "", new { @class = "text-danger  " })*@
                     <div class='input-group date' id='dtedspEndDate'>
-                        <input type='date' id="txtedspEndDate" class="form-control" required />
+                        <input type='text' id="txtedspEndDate" class="form-control" required />
 
                         @*<div class="input-group-addon">
                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
@@ -282,7 +283,8 @@
               $("#btnAddSubPeiod").click(function () {
                   var startdate = $('#txtStartDate').val();
                   var enddate = $('#txtEndDate').val();
-                 
+                  debugger;
+
                   if (startdate != "" && enddate != "") {
 
                       var lastTr = $('#tblSubPeriod tr:last').find('td:eq(2)').html()
@@ -292,11 +294,13 @@
                       if (lastTr.trim() != "End Date") {/////tr thname end date null is not working
                           //    alert(lastTr);
                           if (lastTr.trim() == "End Date") {
-                              $("#txtspStartDate").val('@ViewBag.fromdate');
+
+                              $("#txtspStartDate").val('@ViewBag.fromdate')
                               document.getElementById('txtspStartDate').readOnly = true;
                               $('#txtspEndDate').val("");
                           }
                           else {
+                              debugger;
                               var myDate = moment(lastTr, "DD/MM/YYYY");
                               var date = moment(myDate).add('1', 'day').format("DD/MM/YYYY");
                               $('#txtspStartDate').val(date);
@@ -425,7 +429,7 @@
                             ,
 
                             success: function (res) {
-                            
+
                                 if (res == "Success") {
                                     swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
                                         if (result == true) {
