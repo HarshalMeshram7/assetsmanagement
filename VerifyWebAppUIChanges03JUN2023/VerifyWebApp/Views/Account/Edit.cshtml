@@ -53,11 +53,12 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-sm clBtn" id="btnClose" data-bs-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" id="btnSave">Save</button>
+
     </div>
 }
 </div><!-- /.modal-content -->
 
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+@*<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>*@
 <script type="text/javascript">
     $('#btnSave').click(function (event) {
        
@@ -65,6 +66,7 @@
         e.preventDefault();
         return false;
     });
+   
 
     $(document).ready(function () {
         init();

@@ -26,6 +26,7 @@
 
         <h4 class="modal-title">Import Amc List</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
     </div>
     @*@using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))*@
     @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "frmupload" }))
@@ -54,7 +55,7 @@
         <div class="modal-footer">
             <button type="button" class="btn saveBtn btn-sm" id="btnSave">Upload</button>
             <button type="button" class="btn clBtn btn-sm" data-dismiss="modal">Close</button>
-            
+
             @*@ViewBag.Message*@
 
         </div>
