@@ -441,7 +441,7 @@
         editgetAssetDetails();
 
         $("#frmNewEmp").submit(function (e) {
-            debugger;
+             
             e.preventDefault();
             SaveData();
             return false;
@@ -515,7 +515,7 @@
     }
 
                      //$("#frmNewEmp").submit(function (e) {
-                     //    debugger;
+                     //     ;
                      //    e.preventDefault();
                      //    SaveData();
                      //    return false;
@@ -543,7 +543,7 @@
     function SaveData() {
 
         // alert('Save');
-        debugger;
+         
         var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
         var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
 
@@ -633,7 +633,7 @@
                         headers: headers,
                         data: JSON.stringify(postdata),
                         success: function (res) {
-                            debugger;
+                             
                             if (res == "Failed") {
                                 swal("Alert", "You Cannot Add this Record", "warning");
                             }
