@@ -145,7 +145,7 @@
                     <label for="praticesname">Start Date<span>*</span></label>
 
                     <div class='input-group date' id='dtspStartDate'>
-                        <input type='text' id="txtspStartDate" class="form-control form-control-sm" required />
+                        <input type='text' id="txtspStartDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" required />
                         @*<input id="txtStartDate" tabindex="6" class="form-control form-control-sm" type="date" />*@
 
                     </div>
@@ -255,6 +255,7 @@
 
         var EndDateStatus = false;
         var StartDateStatus = false;
+
     $(document).ready(function () {
         InitUI();
     });
@@ -273,24 +274,25 @@
 
             });
 
-             let _startdate = moment('@ViewBag.fromdate').format('YYYY-MM-DD');
+             let _startdate = moment('@ViewBag.fromdate').format('dd-mm-yyyy');
             $("#txtStartDate").val(_startdate);
          //   $("#stDate").val('@ViewBag.fromdate');
-            debugger;
+           // debugger;
 
 
 
               $("#btnAddSubPeiod").click(function () {
                   var startdate = $('#txtStartDate').val();
                   var enddate = $('#txtEndDate').val();
-                  debugger;
+                 //debugger;
 
                   if (startdate != "" && enddate != "") {
 
                       var lastTr = $('#tblSubPeriod tr:last').find('td:eq(2)').html()
                      // alert(lastTr)
                       var spstartdate = $('#txtStartDate').val();
-                    //  alert(spstartdate)
+                      //  alert(spstartdate)
+                      debugger;
                       if (lastTr.trim() != "End Date") {/////tr thname end date null is not working
                           //    alert(lastTr);
                           if (lastTr.trim() == "End Date") {
@@ -502,6 +504,7 @@
 
             spstartdate = moment(spstartdate, 'YYYY-MM-DD').format('DD/MM/YYYY');
             spenddate = moment(spenddate, 'YYYY-MM-DD').format('DD/MM/YYYY');
+            debugger;
 
             var periodlock = "";
             var depriciation = "";
