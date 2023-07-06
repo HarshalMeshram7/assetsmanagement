@@ -283,6 +283,7 @@ namespace VerifyWebApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateJsonAntiForgeryToken]
+        [ValidateJsonXssAttribute]
         public ActionResult Edit(AccessRights accessrights)
         {
             int userid = 0;
