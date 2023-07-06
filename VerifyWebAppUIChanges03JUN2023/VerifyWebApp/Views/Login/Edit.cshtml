@@ -115,6 +115,7 @@
 
 
     $('#btnSave').click(function (event) {
+        //alert('hi');
         SaveData();
         e.preventDefault();
         return false;
@@ -186,12 +187,10 @@
 
              $("#twofactor").prop("checked", false);
              twofactor = "no";
-        }
+         }
 
         
     });
-
-
 
 
    function SaveData() {
@@ -275,7 +274,7 @@
                     });
                     }
                 });
-             }
+   }
 </script>
 
 
