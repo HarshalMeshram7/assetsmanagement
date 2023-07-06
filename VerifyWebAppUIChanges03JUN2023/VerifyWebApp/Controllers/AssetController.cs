@@ -59,6 +59,8 @@ namespace VerifyWebApp.Controllers
         }
 
         [HttpPost]
+        [ValidateJsonAntiForgeryToken]
+        [ValidateJsonXssAttribute]
         public JsonResult SaveGroupNode(JsTreeNodeGroup node)
         {
             bool bResult = true;
@@ -3882,8 +3884,11 @@ namespace VerifyWebApp.Controllers
 
             return View(assetGroupViewmodel);
         }
+
         [HttpPost]
         [AllowAnonymous]
+        [ValidateJsonAntiForgeryToken]
+        [ValidateJsonXssAttribute]
         public ActionResult Edit(AssetGroupViewmodel assetGroup)
         {
             int userid = 0;
