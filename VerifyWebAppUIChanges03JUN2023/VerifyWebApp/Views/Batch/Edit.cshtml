@@ -199,6 +199,9 @@
                                             <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" onclick="deleteloc(this);">
                                                 <i class="fa fa-remove"></i>Delete
                                             </button>
+                                            @*<button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" onclick="Delete(@item.ID);">
+                                                <i class="fa fa-remove"></i>Delete
+                                            </button>*@
 
                                         </td>
                                     </tr>
@@ -365,7 +368,7 @@
 @*<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>*@
 <script type="text/javascript">
     $('#btnSave').click(function (event) {
-        debugger;
+      
         SaveData();
         e.preventDefault();
         return false;
