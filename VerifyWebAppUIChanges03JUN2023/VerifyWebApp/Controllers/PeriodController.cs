@@ -355,6 +355,7 @@ namespace VerifyWebApp.Controllers
                 ViewBag.StartDate = period.FromDate.ToString("dd/MM/yyyy");
                 ViewBag.EndDate = period.ToDate.ToString("dd/MM/yyyy");
                 ViewBag.id = period.ID;
+                
                 splist = db.SubPeriods.Where(x => x.PeriodID == id && x.Companyid == companyid).ToList();
                 int srno = 1;
                 int depcnt = 0;
