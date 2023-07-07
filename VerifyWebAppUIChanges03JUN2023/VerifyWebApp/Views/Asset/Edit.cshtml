@@ -9,10 +9,10 @@
     .fa-edit:hover {
         color: blueviolet;
     }
+
     .fa-remove:hover {
         color: red;
     }
-
 </style>
 
 
@@ -57,7 +57,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                           
+
                                 <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab"
                                    href="#menu3" role="tab" aria-controls="Cost Center" aria-selected="false">
                                     Insurance & AMC & Loan
@@ -65,7 +65,7 @@
                             </li>
 
                             <li class="nav-item">
-                          
+
 
                                 <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab"
                                    href="#menu5" role="tab" aria-controls="Cost Center" aria-selected="false">
@@ -162,21 +162,23 @@
                                                 <div class="form-group">
                                                     <label for="praticesname">Voucher Date<span style="color:#CC0000;">*</span></label>
 
-                                                  
 
-                                                    @Html.TextBoxFor(m => m.str_VoucherDate, new
+
+                                                    @Html.TextBoxFor(m => m.VoucherDate, "{0:yyyy-MM-dd}", new
                                                {
                                                    @class = "form-control form-control-sm",
                                                    @tabindex = "5",
                                                    required = "required",
                                                    type = "date",
-                                                    id = "txtVDate",
+                                                   id = "txtVDate",
                                                    @onblur = "validateopaccdepreciation()"
                                                })
 
-                                                 
+
 
                                                 </div>
+
+
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
@@ -192,8 +194,8 @@
                                                     <div class='input-group date' id='dtPoDate'>
 
 
-                                                        @Html.TextBoxFor(m => m.str_PODate, new { @class = "form-control form-control-sm", @tabindex = "11", type = "date", id = "txtPoDate" })
-                                                       
+                                                        @Html.TextBoxFor(m => m.PODate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", @tabindex = "11", type = "date", id = "txtPoDate" })
+
 
                                                     </div>
 
@@ -209,8 +211,8 @@
 
                                                     <div class='input-group date' id='dtrecieptDate'>
 
-                                                        @Html.TextBoxFor(m => m.str_ReceiptDate, new { @class = "form-control form-control-sm", type = "date",  @tabindex = "12", id = "txtreceiptDate" })
-                                                     
+                                                        @Html.TextBoxFor(m => m.ReceiptDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @tabindex = "12", id = "txtreceiptDate" })
+
 
                                                     </div>
 
@@ -223,8 +225,15 @@
 
                                                     <div class='input-group date' id='dtcommDate'>
 
-                                                        @Html.TextBoxFor(m => m.str_CommissioningDate, new { @class = "form-control form-control-sm", type = "date",  @tabindex = "13", id = "txtcommDate" })
-                                                   
+                                                        @Html.TextBoxFor(m => m.CommissioningDate, "{0:yyyy-MM-dd}",
+                                                       new
+                                                            {
+                                                                @class = "form-control form-control-sm",
+                                                           type = "date",
+                                                           @tabindex = "13",
+                                                           id = "txtcommDate"
+                                                            })
+
 
                                                     </div>
 
@@ -237,8 +246,17 @@
 
                                                     <div class='input-group date' id='dtdpucomDate'>
 
-                                                        @Html.TextBoxFor(m => m.str_DtPutToUse, new { @class = "form-control form-control-sm", @tabindex = "8", type = "date", required = "required", id = "txtdpucomDate", @onblur = "dtputusevalidatewithvoucher()" })
-                                                      
+                                                        @Html.TextBoxFor(m => m.DtPutToUse, "{0:yyyy-MM-dd}",
+                                                        new
+                                                             {
+                                                            @class = "form-control form-control-sm",
+                                                            @tabindex = "8",
+                                                            type = "date",
+                                                            required = "required",
+                                                            id = "txtdpucomDate",
+                                                            @onblur = "dtputusevalidatewithvoucher()"
+                                                             })
+
 
                                                     </div>
                                                 </div>
@@ -249,8 +267,8 @@
 
                                                     <div class='input-group date' id='dtdpuItDate'>
 
-                                                        @Html.TextBoxFor(m => m.str_DtPutToUseIT, new { @class = "form-control form-control-sm", type = "date", @tabindex = "9", id = "txtdpuItDate" })
-                                                     
+                                                        @Html.TextBoxFor(m => m.DtPutToUseIT, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @tabindex = "9", id = "txtdpuItDate" })
+
                                                     </div>
 
 
@@ -266,7 +284,7 @@
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label for="praticesname" id="componentlabelid" hidden>Is component or not?&nbsp;</label>
-                                                    @Html.CheckBox("iscomponent", false, new { id = "iscomponent",  @hidden = "hidden" })
+                                                    @Html.CheckBox("iscomponent", false, new { id = "iscomponent", @hidden = "hidden" })
                                                 </div>
                                             </div>
                                         </div>
@@ -284,8 +302,8 @@
 
                                                     <div class='input-group date' id='dtbillDate'>
 
-                                                        @Html.TextBoxFor(m => m.str_BillDate, new { @class = "form-control form-control-sm", type = "date", @tabindex = "15", id = "txtbillDate" })
-                                                      
+                                                        @Html.TextBoxFor(m => m.str_BillDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @tabindex = "15", id = "txtbillDate" })
+
 
                                                     </div>
 
@@ -344,20 +362,20 @@
 
                                 </div>
                                 @*<div class="row">
-        <div class="col-md-3">*@
+                                    <div class="col-md-3">*@
                                 <!--
-    <div class="form-group">
-        <label for="praticesname">Supplier Name</label>
+                                <div class="form-group">
+                                    <label for="praticesname">Supplier Name</label>
 
 
-        @Html.DropDownList("SupplierId", (SelectList)ViewBag.supplierlist, "Select Supplier", new { @class = "form-control form-control-sm", id = "SupplierId", @tabindex = "20" })
+                                    @Html.DropDownList("SupplierId", (SelectList)ViewBag.supplierlist, "Select Supplier", new { @class = "form-control form-control-sm", id = "SupplierId", @tabindex = "20" })
 
 
-    </div>
-        -->
+                                </div>
+                                    -->
                                 @*</div>
 
-        </div>*@
+                                    </div>*@
 
 
                                 <div class="row border border-success rounded my-2">
@@ -423,8 +441,8 @@
                                             <div class="col">
                                                 <div class='input-group date' id='dtExpDate'>
 
-                                                    @Html.TextBoxFor(m => m.str_Expirydate, new { @class = "form-control form-control-sm", type = "date",  @tabindex = "29", id = "txtExpDate", name = "txtExpDate", @onblur = "expiredatevalidatewithvoucher()" })
-                                                   
+                                                    @Html.TextBoxFor(m => m.ExpiryDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @tabindex = "29", id = "txtExpDate", name = "txtExpDate", @onblur = "expiredatevalidatewithvoucher()" })
+
                                                 </div>
                                             </div>
                                         </div>
@@ -473,8 +491,8 @@
                                 </div>
                                 <div class="row border border-success rounded  my-2">
                                     <!--
-        TODO     Section 3
-        -->
+                                    TODO     Section 3
+                                    -->
                                     <div class="col-md-4">
                                         <!-- COL 1-->
                                         <div class="row my-1">
@@ -794,100 +812,100 @@
                                     </div>
                                 </div>
                                 <!--
-                <div class="row col-lg-12" style="margin-top: 10px;">
-                   <div class="row">
-        <div class="container border border-primary" style="margin:10px">
+                                            <div class="row col-lg-12" style="margin-top: 10px;">
+                                               <div class="row">
+                                    <div class="container border border-primary" style="margin:10px">
 
-            <label for="praticesname" style="color:crimson">&nbsp;&nbsp;Accessories/Component list received with Asset free of cost</label>
-            @*<div class="row" style="margin-top:10px;">*@
-
-
-                <button type="button" style="margin:10px" class="btn nBtn pull-right" id="btnAddassetfreeofcost" data-toggle="modal">Add</button>
-            @*</div>*@
-            <div class="col-lg-12">
-                <table width="100%" class="table table-hover text-uppercase text-xs" id="tblassetfreeofcost" style="overflow:auto">
-                    <thead class="hcol" style="font-weight:bold">
-                        <tr>
-
-                            <td>
-                                Srno
-                            </td>
-                            <td hidden>
-
-                                uomid
-                            </td>
-
-                            <td>
-                                Description of Accessories/Component
-                            </td>
-                            <td>
-                                Date
-                            </td>
-                            <td>
-                                Qty
-                            </td>
-                            <td>
-                                Uom
-                            </td>
+                                        <label for="praticesname" style="color:crimson">&nbsp;&nbsp;Accessories/Component list received with Asset free of cost</label>
+                                        @*<div class="row" style="margin-top:10px;">*@
 
 
-                            <td align="center">
-                                Edit
-                            </td>
-                            <td align="center">
-                                Delete
-                            </td>
-                        </tr>
-                    </thead>
-                    <tbody style="font-weight:bold">
-                        @if (Model.assetfreeofcostlist.Count() == 0)
-                        {
-                            <tr></tr>
-                        }
-                        else
-                        {
-                            foreach (var item in Model.assetfreeofcostlist)
-                            {
-                                <tr>
-                                    <td>@item.Srno</td>
+                                            <button type="button" style="margin:10px" class="btn nBtn pull-right" id="btnAddassetfreeofcost" data-toggle="modal">Add</button>
+                                        @*</div>*@
+                                        <div class="col-lg-12">
+                                            <table width="100%" class="table table-hover text-uppercase text-xs" id="tblassetfreeofcost" style="overflow:auto">
+                                                <thead class="hcol" style="font-weight:bold">
+                                                    <tr>
 
-                                    <td hidden>@Html.DisplayFor(modelitem => item.Uom)</td>
+                                                        <td>
+                                                            Srno
+                                                        </td>
+                                                        <td hidden>
 
+                                                            uomid
+                                                        </td>
 
-                                    <td>@item.Description</td>
-                                    <td>@item.str_date</td>
-                                    <td>@Html.DisplayFor(modelitem => item.Qty)</td>
-
-                                    <td>@Html.DisplayFor(modelitem => item.str_uomname)</td>
-
-                                    <td align="center">
-                                        <button type="button" class="btn modBtn btn-sm"
-                                                aria-label="Left Align"
-                                                onclick="Editassetf(this,@item.Srno);">
-                                            <i class="fa fa-edit" style="color:green"></i>
-                                        </button>
-
-                                    </td>
-                                    <td align="center">
-                                        <button type="button" class="btn delBtn btn-sm" aria-label="Left Align" onclick="deleteassetf(this);">
-                                            <i class="fa fa-remove" style="color:red"></i>
-                                        </button>
-
-                                    </td>
-                                </tr>
+                                                        <td>
+                                                            Description of Accessories/Component
+                                                        </td>
+                                                        <td>
+                                                            Date
+                                                        </td>
+                                                        <td>
+                                                            Qty
+                                                        </td>
+                                                        <td>
+                                                            Uom
+                                                        </td>
 
 
-                            }
-                        }
-                    </tbody>
-                </table>
+                                                        <td align="center">
+                                                            Edit
+                                                        </td>
+                                                        <td align="center">
+                                                            Delete
+                                                        </td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody style="font-weight:bold">
+                                                    @if (Model.assetfreeofcostlist.Count() == 0)
+                                                    {
+                                                        <tr></tr>
+                                                    }
+                                                    else
+                                                    {
+                                                        foreach (var item in Model.assetfreeofcostlist)
+                                                        {
+                                                            <tr>
+                                                                <td>@item.Srno</td>
 
-            </div>
-        </div>
-    </div>
+                                                                <td hidden>@Html.DisplayFor(modelitem => item.Uom)</td>
 
-                  </div>
-        -->
+
+                                                                <td>@item.Description</td>
+                                                                <td>@item.str_date</td>
+                                                                <td>@Html.DisplayFor(modelitem => item.Qty)</td>
+
+                                                                <td>@Html.DisplayFor(modelitem => item.str_uomname)</td>
+
+                                                                <td align="center">
+                                                                    <button type="button" class="btn modBtn btn-sm"
+                                                                            aria-label="Left Align"
+                                                                            onclick="Editassetf(this,@item.Srno);">
+                                                                        <i class="fa fa-edit" style="color:green"></i>
+                                                                    </button>
+
+                                                                </td>
+                                                                <td align="center">
+                                                                    <button type="button" class="btn delBtn btn-sm" aria-label="Left Align" onclick="deleteassetf(this);">
+                                                                        <i class="fa fa-remove" style="color:red"></i>
+                                                                    </button>
+
+                                                                </td>
+                                                            </tr>
+
+
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                              </div>
+                                    -->
                             </div>
                         </div>
                         <!-- Location tab -->
@@ -971,8 +989,8 @@
                                                                         <td class="text-xs">@Html.DisplayFor(modelitem => item.str_locbname)</td>
                                                                         <td class="text-xs">@Html.DisplayFor(modelitem => item.str_loccname)</td>
                                                                         <td align="center">
-                                                                            <span onclick="Editloc(this,@item.Srno);">   
-                                                                                <i class="fa fa-edit" style="color:green"></i>  
+                                                                            <span onclick="Editloc(this,@item.Srno);">
+                                                                                <i class="fa fa-edit" style="color:green"></i>
                                                                             </span>
 
                                                                         </td>
@@ -1072,7 +1090,7 @@
                                                                     <td class="text-xs">@Html.DisplayFor(modelitem => item.str_costcenterbname)</td>
                                                                     <td class="text-xs">@Html.DisplayFor(modelitem => item.Percentage)</td>
                                                                     <td align="center">
-                                                                     
+
 
                                                                         <span onclick="Editcc(this,@item.Srno);">
                                                                             <i class="fa fa-edit" style="color:green"></i>
@@ -1080,7 +1098,7 @@
 
                                                                     </td>
                                                                     <td align="center">
-                                                                     
+
                                                                         <span onclick="deletecostcenter(this);">   <i class="fa fa-remove" style="color:red"></i>  </span>
                                                                     </td>
                                                                 </tr>
@@ -1124,11 +1142,11 @@
                                                                 </td>
 
                                                                 @*<td>
-                                                        Asset Description
-                                                    </td>
-                                                    <td align="right">
-                                                        Amount to be capitalised
-                                                    </td>*@
+                                                                        Asset Description
+                                                                    </td>
+                                                                    <td align="right">
+                                                                        Amount to be capitalised
+                                                                    </td>*@
 
                                                             </tr>
                                                         </thead>
@@ -1288,18 +1306,18 @@
                     <div class="container">
                         <div class="row">
                             <div class="modal-footer">
-                                    <button type="submit" class="btn saveBtn btn-sm" id="btnsave">Save</button>
-                                </div>
+                                <button type="button" class="btn saveBtn btn-sm" id="btnsave">Save</button>
                             </div>
                         </div>
                     </div>
-
-
-
                 </div>
-                </div>
+
+
+
+            </div>
         </div>
- 
+    </div>
+
 }
 
 <div id="imagemodal" class="modal fade" role="dialog" style="height:600px;">
@@ -1397,7 +1415,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm saveBtn" onclick="saveloc();">Save</button>
                 <button type="button" class="btn btn-sm clBtn" onclick="closeloc();">Close</button>
-                
+
             </div>
         </div>
     </div>
@@ -1461,7 +1479,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm saveBtn" onclick="saveeditloc();">Save</button>
                 <button type="button" class="btn btn-sm clBtn" onclick="closeeditloc();">Close</button>
-                
+
             </div>
         </div>
     </div>
@@ -1528,7 +1546,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm saveBtn" onclick="savecc();">Save</button>
                 <button type="button" class="btn btn-sm clBtn" onclick="closecc();">Close</button>
-                
+
             </div>
         </div>
     </div>
@@ -1592,7 +1610,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm saveBtn" onclick="saveeditcc();">Save</button>
                 <button type="button" class="btn btn-sm clBtn" onclick="closeeditcc();">Close</button>
-                
+
             </div>
         </div>
     </div>
@@ -1655,7 +1673,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm saveBtn" onclick="saveassetf();">Save</button>
                 <button type="button" class="btn btn-sm clBtn" onclick="closeassetf();">Close</button>
-                
+
             </div>
         </div>
     </div>
@@ -1717,7 +1735,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm saveBtn" onclick="saveeditassetf();">Save</button>
                 <button type="button" class="btn btn-sm clBtn" onclick="closeeditassetf();">Close</button>
-                
+
             </div>
         </div>
     </div>
@@ -1828,7 +1846,7 @@
                 //moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
 
 
-                $("#txtVDate").val(moment('@Model.VoucherDate', "YYYY-MM-DD").format("DD/MM/YYYY");
+                $@*("#txtVDate").val(moment('@Model.VoucherDate', "YYYY-MM-DD").format("DD/MM/YYYY");*@
 
 
                 ///
@@ -2046,8 +2064,8 @@
                 });
 
 
-                $("#frmNewEmp").submit(function (e) {
-
+                $("#btnsave").click(function () {
+                    alert('ddf');
                     SaveData();
                     return false;
 
@@ -2069,9 +2087,6 @@
 
 
             }
-
-
-
 
     //check addition to be added or not based on amt caps
         function checkadditionassettobeaddedornot() {
@@ -2121,16 +2136,6 @@
 
         }
 
-
-
-
-
-
-
-
-
-
-
             function editassetfdate() {
 
                 var vdate = moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
@@ -2146,8 +2151,6 @@
                    // $("#editassetfdateerror").hide();
                 }
             }
-
-
 
             function assetfdate() {
                 var vdate = moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
@@ -2628,9 +2631,6 @@
 
 /////////////////////////////////////////////////////////-------Add Cost-Center-Logic-------////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-
             function getcostcenterb(id) {
             if (id == "") {
                 id = 0;
@@ -2667,9 +2667,6 @@
 
 
 /////////////////////////////////////////////////////////-------Edit costcenter-Logic-------////////////////////////////////////////////////////////////////////////////////////////
-
-
-
 
                       function geteditcostcenterb(id) {
             if (id == "") {
@@ -2738,8 +2735,6 @@
                     }
 
 
-
-
 /////////////////////////////////////////////////////////-------Edit CostCenter-Logic-End------////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////----------CostCenter-History-Logic-End-------//////////////////////////////////////////////////////////////////////////////////
@@ -2750,11 +2745,333 @@
                          $('#assetfreeofcostmodal').modal('hide');
                      }
 
-
                      function deleteassetf(obj) {
                          $(obj).parent().parent().remove();
-                     }
+    }
 
+
+    function validateform() {
+        var errorlist = [];
+
+
+        var VoucherDate = $('#txtVDate').val();
+        var DtPutToUse = $('#txtdpucomDate').val();
+        var ITGroupIDID = $('#txtItgroupName').val();
+        // var itgroup = $("#txtItgroupName").find("option:selected").val();
+        var UsefulLife = $("#txtuseful").val();
+        var AssetName = $('#assetname').val();
+        var assetidno = $("#assetidno").val();
+        var grossvalue = $("#txtgrossvalue").val();
+        var Qty = $('#txtqty').val();
+        var DtPutToUseIT = $('#txtdpuItDate').val();
+        var assetno = $('#txtassetno').val();
+        if (assetno == "") {
+            errorlist.push("Assetno   is not entered");
+        }
+        if (Qty == "") {
+            errorlist.push("Quantity   is not entered");
+        }
+        if (grossvalue == "") {
+            errorlist.push("Gross value  is not entered");
+        }
+        if (DtPutToUseIT == "") {
+            errorlist.push("Date put to use (IT) is not entered");
+        }
+        //if (assetidno == "") {
+        //    errorlist.push("Asset Identification No  is not entered");
+        //}
+        //if (ITGroupIDID == "") {
+        //    errorlist.push("Itgroup  is not Selected");
+        //}
+        if (UsefulLife == "") {
+            errorlist.push("Usefullife is not entered");
+        }
+
+        if (AssetName == "") {
+            errorlist.push("Asset Name is not entered");
+        }
+        if (VoucherDate == "") {
+            errorlist.push("Voucher date is not entered");
+        }
+        if (DtPutToUse == "") {
+            errorlist.push("Date put to use company is not entered");
+        }
+        //  alert(errorlist)
+        return errorlist;
+    }
+
+    function SaveData() {
+
+        var validateformz = validateform();
+
+        if (validateformz.length != 0)
+            {
+
+            var srno = 1;
+
+            for (var i = 0; i < validateformz.length; i++) {
+
+                $('#errtbl').last().append('<tr><td>' + srno + '</td><td>' + validateformz[i] + '</td></tr>');
+                srno++
+            }
+
+            $('#errorlist').modal('show');
+        }
+        else {
+            var tbllocation = $('#tbllocation tbody tr:has(td)').map(function (i, v) {
+                var $td = $('td', this);
+                var Tablelocationa = $td.eq(1).html();
+                var Tablelocationb = $td.eq(2).html();
+                var Tablelocationc = $td.eq(3).html();
+                var Tabledate = $td.eq(4).html();
+                Tabledate = moment(Tabledate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+                return {
+                    Date: Tabledate,
+                    ALocID: Tablelocationa,
+                    BLocID: Tablelocationb,
+                    CLocID: Tablelocationc
+                }
+            }).get();
+
+            var tblcostcenter = $('#tblcostcenter tbody tr:has(td)').map(function (i, v) {
+                var $td = $('td', this);
+                var Tabledate = $td.eq(3).html();
+                Tabledate = moment(Tabledate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+                var Tablecosta = $td.eq(1).html();
+                var Tablecostb = $td.eq(2).html();
+                var Tablepercentage = $td.eq(6).html();
+                return {
+                    Date: Tabledate,
+                    AcostcenterID: Tablecosta,
+                    BcostcenterID: Tablecostb,
+                    Percentage: Tablepercentage
+                }
+            }).get();
+
+            var tblassetfreeofcost = $('#tblassetfreeofcost tbody tr:has(td)').map(function (i, v) {
+                var $td = $('td', this);
+                var Tabledate = $td.eq(3).html();
+                Tabledate = moment(Tabledate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+                var Tabledesc = $td.eq(2).html();
+                var Tableqty = $td.eq(4).html();
+                var Tableuom = $td.eq(1).html();
+                return {
+                    Date: Tabledate,
+                    Description: Tabledesc,
+                    Qty: Tableqty,
+                    Uom: Tableuom
+                }
+            }).get();
+            var parentassetid = $("#Parent_AssetId").val();
+            var depreciationmethod = $("input[name='DepreciationMethod']:checked").val();
+            var purchaseaccid = $("#txtPAccName").find("option:selected").val();;
+            var accumatedid = $("#txtAccDepAccName").find("option:selected").val();;
+            var itgroup = $("#txtItgroupName").find("option:selected").val();
+            var depid = $("#txtDepAccName").find("option:selected").val();
+            var assetidno = $("#assetidno").val();
+            var NRate = $("#txtNRate").val();
+            var ARate = $("#txtARate").val();
+            var TRate = $("#txtTRate").val();
+            var UsefulLife = $("#txtuseful").val();
+            var YrMang = $("#txtYrMang").val();
+        // var ExpDate = $("#txtExpDate").val();
+            var grossvalue = $("#txtgrossvalue").val();
+            var servicecharge = $('#txtservicecharge').val();
+            var otherexpense = $('#txtotherexpense').val();
+            var customduty = $('#txtcustomduty').val();
+            var exciseduty = $('#txtexciseduty').val();
+            var servicetax = $('#txtservicetax').val();;
+            var vat = $('#txtvat').val();;
+            var anyotherduty = $('#txtanyotherduty').val();;
+            var cst = $('#txtcst').val();;
+            //var gst = $('#txtgst').val();
+            var anyothertax = $('#txtanyothertax').val();
+            var totaladdition = $('#txttotaladdition').val();
+            var discount = $('#txtdiscount').val();
+            var roundoff = $('#txtroundoff').val();
+            var totaldeduction = $('#txttotaldeduction').val();
+            var invoiceamt = $('#txtinvoiceamt').val();
+            var dutydrawback = $('#txtdutydrawback').val();
+            var excisecredit = $('#txtexcisecredit').val();
+            var servicetaxcredit = $('#txtservicetaxcredit').val();
+            var anyotherdutycredit = $('#txtanyotherdutycredit').val();
+            var vatcredit = $('#txtvatcredit').val();
+            var anyothercredit = $('#txtanyothercredit').val();
+            var cstcredit = $('#txtcstcredit').val();
+            //var gstcredit = $('#txtgstcredit').val();
+            var cgstcredit = $('#txtcgstcredit').val();
+            var igstcredit = $('#txtigstcredit').val();
+            var sgstcredit = $('#txtsgstcredit').val();
+            var cgst = $('#txtcgst').val();
+            var igst = $('#txtigst').val();
+            var sgst = $('#txtsgst').val();
+            var totalcredit = $('#txttotalcredit').val();
+            var amtcap = $('#txtamttobecap').val();
+            var amtcapcompanylaw = $('#txtamtcapcompanylaw').val();
+            var amtcapincometax = $('#txtamtcapincometax').val();
+
+            ////var AssetNo = $('#txtassetno').val();
+            ////var ClientID = $('#txtclientid').val();
+            var AssetName = $('#assetname').val();
+            ////var AdditionAssetName = $('#txtassdesc').val();
+            var VoucherNo = $('#txtvno').val();
+            var ExpDate = moment($("#txtExpDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var VoucherDate = moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var PODate = moment($("#txtPoDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var ReceiptDate = moment($("#txtreceiptDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var CommissioningDate = moment($("#txtcommDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var BillDate = moment($("#txtbillDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var DtPutToUse = moment($("#txtdpucomDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var DtPutToUseIT = moment($("#txtdpuItDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var PONo = $('#txtpono').val();
+            var BillNo = $('#txtbillno').val();
+            var MRRNo = $('#txtmrrno').val();
+            var Qty = $('#txtqty').val();
+            var SupplierNo = $('#SupplierId').val();
+            var UOMNo = $('#UomId').val();
+            var BrandName = $('#txtbrandname').val();
+            var SrNo = $('#txtsrno').val();
+            var Model = $('#txtmodel').val();
+            var Remarks = $('#txtremarks').val();
+            var IsImported = isimportedflag;
+            var Currency = $('#txtcurrency').val();
+            var Values = $('#txtvalue').val();
+            var Residual = $('#txtresidual').val();
+            var OPAccDepreciation = $('#opaccdepreciation').val();
+            var ITGroupIDID = $('#txtItgroupName').val();
+            var assetno = $('#txtassetno').val();
+        //  alert(@Model.ID)
+            var iscomponent = iscomponentflag;
+
+            var postdata =
+                {
+                    "iscomponent": iscomponent,
+                    "ID": '@Model.ID',
+                    "Parent_AssetId": parentassetid,
+                    "AssetNo": assetno,
+                    "ITGroupIDID": ITGroupIDID,
+                    //"DepreciationMethod": depreciationmethod,
+                    "AccountID": purchaseaccid,
+                    "DepAccountId": depid,
+                    "AccAccountID": accumatedid,
+
+                    "OPAccDepreciation": OPAccDepreciation,
+                    "DepreciationMethod": depreciationmethod,
+                    //"AccountID": "1",
+                    //"DepAccountId": "1",
+                    //"AccAccountID": "1",
+
+                    "locationlist": tbllocation,
+                    "costcenterlist": tblcostcenter,
+                    "assetfreeofcostlist": tblassetfreeofcost,
+
+                    "ResidualVal": Residual,
+                    "NormalRatae": NRate,
+                    "AdditionalRate": ARate,
+                    "TotalRate": TRate,
+                    "Usefullife": UsefulLife,
+                    "YrofManufacturing": YrMang,
+                    "ExpiryDate": ExpDate,
+                    "AssetName": AssetName,
+                    "VoucherNo": VoucherNo,
+                    "VoucherDate": VoucherDate,
+                    "PODate": PODate,
+                    "ReceiptDate": ReceiptDate,
+                    "CommissioningDate": CommissioningDate,
+                    "BillDate": BillDate,
+                    "DtPutToUse": DtPutToUse,
+                    "DtPutToUseIT": DtPutToUseIT,
+                    "PONo": PONo,
+                    "BillNo": BillNo,
+                    "Qty": Qty,
+                    "SupplierNo": SupplierNo,
+                    "BrandName": BrandName,
+                    "SrNo": SrNo,
+                    "Model": Model,
+                    "Remarks": Remarks,
+                    "IsImported": IsImported,
+                    "Currency": Currency,
+                    "Values": Values,
+                    "GrossVal": grossvalue,
+                    "ServiceCharges": servicecharge,
+                    "OtherExp": otherexpense,
+                    "CustomDuty": customduty,
+                    "ExciseDuty": exciseduty,
+                    "ServiceTax": servicetax,
+                    "AnyOtherDuty": anyotherduty,
+                    "VAT": vat,
+                    "CSt": cst,
+                    "CGST": cgst,
+                    "SGST": sgst,
+                    "IGST": igst,
+                    "AnyOtherTax": anyothertax,
+                    "TotalAddition": totaladdition,
+                    "Discount": discount,
+                    "Roundingoff": roundoff,
+                    "TotDeduction": totaldeduction,
+                    "InvoiceAmt": invoiceamt,
+                    "DutyDrawback": dutydrawback,
+                    "ExciseCredit": excisecredit,
+                    "ServiceTaxCredit": servicetaxcredit,
+                    "AnyOtherDutyCredit": anyotherdutycredit,
+                    "VATCredit": vatcredit,
+                    "CSTCredit": cstcredit,
+                    "CGSTCredit": cgstcredit,
+                    "SGSTCredit": sgstcredit,
+                    "IGSTCredit": igstcredit,
+                    "AnyOtherCredit": anyothercredit,
+                    "TotalCredit": totalcredit,
+                    "AmountCapitalised": amtcap,
+                    "AmountCapitalisedCompany": amtcapcompanylaw,
+                    "AmountCApitalisedIT": amtcapincometax,
+                    "AssetIdentificationNo": assetidno
+
+                };
+
+            var form = $('#frmNewEmp');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
+            var headers = {};
+            headers['__RequestVerificationToken'] = token;
+            swal({
+                title: "Are You Sure?", text: "You want to edit this record!",
+                icon: "warning", buttons: true, dangerMode: true
+            }).then((result) => {
+                if (result == true) {
+
+                    //var ControllerURL = '@Url.Action("Edit", "Asset")';
+                    var ControllerURL = '@Url.Action("EditAsset", "Asset")'; // new change mp 06122022
+
+                    //alert(ControllerURL);
+                    var returnURL = '@Url.Action("Index", "Asset")';
+                    $.ajax({
+                        type: 'POST',
+                        url: ControllerURL,
+                        contentType: "application/json",
+                        headers: headers,
+                        data: JSON.stringify(postdata),
+                        success: function (res) {
+
+                            if (res == "Success") {
+                                swal({ title: "Successfully Edited!", icon: "success" }).then((result) => {
+                                    if (result == true) {
+                                        window.location.replace(returnURL);
+                                    }
+                                });
+                            }
+                            else {
+                                swal("Alert", res, "warning");
+                            }
+                        },
+
+                        failure: function () {
+                            alert("Error");
+                        }
+
+                    });
+                }
+            });
+        }
+    }
 
 
 
