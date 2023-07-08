@@ -163,17 +163,14 @@
                 <h4 class="modal-title">Add Sub - Period</h4>
             </div>
             <div class="modal-body ">
-
                 <div class="form-group col-lg-6">
                     <label for="praticesname">Start Date<span>*</span></label>
 
                     <div class='input-group date' id='dtspStartDate'>
-                        @*<input id="txtspStartDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" required />*@
-                        <input type='text' id="txtspStartDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" required />
+                        <input id="txtspStartDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" required />
+                        @*<input type='text' id="txtspStartDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" required />*@
                     </div>
                 </div>
-
-
                 <div class="form-group col-lg-6">
                     <label for="praticesname">End Date<span>*</span></label>
                     @*@Html.TextBoxFor(m => m.LeaveDate, new { @class = "form-control" })
@@ -182,10 +179,7 @@
                     <input id="txtspEndDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" required />
                     
                 </div>
-
                 </div>
-
-
                 <div class="form-group col-lg-6">
                     <label>Lock this period so entries cannot be made<span>*</span></label>
                     @Html.CheckBox("isPeriodlockFlag", false)
@@ -220,9 +214,10 @@
                     <label for="praticesname">Start Date<span>*</span></label>
 
                     <div class='input-group date' id='dtedspStartDate'>
-                        @*<input id="txtedspStartDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" required />*@
-                       
                         
+                        @*<input type='text' id="txtspStartDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" required />*@
+                        <input id="txtedspStartDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" required />
+
                     </div>
 
                 </div>
@@ -544,8 +539,8 @@
         var depriciation = "";
         if ($('#isPeriodlockFlag').is(':checked')) {
 
-
             periodlock = "Y";
+            debugger;
         }
         else {
             periodlock = "N";

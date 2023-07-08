@@ -1,4 +1,5 @@
-﻿@model VerifyWebApp.Models.Period
+﻿
+ @model VerifyWebApp.Models.Period
 @{
     /**/
 
@@ -39,7 +40,7 @@
                             <div class="form-group">
                                 <label for="praticesname">Start Date<span>*</span></label>
                                 <input id="txtStartDate" tabindex="6" class="form-control form-control-sm" type="date" />
-
+                              
                             </div>
                             <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
                             <div></div>
@@ -49,6 +50,7 @@
 
                                 <label for="praticesname">End Date<span>*</span></label>
                                 <input id="txtEndDate" tabindex="6" class="form-control form-control-sm" type="date" />
+                                @*<input type='text' id="txtEndDate" class="form-control" required />*@
                             </div>
                             <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
                             <div></div>
@@ -145,7 +147,7 @@
                     <label for="praticesname">Start Date<span>*</span></label>
 
                     <div class='input-group date' id='dtspStartDate'>
-                        <input type='text' id="txtspStartDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" required />
+                        <input type='text' id="txtspStartDate" class="form-control form-control-sm" required />
                         @*<input id="txtStartDate" tabindex="6" class="form-control form-control-sm" type="date" />*@
 
                     </div>
@@ -161,7 +163,7 @@
                         @Html.ValidationMessageFor(m => m.LeaveDate, "", new { @class = "text-danger  " })*@
                     <div class='input-group date' id='dtspEndDate'>
                         <input type='date' id="txtspEndDate" class="form-control" required />
-
+                        @*...//date*@
 
                     </div>
 
@@ -202,11 +204,12 @@
                     <label for="praticesname">Start Date<span>*</span></label>
 
                     <div class='input-group date' id='dtedspStartDate'>
-                        <input type='date' id="txtedspStartDate" class="form-control" required />
+                        @*<input type='date' id="txtedspStartDate" class="form-control" required />*@
+                        <input id="txtedspStartDate" tabindex="6" class="form-control form-control-sm" type="date" />
                         @*<div class="input-group-addon">
-                            <span class="input-group-text"><span class="fa fa-calendar"></span></span>
-
-                        </div>*@
+            <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+            //...date
+        </div>*@
 
                     </div>
 
@@ -274,7 +277,7 @@
 
             });
 
-             let _startdate = moment('@ViewBag.fromdate').format('dd-mm-yyyy');
+            let _startdate = moment('@ViewBag.fromdate').format('YYYY-MM-DD');
             $("#txtStartDate").val(_startdate);
          //   $("#stDate").val('@ViewBag.fromdate');
            // debugger;
@@ -522,6 +525,7 @@
             var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
             var checkspstartdate = moment($("#txtspStartDate").val()).format('YYYY-MM-DD');
             var checkspenddate = moment($("#txtspEndDate").val()).format('YYYY-MM-DD');
+            debugger;
             if (new Date(checkspstartdate) < new Date(startdate)) {
 
 
@@ -616,10 +620,11 @@
         function editsubperiod() {
 
             if ($("#txtedspStartDate").val() != null &&
-                $("#txtedspEndDate").val() != '') {
+                $("#txtedspEndDate").val() != '')
+            {
                 Subperiodedittable();
                 $('#editsubperiodmodal').modal('hide');
-
+                debugger;
             }
         }
 
@@ -643,6 +648,7 @@
             var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
             var checkspstartdate = moment($("#txtedspStartDate").val()).format('YYYY-MM-DD');
             var checkspenddate = moment($("#txtedspEndDate").val()).format('YYYY-MM-DD');
+            debugger;
             if (new Date(checkspstartdate) < new Date(startdate)) {
 
 
