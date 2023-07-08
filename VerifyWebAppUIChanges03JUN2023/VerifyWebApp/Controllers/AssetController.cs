@@ -2877,6 +2877,7 @@ namespace VerifyWebApp.Controllers
 
 
                 assetGroupViewmodel.str_DtPutToUse = Convert.ToDateTime(assets.DtPutToUse).ToString("dd/MM/yyyy");
+                assetGroupViewmodel.DtPutToUse = assets.DtPutToUse;
 
             }
             if (assets.DtPutToUseIT == null)
@@ -2888,6 +2889,7 @@ namespace VerifyWebApp.Controllers
 
 
                 assetGroupViewmodel.str_DtPutToUseIT = Convert.ToDateTime(assets.DtPutToUseIT).ToString("dd/MM/yyyy");
+                assetGroupViewmodel.DtPutToUseIT = assets.DtPutToUseIT;
 
             }
 
@@ -2895,63 +2897,73 @@ namespace VerifyWebApp.Controllers
             if (assets.BillDate == null)
             {
                 assetGroupViewmodel.str_BillDate = "";
+                assetGroupViewmodel.BillDate = null;
             }
             else
             {
 
                 assetGroupViewmodel.str_BillDate = Convert.ToDateTime(assets.BillDate).ToString("dd/MM/yyyy");
+                assetGroupViewmodel.BillDate = assets.BillDate;
 
             }
             if (assets.ReceiptDate == null)
             {
                 assetGroupViewmodel.str_ReceiptDate = "";
+                assetGroupViewmodel.ReceiptDate = null;
             }
             else
             {
 
                 assetGroupViewmodel.str_ReceiptDate = Convert.ToDateTime(assets.ReceiptDate).ToString("dd/MM/yyyy");
+                assetGroupViewmodel.ReceiptDate = assets.ReceiptDate;
 
             }
 
             if (assets.VoucherDate == null)
             {
                 assetGroupViewmodel.str_VoucherDate = "";
+                assetGroupViewmodel.VoucherDate = null;
             }
             else
             {
 
                 assetGroupViewmodel.str_VoucherDate = Convert.ToDateTime(assets.VoucherDate).ToString("dd/MM/yyyy");
-
+                assetGroupViewmodel.VoucherDate = assets.VoucherDate;
             }
 
             if (assets.CommissioningDate == null)
             {
                 assetGroupViewmodel.str_CommissioningDate = "";
+                assetGroupViewmodel.CommissioningDate = null;
             }
             else
             {
 
                 assetGroupViewmodel.str_CommissioningDate = Convert.ToDateTime(assets.CommissioningDate).ToString("dd/MM/yyyy");
-
+                assetGroupViewmodel.CommissioningDate = assets.CommissioningDate;
             }
             if (assets.ExpiryDate == null)
             {
                 assetGroupViewmodel.str_Expirydate = "";
+                assetGroupViewmodel.ExpiryDate = null;
             }
             else
             {
 
                 assetGroupViewmodel.str_Expirydate = Convert.ToDateTime(assets.ExpiryDate).ToString("dd/MM/yyyy");
+                assetGroupViewmodel.ExpiryDate = assets.ExpiryDate;
 
             }
             if (assets.PODate == null)
             {
                 assetGroupViewmodel.str_PODate = "";
+                assetGroupViewmodel.PODate = null;
             }
             else
             {
 
                 assetGroupViewmodel.str_PODate = Convert.ToDateTime(assets.PODate).ToString("dd/MM/yyyy");
+                assetGroupViewmodel.PODate = assets.PODate;
 
             }
 
@@ -3512,6 +3524,7 @@ namespace VerifyWebApp.Controllers
 
 
                 assetGroupViewmodel.str_DtPutToUse = Convert.ToDateTime(assets.DtPutToUse).ToString("dd/MM/yyyy");
+                assetGroupViewmodel.DtPutToUse = assets.DtPutToUse;
 
             }
             if (assets.DtPutToUseIT == null)
@@ -3523,6 +3536,7 @@ namespace VerifyWebApp.Controllers
 
 
                 assetGroupViewmodel.str_DtPutToUseIT = Convert.ToDateTime(assets.DtPutToUseIT).ToString("dd/MM/yyyy");
+                assetGroupViewmodel.DtPutToUseIT = assets.DtPutToUseIT;
 
             }
 
@@ -3535,6 +3549,7 @@ namespace VerifyWebApp.Controllers
             {
 
                 assetGroupViewmodel.str_BillDate = Convert.ToDateTime(assets.BillDate).ToString("dd/MM/yyyy");
+                assetGroupViewmodel.BillDate = assets.BillDate;
 
             }
             if (assets.ReceiptDate == null)
@@ -3551,43 +3566,49 @@ namespace VerifyWebApp.Controllers
             if (assets.VoucherDate == null)
             {
                 assetGroupViewmodel.str_VoucherDate = "";
+                assetGroupViewmodel.VoucherDate = null;
             }
             else
             {
 
                 assetGroupViewmodel.str_VoucherDate = Convert.ToDateTime(assets.VoucherDate).ToString("dd/MM/yyyy");
+                assetGroupViewmodel.VoucherDate = assets.VoucherDate;
 
             }
 
             if (assets.CommissioningDate == null)
             {
                 assetGroupViewmodel.str_CommissioningDate = "";
+                assetGroupViewmodel.CommissioningDate = null;
             }
             else
             {
 
                 assetGroupViewmodel.str_CommissioningDate = Convert.ToDateTime(assets.CommissioningDate).ToString("dd/MM/yyyy");
-
+                assetGroupViewmodel.CommissioningDate = assets.CommissioningDate;
             }
             if (assets.ExpiryDate == null)
             {
                 assetGroupViewmodel.str_Expirydate = "";
+                assetGroupViewmodel.ExpiryDate = null;
             }
             else
             {
 
                 assetGroupViewmodel.str_Expirydate = Convert.ToDateTime(assets.ExpiryDate).ToString("dd/MM/yyyy");
+                assetGroupViewmodel.ExpiryDate = assets.ExpiryDate;
 
             }
             if (assets.PODate == null)
             {
                 assetGroupViewmodel.str_PODate = "";
+                assetGroupViewmodel.PODate = null;
             }
             else
             {
 
                 assetGroupViewmodel.str_PODate = Convert.ToDateTime(assets.PODate).ToString("dd/MM/yyyy");
-
+                assetGroupViewmodel.PODate = assets.PODate;
             }
 
             assetGroupViewmodel.AssetName = assets.AssetName;
