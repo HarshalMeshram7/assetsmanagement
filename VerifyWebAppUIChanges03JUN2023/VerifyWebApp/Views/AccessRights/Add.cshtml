@@ -78,7 +78,7 @@
 
     <div class="modal-footer">
         <button type="button" class="btn btn-sm clBtn" id="btnClose" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" id="btnsave">Save</button>
+        <button type="button" class="btn btn-primary" id="btnSave">Save</button>
     </div>
 
 </div>
@@ -86,6 +86,12 @@
     </div>*@
 
 <script type="text/javascript">
+    //$('#btnSave').click(function (event) {
+
+    //    SaveData();
+    //    e.preventDefault();
+    //    return false;
+    //});
         var addflag = "no";
         var editflag = "no";
         var deleteflag = "no";
@@ -198,7 +204,7 @@
                 }
             });
 
-            $('#btnsave').click(function (e) {
+            $('#btnSave').click(function (e) {
                 savedata();
                 e.preventDefault();
                 return false;
