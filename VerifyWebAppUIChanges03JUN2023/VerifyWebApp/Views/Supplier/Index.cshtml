@@ -27,10 +27,12 @@
                             <i class="fa fa-plus" aria-hidden="true"></i>
                         </button>
                         <button onclick="downloadexcel()" class="btn btn-sm xtraBtn mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Download Template" data-container="body" data-animation="true"><i class="fa fa-download" aria-hidden="true"></i></button>
-                        <button onclick="Importexcel()"  class="btn btn-sm xtraBtn mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Upload Supplier List" data-container="body" data-animation="true"><i class="fa fa-upload" aria-hidden="true"></i></button>
+                        <button onclick="Importexcel()" class="btn btn-sm xtraBtn mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Upload Supplier List" data-container="body" data-animation="true"><i class="fa fa-upload" aria-hidden="true"></i></button>
                         <button onclick="SupplierExport();"
-                                class="btn btn-sm modBtn mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Export Supplier List" 
-                                data-container="body" data-animation="true"><i class="fa fa-file-excel-o" aria-hidden="true"></i></button>
+                                class="btn btn-sm modBtn mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Export Supplier List"
+                                data-container="body" data-animation="true">
+                            <i class="fa fa-file-excel-o" aria-hidden="true"></i>
+                        </button>
                     </div>
 
 
@@ -208,7 +210,7 @@
 
       function showsupplier(id)
       {
-     
+
         let searchby = '';
         //searchby = $("#cboSearchBy").val();
         //searchstring = $("#txtsearch").val();
@@ -310,7 +312,7 @@
 
             function returnDropdownButton(SupplierCode)
             {
-               
+
                 console.log("SupplierCode" + SupplierCode)
                 let link = "";
 
@@ -367,7 +369,7 @@
          var token = $('input[name="__RequestVerificationToken"]', form).val();
          var headers = {};
          headers['__RequestVerificationToken'] = token;
-         swal({ title: "Are You Sure?", text: "", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+         swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
             if (result == true) {
                 var returnURL='@Url.Action("Index", "Supplier")';
                 var url = '@Url.Action("Delete", "Supplier")';
@@ -378,31 +380,16 @@
                     headers: headers,
                     contentType: "application/json",
                         success: function (res) {
-                            console.log(res);
-                        if (res == "Failed")
-                        {
-                            swal("Alert", "You Cannot Delete this Record", "warning");
-                        }
-                        else
-                        {
-
-                            console.log(res);
-                            let resp = JSON.parse(res);
-                            console.log(resp.status);
-                            if (resp) {
-                                console.log(resp);
-
-                                if (resp.status == 'False' && resp.data == 'NotAuthorized') {
-                                    console.log('sw');
-                                    swal({ title: "You dont have Access for this!", icon: "warning" }).then((result) => {
-                                        if (result == true) {
-                                            window.location.reload();
-                                        }
-                                    });
-                                }
+                            if (res == "Success") {
+                                swal({ title: "Successfully Deleted!", icon: "success" }).then((result) => {
+                                    if (result == true) {
+                                        window.location.replace(returnURL);
+                                    }
+                                });
                             }
-                        }
-
+                            else {
+                                swal("Alert", "You Cannot Delete this Record", "warning");
+                            }
                      },
 
                       failure: function () { alert("Error"); }
