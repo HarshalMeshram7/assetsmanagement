@@ -26,38 +26,43 @@
                 <div class="pageconent">
                     <div class="card-body">
                         <div class="row">
-                            @*<div class="col-lg-3">
-                            <div class="form-group">
-                                <label for="praticesname">Start Date<span>*</span></label>
-
-                                <input id="txtStartDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
-
-                            </div>
-                            <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
-                        </div>*@
-                        </div>
+                            <!--<div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="praticesname">Start Date<span>*</span></label>
+                                    <div class='input-group date' id='dtStartDate'>
+                                        <input id="txtStartDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="text" />-->
+                                        @*<input type='text' id="txtStartDate" class="form-control" required />*@
+                                    <!--</div>
+                                    </div>
+                                    <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
+                                </div>-->
+                       
                         <div class="col-lg-3">
                             <div class="form-group">
                                 <label for="praticesname">Start Date<span>*</span></label>
-                                <input id="txtStartDate" tabindex="6" class="form-control form-control-sm" type="date" />
-                              
+                                <input id="txtStartDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="text" />
                             </div>
                             <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
-                            <div></div>
+                            
                         </div>
+                            </div>
+
                         <div class="col-lg-3">
                             <div class="form-group">
 
                                 <label for="praticesname">End Date<span>*</span></label>
-                                <input id="txtEndDate" tabindex="6" class="form-control form-control-sm" type="date" />
-                                @*<input type='text' id="txtEndDate" class="form-control" required />*@
-                            </div>
-                            <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
-                            <div></div>
-                        </div>
+                                <div class='input-group date' id='dtEndDate'>
+                                    @*<input id="txtEndDate" tabindex="6" class="form-control form-control-sm" type="text" />*@
+                                    <input type='date' id="txtEndDate" class="form-control" required />
+                                </div>
+                                <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
+                                
 
-                        @*<div style="color:#CC0000;font-weight:400" id="invalideparentdateerror">Select Date</div>*@
-                    </div>
+                                </div>
+                            </div>
+
+                            @*<div style="color:#CC0000;font-weight:400" id="invalideparentdateerror">Select Date</div>*@
+                        </div>
 
                 </div>
 
@@ -147,7 +152,8 @@
                     <label for="praticesname">Start Date<span>*</span></label>
 
                     <div class='input-group date' id='dtspStartDate'>
-                        <input type='text' id="txtspStartDate" class="form-control form-control-sm" required />
+                        @*<input type='text' id="txtspStartDate" class="form-control" required />*@
+                        <input type='date' id="txtspStartDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" required />
                         @*<input id="txtStartDate" tabindex="6" class="form-control form-control-sm" type="date" />*@
 
                     </div>
@@ -204,8 +210,9 @@
                     <label for="praticesname">Start Date<span>*</span></label>
 
                     <div class='input-group date' id='dtedspStartDate'>
+                        <input type='text' id="txtedspStartDate" class="form-control" required />
                         @*<input type='date' id="txtedspStartDate" class="form-control" required />*@
-                        <input id="txtedspStartDate" tabindex="6" class="form-control form-control-sm" type="date" />
+                        @*<input id="txtedspStartDate" tabindex="6" class="form-control form-control-sm" type="text" />*@
                         @*<div class="input-group-addon">
             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
             //...date
@@ -220,6 +227,7 @@
                         @Html.ValidationMessageFor(m => m.LeaveDate, "", new { @class = "text-danger  " })*@
                     <div class='input-group date' id='dtedspEndDate'>
                         <input type='text' id="txtedspEndDate" class="form-control" required />
+
 
                         @*<div class="input-group-addon">
                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
@@ -268,6 +276,8 @@
         token = $(token).val();
         return token;
    }*@
+
+
         function InitUI() {
 
             $("#frmNewEmp").submit(function (e) {
@@ -284,34 +294,35 @@
 
 
 
-              $("#btnAddSubPeiod").click(function () {
-                  var startdate = $('#txtStartDate').val();
-                  var enddate = $('#txtEndDate').val();
-                 //debugger;
+            $("#btnAddSubPeiod").click(function () {
+                var startdate = $('#txtStartDate').val();
+                var enddate = $('#txtEndDate').val();
+                if (startdate != "" && enddate != "") {
 
-                  if (startdate != "" && enddate != "") {
 
-                      var lastTr = $('#tblSubPeriod tr:last').find('td:eq(2)').html()
-                     // alert(lastTr)
-                      var spstartdate = $('#txtStartDate').val();
-                      //  alert(spstartdate)
-                      debugger;
+                    var lastTr = $('#tblSubPeriod tr:last').find('td:eq(2)').html()
+                    // alert(lastTr)
+                    var spstartdate = $('#txtStartDate').val();
+                    //  alert(spstartdate)
+
                       if (lastTr.trim() != "End Date") {/////tr thname end date null is not working
                           //    alert(lastTr);
-                          if (lastTr.trim() == "End Date") {
-
-                              $("#txtspStartDate").val('@ViewBag.fromdate')
+                          if (lastTr == "End Date")
+                          {
+                              $("#txtspStartDate").val('@ViewBag.fromdate');
                               document.getElementById('txtspStartDate').readOnly = true;
                               $('#txtspEndDate').val("");
                           }
-                          else {
-                              debugger;
-                              var myDate = moment(lastTr, "DD/MM/YYYY");
-                              var date = moment(myDate).add('1', 'day').format("DD/MM/YYYY");
-                              $('#txtspStartDate').val(date);
-                              document.getElementById('txtspStartDate').readOnly = true;
-                              $('#txtspEndDate').val("");
+                         
+                          else
+                          {
+                                  var myDate = moment(lastTr, "DD/MM/YYYY");
+                                  var date = moment(myDate).add('1', 'day').format("DD/MM/YYYY");
+                                  $('#txtspStartDate').val(date);
+                                  document.getElementById('txtspStartDate').readOnly = true;
+                                  $('#txtspEndDate').val("");
                           }
+                        
                       }
                       else {
                           //alert("else")
@@ -338,8 +349,10 @@
     }
 
     function SaveData() {
-      var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
-        var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
+        //var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
+        //var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
+        var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+        var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
 
         if (new Date(startdate) > new Date(enddate)) {
 
@@ -386,10 +399,9 @@
                     var Tableenddate = $td.eq(2).html();
                     var Tableperiodlock = $td.eq(3).html();
                     var Tabledepriciation = $td.eq(4).html();
-
                     var Strstartdate = moment(Tablestartdate, "DD/MM/YYYY").format("YYYY/MM/DD");
-                    var StrEnddate = moment(Tableenddate, "DD/MM/YYYY").format("YYYY/MM/DD");
 
+                    var StrEnddate = moment(Tableenddate, "DD/MM/YYYY").format("YYYY/MM/DD");
                     return {
                         FromDate: Strstartdate,
                         ToDate: StrEnddate,
@@ -402,8 +414,9 @@
                 //var Strstartdate = moment(StartDate, "DD/MM/YYYY").format("YYYY/MM/DD");
                 //var StrEnddate = moment(EndDate, "DD/MM/YYYY").format("YYYY/MM/DD");
 
-                var Strstartdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
-                var StrEnddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
+                var Strstartdate = moment(StartDate, "DD/MM/YYYY").format("YYYY/MM/DD");
+
+                var StrEnddate = moment(EndDate, "DD/MM/YYYY").format("YYYY/MM/DD");
 
                 var postdata =
                     {
@@ -505,9 +518,9 @@
             var spstartdate = $("#txtspStartDate").val();
             var spenddate = $("#txtspEndDate").val();
 
-            spstartdate = moment(spstartdate, 'YYYY-MM-DD').format('DD/MM/YYYY');
-            spenddate = moment(spenddate, 'YYYY-MM-DD').format('DD/MM/YYYY');
-            debugger;
+            //spstartdate = moment(spstartdate, 'YYYY-MM-DD').format('DD/MM/YYYY');
+            //spenddate = moment(spenddate, 'YYYY-MM-DD').format('DD/MM/YYYY');
+          //  debugger;
 
             var periodlock = "";
             var depriciation = "";
@@ -521,11 +534,11 @@
 
             }
             ////check whether the subperiod date is between period date range
-            var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
-            var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
-            var checkspstartdate = moment($("#txtspStartDate").val()).format('YYYY-MM-DD');
-            var checkspenddate = moment($("#txtspEndDate").val()).format('YYYY-MM-DD');
-            debugger;
+            var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var checkspstartdate = moment($("#txtspStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var checkspenddate = moment($("#txtspEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+           // debugger;
             if (new Date(checkspstartdate) < new Date(startdate)) {
 
 
@@ -597,36 +610,35 @@
 
 
         }
-        function Editsubperiod(id, editcnt) {
-            //$(id).parent();
-            editindex = editcnt;
-            var tr = $(id).parent().parent();
-            var startDate = $(tr).find("td").eq(1).html();
-            var endDate = $(tr).find("td").eq(2).html();
-            var periodlock = $(tr).find("td").eq(3).html();
-            if (periodlock == "Y") {
-                $("#edisPeriodlockFlag").prop("checked", true);
+    function Editsubperiod(id, editcnt) {
+        //$(id).parent();
+        editindex = editcnt;
+        var tr = $(id).parent().parent();
+        var startDate = $(tr).find("td").eq(1).html();
+        var endDate = $(tr).find("td").eq(2).html();
+        var periodlock = $(tr).find("td").eq(3).html();
+        if (periodlock == "Y") {
+            $("#edisPeriodlockFlag").prop("checked", true);
 
-            }
-            else {
-                $("#edisPeriodlockFlag").prop("checked", false);
-            }
-            $("#txtedspStartDate").val(startDate);
-            $('#txtedspEndDate').val(endDate);
-
-            $('#editsubperiodmodal').modal('show');
         }
-
-        function editsubperiod() {
-
-            if ($("#txtedspStartDate").val() != null &&
-                $("#txtedspEndDate").val() != '')
-            {
-                Subperiodedittable();
-                $('#editsubperiodmodal').modal('hide');
-                debugger;
-            }
+        else {
+            $("#edisPeriodlockFlag").prop("checked", false);
         }
+        $("#txtedspStartDate").val(startDate);
+        $('#txtedspEndDate').val(endDate);
+
+        $('#editsubperiodmodal').modal('show');
+    }
+
+    function editsubperiod() {
+
+        if ($("#txtedspStartDate").val() != null &&
+            $("#txtedspEndDate").val() != '') {
+            Subperiodedittable();
+            $('#editsubperiodmodal').modal('hide');
+
+        }
+    }
 
         function Subperiodedittable() {
             var periodlock = "";
@@ -644,11 +656,11 @@
             var spenddate = $("#txtedspEndDate").val();
 
             ////check whether the subperiod date is between period date range
-            var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
-            var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
-            var checkspstartdate = moment($("#txtedspStartDate").val()).format('YYYY-MM-DD');
-            var checkspenddate = moment($("#txtedspEndDate").val()).format('YYYY-MM-DD');
-            debugger;
+            var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var checkspstartdate = moment($("#txtedspStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var checkspenddate = moment($("#txtedspEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            //debugger;
             if (new Date(checkspstartdate) < new Date(startdate)) {
 
 
@@ -688,8 +700,8 @@
 
 
 
-            var errorstartdate = moment($("#txtspStartDate").val()).format('YYYY-MM-DD');
-            var errorenddate = moment($("#txtspEndDate").val()).format('YYYY-MM-DD');
+            var errorstartdate = moment($("#txtspStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var errorenddate = moment($("#txtspEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
 
             if (new Date(errorstartdate) > new Date(errorenddate)) {
 

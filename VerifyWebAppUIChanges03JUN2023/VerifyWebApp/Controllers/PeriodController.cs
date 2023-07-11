@@ -107,7 +107,7 @@ namespace VerifyWebApp.Controllers
             //**********************/
 
             Period period = new Period();
-            string str_fromDate = "";
+            string str_fromDate = "01/04/";
             //  var period = "";
             period = db.Periods.Where(x => x.Companyid == companyid).OrderByDescending(x => x.ID).FirstOrDefault();//needs to do validation if no period is added all ready
 
@@ -128,13 +128,13 @@ namespace VerifyWebApp.Controllers
             if (period != null)
             {
 
-                str_fromDate = period.ToDate.AddDays(1).ToString("yyyy/MM/dd");
+                str_fromDate = period.ToDate.AddDays(1).ToString("dd/MM/yyyy");
                 ViewBag.fromdate = str_fromDate;
 
             }
             else
             {
-                ViewBag.fromdate = "";
+                ViewBag.fromdate = str_fromDate;
             }
             return PartialView();
         }
