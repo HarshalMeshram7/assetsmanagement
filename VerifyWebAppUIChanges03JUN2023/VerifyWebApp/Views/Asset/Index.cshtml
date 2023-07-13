@@ -53,8 +53,17 @@
                                     data-container="body" data-animation="true" onclick="downloadexcel();">
                                 <i class="fa fa-download" aria-hidden="true"></i>
                             </button>
-                            <button class="btn btn-sm xtraBtn mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Upload Assets List" data-container="body" data-animation="true"><i class="fa fa-upload" aria-hidden="true"></i></button>
-                            <button class="btn btn-sm modBtn mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Export Assets List" data-container="body" data-animation="true"><i class="fa fa-file-excel-o" aria-hidden="true"></i></button>
+
+                            <button class="btn btn-sm xtraBtn mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Upload Assets List" data-container="body" data-animation="true">
+                                <i class="fa fa-upload" aria-hidden="true"></i>
+                            </button>
+
+                            <button type="button" id="btnExport" 
+                                    class="btn btn-sm modBtn mb-0 btn-tooltip" 
+                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Export Assets List" 
+                                    data-container="body" data-animation="true" onclick="GroupassetExport();">
+                                <i class="fa fa-file-excel-o" aria-hidden="true"></i>
+                            </button>
                         </div>
 
 
@@ -506,7 +515,8 @@
      }
      function GroupassetExport()
      {
-         var node = $('#jstree').jstree().get_selected(true)[0];
+         var node;
+             //= $('#jstree').jstree().get_selected(true)[0];
 
          var id = 0;
          if (node == null) {
@@ -545,6 +555,7 @@
 
 
                 success: function (data) {
+                    //$('#progressbar').modal('hide');
                     var fileurl = DownloadURL + '?fileGuid=' + data.FileGuid
                         + '&filename=' + data.FileName;
                     console.log('hide progres ..');
