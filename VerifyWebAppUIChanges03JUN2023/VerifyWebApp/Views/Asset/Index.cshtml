@@ -50,11 +50,26 @@
                             <button type="button" id="btnDownload" 
                                     class="btn btn-sm xtraBtn mb-0 btn-tooltip" 
                                     data-bs-toggle="tooltip" data-bs-placement="top" title="Download Template" 
-                                    data-container="body" data-animation="true" onclick="downloadexcel();">
+                                    data-container="body" data-animation="true" 
+                                    onclick="downloadexcel();">
                                 <i class="fa fa-download" aria-hidden="true"></i>
                             </button>
-                            <button class="btn btn-sm xtraBtn mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Upload Assets List" data-container="body" data-animation="true"><i class="fa fa-upload" aria-hidden="true"></i></button>
-                            <button class="btn btn-sm modBtn mb-0 btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Export Assets List" data-container="body" data-animation="true"><i class="fa fa-file-excel-o" aria-hidden="true"></i></button>
+
+                            <button type="button" id="btnUpload"
+                                    class="btn btn-sm xtraBtn mb-0 btn-tooltip" 
+                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Upload Assets List" 
+                                    data-container="body" data-animation="true"
+                                    onclick="Importexcel();">
+                                <i class="fa fa-upload" aria-hidden="true"></i>
+                            </button>
+
+                            <button type="button" id="btnExport" 
+                                    class="btn btn-sm modBtn mb-0 btn-tooltip" 
+                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Export Assets List" 
+                                    data-container="body" data-animation="true" 
+                                    onclick="GroupassetExport();">
+                                <i class="fa fa-file-excel-o" aria-hidden="true"></i>
+                            </button>
                         </div>
 
 
@@ -478,7 +493,7 @@
 
          let view_link = '<a href = "javascript:;"  class="mx-2" ><i class="fas fa-eye " style="color:#229954"></i></a >';
          let edit_link = '<a href = "javascript:Edit(' + AssetNo + ')"; class="mx-2"><i class="fas fa-edit" style="color:#229954" ></i></a >';
-         let delete_link = '<a href = "javascript:;" class="mx-2" ><i class="fas fa-trash " style="color:#D0312D"></i></a >';
+         let delete_link = '<a href = "javascript:Delete(' + AssetNo + ')";" class="mx-2" ><i class="fas fa-trash " style="color:#D0312D"></i></a >';
 
          link = view_link + edit_link + delete_link;
          return link;
@@ -506,7 +521,8 @@
      }
      function GroupassetExport()
      {
-         var node = $('#jstree').jstree().get_selected(true)[0];
+         var node;
+             //= $('#jstree').jstree().get_selected(true)[0];
 
          var id = 0;
          if (node == null) {
@@ -545,6 +561,7 @@
 
 
                 success: function (data) {
+                    //$('#progressbar').modal('hide');
                     var fileurl = DownloadURL + '?fileGuid=' + data.FileGuid
                         + '&filename=' + data.FileName;
                     console.log('hide progres ..');
