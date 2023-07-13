@@ -57,7 +57,7 @@ namespace VerifyWebApp.Controllers
                 {
                     item.Srno = srno;
                     item.str_fromdate = item.FromDate.ToString("dd/MM/yyyy");
-                    item.str_todate = item.ToDate.ToString("dd/MM/yyyy"); ;
+                    item.str_todate = item.ToDate.ToString("dd/MM/yyyy");
                     srno++;
                 }
             }
