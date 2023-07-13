@@ -133,7 +133,10 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-        $('#tbluom').DataTable();
+        /*$('#tbluom').DataTable();*/
+        $('#tbluom').DataTable({
+            pagingType: 'numbers'
+        });
     });
 
 
