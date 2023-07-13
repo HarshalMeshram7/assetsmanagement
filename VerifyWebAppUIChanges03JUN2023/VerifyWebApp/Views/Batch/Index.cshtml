@@ -115,7 +115,8 @@
             </div>
         </div>
     </div>
-
+  </div>
+    </div>
 
 
     <div class="modal fade" tabindex="-1" role="dialog" id="divUpload" data-backdrop="static" data-keyboard="false">
@@ -128,7 +129,10 @@
     <script type="text/javascript">
     $(document).ready(function () {
 
-        $('#tblbatch').DataTable();
+       
+        $('#tblbatch').DataTable({
+            pagingType: 'numbers'
+        });
     });
 
 
