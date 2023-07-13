@@ -12,444 +12,458 @@
         <div class="card-header pb-0">
             <div class="row">
                 @*<div class="col-md-12 my-1">*@
-                    <div class="justify-content-center hborder">
-                        <div class="htitle"> <b> Add Disposal of Assets</b></div>
-                    </div>
+                <div class="justify-content-center hborder">
+                    <div class="htitle"> <b> Add Disposal of Assets</b></div>
                 </div>
             </div>
+        </div>
 
-            @*<ul class="nav nav-pills nav-fill my-1">
-                    <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#home">General Info</a>
-                    </li>
-
-
-
-                </ul>*@
+        @*<ul class="nav nav-pills nav-fill my-1">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#home">General Info</a>
+                </li>
 
 
-            <div class="tab-content container-fluid my-1">
-                <div class="tab-pane container active" id="home">
-                    <div class="container-fluid  border border-success rounded bg-light" style="border:  thin #32CD32 ;border-radius: 10px;margin-top: 15px;
+
+            </ul>*@
+
+
+        <div class="tab-content container-fluid my-1">
+            <div class="tab-pane container active" id="home">
+                <div class="container-fluid  border border-success rounded bg-light" style="border:  thin #32CD32 ;border-radius: 10px;margin-top: 15px;
                         margin-bottom: 15px;">
-                        <div class="row col-lg-12" style="margin-top: 10px;">
-                            @*<div class="col-sm-2">
-                                    <div class="form-group">
-                                        <label for="praticesname">Disposal No<span>*</span></label>
-                                        <input type='text' id="txtdispono" class="form-control" readonly tabindex="1" />
-
-                                    </div>
-                                </div>*@
-                            <div class="col-sm-3">
+                    <div class="row col-lg-12" style="margin-top: 10px;">
+                        @*<div class="col-sm-2">
                                 <div class="form-group">
-                                    <input type='checkbox' id="checkflag" tabindex="2" />
-                                    <label for="praticesname">Asset no wise search</label>
+                                    <label for="praticesname">Disposal No<span>*</span></label>
+                                    <input type='text' id="txtdispono" class="form-control" readonly tabindex="1" />
 
-                                </div>
-
-                            </div>
-                            <div class="col-sm-2">
-                                <div class="form-group">
-                                    <label for="praticesname">Asset No</label>
-                                    <input type='text' placeholder="Enter Assetno and press enter" id="txtassetno" class="form-control" tabindex="3" required />
-
-                                </div>
-                            </div>
-
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label for="praticesname">Asset Name<span style="color:#CC0000;">*</span></label>
-                                    <div class='input-group dropdown ' id='dtasset' tabindex="4">
-
-                                        @Html.DropDownList("AssetId", (SelectList)ViewBag.Assestlist, "Select AssetNo", new { @class = "form-control", id = "AssetId", @required = "required", @onblur = "emptyfields();" })
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        @*<div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="praticesname">Add.Description</label>
-                                        <input type='text' id="adddesc" class="form-control" tabindex="5" required />
-
-                                    </div>
                                 </div>
                             </div>*@
-                        <div class="row">
-                            <div class="col-lg-2">
-                                <div class="form-group">
-                                    <label for="praticesname">VoucherNo</label>
-                                    <input type='text' id="txtvno" name="txtvno" class="form-control" tabindex="5" />
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <input type='checkbox' id="checkflag" tabindex="2" />
+                                <label for="praticesname">Asset no wise search</label>
 
-                                </div>
                             </div>
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <label for="praticesname">Voucher Date<span style="color:#CC0000;">*</span></label>
-                                    <div class='input-group date' id='dtVDate'>
-                                        <input id="EndDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
-                                    </div>
 
-                                </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label for="praticesname">Asset No</label>
+                                <input type='text' placeholder="Enter Assetno and press enter" id="txtassetno" class="form-control" tabindex="3" required />
+
                             </div>
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <label for="praticesname">Disposal Date<span style="color:#CC0000;">*</span></label>
+                        </div>
 
-                                    <div class='input-group date' id='dtDispoDate'>
-                                        <input id="EndDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="praticesname">Asset Name<span style="color:#CC0000;">*</span></label>
+                                <div class='input-group dropdown ' id='dtasset' tabindex="4">
 
-                                    </div>
-
-
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <label for="praticesname">Bill Date</label>
-
-                                    <div class='input-group date' id='dtbillDate'>
-                                        <input id="EndDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
-
-                                    </div>
+                                    @Html.DropDownList("AssetId", (SelectList)ViewBag.Assestlist, "Select AssetNo", new { @class = "form-control", id = "AssetId", @required = "required", @onblur = "emptyfields();" })
 
                                 </div>
                             </div>
                         </div>
-
-                        <div class="row">
-                            <div class="col-lg-2">
-                                <div class="form-group">
-                                    <label for="praticesname">Asset Gross Block</label>
-                                    <input type='text' id="txtgrossvalue" class="form-control" readonly tabindex="9" />
-
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <label for="praticesname">Disposal till date </label>
-                                    <input type='text' id="txtdisposaltilldate" name="txtdisposaltilldate" class="form-control" tabindex="10" readonly />
-
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <label for="praticesname">Depreciation till date</label>
-                                    <input type='text' id="txtOpAccDepreciation" name="txtOpAccDepreciation" class="form-control" tabindex="11" readonly />
-
-                                </div>
-                            </div>
-
-                            <div class="col-lg-2">
-                                <div class="form-group">
-                                    <label for="praticesname">Depreciation Rate</label>
-                                    <input type='text' id="txtdeprate" name="txtdeprate" class="form-control" readonly tabindex="12" />
-
-                                </div>
-                            </div>
-                            <div class="col-lg-2">
-                                <div class="form-group">
-                                    <label for="praticesname">Depreciation Method</label>
-                                    <input type='text' id="txtdepmethod" name="txtdepmethod" class="form-control" readonly tabindex="13" />
-
-                                </div>
-                            </div>
-
-
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="txtOpQty">Opening Quantity</label>
-                                    <input type='text' id="txtOpQty" readonly="readonly" class="form-control" tabindex="14" />
-                                </div>
-
-                            </div>
-                            <div class="col-md-3">
-                                <label for="txtDisposedQty">Disposed Quantity</label>
-                                <input type='text' id="txtDisposedQty" readonly="readonly" class="form-control" tabindex="14" />
-                            </div>
-                            <div class="col-md-3">
-                                <label for="txtCurrentQty">Current Quantity</label>
-                                <input type='text' id="txtCurrentQty" readonly="readonly" class="form-control" tabindex="14" />
-                            </div>
-
-                        </div>
-                        <dv class="row">
-                            <div class="col-lg-2">
-                                <div class="form-group">
-                                    <label for="praticesname">Bill No</label>
-                                    <input type='text' id="txtbillno" class="form-control" tabindex="14" />
-
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <label for="praticesname">Quantity<span style="color:#CC0000;">*</span> </label>
-                                    <input type='number' id="txtqty" name="txtqty" class="form-control" tabindex="15" value="1" required />
-
-                                </div>
-                            </div>
-
-
-
-                            <div class="form-group col-md-4 ">
-                                <label for="praticesname">Disposal Category<span style="color:#CC0000;">*</span></label>
-                                <select id="AssetCategoryId" class="form-control" name="AssetCategory" required>
-                                    <option value="">Select Asset Category</option>
-                                    <option value="1">Sold</option>
-                                    <option value="2">Scraped</option>
-                                    <option value="3">Stolen</option>
-                                    <option value="4">Lost</option>
-                                    <option value="5">Replace</option>
-                                    <option value="6">Others</option>
-
-                                </select>
-                            </div>
-
                     </div>
 
+                    @*<div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="praticesname">Add.Description</label>
+                                    <input type='text' id="adddesc" class="form-control" tabindex="5" required />
 
-                    <div class="row">
-
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label for="praticesname">Disposal Type<span style="color:#CC0000;">*</span></label>
-                                Full @Html.RadioButton("DisposalType", "Full", new { id = "full", @tabindex = "16", @onclick = "Getdepreciationreversed()" })
-                                Partial @Html.RadioButton("DisposalType", "Partial", new { id = "partial", @tabindex = "17", @onclick = "Getdepreciationreversed()" })
+                                </div>
                             </div>
+                        </div>*@
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label for="praticesname">VoucherNo</label>
+                                <input type='text' id="txtvno" name="txtvno" class="form-control" tabindex="5" />
 
+                            </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label for="praticesname">Asset sold to</label>
-                                <input type='text' id="txtcustomername" name="txtcustomername" class="form-control" tabindex="18" />
+                                <label for="praticesname">Voucher Date<span style="color:#CC0000;">*</span></label>
+                                <div class='input-group date' id='dtVDate'>
+                                    <input id="txtVDate" tabindex="6" class="form-control " type="date" required />
+                                    @*<div class="input-group-addon">
+                                            <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                                        </div>*@
+                                </div>
 
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="form-group">
-                                <label for="praticesname">Remarks</label>
-                                <input type='text' id="txtremarks" name="txtremarks" class="form-control" tabindex="19" />
+                                <label for="praticesname">Disposal Date<span style="color:#CC0000;">*</span></label>
+
+                                <div class='input-group date' id='dtDispoDate'>
+                                    <input id="txtdispoDate" tabindex="7" class="form-control" type="date" required onblur="validateassetdate();" />
+                                    @*<div class="input-group-addon">
+                                            <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                                        </div>*@
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label for="praticesname">Bill Date</label>
+
+                                <div class='input-group date' id='dtbillDate'>
+                                    <input id="txtbillDate" tabindex="8" class="form-control" type="date" />
+                                    @*<div class="input-group-addon">
+                                            <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                                        </div>*@
+
+                                </div>
 
                             </div>
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label for="praticesname">Asset Gross Block</label>
+                                <input type='text' id="txtgrossvalue" class="form-control" readonly tabindex="9" />
 
-                    <div class="row border border-success rounded bg-light my-2 p-2">
-                        <!-- Col 1 -->
-                        <div class="col-md-7">
-                            <div class="row my-1">
-                                <div class="col">
-                                    <label for="txtgrossvalue" class="col-form-label">
-                                        Disposal Amount<span style="color:#CC0000;">*</span>
-                                    </label>
-                                </div>
-                                <div class="col">
-                                    <input type="number" tabindex="20"
-                                           class="form-control" id="txtdisposalamount" onblur="validdisposalamount();" />
-
-                                </div>
                             </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label for="praticesname">Disposal till date </label>
+                                <input type='text' id="txtdisposaltilldate" name="txtdisposaltilldate" class="form-control" tabindex="10" readonly />
 
-
-                            <div class="row my-1">
-                                <div class="col">
-                                    <label for="praticesname">Sale Value</label>
-                                </div>
-                                <div class="col">
-                                    <input type="number" tabindex="21"
-                                           class="form-control" id="txtsalevalue" />
-
-                                </div>
                             </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label for="praticesname">Depreciation till date</label>
+                                <input type='text' id="txtOpAccDepreciation" name="txtOpAccDepreciation" class="form-control" tabindex="11" readonly />
 
-                            @*<div class="row my-1">
-                                        <div class="col">
-                                            <label for="praticesname">Op.Accumulated Dep.Till</label>
-                                        </div>
-                                        <div class="col">
-                                            <input type="number" tabindex="20"
-                                                   class="form-control" id="txtopAccDepTill" />
-                                        </div>
-                                    </div>
+                            </div>
+                        </div>
 
-                                    <div class="row my-1">
-                                        <div class="col">
-                                            <label for="praticesname">Dep.charged FromDate-ToDate</label>
-                                        </div>
-                                        <div class="col">
-                                            <input type="number" tabindex="20"
-                                                   class="form-control" id="txtdepChargedfrom" />
-                                        </div>
-                                    </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label for="praticesname">Depreciation Rate</label>
+                                <input type='text' id="txtdeprate" name="txtdeprate" class="form-control" readonly tabindex="12" />
 
-                                    <div class="row my-1">
-                                        <div class="col">
-                                            <label for="praticesname">Op.Accumulated Depreciation</label>
-                                        </div>
-                                        <div class="col">
-                                            <input type="number" tabindex="20"
-                                                   class="form-control" id="txtOpAccDepreciation" />
-                                        </div>
-                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label for="praticesname">Depreciation Method</label>
+                                <input type='text' id="txtdepmethod" name="txtdepmethod" class="form-control" readonly tabindex="13" />
 
-                                    <div class="row my-1">
-                                        <div class="col">
-                                            <label for="praticesname">Depreciation For</label>
-                                        </div>
-                                        <div class="col">
-                                            <input type="number" tabindex="20"
-                                                   class="form-control" id="txtDepFor" />
-                                        </div>
-                                    </div>
+                            </div>
+                        </div>
 
-                                    <div class="row my-1">
-                                        <div class="col">
-                                            <label for="praticesname">Total Depreciation</label>
-                                        </div>
-                                        <div class="col">
-                                            <input type="number" tabindex="20"
-                                                   class="form-control" id="txttotaldep" />
-                                        </div>
-                                    </div>
 
-                                    <div class="row my-1">
-                                        <div class="col">
-                                            <label for="praticesname">Wdv of Assets Disposed Off</label>
-                                        </div>
-                                        <div class="col">
-                                            <input type="number" tabindex="20"
-                                                   class="form-control" id="txtwdvofasset" />
-                                        </div>
-                                    </div>
-
-                                    <div class="row my-1">
-                                        <div class="col">
-                                            <label for="praticesname">Profit/Loss</label>
-                                        </div>
-                                        <div class="col">
-                                            <input type="number" tabindex="20"
-                                                   class="form-control" id="txtprofitloss" />
-                                        </div>
-                                    </div>
-
-                                </div>*@
-
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="txtOpQty">Opening Quantity</label>
+                                <input type='text' id="txtOpQty" readonly="readonly" class="form-control" tabindex="14" />
+                            </div>
 
                         </div>
-                        @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="praticesname">Disposal Amount</label>
-                                        <input type="number" tabindex="14" class="form-control" id="txtdisposalamount" />
-                                    </div>
-                                </div>
-                            </div>*@
-                        @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="praticesname">Gross Value</label>
-                                        <input type="number" tabindex="15" class="form-control" id="txtgrossvalue" />
-                                    </div>
-                                </div>
-                            </div>*@
-                        @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="praticesname">Op.Accumulated Dep.Till </label>
-                                        <input type="number" tabindex="16" class="form-control" id="txtopAccDepTill" />
-                                    </div>
-                                </div>
-                            </div>*@
-
-                        @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="praticesname">Depreciation charged FromDate-ToDate </label>
-                                        <input type="number" tabindex="17" class="form-control" id="txtdepChargedfrom" />
-                                    </div>
-                                </div>
-                            </div>*@
-
-                        @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="praticesname">Op.Accumulated Depreciation</label>
-                                        <input type="number" tabindex="18" class="form-control" id="txtOpAccDepreciation" />
-                                    </div>
-                                </div>
-                            </div>*@
-
-                        @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="praticesname">Depreciation For</label>
-                                        <input type="number" tabindex="19" class="form-control" id="txtDepFor" />
-                                    </div>
-                                </div>
-                            </div>*@
-
-                        @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="praticesname">Total Depreciation</label>
-                                        <input type="number" tabindex="20" class="form-control" id="txttotaldep" />
-                                    </div>
-                                </div>
-                            </div>*@
-
-
-                        @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="praticesname">Wdv of Assets Disposed Off</label>
-                                        <input type="number" tabindex="21" class="form-control" id="txtwdvofasset" />
-                                    </div>
-                                </div>
-                            </div>*@
-
-                        @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label for="praticesname">Profit/Loss</label>
-                                    <input type="number" tabindex="22" class="form-control" id="txtprofitloss" />
-                                </div>
-                            </div>*@
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
-
-        @*<div class="row my-1">
-
-                <button type="submit" class="btn btn-primary" id="btnsave">	Save</button>
-                <button type="button" class="btn btn-default" onclick="close()">Close</button>
-
-            </div>*@
-
-        <div class="container">
-            <div class="row my-2">
-                <div class="modal-footer">
-   
-                        <button type="submit" class="btn btn-sm saveBtn" id="btnsave">	Save</button>
+                        <div class="col-md-3">
+                            <label for="txtDisposedQty">Disposed Quantity</label>
+                            <input type='text' id="txtDisposedQty" readonly="readonly" class="form-control" tabindex="14" />
+                        </div>
+                        <div class="col-md-3">
+                            <label for="txtCurrentQty">Current Quantity</label>
+                            <input type='text' id="txtCurrentQty" readonly="readonly" class="form-control" tabindex="14" />
+                        </div>
 
                     </div>
+                    <dv class="row">
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label for="praticesname">Bill No</label>
+                                <input type='text' id="txtbillno" class="form-control" tabindex="14" />
+
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label for="praticesname">Quantity<span style="color:#CC0000;">*</span> </label>
+                                <input type='number' id="txtqty" name="txtqty" class="form-control" tabindex="15" value="1" required />
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group col-md-4 ">
+                            <label for="praticesname">Disposal Category<span style="color:#CC0000;">*</span></label>
+                            <select id="AssetCategoryId" class="form-control" name="AssetCategory" required>
+                                <option value="">Select Asset Category</option>
+                                <option value="1">Sold</option>
+                                <option value="2">Scraped</option>
+                                <option value="3">Stolen</option>
+                                <option value="4">Lost</option>
+                                <option value="5">Replace</option>
+                                <option value="6">Others</option>
+
+                            </select>
+                        </div>
 
                 </div>
 
 
+                <div class="row">
 
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="praticesname">Disposal Type<span style="color:#CC0000;">*</span></label>
+                            Full @Html.RadioButton("DisposalType", "Full", new { id = "full", @tabindex = "16", @onclick = "Getdepreciationreversed()" })
+                            Partial @Html.RadioButton("DisposalType", "Partial", new { id = "partial", @tabindex = "17", @onclick = "Getdepreciationreversed()" })
+                        </div>
+
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label for="praticesname">Asset sold to</label>
+                            <input type='text' id="txtcustomername" name="txtcustomername" class="form-control" tabindex="18" />
+
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="praticesname">Remarks</label>
+                            <input type='text' id="txtremarks" name="txtremarks" class="form-control" tabindex="19" />
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row border border-success rounded bg-light my-2 p-2">
+                    <!-- Col 1 -->
+                    <div class="col-md-7">
+                        <div class="row my-1">
+                            <div class="col">
+                                <label for="txtgrossvalue" class="col-form-label">
+                                    Disposal Amount<span style="color:#CC0000;">*</span>
+                                </label>
+                            </div>
+                            <div class="col">
+                                <input type="number" tabindex="20"
+                                       class="form-control" id="txtdisposalamount" onblur="validdisposalamount();" />
+
+                            </div>
+                        </div>
+
+
+                        <div class="row my-1">
+                            <div class="col">
+                                <label for="praticesname">Sale Value</label>
+                            </div>
+                            <div class="col">
+                                <input type="number" tabindex="21"
+                                       class="form-control" id="txtsalevalue" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
+
+    </div>
+
+    @*<div class="row my-1">
+                <div class="col">
+                    <label for="praticesname">Op.Accumulated Dep.Till</label>
+                </div>
+                <div class="col">
+                    <input type="number" tabindex="20"
+                           class="form-control" id="txtopAccDepTill" />
+                </div>
+            </div>
+
+            <div class="row my-1">
+                <div class="col">
+                    <label for="praticesname">Dep.charged FromDate-ToDate</label>
+                </div>
+                <div class="col">
+                    <input type="number" tabindex="20"
+                           class="form-control" id="txtdepChargedfrom" />
+                </div>
+            </div>
+
+            <div class="row my-1">
+                <div class="col">
+                    <label for="praticesname">Op.Accumulated Depreciation</label>
+                </div>
+                <div class="col">
+                    <input type="number" tabindex="20"
+                           class="form-control" id="txtOpAccDepreciation" />
+                </div>
+            </div>
+
+            <div class="row my-1">
+                <div class="col">
+                    <label for="praticesname">Depreciation For</label>
+                </div>
+                <div class="col">
+                    <input type="number" tabindex="20"
+                           class="form-control" id="txtDepFor" />
+                </div>
+            </div>
+
+            <div class="row my-1">
+                <div class="col">
+                    <label for="praticesname">Total Depreciation</label>
+                </div>
+                <div class="col">
+                    <input type="number" tabindex="20"
+                           class="form-control" id="txttotaldep" />
+                </div>
+            </div>
+
+            <div class="row my-1">
+                <div class="col">
+                    <label for="praticesname">Wdv of Assets Disposed Off</label>
+                </div>
+                <div class="col">
+                    <input type="number" tabindex="20"
+                           class="form-control" id="txtwdvofasset" />
+                </div>
+            </div>
+
+            <div class="row my-1">
+                <div class="col">
+                    <label for="praticesname">Profit/Loss</label>
+                </div>
+                <div class="col">
+                    <input type="number" tabindex="20"
+                           class="form-control" id="txtprofitloss" />
+                </div>
+            </div>
+
+        </div>*@
+
+
+
+    @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="praticesname">Disposal Amount</label>
+                    <input type="number" tabindex="14" class="form-control" id="txtdisposalamount" />
+                </div>
+            </div>
+        </div>*@
+    @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="praticesname">Gross Value</label>
+                    <input type="number" tabindex="15" class="form-control" id="txtgrossvalue" />
+                </div>
+            </div>
+        </div>*@
+    @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="praticesname">Op.Accumulated Dep.Till </label>
+                    <input type="number" tabindex="16" class="form-control" id="txtopAccDepTill" />
+                </div>
+            </div>
+        </div>*@
+
+    @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="praticesname">Depreciation charged FromDate-ToDate </label>
+                    <input type="number" tabindex="17" class="form-control" id="txtdepChargedfrom" />
+                </div>
+            </div>
+        </div>*@
+
+    @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="praticesname">Op.Accumulated Depreciation</label>
+                    <input type="number" tabindex="18" class="form-control" id="txtOpAccDepreciation" />
+                </div>
+            </div>
+        </div>*@
+
+    @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="praticesname">Depreciation For</label>
+                    <input type="number" tabindex="19" class="form-control" id="txtDepFor" />
+                </div>
+            </div>
+        </div>*@
+
+    @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="praticesname">Total Depreciation</label>
+                    <input type="number" tabindex="20" class="form-control" id="txttotaldep" />
+                </div>
+            </div>
+        </div>*@
+
+
+    @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="praticesname">Wdv of Assets Disposed Off</label>
+                    <input type="number" tabindex="21" class="form-control" id="txtwdvofasset" />
+                </div>
+            </div>
+        </div>*@
+
+    @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="praticesname">Profit/Loss</label>
+                <input type="number" tabindex="22" class="form-control" id="txtprofitloss" />
+            </div>
+        </div>*@
+
+
+    @*<div class="row my-1">
+
+            <button type="submit" class="btn btn-primary" id="btnsave">	Save</button>
+            <button type="button" class="btn btn-default" onclick="close()">Close</button>
+
+        </div>*@
+
+    <div class="container">
+        <div class="row my-2">
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-sm saveBtn" id="btnSave">	Save</button>
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+</div>
   
 
-        }
+ }
 
 
         <div id="errorlist" class="modal fade" role="dialog" style="height: 670px;">
@@ -480,48 +494,253 @@
 
 
                         <div class="modal-footer">
-                            <button type="button" class="btn delBtn" data-dismiss="modal">Close</button>
-
+                            <button type="button" class="btn btn-sm clBtn" id="btnClose" data-bs-dismiss="modal">Close</button>
                         </div>
+
+                    </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @*</div>*@
         @*</div>*@
 
-        <script type="text/javascript">
+<script type="text/javascript">
+            $('#btnSave').click(function (event) {
+
+                SaveData();
+                e.preventDefault();
+                return false;
+            });
         var isimportedflag;
 
         $(document).ready(function ($) {
             //voucherdate set to all other date
           //  $("#txtaddno").val('@ViewBag.additionno');
+            $("#txtassetno").prop("disabled", true);
+            $('#checkflag').change(function () {
+                if ($(this).prop("checked")) {
+                    $("#txtassetno").prop("disabled", false);
+                }
+                else {
+                    $("#txtassetno").prop("disabled", true);
+                }
+            });
+            //on assetno enter set assetname
+            $('#txtassetno').keypress(function () {
 
-            $('#dtVDate').datetimepicker({
-                format: 'DD/MM/YYYY',
-                icons:
-                {
-                    next: 'fa fa-angle-right',
-                    previous: 'fa fa-angle-left'
-                },
+                var assetno = $('#txtassetno').val();
+
+                $('#AssetId').val(assetno);
+
+                // GetdisplayFields();
+                //Getdepreciationreversed();
+
+                // getassetname(assetno);
+            });
+
+            $("#txtassetno").on('change keyup paste', function () {
+                console.log('text box changed');
+                var assetno = $('#txtassetno').val();
+
+                $('#AssetId').val(assetno);
+                //$('#AssetId').refresh();
 
             });
-            $('#dtDispoDate').datetimepicker({
-                format: 'DD/MM/YYYY',
-                icons:
-                {
-                    next: 'fa fa-angle-right',
-                    previous: 'fa fa-angle-left'
-                },
-           });
 
-           $('#dtbillDate').datetimepicker({
-               format: 'DD/MM/YYYY',
-               icons:
-               {
-                   next: 'fa fa-angle-right',
-                   previous: 'fa fa-angle-left'
-               },
-           });
+            $('#AssetId').change(function () {
+
+                var index = $("#AssetId option:selected").val();
+
+                $('#txtassetno').val(index);
+
+                // getassetname(assetno);
+            });
+            $("#frmNewEmp").submit(function (e) {
+
+                SaveData();
+                e.preventDefault();
+                return false;
+
+            });
+        });
+    //emptyfields
+    function emptyfields() {
+
+        $("#txtVDate").val("");
+        $("#txtdispoDate").val("");
+        $("#txtbillDate").val("");
+        $("#txtcustomername").val("");
+        $("#remarks").val("");
+        $("#txtsalevalue").val("");
+
+        $("#txtdisposalamount").val("");
+        $("#txtqty").val("");
+        $("#txtbillno").val("");
+        $("#txtdepmethod").val("");
+
+        $("#txtdeprate").val("");
+        $("#txtdepmethod").val("");
+        $("#txtOpAccDepreciation").val("");
+
+        $("#txtgrossvalue").val("");
+        $("#txtdisposaltilldate").val("");//txtvno
+        $("#txtvno").val("");
+    }
+            function validateform() {
+
+                var errorlist = [];
+                var AssetName = $("#AssetId option:selected").text()
+                // var AdditionAssetName = $('#adddesc').val();
+                var AssetNo = $('#txtassetno').val();
+                var VoucherDate = $('#txtVDate').val();
+                var DisposalDate = $('#txtdpucomDate').val();
+                var Qty = $('#txtqty').val();
+                var DisposalType = $("input[name='DisposalType']:checked").val();
+                var grossVal = $('#txtgrossvalue').val();
+                var disposalamt = $('#txtdisposalamount').val();
+                var Assetcategory = $('#AssetCategoryId option:selected').val();
+
+                if (VoucherDate == "") {
+                    errorlist.push("Voucher Date not entered");
+                }
+
+                if (DisposalDate == "") {
+                    errorlist.push("Disposal Date not entered");
+                }
+
+                if (Qty == "") {
+                    errorlist.push("Quantity  not entered");
+                }
+                if (AssetName == "") {
+                    errorlist.push("Asset Name is not entered");
+                }
+                if (grossVal == "") {
+                    errorlist.push("Gross value is not entered");
+                }
+
+                if (AssetNo == "") {
+                    errorlist.push("Asset No is not entered");
+                }
+                if (disposalamt == "") {
+                    errorlist.push("Disposal gross block is not entered");
+                }
+                if (Assetcategory == "") {
+                    errorlist.push("Disposal Asset Category is not entered");
+                }
+
+                // alert(errorlist)
+                return errorlist;
+    }
+     function GetdisplayFields() {
+
+
+           var vdate = moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var ddate =  moment($("#txtdispoDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var assetno = $("#txtassetno").val();
+            var disposalType = $("input[name='DisposalType']:checked").val();
+
+
+            if (ddate != "" && assetno != "" )
+            {
+
+
+                var ControllerURL = '@Url.Action("GetdisplayFields", "Disposal")';
+
+                var returnURL = '@Url.Action("Index", "Disposal")';
+                var url = ControllerURL + "?strddate=" + ddate + "&assetno=" + assetno;
+                 // alert(ControllerURL)
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    headers: headers,
+                    contentType: "application/json",
+                    success: function (res1) {
+
+                        // if (res1.Data == "Yes") { //IsValid
+                        if (res1.IsValid == false) {
+                            swal({ title: "Disposal voucher date cannot be less than  asset voucher date", icon: "warning" }).then((result) => {
+                                if (result == true) {
+                                    document.getElementById("txtdispoDate").focus();
+                                }
+                                else
+                                {
+                                    //document.getElementById("txtVDate").focus();
+                                }
+                            });
+                        }
+                        else
+                        {
+
+
+
+                            var Agrossval = parseFloat(res1.model.AssetAmtCapitalised).toFixed(2);
+                            var disposaltilldate = parseFloat(res1.model.disposaltilldate).toFixed(2);
+                            var depreciationtilldate = parseFloat(res1.model.depreciationtilldate).toFixed(2);
+
+                            var totrate = parseFloat(res1.model.TotalRate).toFixed(2);
+                            var depmethod = res1.model.DepMethod;
+                            var opqty = res1.model.OpeningQty
+                            var disposedqtytilldate = res1.model.DisposedQtyTillDate
+
+                            // Mandar
+
+                            $('#txtgrossvalue').val(Agrossval);
+                            $('#txtdisposaltilldate').val(disposaltilldate);
+                            $('#txtOpAccDepreciation').val(depreciationtilldate);
+                            $('#txtdeprate').val(totrate);
+                            $('#txtdepmethod').val(depmethod);
+
+                            $('#txtOpQty').val(opqty);
+                            $('#txtDisposedQty').val(disposedqtytilldate);
+
+                            $('#txtCurrentQty').val((opqty - disposedqtytilldate).toFixed(0));
+
+                          //  $('#txttotaldep').val(totalDepreciation)
+                            //$('#txtwdvofasset').val(NetAmount)
+                            //$('#txtDepFor').val(DepTillDate)
+
+
+                        }
+
+
+
+                    },
+                    error: function (reponse) {
+                        alert("error : " + reponse);
+                    }
+                });
+            } else {
+
+
+            }
+        }
+
+            //$('#dtVDate').datetimepicker({
+            //    format: 'DD/MM/YYYY',
+            //    icons:
+            //    {
+            //        next: 'fa fa-angle-right',
+            //        previous: 'fa fa-angle-left'
+            //    },
+
+            //});
+           // $('#dtDispoDate').datetimepicker({
+           //     format: 'DD/MM/YYYY',
+           //     icons:
+           //     {
+           //         next: 'fa fa-angle-right',
+           //         previous: 'fa fa-angle-left'
+           //     },
+           //});
+
+           //$('#dtbillDate').datetimepicker({
+           //    format: 'DD/MM/YYYY',
+           //    icons:
+           //    {
+           //        next: 'fa fa-angle-right',
+           //        previous: 'fa fa-angle-left'
+           //    },
+           //});
 
            //$('input[id=txtVDate]').on('keydown', function (evt) {
            //    if (evt.key === 'Tab' || evt.key === 'Enter') {
@@ -538,113 +757,33 @@
 
 
             ///image display
-            function readIMG(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
+            //function readIMG(input) {
+            //    if (input.files && input.files[0]) {
+            //        var reader = new FileReader();
 
-                    reader.onload = function (e) {
-                        $('#preview').attr('src', e.target.result);
-                    }
+            //        reader.onload = function (e) {
+            //            $('#preview').attr('src', e.target.result);
+            //        }
 
-                    reader.readAsDataURL(input.files[0]);
-                }
-            }
+            //        reader.readAsDataURL(input.files[0]);
+            //    }
+            //}
 
-            $("#fileUploader").change(function () {
-                readIMG(this);
-            });
+            //$("#fileUploader").change(function () {
+            //    readIMG(this);
+            //});
 
-            $("#btnAddattachment").click(function () {
-
-
-                $('#imagemodal').modal('show');
+            //$("#btnAddattachment").click(function () {
 
 
-            });
+            //    $('#imagemodal').modal('show');
+
+
+            //});
 
             ///for enable disable assetno or search by
-            $("#txtassetno").prop("disabled", true);
 
-            $('#checkflag').change(function () {
-                if ($(this).prop("checked")) {
-                    $("#txtassetno").prop("disabled", false);
-                }
-                else {
-                    $("#txtassetno").prop("disabled", true);
-                }
-            });
-
-
-
-            //on assetno enter set assetname
-            $('#txtassetno').keypress(function () {
-
-                var assetno = $('#txtassetno').val();
-
-                $('#AssetId').val(assetno);
-
-               // GetdisplayFields();
-                //Getdepreciationreversed();
-
-               // getassetname(assetno);
-            });
-
-            $("#txtassetno").on('change keyup paste', function () {
-                console.log('text box changed');
-                var assetno = $('#txtassetno').val();
-
-                $('#AssetId').val(assetno);
-                $('#AssetId').refresh();
-
-            });
-
-
-            $('#AssetId').change(function () {
-
-                var index = $("#AssetId option:selected").val();
-
-                $('#txtassetno').val(index);
-
-               // getassetname(assetno);
-            });
-
-
-            $("#frmNewEmp").submit(function (e) {
-
-                SaveData();
-               e.preventDefault();
-                return false;
-
-            });
-
-
-
-        });
-            //emptyfields
-            function emptyfields() {
-
-                $("#txtVDate").val("");
-                $("#txtdispoDate").val("");
-                $("#txtbillDate").val("");
-                $("#txtcustomername").val("");
-                $("#remarks").val("");
-                $("#txtsalevalue").val("");
-
-                $("#txtdisposalamount").val("");
-                $("#txtqty").val("");
-                $("#txtbillno").val("");
-                $("#txtdepmethod").val("");
-
-                $("#txtdeprate").val("");
-                $("#txtdepmethod").val("");
-                $("#txtOpAccDepreciation").val("");
-
-                $("#txtgrossvalue").val("");
-                $("#txtdisposaltilldate").val("");//txtvno
-                $("#txtvno").val("");
-            }
-       //////////validate asset date with Disposal  date////
-        function validateassetdate() {
+             function validateassetdate() {
            // alert("test")
             var vdate = moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
             var ddate = moment($("#txtdispoDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
@@ -668,7 +807,7 @@
                 $.ajax({
                     url: url,
                     type: "GET",
-
+                    headers: headers,
                     contentType: "application/json",
                     data: data,
                     success: function (res) {
@@ -762,6 +901,21 @@
                 });
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+       //////////validate asset date with Disposal  date////
+
+
            /////check lockperiod and itperiod lock see above function for calls
           function checkdatevalidation() {
               var vdate = moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
@@ -774,6 +928,7 @@
                 $.ajax({
                     url: ControllerURL,
                     type: "GET",
+                    headers: headers,
                     contentType: "application/json",
                     success: function (res) {
                       //  alert(res.Data)
@@ -823,88 +978,7 @@
             }
         }
 //---------------------------------------------------------------------------------------
- function GetdisplayFields() {
 
-
-           var vdate = moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-            var ddate =  moment($("#txtdispoDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-            var assetno = $("#txtassetno").val();
-            var disposalType = $("input[name='DisposalType']:checked").val();
-
-
-            if (ddate != "" && assetno != "" )
-            {
-
-
-                var ControllerURL = '@Url.Action("GetdisplayFields", "Disposal")';
-
-                var returnURL = '@Url.Action("Index", "Disposal")';
-                var url = ControllerURL + "?strddate=" + ddate + "&assetno=" + assetno;
-                 // alert(ControllerURL)
-                $.ajax({
-                    url: url,
-                    type: "GET",
-                    contentType: "application/json",
-                    success: function (res1) {
-
-                        // if (res1.Data == "Yes") { //IsValid
-                        if (res1.IsValid == false) {
-                            swal({ title: "Disposal voucher date cannot be less than  asset voucher date", icon: "warning" }).then((result) => {
-                                if (result == true) {
-                                    document.getElementById("txtdispoDate").focus();
-                                }
-                                else
-                                {
-                                    //document.getElementById("txtVDate").focus();
-                                }
-                            });
-                        }
-                        else
-                        {
-
-
-
-                            var Agrossval = parseFloat(res1.model.AssetAmtCapitalised).toFixed(2);
-                            var disposaltilldate = parseFloat(res1.model.disposaltilldate).toFixed(2);
-                            var depreciationtilldate = parseFloat(res1.model.depreciationtilldate).toFixed(2);
-
-                            var totrate = parseFloat(res1.model.TotalRate).toFixed(2);
-                            var depmethod = res1.model.DepMethod;
-                            var opqty = res1.model.OpeningQty
-                            var disposedqtytilldate = res1.model.DisposedQtyTillDate
-
-                            // Mandar
-
-                            $('#txtgrossvalue').val(Agrossval);
-                            $('#txtdisposaltilldate').val(disposaltilldate);
-                            $('#txtOpAccDepreciation').val(depreciationtilldate);
-                            $('#txtdeprate').val(totrate);
-                            $('#txtdepmethod').val(depmethod);
-
-                            $('#txtOpQty').val(opqty);
-                            $('#txtDisposedQty').val(disposedqtytilldate);
-
-                            $('#txtCurrentQty').val((opqty - disposedqtytilldate).toFixed(0));
-
-                          //  $('#txttotaldep').val(totalDepreciation)
-                            //$('#txtwdvofasset').val(NetAmount)
-                            //$('#txtDepFor').val(DepTillDate)
-
-
-                        }
-
-
-
-                    },
-                    error: function (reponse) {
-                        alert("error : " + reponse);
-                    }
-                });
-            } else {
-
-
-            }
-        }
 
 
 
@@ -1015,51 +1089,7 @@
             }
         }*@
     //------------------------------------------------------
-            function validateform() {
 
-            var errorlist = [];
-            var AssetName = $("#AssetId option:selected").text()
-           // var AdditionAssetName = $('#adddesc').val();
-            var AssetNo = $('#txtassetno').val();
-            var VoucherDate = $('#txtVDate').val();
-            var DisposalDate = $('#txtdpucomDate').val();
-            var Qty = $('#txtqty').val();
-            var DisposalType = $("input[name='DisposalType']:checked").val();
-            var grossVal = $('#txtgrossvalue').val();
-            var disposalamt = $('#txtdisposalamount').val();
-            var Assetcategory = $('#AssetCategoryId option:selected').val();
-
-            if (VoucherDate == "") {
-                errorlist.push("Voucher Date not entered");
-            }
-
-            if (DisposalDate == "") {
-                errorlist.push("Disposal Date not entered");
-            }
-
-            if (Qty == "") {
-                errorlist.push("Quantity  not entered");
-            }
-            if (AssetName == "") {
-                errorlist.push("Asset Name is not entered");
-            }
-            if (grossVal == "") {
-                errorlist.push("Gross value is not entered");
-            }
-
-            if (AssetNo == "") {
-                errorlist.push("Asset No is not entered");
-            }
-            if (disposalamt == "") {
-                errorlist.push("Disposal gross block is not entered");
-            }
-            if (Assetcategory == "") {
-                errorlist.push("Disposal Asset Category is not entered");
-            }
-
-            // alert(errorlist)
-            return errorlist;
-        }
 //-------------------------------------------------------------------------------
         function getassetname(id) {
             if (id == "") {
@@ -1205,6 +1235,7 @@
                         $.ajax({
                             type: 'POST',
                             url: ControllerURL,
+                            headers: headers,
                             contentType: "application/json",
                             data: JSON.stringify(postdata),
                             success: function (res) {
@@ -1229,5 +1260,5 @@
             }
         }
 
-        </script>
+</script>
 

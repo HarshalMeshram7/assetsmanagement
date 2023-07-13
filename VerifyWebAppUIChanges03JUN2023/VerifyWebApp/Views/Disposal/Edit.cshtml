@@ -17,409 +17,409 @@
                     </div>
                 </div>
                 @*<ul class="nav nav-pills nav-fill my-1">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#home">General Info</a>
-                        </li>
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#home">General Info</a>
+            </li>
 
 
 
-                    </ul>*@
+        </ul>*@
                 <div class="card-body">
                     <div class="tab-content container-fluid my-1">
                         <div class="tab-pane container active" id="home">
                             <!--<div class="container-fluid  border border-success rounded bg-light" style="border:  thin #32CD32 ;border-radius: 10px;margin-top: 15px;
-                        margin-bottom: 15px;">-->
-                                @*<div class="row col-lg-12" style="margin-top: 10px;">*@
-                                    @*<div class="col-sm-2">
-                                            <div class="form-group">
-                                                <label for="praticesname">Disposal No<span>*</span></label>
-                                                <input type='text' id="txtdispono" class="form-control" readonly tabindex="1" />
+                margin-bottom: 15px;">-->
+                            @*<div class="row col-lg-12" style="margin-top: 10px;">*@
+                            @*<div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="praticesname">Disposal No<span>*</span></label>
+                            <input type='text' id="txtdispono" class="form-control" readonly tabindex="1" />
 
-                                            </div>
-                                        </div>*@
-                                    <!--@Html.HiddenFor(m => m.ID)
-                                    <
-                                    <div class="col-sm-3">
-                                        <div class="form-group">
-                                            <input type='checkbox' id="checkflag" tabindex="2" />
-                                            <label for="praticesname">Asset no wise search</label>
+                        </div>
+                    </div>*@
+                            @Html.HiddenFor(m => m.ID)
 
-                                        </div>
-
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <div class="form-group">
-                                            <label for="praticesname">Asset No</label>
-
-                                            @Html.TextBoxFor(m => m.AssetNo, new { @class = "form-control", @tabindex = "3", type = "number", required = "required", id = "txtassetno" })
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label for="praticesname">Asset Name<span style="color:#CC0000;">*</span></label>
-                                            <div class='input-group dropdown ' id='dtasset' tabindex="4">
-
-                                                @Html.DropDownList("AssetId", (SelectList)ViewBag.Assestlist, "Select AssetNo", new { @class = "form-control", id = "AssetId", @required = "required", @onblur = "GetdisplayFields();" })
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                 </div>-->
-
-                                @*<div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <label for="praticesname">Add.Description</label>
-                                                <input type='text' id="adddesc" class="form-control" tabindex="5" required />
-
-                                            </div>
-                                        </div>
-                                    </div>*@
-                                <div class="row">
-                                    <div class="col-lg-2">
-                                        <div class="form-group">
-                                            <label for="praticesname">VoucherNo</label>
-
-                                            @Html.TextBoxFor(m => m.VoucherNo, new { @class = "form-control", id = "txtvno", @tabindex = "5" })
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="form-group">
-                                            <label for="praticesname">Voucher Date<span style="color:#CC0000;">*</span></label>
-                                            <div class='input-group date' id='dtVDate'>
-
-                                                @Html.TextBoxFor(m => m.str_voucherDate, new { @class = "form-control", required = "required", id = "txtVDate", @tabindex = "6", })
-                                                <div class="input-group-addon">
-                                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
-
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="form-group">
-                                            <label for="praticesname">Disposal Date<span style="color:#CC0000;">*</span></label>
-
-                                            <div class='input-group date' id='dtDispoDate'>
-
-                                                @Html.TextBoxFor(m => m.str_disposalDate, new { @class = "form-control", required = "required", id = "txtdispoDate", @tabindex = "7", @onblur = "validateassetdate();" })
-
-                                                <div class="input-group-addon">
-                                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
-
-                                                </div>
-
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="form-group">
-                                            <label for="praticesname">Bill Date</label>
-
-                                            <div class='input-group date' id='dtbillDate'>
-
-                                                @Html.TextBoxFor(m => m.str_billDate, new { @class = "form-control", id = "txtbillDate", tabindex = "8" })
-
-                                                <div class="input-group-addon">
-                                                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-2">
-                                        <div class="form-group">
-                                            <label for="praticesname">Asset Gross Block</label>
-                                            <input type='text' id="txtgrossvalue" class="form-control" readonly tabindex="9" />
-
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="form-group">
-                                            <label for="praticesname">Disposal till date </label>
-                                            <input type='text' id="txtdisposaltilldate" name="txtdisposaltilldate" class="form-control" tabindex="10" readonly />
-
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="form-group">
-                                            <label for="praticesname">Depreciation till date</label>
-                                            <input type='text' id="txtOpAccDepreciation" name="txtOpAccDepreciation" class="form-control" tabindex="11" readonly />
-
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-2">
-                                        <div class="form-group">
-                                            <label for="praticesname">Depreciation Rate</label>
-                                            <input type='text' id="txtdeprate" name="txtdeprate" class="form-control" readonly tabindex="12" />
-
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2">
-                                        <div class="form-group">
-                                            <label for="praticesname">Depreciation Method</label>
-                                            <input type='text' id="txtdepmethod" name="txtdepmethod" class="form-control" readonly tabindex="13" />
-
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-2">
-                                        <div class="form-group">
-                                            <label for="praticesname">Bill No</label>
-
-                                            @Html.TextBoxFor(m => m.BillNo, new { @class = "form-control", id = "txtbillno", @tabindex = "14" })
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="form-group">
-                                            <label for="praticesname">Quantity<span style="color:#CC0000;">*</span> </label>
-                                            @Html.TextBoxFor(m => m.Qty, new { @class = "form-control", type = "number", id = "txtqty", @tabindex = "15", required = "required" })
-
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group col-md-4 ">
-                                        <label for="praticesname">Disposal Category<span style="color:#CC0000;">*</span></label>
-                                        <select id="AssetCategoryId" class="form-control" name="AssetCategory" required>
-                                            <option value="">Select Asset Category</option>
-                                            <option value="1">Sold</option>
-                                            <option value="2">Scraped</option>
-                                            <option value="3">Stolen</option>
-                                            <option value="4">Lost</option>
-                                            <option value="5">Replace</option>
-                                            <option value="6">Others</option>
-
-                                        </select>
-                                    </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <input type='checkbox' id="checkflag" tabindex="2" />
+                                    <label for="praticesname">Asset no wise search</label>
 
                                 </div>
 
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label for="praticesname">Asset No</label>
 
-                                <div class="row">
-
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label for="praticesname">Disposal Type<span style="color:#CC0000;">*</span></label>
-                                            Full @Html.RadioButton("DisposalType", "Full", new { id = "full", @tabindex = "16", @onblur = "Getdepreciationreversed()" })
-                                            Partial @Html.RadioButton("DisposalType", "Partial", new { id = "partial", @tabindex = "17", @onblur = "Getdepreciationreversed()" })
-                                        </div>
-
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div class="form-group">
-                                            <label for="praticesname">Asset sold to</label>
-
-                                            @Html.TextBoxFor(m => m.CustomerName, new { @class = "form-control", id = "txtcustomername", @tabindex = "18" })
-
-
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label for="praticesname">Remarks</label>
-
-                                            @Html.TextBoxFor(m => m.Remarks, new { @class = "form-control", id = "txtremarks", tabindex = "19" })
-
-                                        </div>
-                                    </div>
+                                    @Html.TextBoxFor(m => m.AssetNo, new { @class = "form-control", @tabindex = "3", type = "number", required = "required", id = "txtassetno" })
                                 </div>
+                            </div>
 
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Asset Name<span style="color:#CC0000;">*</span></label>
+                                    <div class='input-group dropdown ' id='dtasset' tabindex="4">
 
-                                <div class="row border border-success rounded bg-light my-2 p-2">
-                                    <!-- Col 1 -->
-                                    <div class="col-md-7">
-                                        <div class="row my-1">
-                                            <div class="col">
-                                                <label for="txtgrossvalue" class="col-form-label">
-                                                    Disposal Amount<span style="color:#CC0000;">*</span>
-                                                </label>
-                                            </div>
-                                            <div class="col">
-
-                                                @Html.TextBoxFor(m => m.DisposalAmount, new { @class = "form-control", id = "txtdisposalamount", @onblur = "validdisposalamount();", @tabindex = "20" })
-                                            </div>
-                                        </div>
-
-
-                                        <div class="row my-1">
-                                            <div class="col">
-                                                <label for="praticesname">Sale Value</label>
-                                            </div>
-                                            <div class="col">
-
-                                                @Html.TextBoxFor(m => m.SaleValue, new { @class = "form-control", id = "txtsalevalue", @tabindex = "21" })
-
-                                            </div>
-                                        </div>
-
-                                        @*<div class="row my-1">
-                                                    <div class="col">
-                                                        <label for="praticesname">Op.Accumulated Dep.Till</label>
-                                                    </div>
-                                                    <div class="col">
-                                                        <input type="number" tabindex="20"
-                                                               class="form-control" id="txtopAccDepTill" />
-                                                    </div>
-                                                </div>
-
-                                                <div class="row my-1">
-                                                    <div class="col">
-                                                        <label for="praticesname">Dep.charged FromDate-ToDate</label>
-                                                    </div>
-                                                    <div class="col">
-                                                        <input type="number" tabindex="20"
-                                                               class="form-control" id="txtdepChargedfrom" />
-                                                    </div>
-                                                </div>
-
-                                                <div class="row my-1">
-                                                    <div class="col">
-                                                        <label for="praticesname">Op.Accumulated Depreciation</label>
-                                                    </div>
-                                                    <div class="col">
-                                                        <input type="number" tabindex="20"
-                                                               class="form-control" id="txtOpAccDepreciation" />
-                                                    </div>
-                                                </div>
-
-                                                <div class="row my-1">
-                                                    <div class="col">
-                                                        <label for="praticesname">Depreciation For</label>
-                                                    </div>
-                                                    <div class="col">
-                                                        <input type="number" tabindex="20"
-                                                               class="form-control" id="txtDepFor" />
-                                                    </div>
-                                                </div>
-
-                                                <div class="row my-1">
-                                                    <div class="col">
-                                                        <label for="praticesname">Total Depreciation</label>
-                                                    </div>
-                                                    <div class="col">
-                                                        <input type="number" tabindex="20"
-                                                               class="form-control" id="txttotaldep" />
-                                                    </div>
-                                                </div>
-
-                                                <div class="row my-1">
-                                                    <div class="col">
-                                                        <label for="praticesname">Wdv of Assets Disposed Off</label>
-                                                    </div>
-                                                    <div class="col">
-                                                        <input type="number" tabindex="20"
-                                                               class="form-control" id="txtwdvofasset" />
-                                                    </div>
-                                                </div>
-
-                                                <div class="row my-1">
-                                                    <div class="col">
-                                                        <label for="praticesname">Profit/Loss</label>
-                                                    </div>
-                                                    <div class="col">
-                                                        <input type="number" tabindex="20"
-                                                               class="form-control" id="txtprofitloss" />
-                                                    </div>
-                                                </div>
-
-                                            </div>*@
-
+                                        @Html.DropDownList("AssetId", (SelectList)ViewBag.Assestlist, "Select AssetNo", new { @class = "form-control", id = "AssetId", @required = "required", @onblur = "GetdisplayFields();" })
 
                                     </div>
-                                    @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <label for="praticesname">Disposal Amount</label>
-                                                    <input type="number" tabindex="14" class="form-control" id="txtdisposalamount" />
-                                                </div>
-                                            </div>
-                                        </div>*@
-                                    @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <label for="praticesname">Gross Value</label>
-                                                    <input type="number" tabindex="15" class="form-control" id="txtgrossvalue" />
-                                                </div>
-                                            </div>
-                                        </div>*@
-                                    @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <label for="praticesname">Op.Accumulated Dep.Till </label>
-                                                    <input type="number" tabindex="16" class="form-control" id="txtopAccDepTill" />
-                                                </div>
-                                            </div>
-                                        </div>*@
-
-                                    @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <label for="praticesname">Depreciation charged FromDate-ToDate </label>
-                                                    <input type="number" tabindex="17" class="form-control" id="txtdepChargedfrom" />
-                                                </div>
-                                            </div>
-                                        </div>*@
-
-                                    @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <label for="praticesname">Op.Accumulated Depreciation</label>
-                                                    <input type="number" tabindex="18" class="form-control" id="txtOpAccDepreciation" />
-                                                </div>
-                                            </div>
-                                        </div>*@
-
-                                    @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <label for="praticesname">Depreciation For</label>
-                                                    <input type="number" tabindex="19" class="form-control" id="txtDepFor" />
-                                                </div>
-                                            </div>
-                                        </div>*@
-
-                                    @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <label for="praticesname">Total Depreciation</label>
-                                                    <input type="number" tabindex="20" class="form-control" id="txttotaldep" />
-                                                </div>
-                                            </div>
-                                        </div>*@
-
-
-                                    @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <label for="praticesname">Wdv of Assets Disposed Off</label>
-                                                    <input type="number" tabindex="21" class="form-control" id="txtwdvofasset" />
-                                                </div>
-                                            </div>
-                                        </div>*@
-
-                                    @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
-                                        <div class="col-sm-4">
-                                            <div class="form-group">
-                                                <label for="praticesname">Profit/Loss</label>
-                                                <input type="number" tabindex="22" class="form-control" id="txtprofitloss" />
-                                            </div>
-                                        </div>*@
                                 </div>
                             </div>
                         </div>
+
+                        @*<div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="praticesname">Add.Description</label>
+                            <input type='text' id="adddesc" class="form-control" tabindex="5" required />
+
+                        </div>
+                    </div>
+                </div>*@
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label for="praticesname">VoucherNo</label>
+
+                                    @Html.TextBoxFor(m => m.VoucherNo, new { @class = "form-control", id = "txtvno", @tabindex = "5" })
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="praticesname">Voucher Date<span style="color:#CC0000;">*</span></label>
+                                    <div class='input-group date' id='dtVDate'>
+                                          @Html.TextBoxFor(m => m.str_voucherDate, new { @class = "form-control", required = "required", id = "txtVDate", @tabindex = "6", })
+                                        <div class="input-group-addon">
+            <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="praticesname">Disposal Date<span style="color:#CC0000;">*</span></label>
+
+                                    <div class='input-group date' id='dtDispoDate'>
+
+                                        @Html.TextBoxFor(m => m.str_disposalDate, new { @class = "form-control", required = "required", id = "txtdispoDate", @tabindex = "7", @onblur = "validateassetdate();" })
+
+                                        <div class="input-group-addon">
+                                            <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="praticesname">Bill Date</label>
+
+                                    <div class='input-group date' id='dtbillDate'>
+
+                                        @Html.TextBoxFor(m => m.str_billDate, new { @class = "form-control", id = "txtbillDate", tabindex = "8" })
+
+                                        <div class="input-group-addon">
+                                            <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label for="praticesname">Asset Gross Block</label>
+                                    <input type='text' id="txtgrossvalue" class="form-control" readonly tabindex="9" />
+
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="praticesname">Disposal till date </label>
+                                    <input type='text' id="txtdisposaltilldate" name="txtdisposaltilldate" class="form-control" tabindex="10" readonly />
+
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="praticesname">Depreciation till date</label>
+                                    <input type='text' id="txtOpAccDepreciation" name="txtOpAccDepreciation" class="form-control" tabindex="11" readonly />
+
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label for="praticesname">Depreciation Rate</label>
+                                    <input type='text' id="txtdeprate" name="txtdeprate" class="form-control" readonly tabindex="12" />
+
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label for="praticesname">Depreciation Method</label>
+                                    <input type='text' id="txtdepmethod" name="txtdepmethod" class="form-control" readonly tabindex="13" />
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label for="praticesname">Bill No</label>
+
+                                    @Html.TextBoxFor(m => m.BillNo, new { @class = "form-control", id = "txtbillno", @tabindex = "14" })
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="praticesname">Quantity<span style="color:#CC0000;">*</span> </label>
+                                    @Html.TextBoxFor(m => m.Qty, new { @class = "form-control", type = "number", id = "txtqty", @tabindex = "15", required = "required" })
+
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4 ">
+                                <label for="praticesname">Disposal Category<span style="color:#CC0000;">*</span></label>
+                                <select id="AssetCategoryId" class="form-control" name="AssetCategory" required>
+                                    <option value="">Select Asset Category</option>
+                                    <option value="1">Sold</option>
+                                    <option value="2">Scraped</option>
+                                    <option value="3">Stolen</option>
+                                    <option value="4">Lost</option>
+                                    <option value="5">Replace</option>
+                                    <option value="6">Others</option>
+
+                                </select>
+                            </div>
+
+                        </div>
+
+
+                        <div class="row">
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Disposal Type<span style="color:#CC0000;">*</span></label>
+                                    Full @Html.RadioButton("DisposalType", "Full", new { id = "full", @tabindex = "16", @onblur = "Getdepreciationreversed()" })
+                                    Partial @Html.RadioButton("DisposalType", "Partial", new { id = "partial", @tabindex = "17", @onblur = "Getdepreciationreversed()" })
+                                </div>
+
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="praticesname">Asset sold to</label>
+
+                                    @Html.TextBoxFor(m => m.CustomerName, new { @class = "form-control", id = "txtcustomername", @tabindex = "18" })
+
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="praticesname">Remarks</label>
+
+                                    @Html.TextBoxFor(m => m.Remarks, new { @class = "form-control", id = "txtremarks", tabindex = "19" })
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row border border-success rounded bg-light my-2 p-2">
+                            <!-- Col 1 -->
+                            <div class="col-md-7">
+                                <div class="row my-1">
+                                    <div class="col">
+                                        <label for="txtgrossvalue" class="col-form-label">
+                                            Disposal Amount<span style="color:#CC0000;">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="col">
+
+                                        @Html.TextBoxFor(m => m.DisposalAmount, new { @class = "form-control", id = "txtdisposalamount", @onblur = "validdisposalamount();", @tabindex = "20" })
+                                    </div>
+                                </div>
+
+
+                                <div class="row my-1">
+                                    <div class="col">
+                                        <label for="praticesname">Sale Value</label>
+                                    </div>
+                                    <div class="col">
+
+                                        @Html.TextBoxFor(m => m.SaleValue, new { @class = "form-control", id = "txtsalevalue", @tabindex = "21" })
+
+                                    </div>
+                                </div>
+
+                                @*<div class="row my-1">
+                                <div class="col">
+                                    <label for="praticesname">Op.Accumulated Dep.Till</label>
+                                </div>
+                                <div class="col">
+                                    <input type="number" tabindex="20"
+                                           class="form-control" id="txtopAccDepTill" />
+                                </div>
+                            </div>
+
+                            <div class="row my-1">
+                                <div class="col">
+                                    <label for="praticesname">Dep.charged FromDate-ToDate</label>
+                                </div>
+                                <div class="col">
+                                    <input type="number" tabindex="20"
+                                           class="form-control" id="txtdepChargedfrom" />
+                                </div>
+                            </div>
+
+                            <div class="row my-1">
+                                <div class="col">
+                                    <label for="praticesname">Op.Accumulated Depreciation</label>
+                                </div>
+                                <div class="col">
+                                    <input type="number" tabindex="20"
+                                           class="form-control" id="txtOpAccDepreciation" />
+                                </div>
+                            </div>
+
+                            <div class="row my-1">
+                                <div class="col">
+                                    <label for="praticesname">Depreciation For</label>
+                                </div>
+                                <div class="col">
+                                    <input type="number" tabindex="20"
+                                           class="form-control" id="txtDepFor" />
+                                </div>
+                            </div>
+
+                            <div class="row my-1">
+                                <div class="col">
+                                    <label for="praticesname">Total Depreciation</label>
+                                </div>
+                                <div class="col">
+                                    <input type="number" tabindex="20"
+                                           class="form-control" id="txttotaldep" />
+                                </div>
+                            </div>
+
+                            <div class="row my-1">
+                                <div class="col">
+                                    <label for="praticesname">Wdv of Assets Disposed Off</label>
+                                </div>
+                                <div class="col">
+                                    <input type="number" tabindex="20"
+                                           class="form-control" id="txtwdvofasset" />
+                                </div>
+                            </div>
+
+                            <div class="row my-1">
+                                <div class="col">
+                                    <label for="praticesname">Profit/Loss</label>
+                                </div>
+                                <div class="col">
+                                    <input type="number" tabindex="20"
+                                           class="form-control" id="txtprofitloss" />
+                                </div>
+                            </div>
+
+                        </div>*@
+
+
+                            </div>
+                            @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="praticesname">Disposal Amount</label>
+                                <input type="number" tabindex="14" class="form-control" id="txtdisposalamount" />
+                            </div>
+                        </div>
+                    </div>*@
+                            @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="praticesname">Gross Value</label>
+                                <input type="number" tabindex="15" class="form-control" id="txtgrossvalue" />
+                            </div>
+                        </div>
+                    </div>*@
+                            @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="praticesname">Op.Accumulated Dep.Till </label>
+                                <input type="number" tabindex="16" class="form-control" id="txtopAccDepTill" />
+                            </div>
+                        </div>
+                    </div>*@
+
+                            @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="praticesname">Depreciation charged FromDate-ToDate </label>
+                                <input type="number" tabindex="17" class="form-control" id="txtdepChargedfrom" />
+                            </div>
+                        </div>
+                    </div>*@
+
+                            @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="praticesname">Op.Accumulated Depreciation</label>
+                                <input type="number" tabindex="18" class="form-control" id="txtOpAccDepreciation" />
+                            </div>
+                        </div>
+                    </div>*@
+
+                            @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="praticesname">Depreciation For</label>
+                                <input type="number" tabindex="19" class="form-control" id="txtDepFor" />
+                            </div>
+                        </div>
+                    </div>*@
+
+                            @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="praticesname">Total Depreciation</label>
+                                <input type="number" tabindex="20" class="form-control" id="txttotaldep" />
+                            </div>
+                        </div>
+                    </div>*@
+
+
+                            @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="praticesname">Wdv of Assets Disposed Off</label>
+                                <input type="number" tabindex="21" class="form-control" id="txtwdvofasset" />
+                            </div>
+                        </div>
+                    </div>*@
+
+                            @*<div class="row" style="margin-top: 15px; margin-bottom: 15px;">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="praticesname">Profit/Loss</label>
+                            <input type="number" tabindex="22" class="form-control" id="txtprofitloss" />
+                        </div>
+                    </div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
 
@@ -432,17 +432,17 @@
                             </div>*@
                 <div class="modal-footer">
 
-                    <button type="submit" class="btn saveBtn btn-sm" id="btnsave">Save</button>
+                    <button type="button" class="btn saveBtn btn-sm" id="btnSave">Save</button>
                 </div>
                                     
 
                                 </div>
 
                             </div>
-                        </div>
-                    </div>
-                @*</div>
-            </div>
+                        @*</div>*@
+                    @*</div>
+                </div>*@
+            @*</div>
         </div>*@
         }
 
@@ -475,15 +475,23 @@
 
 
                         <div class="modal-footer">
-                            <button type="button" class="btn delBtn" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-sm clBtn" id="btnClose" data-bs-dismiss="modal">Close</button>                        
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    @*</div>*@
    
-    <script type="text/javascript">
+<script type="text/javascript">
+        $('#btnSave').click(function (event) {
+
+            SaveData();
+            e.preventDefault();
+            return false;
+        });
+
+
         var isimportedflag;
 
         $(document).ready(function ($) {
@@ -491,6 +499,63 @@
 
             init();
           //  $("#txtaddno").val('@ViewBag.additionno');
+              $("#txtassetno").val('@ViewBag.assetno');
+            //check depreciation flag and lock
+             var lock = '@ViewBag.Lock';
+            $("#AssetId").val('@ViewBag.assetno');
+              // alert("result"+lock)
+                if (lock == "Depalreadycalculated")
+                {
+                    swal("Alert", "Depreciation is calculated you cannot edit this record", "warning");
+                    $("#btnsave").prop('disabled', true);
+                }
+                if (lock == "Periodlock")
+                {
+                    swal("Alert", "Period is locked ,you cannot edit this record", "warning");
+                    $("#btnsave").prop('disabled', true);
+                }
+                if (lock == "Nolock")
+                {
+
+                }
+
+
+                GetdisplayFields();
+            ///for enable disable assetno or search by
+            $("#txtassetno").prop("disabled", true);
+
+            $('#checkflag').change(function () {
+                if ($(this).prop("checked")) {
+                    $("#txtassetno").prop("disabled", false);
+                }
+                else {
+                    $("#txtassetno").prop("disabled", true);
+                }
+            });
+            //on assetno enter set assetname
+            $('#txtassetno').keypress(function () {
+
+                var assetno = $('#txtassetno').val();
+                $('#AssetId').val(assetno);
+                GetdisplayFields();
+                Getdepreciationreversed();
+                // getassetname(assetno);
+            });
+            $('#AssetId').change(function () {
+
+                var index = $("#AssetId option:selected").val();
+
+                $('#txtassetno').val(index);
+                emptyfields();
+                // getassetname(assetno);
+            });
+            $("#frmNewEmp").submit(function (e) {
+
+                SaveData();
+                e.preventDefault();
+                return false;
+
+            });
 
             $('#dtVDate').datetimepicker({
                 format: 'DD/MM/YYYY',
@@ -518,76 +583,7 @@
                    previous: 'fa fa-angle-left'
                },
            });
-             $("#txtassetno").val('@ViewBag.assetno');
-            //check depreciation flag and lock
-             var lock = '@ViewBag.Lock';
-            $("#AssetId").val('@ViewBag.assetno');
-              // alert("result"+lock)
-                if (lock == "Depalreadycalculated")
-                {
-                    swal("Alert", "Depreciation is calculated you cannot edit this record", "warning");
-                    $("#btnsave").prop('disabled', true);
-                }
-                if (lock == "Periodlock")
-                {
-                    swal("Alert", "Period is locked ,you cannot edit this record", "warning");
-                    $("#btnsave").prop('disabled', true);
-                }
-                if (lock == "Nolock")
-                {
-
-                }
-
-
-                GetdisplayFields();
-
-
-
-
-
-            ///for enable disable assetno or search by
-            $("#txtassetno").prop("disabled", true);
-
-            $('#checkflag').change(function () {
-                if ($(this).prop("checked")) {
-                    $("#txtassetno").prop("disabled", false);
-                }
-                else {
-                    $("#txtassetno").prop("disabled", true);
-                }
-            });
-
-
-
-            //on assetno enter set assetname
-            $('#txtassetno').keypress(function () {
-
-                var assetno = $('#txtassetno').val();
-                $('#AssetId').val(assetno);
-                GetdisplayFields();
-                Getdepreciationreversed();
-               // getassetname(assetno);
-            });
-
-            $('#AssetId').change(function () {
-
-                var index = $("#AssetId option:selected").val();
-
-                $('#txtassetno').val(index);
-                emptyfields();
-               // getassetname(assetno);
-            });
-
-
-            $("#frmNewEmp").submit(function (e) {
-
-                SaveData();
-               e.preventDefault();
-                return false;
-
-            });
-
-
+           
 
     });
 
@@ -662,7 +658,7 @@
                 $.ajax({
                     url: url,
                     type: "GET",
-
+                    headers: headers,
                     contentType: "application/json",
                     data: data,
                     success: function (res) {
@@ -768,6 +764,7 @@
                     url: ControllerURL,
                     type: "GET",
                     data: data,
+                    headers: headers,
                     contentType: "application/json",
                     success: function (res) {
                       //  alert(res.Data)
@@ -841,7 +838,8 @@
                 $.ajax({
                     url: url,
                     type: "GET",
-                    data:data,
+                    data: data,
+                    headers: headers,
                     contentType: "application/json",
                     success: function (res1) {
 
@@ -925,6 +923,7 @@
                 $.ajax({
                     url: url,
                     type: "GET",
+                    headers: headers,
                     data: JSON.stringify(data),
                     contentType: "application/json",
                     success: function (res1) {
@@ -1105,6 +1104,7 @@
                         $.ajax({
                                 type: 'GET',
                                 url: url,
+                                headers: headers,
                                 contentType: "application/json",
                                 // data: JSON.stringify(getdata),
                                 success: function (result) {
@@ -1237,6 +1237,7 @@
                         $.ajax({
                             type: 'POST',
                             url: ControllerURL,
+                            headers: headers,
                             contentType: "application/json",
                             data: JSON.stringify(postdata),
                             success: function (res) {
@@ -1261,5 +1262,5 @@
             }
         }
 
-    </script>
+</script>
 
