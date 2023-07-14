@@ -239,7 +239,7 @@
        
 
         $('#btnSave').click(function () {
-            console.log('clicked')
+            //alert('clicked');
             save()
             clearEmp();
             clearAsset();
@@ -518,11 +518,11 @@
                     return
                 }
 
-                _IssueDate = moment($("#IssueDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+                _IssueDate = moment($("#IssueDate").val()).format('YYYY-MM-DD');
                 console.log(_IssueDate);
 
                 //checkassetasigned(_selectedAssetID);
-
+                debugger;
                 var postdata =
                 {
                     "RecievedDate": '',
@@ -547,6 +547,7 @@
                     headers: headers,
                     data: JSON.stringify(postdata),
                     success: function (res) {
+                        debugger;
                         if (res == "Failed") {
                             swal("Alert", "You Cannot Add this Record. Pls check if asset already issued.", "warning");
                         }
