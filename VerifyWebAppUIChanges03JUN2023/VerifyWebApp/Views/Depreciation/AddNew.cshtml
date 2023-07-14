@@ -155,7 +155,7 @@
 
                     <div class="modal-footer">
 
-                        <button type="submit" class="btn saveBtn btn-sm" id="btnSave">Save</button>
+                        <button type="button" class="btn saveBtn btn-sm" id="btnSave">Save</button>
                     </div>
                 </div>
                 </div>
@@ -172,23 +172,23 @@
     let _selectedAssetID = '';
     let _selectedAssetNO = '';
 
-    $('#dtFromDate').datetimepicker({
-        format: 'DD/MM/YYYY',
-        icons:
-        {
-            next: 'fa fa-angle-right',
-            previous: 'fa fa-angle-left'
-        },
+    //$('#dtFromDate').datetimepicker({
+    //    format: 'DD/MM/YYYY',
+    //    icons:
+    //    {
+    //        next: 'fa fa-angle-right',
+    //        previous: 'fa fa-angle-left'
+    //    },
 
-    });
-    $('#dtToDate').datetimepicker({
-        format: 'DD/MM/YYYY',
-        icons:
-        {
-            next: 'fa fa-angle-right',
-            previous: 'fa fa-angle-left'
-        },
-    });
+    //});
+    //$('#dtToDate').datetimepicker({
+    //    format: 'DD/MM/YYYY',
+    //    icons:
+    //    {
+    //        next: 'fa fa-angle-right',
+    //        previous: 'fa fa-angle-left'
+    //    },
+    //});
     $(document).ready(function () {
 
           let baseURL = "@ViewBag.baseUrl";
@@ -309,7 +309,7 @@
             });
 
 
-        $("#frmNewEmp").submit(function (e) {
+        $("#btnSave").click(function (e) {
 
             SaveData();
             e.preventDefault();
@@ -412,8 +412,8 @@
         NormalRate = $('#NormalRate').val();
         AdditionalRate = 0;  ///$('#AdditionalRate').val();
         TotalRate = NormalRate;//$('#TotalRate').val();
-        FromDate = moment($("#txtFromDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-        ToDate = moment($("#txtToDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+        FromDate = moment($("#txtFromDate").val()).format('YYYY-MM-DD');
+        ToDate = moment($("#txtToDate").val()).format('YYYY-MM-DD');
         DepreciationDays = $('#DepreciationDays').val();
         Amount = $('#Amount').val();
 
