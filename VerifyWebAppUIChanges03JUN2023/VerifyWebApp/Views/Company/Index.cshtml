@@ -111,7 +111,10 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-        $('#tblcompany').DataTable();
+        /* $('#tblcompany').DataTable();*/
+        $('#tblcompany').DataTable({
+            pagingType: 'numbers'
+        });
     });
 
 

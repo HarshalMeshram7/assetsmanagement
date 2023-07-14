@@ -154,12 +154,16 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-
+        $('#tbllogin').DataTable({
+            pagingType: 'numbers'
+        });
         $('#tblaccessrights').DataTable({
-            "destroy": true,
-            "paging": true,
-            "searching": false,
-            "proccessing": true
+            //"destroy": true,
+            //"paging": true,
+            pagingType: 'numbers'
+            //"searching": false,
+            //"proccessing": true
+
         });
 
         if (typeof jQuery !== 'undefined') {

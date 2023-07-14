@@ -144,7 +144,10 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-        $('#tbllogin').DataTable();
+        /*  $('#tbllogin').DataTable();*/
+        $('#tbllogin').DataTable({
+            pagingType: 'numbers'
+        });
     });
 
 
