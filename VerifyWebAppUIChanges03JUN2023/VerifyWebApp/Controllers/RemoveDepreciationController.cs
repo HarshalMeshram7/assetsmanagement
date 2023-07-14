@@ -58,7 +58,6 @@ namespace VerifyWebApp.Controllers
             {
                 ViewBag.Fromdate = Convert.ToDateTime(splist.FromDate).ToString("dd/MM/yyyy");
                 ViewBag.Todate = Convert.ToDateTime(splist.ToDate).ToString("dd/MM/yyyy");
-
                 
 
                 ViewBag.SubperiodId = splist.ID;
@@ -140,10 +139,8 @@ namespace VerifyWebApp.Controllers
                     //    res.Data = "Norecordsfound";
                     //}
 
-
                     string startdate = Convert.ToDateTime(fromdate).ToString("yyyy-MM-dd");
                     string enddate = Convert.ToDateTime(todate).ToString("yyyy-MM-dd");
-
 
                     string strSQL = "";
                     /*
@@ -173,10 +170,9 @@ namespace VerifyWebApp.Controllers
                             modifiedsubperiod.DepFlag = "N";
                             db.Entry(modifiedsubperiod).State = System.Data.Entity.EntityState.Modified;
                             db.SaveChanges();
-                        }
-                        res.Data = "Success";
-
+                        }        
                     }
+                    res.Data = "Success";
 
                     //var result = db.Database.SqlQuery<RemoveDepreciationStatus_Viewmodel>(strSQL).FirstOrDefault();
                     //if (result != null)
@@ -195,10 +191,6 @@ namespace VerifyWebApp.Controllers
                     //    }
                     //}
                 }
-
-
-
-
                 return res;
             }
             catch(Exception ex)
@@ -208,12 +200,7 @@ namespace VerifyWebApp.Controllers
                 // logger.Log(LogLevel.Error, strError);
                 res.Data = "Failed";
                 return res;
-            }
-
-
-
-
-            
+            }            
         }
 
         // GET: RemoveDepreciation/Details/5
