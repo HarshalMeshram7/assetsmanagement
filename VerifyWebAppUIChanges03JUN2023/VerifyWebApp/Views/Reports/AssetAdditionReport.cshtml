@@ -6,8 +6,8 @@
 @{
     ViewBag.Title = "FARReport";
 
-}   
- <div class="container-fluid py-4">
+}
+<div class="container-fluid py-4">
     <div class="row my-1">
         <div class="col-12">
             <div class="card">
@@ -21,69 +21,70 @@
                 </div>
                 <div class="card-body">
 
-                
-                     @using (@Html.BeginForm(null, null, FormMethod.Get, new { id = "frmNewEmp", name = "frmNewEmp" })) { @Html.AntiForgeryToken()   <div class="modal-body">
+
+                    @using (@Html.BeginForm(null, null, FormMethod.Get, new { id = "frmNewEmp", name = "frmNewEmp" }))
+                    {@Html.AntiForgeryToken() <div class="modal-body">
 
 
-                                <div class="row">
-                                    <div class="form-group col-md-2">
-                                        <label for="praticesname" class="form-control-sm">From Date<span style="color:#CC0000;">*</span></label>
-                                        @Html.DropDownList("Fromdate", (SelectList)ViewBag.Fromdate, "Select Fromdate", new { @class = "form-control form-control-sm", id = "Fromdate", @required = true })
-                                        <div style="color:#CC0000;font-weight:400" id="locaerror"></div>
-                                    </div>
-                                </div>
-
-                                <div class="row ">
-                                    <div class="form-group col-md-2">
-
-
-                                        <label for="praticesname" class="form-control-sm">To Date <span style="color:#CC0000;">*</span></label>
-                                        @Html.DropDownList("Todate", (SelectList)ViewBag.Todate, "Select Todate", new { @class = "form-control form-control-sm", id = "Todate", @required = true })
-                                        <div style="color:#CC0000;font-weight:400" id="locaerror"></div>
-
-
-                                    </div>
-                                </div>
-                                <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
+                        <div class="row">
+                            <div class="form-group col-md-2">
+                                <label for="praticesname" class="form-control-sm">From Date<span style="color:#CC0000;">*</span></label>
+                                @Html.DropDownList("Fromdate", (SelectList)ViewBag.Fromdate, "Select Fromdate", new { @class = "form-control form-control-sm", id = "Fromdate", @required = true })
+                                <div style="color:#CC0000;font-weight:400" id="locaerror"></div>
                             </div>
-                        
-                              <div class="modal-footer">
-                                <button type="submit" class="btn saveBtn btn-sm" id="btngetreport">Show Report</button>
-                              </div>
-                        }
+                        </div>
+
+                        <div class="row ">
+                            <div class="form-group col-md-2">
+
+
+                                <label for="praticesname" class="form-control-sm">To Date <span style="color:#CC0000;">*</span></label>
+                                @Html.DropDownList("Todate", (SelectList)ViewBag.Todate, "Select Todate", new { @class = "form-control form-control-sm", id = "Todate", @required = true })
+                                <div style="color:#CC0000;font-weight:400" id="locaerror"></div>
+
+
+                            </div>
+                        </div>
+                        <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn saveBtn btn-sm" id="btngetreport">Show Report</button>
+                    </div>
+                }
                 </div><!-- /.modal-content -->
             </div>
         </div>
-     </div>
-</div>    
-            <div id="progressbar" class="modal fade" role="dialog" style="height: auto;" data-backdrop="static" data-keyboard="false">
-                <div class="modal-dialog modal-lx">
+    </div>
+</div>
+<div id="progressbar" class="modal fade" role="dialog" style="height: auto;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lx">
 
-                    <!-- Modal content-->
-                    <div class="modal-content" style="height:auto;width:auto;overflow:auto">
-                        <div class="modal-header">
-                            <label style="color:red;text-align: center;">Please wait........</label>
+        <!-- Modal content-->
+        <div class="modal-content" style="height:auto;width:auto;overflow:auto">
+            <div class="modal-header">
+                <label style="color:red;text-align: center;">Please wait........</label>
 
-                        </div>
-                        <div class="modal-body ">
+            </div>
+            <div class="modal-body ">
 
-                            <div class="row col-6" style="overflow:auto;align-content:center">
-                                <label style="color:darkred;text-align: center;"> Report is in progress........</label>
+                <div class="row col-6" style="overflow:auto;align-content:center">
+                    <label style="color:darkred;text-align: center;"> Report is in progress........</label>
 
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
-            <script type="text/javascript">
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
 
 
     $(document).ready(function ($) {
-        $('#progressbar').modal('hide');
+        //$('#progressbar').modal('hide');
         //voucherdate set to all other date
 
 
-        $("#frmNewEmp").submit(function (e) {
+        $("#btngetreport").click(function (e) {
             var fromdate = $("#Fromdate").val();
             var todate = $("#Todate").val();
             getreport(fromdate, todate);
@@ -93,12 +94,12 @@
         });
 
     });
-    if (typeof jQuery !== 'undefined') {
-        console.log('jQuery Loaded');
-    }
-    else {
-        console.log('not loaded yet');
-    }
+    //if (typeof jQuery !== 'undefined') {
+    //    console.log('jQuery Loaded');
+    //}
+    //else {
+    //    console.log('not loaded yet');
+    //}
 
     function getreport(fromdate, todate) {
 
@@ -115,7 +116,7 @@
           var token = $('input[name="__RequestVerificationToken"]', form).val();
           var headers = {};
           headers['__RequestVerificationToken'] = token;
-            $('#progressbar').modal('show');
+            /*$('#progressbar').modal('show');*/
          var ControllerURL = '@Url.Action("GetAssetAdditionReport", "Reports")';
         var DownloadURL = '@Url.Action("Download", "Reports")';
 
@@ -130,11 +131,11 @@
                 success: function (data) {
                     var fileurl = DownloadURL + '?fileGuid=' + data.FileGuid
                         + '&filename=' + data.FileName;
-                    $('#progressbar').modal('hide');
+                    /*$('#progressbar').modal('hide');*/
                     //alert(fileurl);
 
                     window.location = fileurl;
-                    $('#progressbar').modal('hide');
+                    /*$('#progressbar').modal('hide');*/
                 },
                 failure: function () {
                     alert("Error");
@@ -144,6 +145,5 @@
 
 
     }
-
-            </script>
+</script>
 
