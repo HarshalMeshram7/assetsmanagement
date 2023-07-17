@@ -4,274 +4,323 @@
     ViewBag.Title = "Add";
 }
 
-@using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
-{
-    @Html.AntiForgeryToken()
-    <style>
-        input.largerCheckbox {
-            width: 20px;
-            height: 20px;
-        }
-    </style>
-    <div class="container-fluid rounded page border shadow">
-        <div class="row border-bottom">
-            <div class="col-lg-12">
-                <div class="row justify-content-md-center title">
-                    <strong> <h4>Add New Batch</h4></strong>
-                </div>
-            </div>
-        </div>
+<div class="container-fluid">
+    <div class="row my-0">
+        <div class="card">
+            @*<div class="modal-content ">*@
 
-        <div class="pageconent">
+            <!--<div class="modal-header">-->
+            @*<strong> <h4>Add New Batch</h4></strong>*@
+            @*<div class="htitle"> <b>Add New Batch</b> </div>
 
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="form-group">
-                        @*<label for="praticesname">From Date<span>*From Date</span></label>*@
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
 
-                        <div class='input-group date' id='dtStartDate'>
-                            <label for="praticesname">From Date</label>
-                        </div>
-                        <div class='input-group date' id='dtStartDate'>
-                            <input type="date" id="txtStartDate" class="form-control" required />
-                            @*<div class="input-group-addon">
-                <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+            <!--</div>-->
 
-            </div>*@
-
-                        </div>
-
-
-
-                    </div>
-                    <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
-                </div>
-
-                <div class="col-lg-3">
-                    <div class="form-group">
-                        @*<label for="praticesname">To Date<span>*</span></label>*@
-
-                        <div class='input-group date' id='dtStartDate'>
-                            <label for="praticesname">To Date</label>
-                        </div>
-                        <div class='input-group date' id='dtStartDate'>
-                            <input type="date" id="txtStartDate" class="form-control" required />
-
-                            @*<div class="input-group-addon">
-                <span class="input-group-text"><span class="fa fa-calendar"></span></span>
-
-            </div>*@
-
-                        </div>
-                        <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
-
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="praticesname" style="position:relative;color:white;z-index:1000000;">Batch Description</label>
-                        <div class='input-group date'>
-                            <input id="BatchDescription" class="form-control" />
-                            @*@Html.TextBoxFor(m => m.BatchDescription, new { @class = "form-control", required = "required", id = "BatchDescription" })*@
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-9">
-                    <div class="row my-5">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input id="IsBatchOpen" type="checkbox" class="largerCheckbox" />
-                                <label class="form-check-label" for="IsBatchOpen">Batch Open</label>
-                            </div>
-                        </div>
+            <div class="card-header pb-0">
+                <div class="row">
+                    <div class="d-sm-flex justify-content-between hborder">
+                        <div class="htitle"> <b>Add New Batch</b> </div>
+                        <button type="button" class="close" id="btnClose" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        @*<button type="button" class="btn btn-sm clBtn" id="btnClose" data-bs-dismiss="modal">Close</button>*@
                     </div>
 
-                </div>
-            </div>
+                    @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <style>
+                            input.largerCheckbox {
+                                width: 20px;
+                                height: 20px;
+                            }
+                        </style>
 
-
-            <div class="row">
-                <div class="col-md-12">
-                    Location List for Batch
-                </div>
-            </div>
-            <div class="row my-1">
-                <div class="col-md-12">
-                    <div class="pull-right">
-                        <button type="button" class="btn btn-primary" id="btnAddloc"
-                                data-toggle="modal">
-                            Add Location
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-
-            @*<div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>*@
-            @*<div class="row">
-
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button type="button" class="btn btn-primary" id="btnAddloc" data-toggle="modal">Add Location</button>
-                </div>*@
-
-
-            <div class="row">
-
-
-
+                        @*<div class="container-fluid rounded page border shadow">*@
+                        @*<div class="row border-bottom">
                 <div class="col-lg-12">
-                    <div class="table-responsive">
-                        <table width="100%" class="table table-striped table-bordered table-hover" id="tbllocation">
-                            <thead>
-                                <tr>
-
-                                    <td>
-                                        Srno
-                                    </td>
-                                    <td hidden>
-                                        locaid
-                                    </td>
-                                    <td hidden>
-                                        locbid
-                                    </td>
-                                    <td hidden>
-                                        loccid
-                                    </td>
-
-                                    <td>
-                                        Location
-                                    </td>
-                                    <td>
-                                        Sub Location
-                                    </td>
-                                    <td>
-                                        Sub SubLocation
-                                    </td>
-                                    <td align="center">
-                                        Edit
-                                    </td>
-                                    <td align="center">
-                                        Delete
-                                    </td>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
+                    <div class="row justify-content-md-center title">
+                        <strong> <h4>Add New Batch</h4></strong>
 
                     </div>
+
                 </div>
-            </div>
-        </div>
+            </div>*@
 
-        <div class="modal-footer">
-            @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
-            <button type="button" class="btn btn-sm clBtn" data-bs-dismiss="modal" onclick="close()">Close</button>
-            @*<button type="button" class="btn btn-primary" id="btnSave" onabort="click">Save</button>*@
-            <button type="button" class="btn btn-primary" onclick="save()">Save</button>
-        </div>
-        
-        <!-- /.modal-content -->
-        @*</div>*@
-        <div id="locationmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
+                        @*<div class="pageconent">*@
 
-            <div class="modal-dialog modal-lg">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    @*<label for="praticesname">From Date<span>*From Date</span></label>*@
 
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
+                                    <div class='input-group date' id='dtStartDate'>
+                                        <label for="praticesname">From Date</label>
+                                    </div>
+                                    <div class='input-group date' id='dtStartDate'>
+                                        <input type="date" id="txtStartDate" class="form-control" required />
+                                        @*<div class="input-group-addon">
+                                <span class="input-group-text"><span class="fa fa-calendar"></span></span>
 
-                        <h4 class="modal-title">Add Location</h4>
+                            </div>*@
+
+                                    </div>
+
+
+
+                                </div>
+                                <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    @*<label for="praticesname">To Date<span>*</span></label>*@
+
+                                    <div class='input-group date' id='dtStartDate'>
+                                        <label for="praticesname">To Date</label>
+                                    </div>
+                                    <div class='input-group date' id='dtStartDate'>
+                                        <input type="date" id="txtStartDate" class="form-control" required />
+
+                                        @*<div class="input-group-addon">
+                                <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+
+                            </div>*@
+
+                                    </div>
+                                    <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row" style="height:50px">
+                            <div class="col-md-3">
+                                @*<div class="form-group">*@
+                                <label for="praticesname" style="position:relative;color:black;z-index:1000000;">Batch Description</label>
+                                <div class='input-group date'>
+                                    <input id="BatchDescription" class="form-control" />
+                                    @*@Html.TextBoxFor(m => m.BatchDescription, new { @class = "form-control", required = "required", id = "BatchDescription" })*@
+                                    @*</div>*@
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="row my-5">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                        @*<input id="IsBatchOpen" type="checkbox" class="largerCheckbox" />*@
+                                            <input type="checkbox" />
+                                        <label class="form-check-label" for="IsBatchOpen">Batch Open</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                Location List for Batch
+                            </div>
+                        </div>
+                        <div class="row my-1">
+                            <div class="col-md-12">
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-primary" id="btnAddloc"
+                                            data-toggle="modal">
+                                        Add Location
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        @*<div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>*@
+                        @*<div class="row">
+
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="button" class="btn btn-primary" id="btnAddloc" data-toggle="modal">Add Location</button>
+            </div>*@
+
+
+                <div class="row">
+
+
+
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table width="100%" class="table table-striped table-bordered table-hover" id="tbllocation">
+                                <thead>
+                                    <tr>
+
+                                        <td>
+                                            Srno
+                                        </td>
+                                        <td hidden>
+                                            locaid
+                                        </td>
+                                        <td hidden>
+                                            locbid
+                                        </td>
+                                        <td hidden>
+                                            loccid
+                                        </td>
+
+                                        <td>
+                                            Location
+                                        </td>
+                                        <td>
+                                            Sub Location
+                                        </td>
+                                        <td>
+                                            Sub SubLocation
+                                        </td>
+                                        <td align="center">
+                                            Edit
+                                        </td>
+                                        <td align="center">
+                                            Delete
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+
+                        </div>
                     </div>
-                    <div class="modal-body ">
-
-                        <div class="row">
-                            <div class="form-group col-lg-6">
-                                <label for="praticesname">Location A<span style="color:#CC0000;">*</span></label>
-                                @Html.DropDownList("txtlocA", (SelectList)ViewBag.alocationlist, "Select Location", new { @class = "form-control", id = "txtlocA", @required = true })
-                                <div style="color:#CC0000;font-weight:400" id="locaerror"></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-lg-6">
-                                <label for="praticesname">Location B</label>
-
-                                <select id="txtlocB" name="txtlocB" class="form-control"></select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-lg-6">
-                                <label for="praticesname">Location C</label>
-                                <select id="txtlocC" name="txtlocC" class="form-control"></select>
-                            </div>
-                        </div>
-                    </div>
-                    <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
-
 
                     <div class="modal-footer">
-                        @*<button type="button" class="btn btn-default " data-dismiss="modal" onclick="closeeditloc();">Close</button>*@
-                        <button type="button" class="btn btn-sm clBtn" id="btnClose" data-bs-dismiss="modal">Close</button>
-
-                        <button type="button" class="btn btn-primary" id="btnSave" onclick="saveloc();">Save</button>
+                       
+                        <button type="button" class="btn btn-default" id="ocationmodal" data-dismiss="modal" onclick="closeloc()">Close</button>
+                        <button type="button" class="btn btn-primary" id="btnSave" onclick="save()">Save</button>
+                        @*<button type="button" class="btn btn-default" onclick="close()">Close</button>*@
                     </div>
+
+
+
                 </div>
-            </div>
-        </div>
+                        @*</div>*@
+
+                        <!--<div class="modal-footer">-->
+                        @*<button type="button" class="btn btn-sm clBtn" id="btnClose" data-bs-dismiss="modal">Close</button>*@
+                        @*<button type="button" class="btn btn-sm clBtn" id="btnClose" data-bs-dismiss="modal" onclick="closeloc();">Close</button>*@
+                        @*<button type="button" class="btn btn-primary" id="btnSave" onabort="click">Save</button>*@
+                        <!--<button type="button" class="btn btn-sm clBtn" id="locationmodal" data-bs-dismiss="modal" onclick="closeloc();">Close</button>
+            <button type="button" class="btn btn-primary" id="btnSave" onclick="save()">Save</button>
+        </div>-->
+
+                        <!-- /.modal-content -->
+                        @*</div>*@
+                        <div id="locationmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
+
+                            <div class="modal-dialog modal-lg">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+
+                                        <h4 class="modal-title">Add Location</h4>
+                                    </div>
+                                    <div class="modal-body ">
+
+                                        <div class="row">
+                                            <div class="form-group col-lg-6">
+                                                <label for="praticesname">Location A<span style="color:#CC0000;">*</span></label>
+                                                @Html.DropDownList("txtlocA", (SelectList)ViewBag.alocationlist, "Select Location", new { @class = "form-control", id = "txtlocA", @required = true })
+                                                <div style="color:#CC0000;font-weight:400" id="locaerror"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-lg-6">
+                                                <label for="praticesname">Location B</label>
+
+                                                <select id="txtlocB" name="txtlocB" class="form-control"></select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-lg-6">
+                                                <label for="praticesname">Location C</label>
+                                                <select id="txtlocC" name="txtlocC" class="form-control"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
 
 
-        <div id="editlocationmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
-
-            <div class="modal-dialog modal-lg">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-
-                        <h4 class="modal-title">Edit Location</h4>
-                    </div>
-                    <div class="modal-body ">
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" id="btnClose" data-bs-dismiss="modal" onclick="closeeditloc();">Close</button>
+                                        @*<button type="button" class="btn btn-sm clBtn" id="btnClose" data-bs-dismiss="modal">Close</button>*@
 
 
-                        <div class="row">
-                            <div class="form-group col-lg-6">
-                                <label for="praticesname">Location A<span style="color:#CC0000;">*</span></label>
-                                @Html.DropDownList("txteditlocA", (SelectList)ViewBag.alocationlist, "Select Location", new { @class = "form-control", id = "txteditlocA", @required = true })
-                                <div style="color:#CC0000;font-weight:400" id="editlocaerror"></div>
+                                        <button type="button" class="btn btn-primary" id="btnSave" onclick="saveloc();">Save</button>
+
+                                    </div>
+
+                                </div>
                             </div>
-
                         </div>
-                        <div class="row">
-                            <div class="form-group col-lg-6">
-                                <label for="praticesname">Location B</label>
 
-                                <select id="txteditlocB" name="txteditlocB" class="form-control"></select>
+                        <div id="editlocationmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
+
+                            <div class="modal-dialog modal-lg">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+
+                                        <h4 class="modal-title">Edit Location</h4>
+                                    </div>
+                                    <div class="modal-body ">
+
+
+                                        <div class="row">
+                                            <div class="form-group col-lg-6">
+                                                <label for="praticesname">Location A<span style="color:#CC0000;">*</span></label>
+                                                @Html.DropDownList("txteditlocA", (SelectList)ViewBag.alocationlist, "Select Location", new { @class = "form-control", id = "txteditlocA", @required = true })
+                                                <div style="color:#CC0000;font-weight:400" id="editlocaerror"></div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-lg-6">
+                                                <label for="praticesname">Location B</label>
+
+                                                <select id="txteditlocB" name="txteditlocB" class="form-control"></select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-lg-6">
+                                                <label for="praticesname">Location C</label>
+                                                <select id="txteditlocC" name="txteditlocC" class="form-control"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
+
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-sm clBtn" data-bs-dismiss="modal" onclick="closeeditloc();">Close</button>
+                                        <button type="button" class="btn btn-primary" id="btnSave" onclick="saveeditloc();">Save</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="form-group col-lg-6">
-                                <label for="praticesname">Location C</label>
-                                <select id="txteditlocC" name="txteditlocC" class="form-control"></select>
-                            </div>
-                        </div>
-                    </div>
-                    <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
 
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-sm clBtn" data-bs-dismiss="modal" onclick="closeeditloc();">Close</button>
-                        <button type="button" class="btn btn-primary" id="btnSave" onclick="saveeditloc();">Save</button>
-                    </div>
+                    }
+                    @*</div>*@
+
                 </div>
             </div>
         </div>
     </div>
-}
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script type="text/javascript">
+  </div>
+
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript">
+
    $('#btnSave').click(function (event) {
     SaveData();
     e.preventDefault();
@@ -314,16 +363,16 @@ $(document).ready(function ($) {
     //    return false;
 });
 
-//$('#IsBatchOpen').change(function () {
-//    if ($(this).prop("checked")) {
-//        isbatchopenflag = "yes";
+$('#IsBatchOpen').change(function () {
+    if ($(this).prop("checked")) {
+        isbatchopenflag = "yes";
 
-//    }
-//    else {
+    }
+    else {
 
-//        isbatchopenflag = "no";
-//    }
-//});
+        isbatchopenflag = "no";
+    }
+});
 
 //--------------------loc---------------------------------------------------------------
 
@@ -389,12 +438,6 @@ var StartDateStatus = false;
 
 $("#startdateerror,#enddateerror").hide();
 //});
-
-
-
-
-
-
 
 
 //----------------------------------------------------------------------
@@ -920,6 +963,5 @@ function SaveData() {
 
 
 
-
-</script>
+ </script>
 
