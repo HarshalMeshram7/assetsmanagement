@@ -44,7 +44,7 @@
                         <div class="modal-footer">
 
 
-                                <button type="submit" class="btn btn-sm saveBtn" id="btngetreport">Show Report</button>
+                                <button type="button" class="btn btn-sm saveBtn" id="btngetreport">Show Report</button>
                             </div>
                         
                     }
@@ -76,25 +76,25 @@
 
 
     $(document).ready(function ($) {
-        $('#progressbar').modal('hide');
+        //$('#progressbar').modal('hide');
         //voucherdate set to all other date
 
-        $("#frmNewEmp").submit(function (e) {
+        $("#btngetreport").click(function (e) {
             var fromdate = $("#Fromdate").val();
             var todate = $("#Todate").val();
             getreport(fromdate, todate);
             e.preventDefault();
             return false;
-
         });
 
     });
-    if (typeof jQuery !== 'undefined') {
-        console.log('jQuery Loaded');
-    }
-    else {
-        console.log('not loaded yet');
-    }
+
+    //if (typeof jQuery !== 'undefined') {
+    //    console.log('jQuery Loaded');
+    //}
+    //else {
+    //    console.log('not loaded yet');
+    //}
 
     function getreport(fromdate, todate) {
 
@@ -111,7 +111,7 @@
           var token = $('input[name="__RequestVerificationToken"]', form).val();
           var headers = {};
           headers['__RequestVerificationToken'] = token;
-            $('#progressbar').modal('show');
+            //$('#progressbar').modal('show');
          var ControllerURL = '@Url.Action("GetAssetDispoalReport", "Reports")';
         var DownloadURL = '@Url.Action("Download", "Reports")';
 
@@ -126,11 +126,11 @@
                 success: function (data) {
                     var fileurl = DownloadURL + '?fileGuid=' + data.FileGuid
                         + '&filename=' + data.FileName;
-                    $('#progressbar').modal('hide');
+                    //$('#progressbar').modal('hide');
                     //alert(fileurl);
 
                     window.location = fileurl;
-                    $('#progressbar').modal('hide');
+                    //$('#progressbar').modal('hide');
                 },
                 failure: function () {
                     alert("Error");
