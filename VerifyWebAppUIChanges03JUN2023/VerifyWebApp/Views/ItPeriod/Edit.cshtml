@@ -26,26 +26,47 @@
             <div class="form-group">
                 <label for="praticesname">Start Date<span>*</span></label>
 
-                <div class='input-group date' id='dtStartDate'>
-                    <input type='text' id="txtStartDate" class="form-control" required />
+                @*<div class='input-group date' id='dtStartDate'>
+            <input type='text' id="txtStartDate" class="form-control" required />
 
-                    <div class="input-group-addon">
-                        <span class="input-group-text"><span class="fa fa-calendar"></span></span>
-                    </div>
-
-                </div>
-                <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
+            <div class="input-group-addon">
+                <span class="input-group-text"><span class="fa fa-calendar"></span></span>
             </div>
+
+        </div>
+        <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>*@
+
+
+           @Html.TextBoxFor(m => m.FromDate, "{0:yyyy-MM-dd}", new
+           {
+               @class = "form-control form-control-sm",
+               @tabindex = "5",
+               required = "required",
+               type = "date",
+               id = "txtStartDate"
+           })
+            </div>
+
             <div class="form-group">
                 <label for="praticesname">End Date<span>*</span></label>
-                <div class='input-group date' id='dtEndDate'>
-                    <input type='text' id="txtEndDate" class="form-control" required />
-                    <div class="input-group-addon">
-                        <span class="input-group-text"><span class="fa fa-calendar"></span></span>
-                    </div>
-                </div>
-                <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
+                @*<div class='input-group date' id='dtEndDate'>
+            <input type='text' id="txtEndDate" class="form-control" required />
+            <div class="input-group-addon">
+                <span class="input-group-text"><span class="fa fa-calendar"></span></span>
             </div>
+        </div>
+        <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>*@
+
+                @Html.TextBoxFor(m => m.ToDate, "{0:yyyy-MM-dd}", new
+           {
+               @class = "form-control form-control-sm",
+               @tabindex = "5",
+               required = "required",
+               type = "date",
+               id = "txtEndDate"
+           })
+            </div>
+
             <div class="form-group">
                 <label>Lock this period so entries cannot be made</label>
                 @Html.CheckBox("isPeriodlockFlag", false)
@@ -70,7 +91,12 @@
     //    return false;
     //});
 
-        //$('#dtStartDate').datetimepicker({
+     
+        var EndDateStatus = false;
+        var StartDateStatus = false;
+
+    $(document).ready(function () {
+        //   $('#dtStartDate').datetimepicker({
         //    format: 'DD/MM/YYYY',
         //    icons:
         //    {
@@ -87,13 +113,9 @@
         //        previous: 'fa fa-angle-left'
         //    },
         //});
-        var EndDateStatus = false;
-        var StartDateStatus = false;
 
-    $(document).ready(function () {  
-
-            $("#txtStartDate").val('@Model.str_fromdate');
-            $("#txtEndDate").val('@Model.str_todate');
+            //$("#txtStartDate").val('@Model.str_fromdate');
+            //$("#txtEndDate").val('@Model.str_todate');
             var checkperiod='@Model.PeriodlockFlag';
             if (checkperiod == 1)
             {
@@ -164,9 +186,9 @@
             if (StartDateStatus == true && EndDateStatus == true) {
 
                 $("#startdateerror,#enddateerror").hide();
-
-                var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-                var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            
+                var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
+                var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
 
                 var postdata =
                     {

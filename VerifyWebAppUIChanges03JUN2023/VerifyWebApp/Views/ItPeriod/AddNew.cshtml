@@ -24,26 +24,46 @@
             @*@Html.ValidationSummary(true)*@
             <div class="form-group">
                 <label for="praticesname">Start Date<span>*</span></label>
-                <div class='input-group date' id='dtStartDate'>
-                    <input id="txtStartDate" tabindex="6" class="form-control form-control-sm" type="text" />
-                    <div class="input-group-addon">
-                        <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                @*<div class='input-group date' id='dtStartDate'>
+                        <input id="txtStartDate" tabindex="6" class="form-control form-control-sm" type="text" />
+                        <div class="input-group-addon">
+                            <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                        </div>
                     </div>
-                </div>
-                <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
+                    <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>*@
+
+
+                @Html.TextBoxFor(m => m.FromDate, "{0:yyyy-MM-dd}", new
+                {
+                    @class = "form-control form-control-sm",
+                    @tabindex = "5",
+                    required = "required",
+                    type = "date",
+                    id = "txtStartDate"
+                })
 
             </div>
+
             <div class="form-group">
                 <label for="praticesname">End Date<span>*</span></label>
-                <div class='input-group date' id='dtEndDate'>
+                @*<div class='input-group date' id='dtEndDate'>
                     <input id="txtEndDate" tabindex="6" class="form-control form-control-sm" type="text" />
-                    @*<input id="txtEndDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />*@
                     <div class="input-group-addon">
                         <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                     </div>
                 </div>
-                <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
+                <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>*@
+
+           @Html.TextBoxFor(m => m.ToDate, "{0:yyyy-MM-dd}", new
+           {
+               @class = "form-control form-control-sm",
+               @tabindex = "5",
+               required = "required",
+               type = "date",
+               id = "txtEndDate"
+           })
             </div>
+
             <div class="form-group">
                 <label>Lock this period so entries cannot be made</label>
                 @Html.CheckBox("isPeriodlockFlag", false)
@@ -127,8 +147,8 @@
             $("#startdateerror,#enddateerror").hide();
             $("#btnSave").click(function () {
 
-                var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-                var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+                var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
+                var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
 
                 if (new Date(startdate) > new Date(enddate)) {
 
@@ -147,30 +167,30 @@
 
 
     function setdefaultdates() {
+
+        var todate = '@ViewBag.todate';
+        var fromdate = '@ViewBag.fromdate';
        
-            var todate = '@ViewBag.todate';
-            var fromdate = '@ViewBag.fromdate';
-            if (fromdate == "01/04/" && todate=="31/03/")
-            {
-                $("#txtEndDate").prop("readonly", false);
-                $("#txtStartDate").prop("readonly", false);
-                 $("#txtStartDate").val(fromdate);
-                 $("#txtEndDate").val(todate);
-            }
-
-            if (fromdate != "01/04/" && todate != "31/03/")
-            {
-               
-                $("#txtEndDate").prop("readonly", true);
-                $("#txtStartDate").prop("readonly", true);
-
-                 $("#txtStartDate").val(fromdate);
-                  $("#txtEndDate").val(todate);
-            }
+        if ('@ViewBag.b_FirstPeriod'==true)
+        {
+            $("#txtEndDate").prop("readonly", false);
+            $("#txtStartDate").prop("readonly", false);
+                //$("#txtStartDate").val(fromdate);
+                //$("#txtEndDate").val(todate);
         }
+        else
+        {
+
+            $("#txtEndDate").prop("readonly", true);
+            $("#txtStartDate").prop("readonly", true);
+
+                //$("#txtStartDate").val(fromdate);
+                // $("#txtEndDate").val(todate);
+        }
+    }
 
         function SaveData() {
-           
+
             var periodlock;
             if ($('#isPeriodlockFlag').is(':checked')) {
                 periodlock = 1;
@@ -184,7 +204,7 @@
 
             StartDate = $('#txtStartDate').val();
             EndDate = $('#txtEndDate').val();
-           
+
             if (StartDate == '') {
                 StartDateStatus = false;
             }
@@ -202,16 +222,16 @@
             }
 
             if (StartDateStatus == true && EndDateStatus == true) {
-             
+
                 $("#startdateerror,#enddateerror").hide();
                 // alert("test");
-                var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-                var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+                var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
+                var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
 
                 //var _enddate = moment(EndDate, 'DD/MM/YYYY').format('YYYY-MM-DD');
                 //var _startdate = moment(StartDate).format('YYYY-MM-DD');
-               
-                                         
+
+
                 var postdata =
                 {
                     "FromDate": startdate,
@@ -230,7 +250,7 @@
                     var form = $('#frmNewEmp');
                     var token = $('input[name="__RequestVerificationToken"]', form).val();
                     var headers = {};
-                    headers['__RequestVerificationToken'] = token;                  
+                    headers['__RequestVerificationToken'] = token;
 
                     $.ajax({
                         type: 'POST',

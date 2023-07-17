@@ -101,14 +101,11 @@ namespace VerifyWebApp.Controllers
 
 
             ITPeriod itperiod = new ITPeriod();
-            //var lYear = System.DateTime.Now.ToUniversalTime().Year;
-            string str_fromDate = "01/04/"; // + lYear;
-            //var FYear = System.DateTime.Now.ToUniversalTime().Year+1;
-            string str_ToDate = "31/03/"; // + FYear;
-
-            
+            var lYear = System.DateTime.Now.ToUniversalTime().Year;
+            string str_fromDate = "01/04/" + lYear;
+            var FYear = System.DateTime.Now.ToUniversalTime().Year + 1;
+            string str_ToDate = "31/03/" + FYear;
        
-
             //  var period = "";
             itperiod = db.ITPeriods.Where(x => x.Companyid == companyid).OrderByDescending(x => x.ID).FirstOrDefault();//needs to do validation if no period is added all ready
 
@@ -122,17 +119,24 @@ namespace VerifyWebApp.Controllers
                 //str_fromDate = itperiod.FromDate.ToString(str_fromDate);
                 //str_ToDate = itperiod.ToDate.ToString(str_ToDate);
 
-
                 ViewBag.fromdate = str_fromDate;
                 ViewBag.todate = str_ToDate;
 
+                itperiod.FromDate = itperiod.FromDate.AddYears(1);
+                itperiod.ToDate = itperiod.ToDate.AddYears(1);               
+                ViewBag.b_FirstPeriod = false;
             }
             else
             {
+                itperiod = new ITPeriod();
                 ViewBag.fromdate = str_fromDate;
                 ViewBag.todate = str_ToDate;
+
+                itperiod.FromDate = Convert.ToDateTime(str_fromDate);
+                itperiod.ToDate = Convert.ToDateTime(str_ToDate);
+                ViewBag.b_FirstPeriod = true;
             }
-            return PartialView();
+            return PartialView(itperiod);
         }
 
         // GET: Brand/Create
