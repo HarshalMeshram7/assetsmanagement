@@ -30,7 +30,7 @@
                                 <div class="form-group">
                                     <div>
                                         <label>Select Expiry  Category</label>
-                                       
+
 
                                         <div class="form-check mb-1">
                                             <input class="form-check-input" type="radio" name="Usefullifetype" value="0" id="useover">
@@ -46,59 +46,59 @@
                                             <input class="form-check-input" type="radio" name="Usefullifetype" value="6" id="6togo">
                                             <label class="custom-control-label" for="customRadio2">  6  Months to  Assets to  expire</label>
                                         </div>
-                                     
+
                                     </div>
                                 </div>
 
 
                                 <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
                             </div>
-                           
+
                             <div class="modal-footer">
-                                <button type="submit" class="btn saveBtn btn-sm" id="btngetreport">Show Report</button>
+                                <button type="button" class="btn saveBtn btn-sm" id="btngetreport">Show Report</button>
                             </div>
                         }
                     </div><!-- /.modal-content -->
                 </div>
-               </div>
-         </div>
+            </div>
+        </div>
     </div>
 </div>
 
-             
-                  
-                
-            <div id="progressbar" class="modal fade" role="dialog" style="height: auto;" data-backdrop="static" data-keyboard="false">
-                <div class="modal-dialog modal-lx">
 
-                    <!-- Modal content-->
-                    <div class="modal-content" style="height:auto;width:auto;overflow:auto">
-                        <div class="modal-header">
-                            <label style="color:red;text-align: center;">Please wait........</label>
 
-                        </div>
-                        <div class="modal-body ">
 
-                            <div class="row col-6" style="overflow:auto;align-content:center">
-                                <label style="color:darkred;text-align: center;"> Report is in progress........</label>
+<div id="progressbar" class="modal fade" role="dialog" style="height: auto;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lx">
 
-                            </div>
-                        </div>
-                    </div>
+        <!-- Modal content-->
+        <div class="modal-content" style="height:auto;width:auto;overflow:auto">
+            <div class="modal-header">
+                <label style="color:red;text-align: center;">Please wait........</label>
+
+            </div>
+            <div class="modal-body ">
+
+                <div class="row col-6" style="overflow:auto;align-content:center">
+                    <label style="color:darkred;text-align: center;"> Report is in progress........</label>
+
                 </div>
             </div>
+        </div>
+    </div>
+</div>
 
 
-            <script type="text/javascript">
+<script type="text/javascript">
 
 
             $(document).ready(function ($) {
-                $('#progressbar').modal('hide');
+                /*$('#progressbar').modal('hide');*/
                 //voucherdate set to all other date
 
 
 
-                $("#frmNewEmp").submit(function (e) {
+                $("#btngetreport").click(function (e) {
 
                     var usefullifetype = $("input[name='Usefullifetype']:checked").val();
                     if (usefullifetype == "") {
@@ -107,6 +107,7 @@
                     else {
                       //  alert(usefullifetype)
                         getreport(usefullifetype);
+
                     }
                     e.preventDefault();
                     return false;
@@ -114,12 +115,12 @@
                 });
 
             });
-            if (typeof jQuery !== 'undefined') {
-                console.log('jQuery Loaded');
-            }
-            else {
-                console.log('not loaded yet');
-            }
+            //if (typeof jQuery !== 'undefined') {
+            //    console.log('jQuery Loaded');
+            //}
+            //else {
+            //    console.log('not loaded yet');
+            //}
 
             function getreport(usefullifetype) {
 
@@ -133,7 +134,7 @@
              var data = {
                  "usefullifetype": usefullifetype
         };
-            $('#progressbar').modal('show');
+            /*$('#progressbar').modal('show');*/
          var ControllerURL = '@Url.Action("Usefulllifereport", "Reports")';
         var DownloadURL = '@Url.Action("Download", "Reports")';
 
@@ -152,11 +153,11 @@
                 success: function (data) {
                     var fileurl = DownloadURL + '?fileGuid=' + data.FileGuid
                         + '&filename=' + data.FileName;
-                    $('#progressbar').modal('hide');
+                    /*$('#progressbar').modal('hide');*/
                     //alert(fileurl);
 
                     window.location = fileurl;
-                    $('#progressbar').modal('hide');
+                    /*$('#progressbar').modal('hide');*/
 
                 },
                 failure: function () { alert("Error"); }
@@ -164,4 +165,4 @@
 
     }
 
-            </script>
+</script>
