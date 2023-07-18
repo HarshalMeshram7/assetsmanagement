@@ -190,20 +190,43 @@
                 <div class="form-group col-lg-6">
                     <label for="praticesname">Start Date<span>*</span></label>
 
-                    <div class='input-group date' id='dtspStartDate'>
-                        <input id="txtspStartDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" required />
+                    <!--<div class='input-group date' id='dtspStartDate'>
+                        <input id="txtspStartDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" required />-->
                         @*<input type='text' id="txtspStartDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" required />*@
-                    </div>
+                    <!--</div>-->
+
+                    @Html.TextBoxFor(m => m.FromDate, "{0:yyyy-MM-dd}", new
+               {
+                   @class = "form-control form-control-sm",
+                   @tabindex = "5",
+                   required = "required",
+                   type = "date",
+                   id = "txtspStartDate"
+               })
+
                 </div>
+
                 <div class="form-group col-lg-6">
                     <label for="praticesname">End Date<span>*</span></label>
                     @*@Html.TextBoxFor(m => m.LeaveDate, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.LeaveDate, "", new { @class = "text-danger  " })*@
-                    <div class='input-group date' id='dtspEndDate'>
+        @Html.ValidationMessageFor(m => m.LeaveDate, "", new { @class = "text-danger  " })*@
+                    @*<div class='input-group date' id='dtspEndDate'>
                         <input id="txtspEndDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" required />
 
-                    </div>
+                    </div>*@
+
+                    @Html.TextBoxFor(m => m.FromDate, "{0:yyyy-MM-dd}", new
+               {
+                   @class = "form-control form-control-sm",
+                   @tabindex = "5",
+                   required = "required",
+                   type = "date",
+                   id = "txtspEndDate"
+               })
+
                 </div>
+
+
                 <div class="form-group col-lg-6">
                     <label>Lock this period so entries cannot be made<span>*</span></label>
                     @Html.CheckBox("isPeriodlockFlag", false)
@@ -215,7 +238,7 @@
             <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
 
             <div class="modal-footer">
-                <button type="submit" class="btn saveBtn btn-sm" onclick="addsubperiod();">Save</button>
+                <button type="button" class="btn saveBtn btn-sm" onclick="addsubperiod();">Save</button>
                 <button type="button" class="btn btn-sm clBtn" onclick="closeaddperiod();">Close</button>
                 @*<button type="button" class="btn btn-sm clBtn" id="btnClose" data-bs-dismiss="modal">Close</button>*@
 
@@ -342,7 +365,8 @@
          }
 
 
-              $("#btnAddSubPeiod").click(function () {
+            $("#btnAddSubPeiod").click(function () {
+
                   var startdate = $('#txtStartDate').val();
                   var enddate = $('#txtEndDate').val();
                   if (startdate != "" && enddate != "") {
@@ -351,34 +375,42 @@
                      // alert(lastTr)
                       var spstartdate = $('#txtStartDate').val();
                     //  alert(spstartdate)
+                      
                       if (lastTr != "End Date") {/////tr thname end date null is not working
                           //    alert(lastTr);
                           if (lastTr == "End Date") {
-
-                               $("#txtspStartDate").val('@ViewBag.fromdate');
+                              startdate = moment(startdate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+                               $("#txtspStartDate").val(startdate);
                               document.getElementById('txtspStartDate').readOnly = true;
                               $('#txtspEndDate').val("");
 
 
                           }
                           else {
-                            //  
+                            //
+
                               var myDate = moment(lastTr, "DD/MM/YYYY");
                               var date = moment(myDate).add('1', 'day').format("DD/MM/YYYY");
+                              date = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD');
                               $('#txtspStartDate').val(date);
                               document.getElementById('txtspStartDate').readOnly = true;
-                              $('#txtspEndDate').val("");
+
+                              enddate = moment($('#txtEndDate').val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+                              $('#txtspEndDate').val(enddate);
                           }
                       }
                       else {
                           //alert("else")
-                        //  
+                        //
+                          
+                          spstartdate = $('#txtStartDate').val();
+                          /*spstartdate = moment(spstartdate, 'DD/MM/YYYY').format('YYYY-MM-DD');*/
                           $('#txtspStartDate').val(spstartdate);
                           document.getElementById('txtspStartDate').readOnly = true;
-                          $('#txtspEndDate').val();
+
+                          enddate = moment($('#txtEndDate').val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+                          $('#txtspEndDate').val(enddate);
                       }
-
-
 
                       $('#subperiodmodal').modal('show');
                   }
@@ -395,7 +427,7 @@
     }
 
    function SaveData() {
-       
+
         // alert('Save');
         var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
         var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
@@ -490,7 +522,7 @@
                     if (result == true) {
 
                         var ControllerURL = '@Url.Action("Edit", "Period")';
-                        
+
                         // alert(ControllerURL);
                         var returnURL = '@Url.Action("Index", "Period")';
                         $.ajax({
@@ -576,8 +608,6 @@
 
     function SubperiodAddtotable()
     {
-
-
         var spstartdate = $("#txtspStartDate").val();
         var spenddate = $("#txtspEndDate").val();
         var periodlock = "";
@@ -585,29 +615,25 @@
         if ($('#isPeriodlockFlag').is(':checked')) {
 
             periodlock = "Y";
-            
+
         }
         else {
             periodlock = "N";
 
         }
         ////check whether the subperiod date is between period date range
-        var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-        var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-        var checkspstartdate = moment($("#txtspStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-        var checkspenddate = moment($("#txtspEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+        var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
+        var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
+        var checkspstartdate = moment($("#txtspStartDate").val()).format('YYYY-MM-DD');
+        var checkspenddate = moment($("#txtspEndDate").val()).format('YYYY-MM-DD');
         if (new Date(checkspstartdate) < new Date(startdate)) {
 
-
             swal("Alert", "Subperiod start date cannot be less then parent period start date", "warning");
-
             return;
-
         }
         else {
         }
         if (new Date(checkspstartdate) > new Date(enddate)) {
-
 
             swal("Alert", "Subperiod start date cannot be greater then parent period end date", "warning");
 
@@ -616,7 +642,6 @@
         else {
         }
         if (new Date(checkspenddate) > new Date(enddate)) {
-
 
             swal("Alert", "Subperiod end date cannot be greater then parent period end date", "warning");
             return;
@@ -635,8 +660,8 @@
         ////////////////////////////////////////////////////////////////////
 
 
-        var errorstartdate = moment($("#txtspStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-        var errorenddate = moment($("#txtspEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+        var errorstartdate = moment($("#txtspStartDate").val()).format('YYYY-MM-DD');
+        var errorenddate = moment($("#txtspEndDate").val()).format('YYYY-MM-DD');
 
         if (new Date(errorstartdate) > new Date(errorenddate)) {
 
@@ -644,7 +669,9 @@
             $("#spinvaliddateerror").show();
         }
         else {
-
+            
+            var spstartdate = moment(spstartdate).format('DD/MM/YYYY');
+            var spenddate = moment(spenddate).format('DD/MM/YYYY');
             $("#spinvaliddateerror").hide();
             $('#tblSubPeriod').last().append('<tr><td>' + srnocnt + '</td><td>' + spstartdate + '</td>'
                 + '<td>' + spenddate + '</td ><td>' + periodlock + '</td > <td>' + depriciation + '</td > <td align="center"> <button type="button" class="btn addBtn btn-sm"'
@@ -679,7 +706,7 @@
             $("#edisPeriodlockFlag").prop("checked", false);
         }
 
-        startDate = moment(startDate, 'DD/MM/YYYY').format('YYYY-MM-DD'); 
+        startDate = moment(startDate, 'DD/MM/YYYY').format('YYYY-MM-DD');
         $("#txtedspStartDate").val(startDate);
         endDate = moment(endDate, 'DD/MM/YYYY').format('YYYY-MM-DD');
         $('#txtedspEndDate').val(endDate);
@@ -717,7 +744,7 @@
         var spenddate = $("#txtedspEndDate").val();
         // alert(spenddate)
         ////check whether the subperiod date is between period date range
-        
+
         var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         var checkspstartdate = moment($("#txtedspStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
