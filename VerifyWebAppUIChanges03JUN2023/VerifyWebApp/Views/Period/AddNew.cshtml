@@ -159,12 +159,21 @@
                 <div class="form-group col-lg-6">
                     <label for="praticesname">Start Date<span>*</span></label>
 
-                    <div class='input-group date' id='dtspStartDate'>
-                        @*<input type='text' id="txtspStartDate" class="form-control" required />*@
-                        <input type='date' id="txtspStartDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" required />
-                        @*<input id="txtStartDate" tabindex="6" class="form-control form-control-sm" type="date" />*@
+                    <!--<div class='input-group date' id='dtspStartDate'>-->
+                    @*<input type='text' id="txtspStartDate" class="form-control" required />*@
+                    <!--<input type='date' id="txtspStartDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" required />-->
+                    @*<input id="txtStartDate" tabindex="6" class="form-control form-control-sm" type="date" />*@
 
-                    </div>
+                    <!--</div>-->
+
+                    @Html.TextBoxFor(m => m.FromDate, "{0:yyyy-MM-dd}", new
+               {
+                   @class = "form-control form-control-sm",
+                   @tabindex = "5",
+                   required = "required",
+                   type = "date",
+                   id = "txtspStartDate"
+               })
 
                 </div>
 
@@ -174,12 +183,21 @@
                     <label for="praticesname">End Date<span>*</span></label>
 
                     @*@Html.TextBoxFor(m => m.LeaveDate, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.LeaveDate, "", new { @class = "text-danger  " })*@
-                    <div class='input-group date' id='dtspEndDate'>
-                        <input type='date' id="txtspEndDate" class="form-control" required />
-                        @*...//date*@
+        @Html.ValidationMessageFor(m => m.LeaveDate, "", new { @class = "text-danger  " })*@
+                    <!--<div class='input-group date' id='dtspEndDate'>
+        <input type='date' id="txtspEndDate" class="form-control" required />-->
+                    @*...//date*@
 
-                    </div>
+                    <!--</div>-->
+
+                    @Html.TextBoxFor(m => m.FromDate, "{0:yyyy-MM-dd}", new
+               {
+                   @class = "form-control form-control-sm",
+                   @tabindex = "5",
+                   required = "required",
+                   type = "date",
+                   id = "txtspEndDate"
+               })
 
                 </div>
 
@@ -333,27 +351,34 @@
                           //    alert(lastTr);
                           if (lastTr == "End Date")
                           {
-                              $("#txtspStartDate").val('@ViewBag.fromdate');
-                              document.getElementById('txtspStartDate').readOnly = true;
+                              startdate = moment(startdate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+                              $("#txtspStartDate").val(startdate);
+                              //document.getElementById('txtspStartDate').readOnly = true;
                               $('#txtspEndDate').val("");
                           }
-                         
+
                           else
                           {
                                   var myDate = moment(lastTr, "DD/MM/YYYY");
-                                  var date = moment(myDate).add('1', 'day').format("DD/MM/YYYY");
+                              var date = moment(myDate).add('1', 'day').format("DD/MM/YYYY");
+                              date = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD');
                                   $('#txtspStartDate').val(date);
-                                  document.getElementById('txtspStartDate').readOnly = true;
-                                  $('#txtspEndDate').val("");
+                              document.getElementById('txtspStartDate').readOnly = true;
+
+                              enddate = moment($('#txtEndDate').val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+                              $('#txtspEndDate').val(enddate);
                           }
-                        
+
                       }
                       else {
                           //alert("else")
                         //  ;
+                          spstartdate = $('#txtStartDate').val();
                           $('#txtspStartDate').val(spstartdate);
-                          document.getElementById('txtspStartDate').readOnly = true;
-                          $('#txtspEndDate').val();
+                          //document.getElementById('txtspStartDate').readOnly = true;
+
+                          enddate = moment($('#txtEndDate').val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+                          $('#txtspEndDate').val(enddate);
                       }
 
 
