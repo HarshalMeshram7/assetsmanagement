@@ -130,13 +130,14 @@ namespace VerifyWebApp.Controllers
 
                 str_fromDate = period.ToDate.AddDays(1).ToString("dd/MM/yyyy");
                 ViewBag.fromdate = str_fromDate;
-
+                period.FromDate = Convert.ToDateTime(str_fromDate);
             }
             else
             {
                 ViewBag.fromdate = str_fromDate;
+                period.FromDate = Convert.ToDateTime(str_fromDate);
             }
-            return PartialView();
+            return PartialView(period);
         }
 
         private DateTime ParseExact(string str_fromdate, string v, CultureInfo invariantCulture)

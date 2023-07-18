@@ -40,7 +40,15 @@
                         <div class="col-lg-3">
                             <div class="form-group">
                                 <label for="praticesname">Start Date<span>*</span></label>
-                                <input id="txtStartDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="text" />
+                                @*<input id="txtStartDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="text" />*@
+                                @Html.TextBoxFor(m => m.FromDate, "{0:yyyy-MM-dd}", new
+                           {
+                               @class = "form-control form-control-sm",
+                               @tabindex = "5",
+                               required = "required",
+                               type = "date",
+                               id = "txtStartDate"
+                           })
                             </div>
                             <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
                             
@@ -209,32 +217,48 @@
                 <div class="form-group col-lg-6">
                     <label for="praticesname">Start Date<span>*</span></label>
 
-                    <div class='input-group date' id='dtedspStartDate'>
-                        <input type='text' id="txtedspStartDate" class="form-control" required />
-                        @*<input type='date' id="txtedspStartDate" class="form-control" required />*@
-                        @*<input id="txtedspStartDate" tabindex="6" class="form-control form-control-sm" type="text" />*@
-                        @*<div class="input-group-addon">
+                    <!--<div class='input-group date' id='dtedspStartDate'>
+        <input type='text' id="txtedspStartDate" class="form-control" required />-->
+                    @*<input type='date' id="txtedspStartDate" class="form-control" required />*@
+                    @*<input id="txtedspStartDate" tabindex="6" class="form-control form-control-sm" type="text" />*@
+                    @*<div class="input-group-addon">
             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
             //...date
         </div>*@
 
-                    </div>
+                    <!--</div>-->
+
+                    @Html.TextBoxFor(m => m.FromDate, "{0:yyyy-MM-dd}", new
+               {
+                   @class = "form-control form-control-sm",
+                   @tabindex = "5",
+                   required = "required",
+                   type = "date",
+                   id = "txtedspStartDate"
+               })
 
                 </div>
                 <div class="form-group col-lg-6">
                     <label for="praticesname">End Date<span>*</span></label>
                     @*@Html.TextBoxFor(m => m.LeaveDate, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.LeaveDate, "", new { @class = "text-danger  " })*@
-                    <div class='input-group date' id='dtedspEndDate'>
-                        <input type='text' id="txtedspEndDate" class="form-control" required />
+        @Html.ValidationMessageFor(m => m.LeaveDate, "", new { @class = "text-danger  " })*@
+                    <!--<div class='input-group date' id='dtedspEndDate'>
+        <input type='text' id="txtedspEndDate" class="form-control" required />-->
+                    @*<div class="input-group-addon">
+            <span class="input-group-text"><span class="fa fa-calendar"></span></span>
 
+        </div>*@
 
-                        @*<div class="input-group-addon">
-                            <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                    <!--</div>-->
 
-                        </div>*@
-
-                    </div>
+                    @Html.TextBoxFor(m => m.FromDate, "{0:yyyy-MM-dd}", new
+               {
+                   @class = "form-control form-control-sm",
+                   @tabindex = "5",
+                   required = "required",
+                   type = "date",
+                   id = "txtedspEndDate"
+               })
 
                     <div class="form-group col-lg-6">
                         <label>Lock this period so entries cannot be made</label>
@@ -287,8 +311,8 @@
 
             });
 
-            let _startdate = moment('@ViewBag.fromdate').format('YYYY-MM-DD');
-            $("#txtStartDate").val(_startdate);
+            @*let _startdate = moment('@ViewBag.fromdate').format('YYYY-MM-DD');
+            $("#txtStartDate").val(_startdate);*@
          //   $("#stDate").val('@ViewBag.fromdate');
            // debugger;
 
@@ -351,8 +375,8 @@
     function SaveData() {
         //var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
         //var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
-        var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-        var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+        var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
+        var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
 
         if (new Date(startdate) > new Date(enddate)) {
 
@@ -414,9 +438,9 @@
                 //var Strstartdate = moment(StartDate, "DD/MM/YYYY").format("YYYY/MM/DD");
                 //var StrEnddate = moment(EndDate, "DD/MM/YYYY").format("YYYY/MM/DD");
 
-                var Strstartdate = moment(StartDate, "DD/MM/YYYY").format("YYYY/MM/DD");
+                var Strstartdate = moment(StartDate).format("YYYY/MM/DD");
 
-                var StrEnddate = moment(EndDate, "DD/MM/YYYY").format("YYYY/MM/DD");
+                var StrEnddate = moment(EndDate).format("YYYY/MM/DD");
 
                 var postdata =
                     {
@@ -496,7 +520,6 @@
         function closeeditsubperiod() {
             $('#editsubperiodmodal').modal('hide');
         }
-
         function addsubperiod() {
 
 
@@ -534,10 +557,10 @@
 
             }
             ////check whether the subperiod date is between period date range
-            var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-            var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-            var checkspstartdate = moment($("#txtspStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-            var checkspenddate = moment($("#txtspEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+            var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
+            var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
+            var checkspstartdate = moment($("#txtspStartDate").val()).format('YYYY-MM-DD');
+            var checkspenddate = moment($("#txtspEndDate").val()).format('YYYY-MM-DD');
            // debugger;
             if (new Date(checkspstartdate) < new Date(startdate)) {
 
@@ -586,7 +609,8 @@
                 $("#spinvaliddateerror").show();
             }
             else {
-
+                var spstartdate = moment(spstartdate).format('DD/MM/YYYY');
+                var spenddate = moment(spenddate).format('DD/MM/YYYY');
                 $("#spinvaliddateerror").hide();
                 $('#tblSubPeriod').last().append('<tr><td>' + srnocnt + '</td><td>' + spstartdate + '</td>'
                     + '<td>' + spenddate + '</td ><td>' + periodlock + '</td > <td>' + depriciation + '</td > <td align="center"> <button type="button" class="btn btn-primary btn-sm"'
@@ -624,7 +648,10 @@
         else {
             $("#edisPeriodlockFlag").prop("checked", false);
         }
+
+        startDate = moment(startDate, 'DD/MM/YYYY').format('YYYY-MM-DD');
         $("#txtedspStartDate").val(startDate);
+        endDate = moment(endDate, 'DD/MM/YYYY').format('YYYY-MM-DD');
         $('#txtedspEndDate').val(endDate);
 
         $('#editsubperiodmodal').modal('show');
@@ -639,7 +666,6 @@
 
         }
     }
-
         function Subperiodedittable() {
             var periodlock = "";
             var depriciation = "";
@@ -711,6 +737,8 @@
             else {
 
                 $("#edspinvaliddateerror").hide();
+                var spstartdate = moment($("#txtedspStartDate").val()).format('DD/MM/YYYY');
+                var spenddate = moment($("#txtedspEndDate").val()).format('DD/MM/YYYY');
                 var tbl = $('#tblSubPeriod tbody tr:has(td)').each(function () {
                     var srno = $(this).find("td").eq(0).html();
                     if (srno == editindex) {
