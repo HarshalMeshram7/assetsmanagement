@@ -3,8 +3,6 @@
     ViewBag.Title = "FASSummary_Index";
 }
 
-
-
 <div class="container-fluid py-4">
     <div class="row my-1">
         <div class="col-12">
@@ -12,146 +10,102 @@
                 <div class="card-header pb-0">
                     <div class="row">
                         <div class="d-sm-flex justify-content-between" style="border-bottom:groove">
-                            <div class="text-2xl"><b>Fixed Asset Schedule Summary Report  </b></div>
+                            <div class="text-2xl"><b>Fixed Asset Schedule Summary Report</b></div>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="modal-content">
-                        @using (@Html.BeginForm(null, null, FormMethod.Get, new { id = "frmNewEmp", name = "frmNewEmp" }))
-                        {@Html.AntiForgeryToken();
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="form-group col-md-3">
-                                    <label for="praticesname">From Date<span style="color:#CC0000;">*</span></label>
-                                    @Html.DropDownList("Fromdate", (SelectList)ViewBag.Fromdate, "Select Fromdate", new { @class = "form-control", id = "Fromdate", @required = true })
-                                    <div style="color:#CC0000;font-weight:400" id="locaerror"></div>
+                        @using (Html.BeginForm("GetFASSummaryReport", "FASSummary", FormMethod.Post, new { id = "frmNewEmp" }))
+                        {
+                            @Html.AntiForgeryToken();
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="form-group col-md-3">
+                                        <label for="praticesname">From Date<span style="color:#CC0000;">*</span></label>
+                                        @Html.DropDownList("Fromdate", (SelectList)ViewBag.Fromdate, "Select Fromdate", new { @class = "form-control", id = "Fromdate", required = "required" })
+                                        <div style="color:#CC0000;font-weight:400" id="fromdateerror"></div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="praticesname">To Date <span style="color:#CC0000;">*</span></label>
+                                        @Html.DropDownList("Todate", (SelectList)ViewBag.Todate, "Select Todate", new { @class = "form-control", id = "Todate", required = "required" })
+                                        <div style="color:#CC0000;font-weight:400" id="todateerror"></div>
+                                    </div>
                                 </div>
-                                <div class="form-group col-md-3">
-
-                                    <label for="praticesname">To Date <span style="color:#CC0000;">*</span></label>
-                                    @Html.DropDownList("Todate", (SelectList)ViewBag.Todate, "Select Todate", new { @class = "form-control", id = "Todate", @required = true })
-                                    <div style="color:#CC0000;font-weight:400" id="locaerror"></div>
-
-
-                                </div>
+                                <div><label style="font-size:12px;color:red;"><span>*</span> Mandatory Fields</label></div>
                             </div>
-                            <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
-                        </div>
-                        
-                        <div class="modal-footer">
-                            <button type="submit" class="btn saveBtn btn-sm" id="btngetreport">Show Report</button>
-                        </div>
-                    }
+                            <div class="modal-footer">
+                                <button type="submit" class="btn saveBtn btn-sm" id="btngetreport">Show Report</button>
+                            </div>
+                        }
                     </div><!-- /.modal-content -->
                 </div>
             </div>
+        </div>
     </div>
 </div>
-        </div>
-  </div>             
-            
-        
-        <div id="progressbar" class="modal fade" role="dialog" style="height: auto;" data-backdrop="static" data-keyboard="false">
-            <div class="modal-dialog modal-lx">
 
-                <!-- Modal content-->
-                <div class="modal-content" style="height:auto;width:auto;overflow:auto">
-                    <div class="modal-header">
-                        <label style="color:red;text-align: center;">Please wait........</label>
-
-                    </div>
-                    <div class="modal-body ">
-
-                        <div class="row col-6" style="overflow:auto;align-content:center">
-                            <label style="color:darkred;text-align: center;"> Report is in progress........</label>
-
-                        </div>
-                    </div>
+<div id="progressbar" class="modal fade" role="dialog" style="height: auto;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lx">
+        <!-- Modal content-->
+        <div class="modal-content" style="height:auto;width:auto;overflow:auto">
+            <div class="modal-header">
+                <label style="color:red;text-align: center;">Please wait........</label>
+            </div>
+            <div class="modal-body ">
+                <div class="row col-6" style="overflow:auto;align-content:center">
+                    <label style="color:darkred;text-align: center;">Report is in progress........</label>
                 </div>
             </div>
         </div>
-        <script type="text/javascript">
+    </div>
+</div>
 
-
-    $(document).ready(function ($) {
-        //voucherdate set to all other date
+<script type="text/javascript">
+    $(document).ready(function () {
         $('#progressbar').modal('hide');
-        $('#dtfromDate').datetimepicker({
-            format: 'DD/MM/YYYY',
-            icons:
-            {
-                next: 'fa fa-angle-right',
-                previous: 'fa fa-angle-left'
-            },
-
-        });
-        $('#dttoDate').datetimepicker({
-            format: 'DD/MM/YYYY',
-            icons:
-            {
-                next: 'fa fa-angle-right',
-                previous: 'fa fa-angle-left'
-            },
-        })
-        $("#frmNewEmp").submit(function (e) {
-            var fromdate = $("#Fromdate").val();
-            var todate = $("#Todate").val();
-            getreport(fromdate, todate);
+        $('#frmNewEmp').submit(function (e) {
             e.preventDefault();
-            return false;
-
+            var fromdate = $('#Fromdate').val();
+            var todate = $('#Todate').val();
+            getreport(fromdate, todate);
         });
-
     });
-    if (typeof jQuery !== 'undefined') {
-        console.log('jQuery Loaded');
-    }
-    else {
-        console.log('not loaded yet');
-    }
 
     function getreport(fromdate, todate) {
-
-        @*var url = '@Url.Action("GetFASSummaryReport", "FASSummary")';
-
-            url = url + "?fromdate="+fromdate+"&todate="+todate;
-
-            window.location.href = url;*@
         fromdate = moment(fromdate, 'DD/MM/YYYY').format('YYYY-MM-DD');
         todate = moment(todate, 'DD/MM/YYYY').format('YYYY-MM-DD');
         var data = {
-            "Fromdate": fromdate,
-            "Todate": todate
-
-
+            fromdate: fromdate,
+            todate: todate
         };
         $('#progressbar').modal('show');
         var form = $('#frmNewEmp');
         var token = $('input[name="__RequestVerificationToken"]', form).val();
         var headers = {};
         headers['__RequestVerificationToken'] = token;
-          var ControllerURL = '@Url.Action("GetFASSummaryReport", "FASSummary")';
+        var ControllerURL = '@Url.Action("GetFASSummaryReport", "FASSummary")';
         var DownloadURL = '@Url.Action("Download", "FASSummary")';
 
-            $.ajax({
-                type: 'POST',
-                url: ControllerURL,
-                contentType: "application/json",
-                headers: headers,
-                data: JSON.stringify(data),
-                success: function (data) {
-                    var fileurl = DownloadURL + '?fileGuid=' + data.FileGuid
-                        + '&filename=' + data.FileName;
-                    //alert(fileurl);
-                    $('#progressbar').modal('hide');
-                    window.location = fileurl;
-                    $('#progressbar').modal('hide');
-                },
-                failure: function () { alert("Error"); }
-            });
-
-
+        $.ajax({
+            type: 'POST',
+            url: ControllerURL,
+            contentType: 'application/json',
+            headers: headers,
+            data: JSON.stringify(data),
+            success: function (data) {
+                var fileurl = DownloadURL + '?fileGuid=' + data.FileGuid + '&filename=' + data.FileName;
+                window.location.href = fileurl;
+            },
+            error: function () {
+                alert('Error occurred during report generation.');
+            },
+            complete: function () {
+                $('#progressbar').modal('hide');
+            }
+        });
     }
-
-        </script>
+</script>
+apps-fileview.texmex_20230705.06_p1
+GetFASSummaryReport.txt
+Displaying GetFASSummaryReport.txt.
