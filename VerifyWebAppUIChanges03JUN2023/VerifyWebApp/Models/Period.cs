@@ -28,8 +28,8 @@ namespace VerifyWebApp.Models
         [NotMapped]
         public int Srno { get; set; }
         [NotMapped]
-        public string[] SubPeriodTable { get; set; }
+        public List<SubPeriod> SubPeriodTable { get; set; }
 
-        // public string DepFlag { get; set; }  //Depreciation Calculation Flag (Y/N)
+        // public string DepFlag { get; set; }  //Depreciation Calculation Flag (Y/N)        
     }
 }

@@ -1,12 +1,10 @@
-﻿@model IEnumerable<VerifyWebApp.Models.SubPeriod>
+﻿@model VerifyWebApp.Models.Period
 @{
     /**/
 
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Edit";
 }
-
-
 
 @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
 {
@@ -29,30 +27,51 @@
                         <div class="col-lg-3">
                             <div class="form-group">
                                 <label for="praticesname">Start Date<span>*</span></label>
-                                <div class='input-group date' id='dtStartDate'>
-                                    <input id="txtStartDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
+
+                                @*<div class='input-group date' id='dtStartDate'>
+                                        <input id="txtStartDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
 
 
-                                    <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
-                                </div>
+                                        <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
+                                    </div>*@
+
+                                @Html.TextBoxFor(m => m.FromDate, "{0:yyyy-MM-dd}", new
+                           {
+                               @class = "form-control form-control-sm",
+                               @tabindex = "5",
+                               required = "required",
+                               type = "date",
+                               id = "txtStartDate"
+                           })
+
                             </div>
-                            </div>
-                            </div>
-
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <label for="praticesname">End Date<span>*</span></label>
-                                    @*@Html.TextBoxFor(m => m.LeaveDate, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.LeaveDate, "", new { @class = "text-danger  " })*@
-                                    <div class='input-group date' id='dtEndDate'>
-                                        <input id="txtEndDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
-                                        <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
-
-                                    </div>
-                                </div>
-                            <div style="color:#CC0000;font-weight:400" id="invalideparentdateerror">Select Date</div>
                         </div>
                     </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label for="praticesname">End Date<span>*</span></label>
+                            @*@Html.TextBoxFor(m => m.LeaveDate, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.LeaveDate, "", new { @class = "text-danger  " })*@
+                            <!--<div class='input-group date' id='dtEndDate'>
+        <input id="txtEndDate" tabindex="6" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
+        <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
+
+    </div>-->
+                            @*<div style="color:#CC0000;font-weight:400" id="invalideparentdateerror">Select Date</div>*@
+
+                            @Html.TextBoxFor(m => m.ToDate, "{0:yyyy-MM-dd}", new
+                       {
+                           @class = "form-control form-control-sm",
+                           @tabindex = "5",
+                           required = "required",
+                           type = "date",
+                           id = "txtEndDate"
+                       })
+                        </div>
+
+                    </div>
+                </div>
 
 
 
@@ -101,13 +120,13 @@
                                     </tr>
                                 </thead>
                                 <tbody style="font-weight:bold;color:black">
-                                    @if (Model.Count() == 0)
+                                    @if (Model.SubPeriodTable.Count() == 0)
                                     {
 
                                     }
                                     else
                                     {
-                                        foreach (var item in Model)
+                                        foreach (var item in Model.SubPeriodTable)
                                         {
                                             <tr>
                                                 <td>@item.Srno</td>
@@ -180,10 +199,10 @@
                     <label for="praticesname">End Date<span>*</span></label>
                     @*@Html.TextBoxFor(m => m.LeaveDate, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.LeaveDate, "", new { @class = "text-danger  " })*@
-                <div class='input-group date' id='dtspEndDate'>
-                    <input id="txtspEndDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" required />
-                    
-                </div>
+                    <div class='input-group date' id='dtspEndDate'>
+                        <input id="txtspEndDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" required />
+
+                    </div>
                 </div>
                 <div class="form-group col-lg-6">
                     <label>Lock this period so entries cannot be made<span>*</span></label>
@@ -218,33 +237,48 @@
                 <div class="form-group col-lg-6">
                     <label for="praticesname">Start Date<span>*</span></label>
 
-                    <div class='input-group date' id='dtedspStartDate'>
-
+                    @*<div class='input-group date' id='dtedspStartDate'>
                         <input type='text' id="txtedspStartDate" class="form-control form-control-sm" placeholder="" required />
-                        
-                    <div class="input-group-addon">
-                        <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                        <div class="input-group-addon">
+                            <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                        </div>
+                    </div>*@
 
-                    </div>
-
-                    
-
-                    </div>
+               @Html.TextBoxFor(m => m.FromDate, "{0:yyyy-MM-dd}", new
+               {
+                   @class = "form-control form-control-sm",
+                   @tabindex = "5",
+                   required = "required",
+                   type = "date",
+                   id = "txtedspStartDate"
+               })
 
                 </div>
+
                 <div class="form-group col-lg-6">
                     <label for="praticesname">End Date<span>*</span></label>
-                    <div class='input-group date' id='dtedspEndDate'>
-                        @*<input id="txtedspEndDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="text" required />*@
-                        <input id="txtedspEndDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" required />
-                    </div>
+
+                    <!--<div class='input-group date' id='dtedspEndDate'>-->
+                    @*<input id="txtedspEndDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="text" required />*@
+                    <!--<input id="txtedspEndDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" required />
+    </div>-->
+
+                    @Html.TextBoxFor(m => m.FromDate, "{0:yyyy-MM-dd}", new
+               {
+                   @class = "form-control form-control-sm",
+                   @tabindex = "5",
+                   required = "required",
+                   type = "date",
+                   id = "txtedspEndDate"
+               })
 
                     <div class="form-group col-lg-6">
                         <label>Lock this period so entries cannot be made<span>*</span></label>
                         @Html.CheckBox("edisPeriodlockFlag", false)
-
                     </div>
+
                     <div style="color:#CC0000;font-weight:400" id="edspinvaliddateerror"></div>
+
                 </div>
 
 
@@ -290,9 +324,9 @@
             let _enddate = moment('@ViewBag.EndDate', 'DD/MM/YYYY').format('YYYY-MM-DD');
             $("#txtStartDate").val(_startdate);
             $("#txtEndDate").val(_enddate);
-            debugger;*@
-            $("#txtStartDate").val('@ViewBag.StartDate');
-            $("#txtEndDate").val('@ViewBag.EndDate');
+            *@
+            //$("#txtStartDate").val('@ViewBag.StartDate');
+            //$("#txtEndDate").val('@ViewBag.EndDate');
 
 
             //if dep is calculated then readonly start date and end date parent
@@ -325,10 +359,10 @@
                               document.getElementById('txtspStartDate').readOnly = true;
                               $('#txtspEndDate').val("");
 
-                              
+
                           }
                           else {
-                            //  debugger;
+                            //  
                               var myDate = moment(lastTr, "DD/MM/YYYY");
                               var date = moment(myDate).add('1', 'day').format("DD/MM/YYYY");
                               $('#txtspStartDate').val(date);
@@ -338,7 +372,7 @@
                       }
                       else {
                           //alert("else")
-                        //  debugger;
+                        //  
                           $('#txtspStartDate').val(spstartdate);
                           document.getElementById('txtspStartDate').readOnly = true;
                           $('#txtspEndDate').val();
@@ -361,10 +395,10 @@
     }
 
    function SaveData() {
-
+       
         // alert('Save');
-        var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-        var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+        var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
+        var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
 
         if (new Date(startdate) > new Date(enddate)) {
 
@@ -382,8 +416,6 @@
 
             StartDate = $('#txtStartDate').val();
             EndDate = $('#txtEndDate').val();
-
-
 
 
             if (StartDate == '') {
@@ -439,9 +471,9 @@
                 //    });
 
                 //}
-                var Strstartdate = moment(StartDate, "DD/MM/YYYY").format("YYYY/MM/DD");
+                var Strstartdate = moment(StartDate).format("YYYY-MM-DD");
 
-                var StrEnddate = moment(EndDate, "DD/MM/YYYY").format("YYYY/MM/DD");
+                var StrEnddate = moment(EndDate).format("YYYY-MM-DD");
 
                 var postdata =
                     {
@@ -458,7 +490,7 @@
                     if (result == true) {
 
                         var ControllerURL = '@Url.Action("Edit", "Period")';
-
+                        
                         // alert(ControllerURL);
                         var returnURL = '@Url.Action("Index", "Period")';
                         $.ajax({
@@ -553,7 +585,7 @@
         if ($('#isPeriodlockFlag').is(':checked')) {
 
             periodlock = "Y";
-            debugger;
+            
         }
         else {
             periodlock = "N";
@@ -646,7 +678,10 @@
         else {
             $("#edisPeriodlockFlag").prop("checked", false);
         }
+
+        startDate = moment(startDate, 'DD/MM/YYYY').format('YYYY-MM-DD'); 
         $("#txtedspStartDate").val(startDate);
+        endDate = moment(endDate, 'DD/MM/YYYY').format('YYYY-MM-DD');
         $('#txtedspEndDate').val(endDate);
 
         if (Deplock == "Y") {
@@ -682,6 +717,7 @@
         var spenddate = $("#txtedspEndDate").val();
         // alert(spenddate)
         ////check whether the subperiod date is between period date range
+        
         var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
         var checkspstartdate = moment($("#txtedspStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
@@ -733,6 +769,8 @@
         else {
             // alert("alert")
             $("#edspinvaliddateerror").hide();
+            var spstartdate = moment($("#txtedspStartDate").val()).format('DD/MM/YYYY');
+            var spenddate = moment($("#txtedspEndDate").val()).format('DD/MM/YYYY');
             var tbl = $('#tblSubPeriod tbody tr:has(td)').each(function () {
                 var srno = $(this).find("td").eq(0).html();
                 //alert(srno)

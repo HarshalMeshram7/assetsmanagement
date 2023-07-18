@@ -376,10 +376,12 @@ namespace VerifyWebApp.Controllers
                 }
                 else
                 {
-                    ViewBag.depflag = "N";
+                    ViewBag.depflag = "N";                    
                 }
                 
                 ViewBag.Srno = srno;
+                period.Srno = srno;
+                period.SubPeriodTable = splist;
 
             }
             catch (Exception ex)
@@ -389,7 +391,7 @@ namespace VerifyWebApp.Controllers
                 // logger.Log(LogLevel.Error, strError);
 
             }
-            return PartialView(splist);
+            return PartialView(period);
 
         }
         // [AuthUser]

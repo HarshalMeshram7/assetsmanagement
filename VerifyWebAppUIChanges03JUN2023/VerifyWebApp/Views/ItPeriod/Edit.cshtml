@@ -116,6 +116,7 @@
 
             //$("#txtStartDate").val('@Model.str_fromdate');
             //$("#txtEndDate").val('@Model.str_todate');
+
             var checkperiod='@Model.PeriodlockFlag';
             if (checkperiod == 1)
             {
@@ -131,8 +132,8 @@
 
             $("#btnSave").click(function () {
 
-                var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-                var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+                var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
+                var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
 
                 if (new Date(startdate) > new Date(enddate)) {
 
