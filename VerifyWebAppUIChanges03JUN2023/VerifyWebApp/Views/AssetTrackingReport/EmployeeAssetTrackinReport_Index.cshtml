@@ -1,7 +1,7 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "EmployeeAssetTracking_Index";
 }
+
 <div class="container-fluid py-4">
     <div class="row my-1">
         <div class="col-12">
@@ -14,164 +14,114 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    @using (@Html.BeginForm(null, null, FormMethod.Get, new { id = "frmNewEmp", name = "frmNewEmp" }))
+                    @using (Html.BeginForm("GetEmployeeAssetsTrackingReport", "AssetTrackingReport", FormMethod.Post, new { id = "frmNewEmp" }))
                     {
-                        @Html.AntiForgeryToken()
-                     
-                    <div class="modal-body">
+                        @Html.AntiForgeryToken();
 
-
-                        <div class="row">
-                            <div class="form-group col-md-3">
-                                <label for="praticesname" class="form-control-sm">From Date</label>
-
-                                <input type='date' id="startdate"
-                                       name="startdate"
-                                       class="form-control form-control-sm" />
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="form-group col-md-3">
+                                    <label for="startdate" class="form-control-sm">From Date</label>
+                                    <input type="date" id="startdate" name="startdate" class="form-control form-control-sm" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-3">
+                                    <label for="enddate" class="form-control-sm">To Date</label>
+                                    <input type="date" id="enddate" name="enddate" class="form-control form-control-sm" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label for="strempid" class="form-control-sm">Employee</label>
+                                    @Html.DropDownList("strempid", (SelectList)ViewBag.employee, "Select Employee", new { @class = "form-control form-control-sm", id = "strempid" })
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="form-group col-md-3">
-                                <label for="praticesname" class="form-control-sm">To Date </label>
 
-                                <input type='date' id="enddate"
-                                       name="enddate"
-                                       class="form-control form-control-sm" />
-
-                            </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn saveBtn btn-sm" id="btngetreport">Show Report</button>
                         </div>
-
-                        <div class="row ">
-                            <div class="form-group col-md-4">
-
-
-                                <label for="praticesname" class="form-control-sm">Employee </label>
-                                @Html.DropDownList("strempid", (SelectList)ViewBag.employee, "Select Employee", new { @class = "form-control form-control-sm", id = "strempid" })
-
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="submit" class="btn saveBtn btn-sm" id="btngetreport">Show Report</button>
-                    </div>
-                      
-                   
                     }
                 </div>
             </div>
         </div>
     </div>
 </div>
-        
-        
+
 <div id="progressbar" class="modal fade" role="dialog" style="height: auto;" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lx">
-
         <!-- Modal content-->
         <div class="modal-content" style="height:auto;width:auto;overflow:auto">
             <div class="modal-header">
                 <label style="color:red;text-align: center;">Please wait........</label>
-
             </div>
             <div class="modal-body ">
-
                 <div class="row col-6" style="overflow:auto;align-content:center">
                     <label style="color:darkred;text-align: center;"> Report is in progress........</label>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <script type="text/javascript">
-
-
-    $(document).ready(function ($) {
+    $(document).ready(function () {
         $('#progressbar').modal('hide');
-        //voucherdate set to all other date
 
-      
         $("#frmNewEmp").submit(function (e) {
             e.preventDefault();
             var fromdate = $("#startdate").val();
             var todate = $("#enddate").val();
-            if (fromdate != "" && todate != "") {
-                fromdate = moment(fromdate, 'DD/MM/YYYY').format('YYYY-MM-DD');
-                todate = moment(todate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+
+            if (fromdate !== "" && todate !== "") {
+                fromdate = moment(fromdate, 'YYYY-MM-DD').format('YYYY-MM-DD');
+                todate = moment(todate, 'YYYY-MM-DD').format('YYYY-MM-DD');
             }
-            var fromassetno = $("#fromassetno").val();
-            var toassetno = $("#toassetno").val();
+
             var employee = $("#strempid").val();
 
-            if (employee == "") {
+            if (employee === "") {
                 employee = "0";
             }
-        if (fromdate == "" || todate == "") {
-            swal("Alert", "Please Select  From Date and To Date", "warning");
-            return;
 
-            }
-          /*
-        if (fromassetno == "" && toassetno == "") {
-            swal("Alert", "Select toassetno", "warning");
-            return;
-            }
-            */
-           
-            getreport(fromdate, todate, fromassetno, toassetno, employee);
-            e.preventDefault();
-            return false;
-
+            getreport(fromdate, todate, employee);
         });
-
     });
-    if (typeof jQuery !== 'undefined') {
-        console.log('jQuery Loaded');
-    }
-    else {
-        console.log('not loaded yet');
-    }
 
-    function getreport(fromdate, todate, fromassetno,toassetno,employee)
-    {
-        //alert("test")
+    function getreport(fromdate, todate, employee) {
         var data = {
             "startdate": fromdate,
             "enddate": todate,
-            "fromassetno": fromassetno,
-            "toassetno": toassetno,
             "strempid": employee
-
         };
+
         var form = $('#frmNewEmp');
         var token = $('input[name="__RequestVerificationToken"]', form).val();
         var headers = {};
         headers['__RequestVerificationToken'] = token;
+
         $('#progressbar').modal('show');
-         var ControllerURL = '@Url.Action("GetEmployeeAssetsTrackingReport", "AssetTrackingReport")';
+
+        var ControllerURL = '@Url.Action("GetEmployeeAssetsTrackingReport", "AssetTrackingReport")';
         var DownloadURL = '@Url.Action("Download", "AssetTrackingReport")';
 
-            $.ajax({
-                type: 'POST',
-                url: ControllerURL,
-                headers: headers,
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data) {
-                    var fileurl = DownloadURL + '?fileGuid=' + data.FileGuid
-                        + '&filename=' + data.FileName;
-                    //alert(fileurl);
-                    $('#progressbar').modal('hide');
-                    window.location = fileurl;
-                    $('#progressbar').modal('hide');
-                },
-                failure: function () { alert("Error"); }
-            });
-
-
-
+        $.ajax({
+            type: 'POST',
+            url: ControllerURL,
+            headers: headers,
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (response) {
+                var fileurl = DownloadURL + '?fileGuid=' + response.FileGuid + '&filename=' + response.FileName;
+                window.location.href = fileurl;
+            },
+            error: function () {
+                alert('Error occurred during report generation.');
+            },
+            complete: function () {
+                $('#progressbar').modal('hide');
+            }
+        });
     }
-
 </script>
