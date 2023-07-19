@@ -90,7 +90,7 @@
             headers: headers,
             data: JSON.stringify(data),
             beforeSend: function() {
-                $('#progressbar').modal('show');
+                /*$('#progressbar').modal('show');*/
             },
             success: function(data) {
                 var fileurl = DownloadURL + '?fileGuid=' + data.FileGuid + '&filename=' + data.FileName;
