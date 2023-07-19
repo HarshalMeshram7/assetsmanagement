@@ -60,6 +60,9 @@
         }
 
     function returnDeleteButton(id) {
+
+        /*alert('Under Construction');*/
+
         var strButton = "";
         //strButton = id;
         strButton = '<button type="button" class="btn delBtn btn-sm"';
@@ -72,6 +75,9 @@
 
     }
     function returnEditButton(id) {
+
+       /* alert('Under Construction');*/
+
         var strButton = "";
         //strButton = id;
         strButton = '<button type="button" class="btn modBtn btn-sm"';
@@ -84,24 +90,26 @@
     }
 
     function opennewdialog() {
+        alert('Under Construction');
 
-          window.location.href ='@Url.Action("Add","Disposal")';
+          @*window.location.href ='@Url.Action("Add","Disposal")';*@
      }
 
     function EditDisposal(id) {
-              //alert("edit")
+        alert('Under Construction');
 
-        var url = '@Url.Action("Edit", "Disposal")';
+        @*var url = '@Url.Action("Edit", "Disposal")';
             url = url + "/" + id;
            // alert(url)
-            window.location.href = url;
+            window.location.href = url;*@
 
      }
 
 
      function Delete(id)
      {
-         var form = $('#frmNewEmp');
+         alert('Under Construction');
+         @*var form = $('#frmNewEmp');
          var token = $('input[name="__RequestVerificationToken"]', form).val();
          var headers = {};
          headers['__RequestVerificationToken'] = token;
@@ -134,15 +142,16 @@
 
                  });
             }
-        });
+        });*@
 
         }
 
 
      function DisposalExport()
      {
+         alert('Under Construction');
 
-       //  window.location.href = '@Url.Action("DisposalExport", "Disposal")';
+       @*//  window.location.href = '@Url.Action("DisposalExport", "Disposal")';
          var ControllerURL = '@Url.Action("DisposalExport", "Disposal")';
          $('#progressbar').modal('show');
         var DownloadURL = '@Url.Action("Download", "Disposal")';
@@ -165,26 +174,27 @@
 
                 },
                 failure: function () { alert("Error"); }
-            });
+            });*@
 
      }
 
     function downloadexcel()
      {
-
-         window.location.href = '@Url.Action("DownloadDisposalExcel", "Disposal")';
+        alert('Under Construction');
+         @*window.location.href = '@Url.Action("DownloadDisposalExcel", "Disposal")';*@
 
      }
      function Importexcel()
      {
-           var url = '@Url.Action("ImportExcel", "Disposal")';
+         alert('Under Construction');
+           @*var url = '@Url.Action("ImportExcel", "Disposal")';
 
 
             $.get(url, function (data) {
                 $("#divUploadContent").html(data);
                // alert(data);
                 $('#divUpload').modal('show')
-            });
+            });*@
 
      }
 
