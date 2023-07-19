@@ -57,7 +57,7 @@
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="Company">Mobile No<span>*</span></label>
-                        @Html.TextBoxFor(m => m.Mobileno, new { @class = "form-control form-control-sm", @required = "required" })
+                        @Html.TextBoxFor(m => m.Mobileno, new { @class = "form-control form-control-sm", @required = "required", pattern = "[0-9]{10}", title = "Please enter a valid mobile no", type = "number", maxlength = "10", minlength = "10" })
                         <div style="color:#CC0000;font-weight:400" class="text-danger error">@Html.ValidationMessageFor(m => m.Mobileno)</div>
                         @Html.AntiForgeryToken()
                     </div>
@@ -66,7 +66,7 @@
 
                     <div class="form-group">
                         <label for="Company">Email Id<span>*</span></label>
-                        @Html.TextBoxFor(m => m.Emailid, new { @class = "form-control form-control-sm", @required = "required" })
+                        @Html.TextBoxFor(m => m.Emailid, new { @class = "form-control form-control-sm", @required = "required", pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$", title = "Please enter a valid email id", type = "email" })
                         <div style="color:#CC0000;font-weight:400" class="text-danger error">@Html.ValidationMessageFor(m => m.Emailid)</div>
                         @Html.AntiForgeryToken()
                     </div>
