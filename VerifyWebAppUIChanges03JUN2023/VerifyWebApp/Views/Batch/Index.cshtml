@@ -145,26 +145,26 @@
     }
 
     function opennewdialog() {
-        alert('Under Construction');
+       
 
-            @*var url = '@Url.Action("Add","Batch")';
-            window.location = url;*@
+            var url = '@Url.Action("Add","Batch")';
+            window.location = url;
         }
 
         function EditBatch(id) {
-            alert('Under Construction');
-        @*alert(id)
+           
+       // alert(id)
             var url = '@Url.Action("Edit", "Batch")';
             url = url + "/" + id;
-            window.location = url;*@
+            window.location = url;
 
          }
 
 
      function Delete(id)
      {
-         alert('Under Construction');
-         @*var form = $('#frmNewEmp');
+         
+         var form = $('#frmNewEmp');
          var token = $('input[name="__RequestVerificationToken"]', form).val();
          var headers = {};
          headers['__RequestVerificationToken'] = token;
@@ -197,7 +197,7 @@
 
                  });
             }
-        });*@
+        });
 
         }
 
