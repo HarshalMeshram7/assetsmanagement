@@ -27,7 +27,7 @@
         </div>
         @using (@Html.BeginForm(null, null, FormMethod.Get, new { id = "frmNewEmp", name = "frmNewEmp" }))
         {@Html.AntiForgeryToken()}
-        <div class="pageconent">
+        <div class="pagecontent">
             <div class="row">
                 <div class="col-lg-12 ">
                     <button type="button" id="btnnew" value="New Practice"
@@ -145,23 +145,26 @@
     }
 
     function opennewdialog() {
+        alert('Under Construction');
 
-            var url = '@Url.Action("Add","Batch")';
-            window.location = url;
+            @*var url = '@Url.Action("Add","Batch")';
+            window.location = url;*@
         }
 
-      function EditBatch(id) {
-      //  alert(id)
+        function EditBatch(id) {
+            alert('Under Construction');
+        @*alert(id)
             var url = '@Url.Action("Edit", "Batch")';
             url = url + "/" + id;
-            window.location = url;
+            window.location = url;*@
 
          }
 
 
      function Delete(id)
      {
-         var form = $('#frmNewEmp');
+         alert('Under Construction');
+         @*var form = $('#frmNewEmp');
          var token = $('input[name="__RequestVerificationToken"]', form).val();
          var headers = {};
          headers['__RequestVerificationToken'] = token;
@@ -194,7 +197,7 @@
 
                  });
             }
-        });
+        });*@
 
         }
 
