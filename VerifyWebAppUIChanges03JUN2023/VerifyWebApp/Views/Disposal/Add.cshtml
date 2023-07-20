@@ -1195,9 +1195,9 @@
                 var AssetName = $('#AssetId option:selected').text();
 
                 var VoucherNo = $('#txtvno').val();
-                var VoucherDate =  moment($("#txtVDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-                var DisposalDate =  moment($("#txtdispoDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-                var BillDate = moment($("#txtbillDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+                var VoucherDate =  moment($("#txtVDate").val()).format('YYYY-MM-DD');
+                var DisposalDate =  moment($("#txtdispoDate").val()).format('YYYY-MM-DD');
+                var BillDate = moment($("#txtbillDate").val()).format('YYYY-MM-DD');
                 var BillNo = $('#txtbillno').val();
                 var DisposalType = $("input[name='DisposalType']:checked").val();
                 var Qty = $('#txtqty').val();
