@@ -55,7 +55,7 @@ namespace VerifyWebApp.Controllers
                 {
                     item.Srno = srno;
                     item.str_fromdate = item.FromDate.ToString("dd/MM/yyyy");
-                    item.str_todate = item.ToDate.ToString("dd/MM/yyyy"); ;
+                    item.str_todate = item.ToDate.ToString("dd/MM/yyyy"); 
                     srno++;
                 }
             }
@@ -395,11 +395,12 @@ namespace VerifyWebApp.Controllers
             List<Subbatch> splist = new List<Subbatch>();
             try
             {
-                // batch = db.Batchs.Where(x => x.ID == id).FirstOrDefault();
+                //batch = db.Batchs.Where(x => x.ID == id && x.Companyid == companyid).FirstOrDefault();
 
 
                 splist = db.SubBatchs.Where(x => x.BatchId == id && x.Companyid == companyid).ToList();
                 batch = db.Batchs.Where(x => x.ID == id && x.Companyid == companyid).FirstOrDefault();
+
                 ViewBag.FromDate = batch.FromDate.ToString("dd/MM/yyyy");
                 ViewBag.ToDate = batch.ToDate.ToString("dd/MM/yyyy");
 
@@ -454,6 +455,8 @@ namespace VerifyWebApp.Controllers
                 ViewBag.blocationlist = new SelectList("", "ID", "BLocationName");
                 ViewBag.clocationlist = new SelectList("", "ID", "CLocationName");
                 ViewBag.Srno = srno;
+                batch.Srno = srno;
+                batch.SubbatchTable = splist;
 
             }
             catch (Exception ex)
@@ -464,7 +467,7 @@ namespace VerifyWebApp.Controllers
 
             }
             // return PartialView(splist);
-            return View(splist);
+            return View(batch);
         }
         //------------------------------------
         [AuthUser]
