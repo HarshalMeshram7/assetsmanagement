@@ -1,170 +1,119 @@
 ﻿@model VerifyWebApp.Models.Employee
 @{
-    ViewBag.Title = "Add";
+    ViewBag.Title = "Edit";
 }
+
 <div class="modal-content">
     <div class="modal-header">
-
         <h4 class="modal-title htitle">Edit Employee</h4>
         <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span></button>
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
 
-    @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
     {
         @Html.AntiForgeryToken();
         <div class="modal-body">
-
             @Html.ValidationSummary(true)
             <div class="row">
+                <!-- Employee Id -->
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="Company">Employee Id<span>*</span></label>
-                        @Html.TextBoxFor(m => m.EmpId, new { @class = "form-control form-control-sm", @required = "required" })
+                        @Html.TextBoxFor(m => m.EmpId, new { @class = "form-control form-control-sm", @required = "required", @readonly = "readonly" })
                         <div style="color:#CC0000;font-weight:400" class="text-danger error">@Html.ValidationMessageFor(m => m.EmpId)</div>
-                        @Html.AntiForgeryToken()
                     </div>
                 </div>
-            </div><div class="row">
+            </div>
+            <div class="row">
+                <!-- First Name -->
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="Company">First Name<span>*</span></label>
                         @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control form-control-sm", @required = "required" })
                         <div style="color:#CC0000;font-weight:400" class="text-danger error">@Html.ValidationMessageFor(m => m.FirstName)</div>
-                        @Html.AntiForgeryToken()
                     </div>
                 </div>
+                <!-- Middle Name -->
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="Company">Middle Name</label>
                         @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control form-control-sm" })
                         <div style="color:#CC0000;font-weight:400" class="text-danger error">@Html.ValidationMessageFor(m => m.MiddleName)</div>
-                        @Html.AntiForgeryToken()
                     </div>
                 </div>
+                <!-- Last Name -->
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="Company">Last Name<span>*</span></label>
                         @Html.TextBoxFor(m => m.LastName, new { @class = "form-control form-control-sm", @required = "required" })
                         <div style="color:#CC0000;font-weight:400" class="text-danger error">@Html.ValidationMessageFor(m => m.LastName)</div>
-                        @Html.AntiForgeryToken()
                     </div>
                 </div>
             </div>
-
             <div class="row">
-
+                <!-- Mobile No -->
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="Company">Mobile No<span>*</span></label>
-                        @Html.TextBoxFor(m => m.Mobileno, new { @class = "form-control form-control-sm", @required = "required", pattern = "[0-9]{10}", title = "Please enter a valid mobile no", type = "number", maxlength = "10", minlength = "10" })
+                        @Html.TextBoxFor(m => m.Mobileno, new { @class = "form-control form-control-sm", @required = "required", @pattern = "[0-9]{10}", @title = "Please enter a valid 10-digit mobile number", @type = "text", @maxlength = "10", @minlength = "10" })
                         <div style="color:#CC0000;font-weight:400" class="text-danger error">@Html.ValidationMessageFor(m => m.Mobileno)</div>
-                        @Html.AntiForgeryToken()
                     </div>
                 </div>
+                <!-- Email Id -->
                 <div class="col-lg-4">
-
                     <div class="form-group">
                         <label for="Company">Email Id<span>*</span></label>
-                        @Html.TextBoxFor(m => m.Emailid, new { @class = "form-control form-control-sm", @required = "required", pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$", title = "Please enter a valid email id", type = "email" })
+                        @Html.TextBoxFor(m => m.Emailid, new { @class = "form-control form-control-sm", @required = "required", @pattern = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}", @title = "Please enter a valid email address", @type = "email" })
                         <div style="color:#CC0000;font-weight:400" class="text-danger error">@Html.ValidationMessageFor(m => m.Emailid)</div>
-                        @Html.AntiForgeryToken()
                     </div>
                 </div>
             </div>
             <div class="row">
-
+                <!-- Address -->
                 <div class="col-lg-8">
                     <div class="form-group">
                         <label for="Company">Address</label>
                         @Html.TextAreaFor(m => m.Address1, new { @class = "form-control form-control-sm" })
                         <div style="color:#CC0000;font-weight:400" class="text-danger error">@Html.ValidationMessageFor(m => m.Address1)</div>
-                        @Html.AntiForgeryToken()
                     </div>
                 </div>
             </div>
-
-
             <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
         </div>
         <div class="modal-footer">
-            @*<button type="button" class="btn saveBtn btn-sm" id="btnSave">Save</button>*@
-            <button type="button" class="btn btn-primary" id="btnSave">Save</button>
-
+            <!-- Save Button -->
+            <button type="submit" class="btn btn-primary" id="btnSave">Save</button>
+            <!-- Close Button -->
             <button type="button" class="btn clBtn btn-sm" data-bs-dismiss="modal">Close</button>
         </div>
     }
 </div><!-- /.modal-content -->
 
-
-
 <script type="text/javascript">
-
-    $('#btnSave').click(function (event) {
-
-        SaveData();
-        e.preventDefault();
-        return false;
-    });
-
-
-
     $(document).ready(function ($) {
-       // alert(result);
+        $('#frmNewEmp').submit(function (e) {
+            e.preventDefault();
 
-        //$('#frmNewEmp').removeData('validator');
-        //$('#frmNewEmp').removeData('unobtrusiveValidation');
-        //$("#frmNewEmp").each(function () { $.data($(this)[0], 'validator', false); }); //enable to display the error messages
-        //$.validator.unobtrusive.parse("#frmNewEmp");
-        //$('#frmNewEmp').submit(function (e) {
-
-        //    //  e.preventDefault();
-
-        //    var result;
-        //    result = $('#frmNewEmp').valid();
-        //    console.log(result);
-
-        //    //alert(result);
-        //    if (result == true) {
-        //        SaveData();
-        //    }
-        //    e.preventDefault();
-        //    return false;
-
-
-     //   });
-        //$("#frmNewEmp").submit(function (e) {
-
-        //    SaveData();
-        //    e.preventDefault();
-        //    return false;
-
-        //});
-
-
-        $("#btnSave").click(function () {
-            SaveData();
+            if (!this.checkValidity()) {
+                this.reportValidity();
+            } else {
+                SaveData();
+            }
         });
 
-    });
+        function SaveData() {
+            var result;
+            var middlename;
+            var FirstName;
+            var LastName;
+            var Address;
+            var MobileNo;
+            var EmailId;
+            var empid;
 
-
-
-
-   function SaveData() {
-
-        var result;
-        var Username;
-        var Password;
-        var FirstName;
-        var LastName;
-        var Address;
-        var MobileNo;
-        var EmailId;
-
-        //alert('2');
-
-        middlename = $('#MiddleName').val();
+           middlename = $('#MiddleName').val();
 
         FirstName = $('#FirstName').val();
         LastName = $('#LastName').val();
@@ -216,7 +165,7 @@
                 }
                 else
                 {
-               
+
                     swal("Alert", "You Cannot Add this Record", "warning");
                 }
 
@@ -228,7 +177,7 @@
                 }
                 });
                 }
+
+
+    });
 </script>
-
-
-
