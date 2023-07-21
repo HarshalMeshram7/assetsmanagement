@@ -1,13 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "ClnrewiNb6mplGtx1dbCk3RAhmI6/eL/1reT58dtlIrfEUwjVNeF35Yr0N0R24Sq6KRuAbn7AF24SPOXF27InA==",
+  "dgSpecHash": "4Lat9iEPqs1k/iQwOEW1vOWU8+Y6loK72Ew2c1aZ4EwYaYR0OJt/tzYSUipdTBgZIsPHVm0piWgFho+Pq+RPfg==",
   "success": true,
-  "projectFilePath": "D:\\AssetManagement\\assetmanagement_latest\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj",
+  "projectFilePath": "D:\\pixonixassetsmanagement\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Micro_Soft\\.nuget\\packages\\microsoft.codecoverage\\16.5.0\\microsoft.codecoverage.16.5.0.nupkg.sha512",
-    "C:\\Users\\Micro_Soft\\.nuget\\packages\\microsoft.net.test.sdk\\16.5.0\\microsoft.net.test.sdk.16.5.0.nupkg.sha512",
-    "C:\\Users\\Micro_Soft\\.nuget\\packages\\nunit\\3.12.0\\nunit.3.12.0.nupkg.sha512",
-    "C:\\Users\\Micro_Soft\\.nuget\\packages\\nunit3testadapter\\3.16.1\\nunit3testadapter.3.16.1.nupkg.sha512"
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.codecoverage\\16.5.0\\microsoft.codecoverage.16.5.0.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.net.test.sdk\\16.5.0\\microsoft.net.test.sdk.16.5.0.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\nunit\\3.12.0\\nunit.3.12.0.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\nunit3testadapter\\3.16.1\\nunit3testadapter.3.16.1.nupkg.sha512"
   ],
   "logs": []
 }

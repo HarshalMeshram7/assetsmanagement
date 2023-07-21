@@ -15,3 +15,9 @@ D:\E-Forum\assetmanagement_latest\VerifyWebAppUIChanges03JUN2023\VerifyLicenseV2
 D:\E-Forum\assetmanagement_latest\VerifyWebAppUIChanges03JUN2023\VerifyLicenseV2\obj\Debug\VerifyLicenseV2.csproj.CoreCompileInputs.cache
 D:\E-Forum\assetmanagement_latest\VerifyWebAppUIChanges03JUN2023\VerifyLicenseV2\obj\Debug\VerifyLicenseV2.dll
 D:\E-Forum\assetmanagement_latest\VerifyWebAppUIChanges03JUN2023\VerifyLicenseV2\obj\Debug\VerifyLicenseV2.pdb
+D:\pixonixassetsmanagement\VerifyWebAppUIChanges03JUN2023\VerifyLicenseV2\bin\Debug\VerifyLicenseV2.dll
+D:\pixonixassetsmanagement\VerifyWebAppUIChanges03JUN2023\VerifyLicenseV2\bin\Debug\VerifyLicenseV2.pdb
+D:\pixonixassetsmanagement\VerifyWebAppUIChanges03JUN2023\VerifyLicenseV2\obj\Debug\VerifyLicenseV2.csproj.AssemblyReference.cache
+D:\pixonixassetsmanagement\VerifyWebAppUIChanges03JUN2023\VerifyLicenseV2\obj\Debug\VerifyLicenseV2.csproj.CoreCompileInputs.cache
+D:\pixonixassetsmanagement\VerifyWebAppUIChanges03JUN2023\VerifyLicenseV2\obj\Debug\VerifyLicenseV2.dll
+D:\pixonixassetsmanagement\VerifyWebAppUIChanges03JUN2023\VerifyLicenseV2\obj\Debug\VerifyLicenseV2.pdb

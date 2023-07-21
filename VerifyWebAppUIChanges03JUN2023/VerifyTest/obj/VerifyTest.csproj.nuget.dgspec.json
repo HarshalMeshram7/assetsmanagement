@@ -1,23 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\AssetManagement\\assetmanagement_latest\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj": {}
+    "D:\\pixonixassetsmanagement\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj": {}
   },
   "projects": {
-    "D:\\AssetManagement\\assetmanagement_latest\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj": {
+    "D:\\pixonixassetsmanagement\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\AssetManagement\\assetmanagement_latest\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj",
+        "projectUniqueName": "D:\\pixonixassetsmanagement\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj",
         "projectName": "VerifyTest",
-        "projectPath": "D:\\AssetManagement\\assetmanagement_latest\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj",
-        "packagesPath": "C:\\Users\\Micro_Soft\\.nuget\\packages\\",
-        "outputPath": "D:\\AssetManagement\\assetmanagement_latest\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\obj\\",
+        "projectPath": "D:\\pixonixassetsmanagement\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj",
+        "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
+        "outputPath": "D:\\pixonixassetsmanagement\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Micro_Soft\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -55,7 +56,8 @@
               "target": "Package",
               "version": "[3.16.1, )"
             }
-          }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.411\\RuntimeIdentifierGraph.json"
         }
       }
     }
