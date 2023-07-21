@@ -29,7 +29,9 @@ namespace VerifyWebApp.Models
         public string str_todate { get; set; }
         [NotMapped]
         public int Srno { get; set; }
-        
+
+        public List<Subbatch> SubbatchTable { get; set; }
+
         public string batchcode
         {
             get { return  BatchDescription  + " -- "+ID ; }
