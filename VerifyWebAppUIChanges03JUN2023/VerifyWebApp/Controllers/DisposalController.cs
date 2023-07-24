@@ -2100,7 +2100,7 @@ namespace VerifyWebApp.Controllers
                                     DisposalTypeflag = true;
                                 }
 
-                                if (workSheet.Cells[rowIterator, 9].Text == "0")
+                                if (workSheet.Cells[rowIterator, 9].Text == "0" || workSheet.Cells[rowIterator, 9].Text.Trim().Length <=0)
                                 {
                                     Qty = "";
                                     Qtyflag = false;
