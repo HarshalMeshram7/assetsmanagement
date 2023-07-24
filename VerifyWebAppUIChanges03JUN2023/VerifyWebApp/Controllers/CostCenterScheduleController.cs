@@ -9,7 +9,7 @@ using VerifyWebApp.Models;
 using VerifyWebApp.ViewModel;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-
+using System.Configuration;
 
 namespace VerifyWebApp.Controllers
 {
@@ -24,6 +24,15 @@ namespace VerifyWebApp.Controllers
 
         public ActionResult GetCCScheduleReport_Index()
         {
+
+            string BetaVer = ConfigurationManager.AppSettings["BetaVersion"];
+
+            if (BetaVer == "true")
+            {
+                ModelState.AddModelError(string.Empty, "Report download is restricted in the beta version.");
+                return RedirectToAction("Index", "Home");
+            }
+
             int userid = 0;
             Login user = (Login)(Session["PUser"]);
 

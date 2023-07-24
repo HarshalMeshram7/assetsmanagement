@@ -2,6 +2,7 @@
 using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -23,6 +24,14 @@ namespace VerifyWebApp.Controllers
         [AuthUser]
         public ActionResult AssetTrackinReport_Index()
         {
+            string BetaVer = ConfigurationManager.AppSettings["BetaVersion"];
+
+            if (BetaVer == "true")
+            {
+                ModelState.AddModelError(string.Empty, "Report download is restricted in the beta version.");
+                return RedirectToAction("Index", "Home");
+            }
+
             int userid = 0;
             Login user = (Login)(Session["PUser"]);
 
@@ -316,6 +325,15 @@ namespace VerifyWebApp.Controllers
         [AuthUser]
         public ActionResult EmployeeAssetTrackinReport_Index()
         {
+
+            string BetaVer = ConfigurationManager.AppSettings["BetaVersion"];
+
+            if (BetaVer == "true")
+            {
+                ModelState.AddModelError(string.Empty, "Report download is restricted in the beta version.");
+                return RedirectToAction("Index", "Home");
+            }
+
             int userid = 0;
             Login user = (Login)(Session["PUser"]);
 
