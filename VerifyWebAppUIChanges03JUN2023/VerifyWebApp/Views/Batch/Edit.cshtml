@@ -25,14 +25,10 @@
     <div class="container-fluid rounded page border shadow">
         <div class="row border-bottom">
             <div class="card">
-
                 <div class="card-header pb-0">
                     <div class="row">
                         <div class="d-sm-flex justify-content-between hborder">
                             <div class="htitle"> <b>Edit Batch</b> </div>
-
-
-
                             @*<div class="col-lg-12">
                             <div class="row justify-content-md-center title">
                                 <strong> <h4>Edit Batch</h4></strong>
@@ -42,19 +38,15 @@
                     </div>
 
                     <div class="pageconent">
-
                         <div class="row">
                             <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for="praticesname">From Date</label>
-
                                     <!--<div class='input-group date' id='dtStartDate'>
                             <input type="date" id="txtStartDate" class="form-control" required />-->
                                     @*<div class="input-group-addon">
                                       <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                 </div>*@
-
-
                                     @Html.TextBoxFor(m => m.FromDate, "{0:yyyy-MM-dd}", new
                                {
                                    @class = "form-control form-control-sm",
@@ -66,9 +58,6 @@
                                 </div>
                             </div>
                             @*<div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>*@
-
-
-
                             <div class="col-lg-3">
                                 <div class="form-group">
 
@@ -94,14 +83,10 @@
                                 </div>
                             </div>
                         </div>
-
-
                         <div class="row">
                             <div class="col-lg-3">
                                 <div class="form-group">
-
-                                    <label for="praticesname">Batch Description</label>
-
+                                  <label for="praticesname">Batch Description</label>
                                     <!--<div class='input-group date'>
                             <input id="BatchDescription" class="form-control" type="text"/>-->
                                     @Html.TextBoxFor(m => m.BatchDescription, new
@@ -110,17 +95,13 @@
                                    required = "required",
                                    id = "BatchDescription"
                                })
-
-
+                                   
                                 </div>
                             </div>
 
                             <div class="col-lg-3">
                                 <div class="form-group">
-
                                     <label for="praticesname" class="form-group">Isbatchopen </label>&nbsp;&nbsp;
-
-
                                     @Html.TextBoxFor(m => m.IsBatchOpen, new
                                    {
                                        @class = "form-control",
@@ -130,9 +111,7 @@
 
                                 </div>
                             </div>
-
                         </div>
-
 
                         <div class="row">
                             <div class="col-md-12">
@@ -142,7 +121,7 @@
                         <div class="row my-1">
                             <div class="col-md-12">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-primary" id="btnAddloc"
+                                    <button type="button" class="btn btn-primary" onclick="addLocation()" id="btnAddloc"
                                             data-toggle="modal">
 
                                         Add Location
@@ -248,8 +227,8 @@
 
                         <div class="modal-footer">
                             @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
-                            <button type="button" class="btn btn-default" onclick="close()">Close</button>
-                            <button type="button" class="btn btn-primary" id="btnSave">Save</button>
+                            <button type="button" class="btn btn-default" onclick="closeloc()">Close</button>
+                            <button type="button" class="btn btn-primary" id="btnSave" onclick="SaveData();">Save</button>
                         </div>
 
                         <!-- /.modal-content -->
@@ -379,7 +358,7 @@
 
 
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeeditloc();">Close</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeeditloc();">Close4</button>
                                         <button type="button" class="btn btn-primary" id="btnSave" onclick="saveeditloc();">Save</button>
                                     </div>
                                 </div>
@@ -411,23 +390,23 @@
     var isbatchopenflag = "no";
 
 
-    $('#dtStartDate').datetimepicker({
-        format: 'DD/MM/YYYY',
-        icons:
-        {
-            next: 'fa fa-angle-right',
-            previous: 'fa fa-angle-left'
-        },
+    //$('#dtStartDate').datetimepicker({
+    //    format: 'DD/MM/YYYY',
+    //    icons:
+    //    {
+    //        next: 'fa fa-angle-right',
+    //        previous: 'fa fa-angle-left'
+    //    },
 
-    });
-    $('#dtEndDate').datetimepicker({
-        format: 'DD/MM/YYYY',
-        icons:
-        {
-            next: 'fa fa-angle-right',
-            previous: 'fa fa-angle-left'
-        },
-    });
+    //});
+    //$('#dtEndDate').datetimepicker({
+    //    format: 'DD/MM/YYYY',
+    //    icons:
+    //    {
+    //        next: 'fa fa-angle-right',
+    //        previous: 'fa fa-angle-left'
+    //    },
+    //});
 
     var EndDateStatus = false;
     var StartDateStatus = false;
@@ -467,19 +446,6 @@
 
 
 //--------------------loc---------------------------------------------------------------
-         $("#btnAddloc").click(function () {
-
-            alert("test22");
-            //$("#txtlocA").val("");
-            //$("#txtlocB ").val("");
-            //$("#txtlocC ").val("");
-
-            $('#locationmodal').modal('show');
-            $("#txtlocA").val("");
-            $("#txtlocB ").val("");
-            $("#txtlocC ").val("");
-
-        });
 
     ///onlocation a select load location b dropdown
    $('#txtlocA').change(function () {
@@ -530,18 +496,17 @@
      $("#startdateerror,#enddateerror").hide();
 
 
-
-
-
-
-
-
-
 //----------------------------------------------------------------------
-     function closeloc() {
-         $('#locationmodal').modal('hide');
-     }
+       function closeloc() {
+            var url = '@Url.Action("index", "Batch")';
+            window.location = url;
 
+    $('#locationmodal').modal('hide');
+}
+
+     function addLocation() {
+    $('#locationmodal').modal('show');
+}
 
      function deleteloc(obj) {
          swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
@@ -679,7 +644,7 @@ function getlocationb(id) {
                     }
 /////////////////////////////////////////////////////////-------Add Location-Logic-End------////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////-------Edit Location-Logic-------////////////////////////////////////////////////////////////////////////////////////////
-                    function closeeditloc() {
+    function closeeditloc() {
                         $('#editlocationmodal').modal('hide');
                     }
 
@@ -886,16 +851,18 @@ function getlocationb(id) {
 
  function SaveData()
  {
-     var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-     var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+     //var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+     //var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
      //var startdate = $('#txtStartDate').val();
      //var enddate = $('#txtEndDate').val();
+     var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
+     var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
 
      if (new Date(startdate) >= new Date(enddate)) {
          swal("Alert", "To Date must be greater than From Date", "warning");
      }
      else {
-
+         
          //var tbllocation = $('#tbllocation tbody tr:has(td)').map(function (i, v) {
          //    var $td = $('td', this);
          //    var Tablelocationa = $td.eq(1).html();
@@ -957,8 +924,13 @@ function getlocationb(id) {
                  }
              }).get();
 
-         var Strstartdate = moment(StartDate, "DD/MM/YYYY").format("YYYY/MM/DD");
+             var Strstartdate = moment(StartDate, "DD/MM/YYYY").format("YYYY/MM/DD");
              var StrEnddate = moment(EndDate, "DD/MM/YYYY").format("YYYY/MM/DD");
+             //var Strstartdate = moment($('#txtStartDate').val()).format("YYYY-MM-DD");
+             //var StrEnddate = moment($('#txtEndDate').val()).format("YYYY-MM-DD");
+             
+
+
              //var StartDate = $('#txtStartDate').val();
              //var EndDate = $('#txtEndDate').val();
          var Editid = '@ViewBag.ID';
