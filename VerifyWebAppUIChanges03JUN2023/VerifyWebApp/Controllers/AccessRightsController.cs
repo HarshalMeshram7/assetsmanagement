@@ -61,7 +61,7 @@ namespace VerifyWebApp.Controllers
                 return RedirectToAction("Login", "Login");
             }
 
-            
+
         }
         [HttpGet]
         public ActionResult Add()
@@ -97,8 +97,8 @@ namespace VerifyWebApp.Controllers
                 VerifyWebApp.BusinessLogic.AccessRightsHelper helper = new BusinessLogic.AccessRightsHelper();
 
                 var cname = helper.getcontrollernames();
-                ViewBag.controllername=new SelectList(cname);
-                ViewBag.Username = new SelectList(db.Logins.Where( x=>x.CompanyId == companyid).OrderBy(e => e.ID), "ID", "UserName");
+                ViewBag.controllername = new SelectList(cname);
+                ViewBag.Username = new SelectList(db.Logins.Where(x => x.CompanyId == companyid).OrderBy(e => e.ID), "ID", "UserName");
                 return View();
             }
             else
@@ -155,8 +155,8 @@ namespace VerifyWebApp.Controllers
                 controller_code = accessRightsHelper.controller_codemap[accessrights.ControllerName.ToUpper()];
 
 
-                var check_controllerentryexists = db.AccessRights.Where(x => x.Companyid == companyid 
-                && x.Userid==accessrights.Userid && x.ControllerName == controller_code.ToString()).FirstOrDefault();
+                var check_controllerentryexists = db.AccessRights.Where(x => x.Companyid == companyid
+                && x.Userid == accessrights.Userid && x.ControllerName == controller_code.ToString()).FirstOrDefault();
 
 
 
@@ -195,7 +195,7 @@ namespace VerifyWebApp.Controllers
                         obj.Export = accessrights.Export;
                         obj.Import = accessrights.Import;
                         obj.Index = accessrights.Index;
-                       
+
                         db.AccessRights.Add(obj);
                         db.SaveChanges();
 
@@ -255,8 +255,8 @@ namespace VerifyWebApp.Controllers
             {
                 //BusinessLogic.GetControllerNames getControllerNames = new BusinessLogic.GetControllerNames();
                 BusinessLogic.AccessRightsHelper helper = new BusinessLogic.AccessRightsHelper();
-                
-                
+
+
                 var cname = helper.getcontrollernames();
                 ViewBag.controllername = new SelectList(cname);
                 ViewBag.Username = new SelectList(db.Logins.Where(x => x.CompanyId == companyid).OrderBy(e => e.ID), "ID", "UserName");
@@ -330,7 +330,7 @@ namespace VerifyWebApp.Controllers
                     //controller_code = accessRightsHelper.controller_codemap[accessrights.ControllerName.ToUpper()];
 
 
-                    
+
 
                     TimeZoneInfo istZone = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
 
@@ -351,9 +351,9 @@ namespace VerifyWebApp.Controllers
                     obj.Index = accessrights.Index;
                     obj.Export = accessrights.Export;
                     obj.Import = accessrights.Import;
-                    
+
                     obj.Companyid = companyid;
-                  
+
                     db.Entry(obj).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
 
@@ -381,5 +381,73 @@ namespace VerifyWebApp.Controllers
 
         }
 
-    }
+        public ActionResult Delete(int id)
+        {
+            int userid = 0;
+            Login user = (Login)(Session["PUser"]);
+
+            if (user != null)
+            {
+                ViewBag.LogonUser = user.UserName;
+                userid = user.ID;
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            int companyid = 0;
+            Company company = (Company)(Session["Cid"]);
+
+            if (company != null)
+            {
+                ViewBag.LoggedCompany = company.CompanyName;
+                companyid = company.ID;
+                ViewBag.companyid = companyid;
+                // ViewBag.LoggedCompany = company.CompanyName;
+            }
+            else
+            {
+                return RedirectToAction("CompanySelection", "Company");
+            }
+
+
+            JsonResult res;
+            res = new JsonResult();
+            AccessRights accessobj;
+            List<AccessRights> access = new List<AccessRights>();
+            access = db.AccessRights.Where(x => x.Id == id && x.Companyid == companyid).ToList();
+
+            try
+            {
+                if (access.Count != 0)
+                {
+
+                    accessobj = db.AccessRights.Where(x => x.Id == id).FirstOrDefault();
+                    db.Entry(accessobj).State = System.Data.Entity.EntityState.Deleted;
+                    db.SaveChanges();
+                    res.Data = "Success";
+
+                }
+                else
+                {
+
+                    res.Data = "Failed";
+
+                }
+                return res;
+
+            }
+            catch (Exception ex)
+            {
+                string strError;
+                strError = ex.Message + "|" + ex.InnerException;
+                //logger.Log(LogLevel.Error, strError);
+                res.Data = "Err";
+                return res;
+            }
+        }
+    
+
+
+        }
     }
