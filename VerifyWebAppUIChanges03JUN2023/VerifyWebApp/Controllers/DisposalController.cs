@@ -2818,6 +2818,74 @@ namespace VerifyWebApp.Controllers
             return checkflag;
 
         }
+        [AuthUser]
+        [AllowAnonymous]
+        [ValidateJsonAntiForgeryToken]
+        public ActionResult Delete(int id)
+        {
+            int userid = 0;
+            Login user = (Login)(Session["PUser"]);
 
+            if (user != null)
+            {
+                ViewBag.LogonUser = user.UserName;
+                userid = user.ID;
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            int companyid = 0;
+            Company company = (Company)(Session["Cid"]);
+
+            if (company != null)
+            {
+                ViewBag.LoggedCompany = company.CompanyName;
+                companyid = company.ID;
+                ViewBag.companyid = companyid;
+                // ViewBag.LoggedCompany = company.CompanyName;
+            }
+            else
+            {
+                return RedirectToAction("CompanySelection", "Company");
+            }
+
+
+            JsonResult res;
+            res = new JsonResult();
+            Disposal disobj;
+            List<Disposal> dispo = new List<Disposal>();
+            dispo = db.Disposals.Where(x => x.ID == id && x.Companyid == companyid).ToList();
+
+            try
+            {
+                if (dispo.Count != 0)
+                {
+
+                    disobj = db.Disposals.Where(x => x.ID == id).FirstOrDefault();
+                    db.Entry(disobj).State = System.Data.Entity.EntityState.Deleted;
+                    db.SaveChanges();
+                    res.Data = "Success";
+
+                }
+                else
+                {
+
+                    res.Data = "Failed";
+
+                }
+                return res;
+
+            }
+            catch (Exception ex)
+            {
+                string strError;
+                strError = ex.Message + "|" + ex.InnerException;
+                //logger.Log(LogLevel.Error, strError);
+                res.Data = "Err";
+                return res;
+            }
+
+        }
     }
 }
