@@ -413,10 +413,12 @@
 
     $(document).ready(function ($) {
         /////initialisation of values batch
-        $("#txtStartDate").val('@ViewBag.FromDate');
-        $("#txtEndDate").val('@ViewBag.ToDate');
+        @*$("#txtStartDate").val('@ViewBag.FromDate');
+        $("#txtEndDate").val('@ViewBag.ToDate');*@
         $("#BatchDescription").val('@ViewBag.BatchDescription');
         $("#IsBatchOpen").val('@ViewBag.IsBatchOpen');
+
+        debugger;
 
         if ('@ViewBag.IsBatchOpen' == "Yes" || '@ViewBag.IsBatchOpen' == "yes") {
             $("#IsBatchOpen").prop("checked", true);
@@ -644,12 +646,14 @@ function getlocationb(id) {
                     }
 /////////////////////////////////////////////////////////-------Add Location-Logic-End------////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////-------Edit Location-Logic-------////////////////////////////////////////////////////////////////////////////////////////
-    function closeeditloc() {
-                        $('#editlocationmodal').modal('hide');
-                    }
+    function closeeditloc()
+    {
+         $('#editlocationmodal').modal('hide');
+    }
 
 
-                    function Editloc(id, editcnt) {
+    function Editloc(id, editcnt)
+    {
                         //$(id).parent();
                         editindex = editcnt;
                         var tr = $(id).parent().parent();
@@ -685,7 +689,7 @@ function getlocationb(id) {
                             $('#editlocationmodal').modal('hide');
 
                         }
-                    }
+        }
 
                     function editlocationtotable() {
                         var alocname = $("#txteditlocA").find("option:selected").text();
@@ -851,12 +855,12 @@ function getlocationb(id) {
 
  function SaveData()
  {
-     //var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-     //var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+     var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+     var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
      //var startdate = $('#txtStartDate').val();
      //var enddate = $('#txtEndDate').val();
-     var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
-     var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
+     //var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
+     //var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
 
      if (new Date(startdate) >= new Date(enddate)) {
          swal("Alert", "To Date must be greater than From Date", "warning");
@@ -924,15 +928,15 @@ function getlocationb(id) {
                  }
              }).get();
 
-             var Strstartdate = moment(StartDate, "DD/MM/YYYY").format("YYYY/MM/DD");
-             var StrEnddate = moment(EndDate, "DD/MM/YYYY").format("YYYY/MM/DD");
-             //var Strstartdate = moment($('#txtStartDate').val()).format("YYYY-MM-DD");
-             //var StrEnddate = moment($('#txtEndDate').val()).format("YYYY-MM-DD");
+             //var Strstartdate = moment(StartDate, "DD/MM/YYYY").format("YYYY-MM-DD");
+             //var StrEnddate = moment(EndDate, "DD/MM/YYYY").format("YYYY-MM-DD");
+             var Strstartdate = moment($('#txtStartDate').val()).format("YYYY-MM-DD");
+             var StrEnddate = moment($('#txtEndDate').val()).format("YYYY-MM-DD");
              
 
 
-             //var StartDate = $('#txtStartDate').val();
-             //var EndDate = $('#txtEndDate').val();
+             var StartDate = $('#txtStartDate').val();
+             var EndDate = $('#txtEndDate').val();
          var Editid = '@ViewBag.ID';
          var postdata =
              {
