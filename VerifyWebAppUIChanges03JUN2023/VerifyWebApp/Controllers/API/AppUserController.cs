@@ -104,7 +104,7 @@ namespace VerifyWebApp.Controllers.API
               
                 if (user != null)
                 {
-                    if (user.IsAppAccess == "Yes")
+                    if (user.IsAppAccess.ToUpper() == "YES")
                     {
                         resp.status = "True";
                         resp.data = "Valid Access";
