@@ -81,39 +81,40 @@
                                 {
                                     foreach (var item in Model)
                                     {
-                                        <tr>
-                                            <td>@Html.DisplayFor(modelitem => item.ID)</td>
-                                            <td>@Html.DisplayFor(modelitem => item.UserName)</td>
-                                            <td>@Html.DisplayFor(modelitem => item.FirstName)</td>
-                                            <td>@Html.DisplayFor(modelitem => item.LastName)</td>
-                                            <td>@Html.DisplayFor(modelitem => item.MobileNo)</td>
-                                            <td>@Html.DisplayFor(modelitem => item.EmailId)</td>
-                                            <td>@Html.DisplayFor(modelitem => item.Address)</td>
+                            <tr>
+                                <td>@Html.DisplayFor(modelitem => item.ID)</td>
+                                <td>@Html.DisplayFor(modelitem => item.UserName)</td>
+                                <td>@Html.DisplayFor(modelitem => item.FirstName)</td>
+                                <td>@Html.DisplayFor(modelitem => item.LastName)</td>
+                                <td>@Html.DisplayFor(modelitem => item.MobileNo)</td>
+                                <td>@Html.DisplayFor(modelitem => item.EmailId)</td>
+                                <td>@Html.DisplayFor(modelitem => item.IsAppAccess)</td>
+                                <td>@Html.DisplayFor(modelitem => item.Address)</td>
 
-                                            <td align="center">
-                                                <button type="button" class="btn bg-gradient-primary btn-sm"
-                                                        aria-label="Left Align"
-                                                        onclick="ResetPassword(@item.ID);">
-                                                    <i class="fa fa-lock"></i>
-                                                </button>
+                                <td align="center">
+                                    <button type="button" class="btn bg-gradient-primary btn-sm"
+                                            aria-label="Left Align"
+                                            onclick="ResetPassword(@item.ID);">
+                                        <i class="fa fa-lock"></i>
+                                    </button>
 
-                                            </td>
+                                </td>
 
-                                            <td align="center">
-                                                <button type="button" class="btn bg-gradient-success btn-sm"
-                                                        aria-label="Left Align"
-                                                        onclick="EditLogin(@item.ID);">
-                                                    <i class="fa fa-edit"></i>Edit
-                                                </button>
+                                <td align="center">
+                                    <button type="button" class="btn bg-gradient-success btn-sm"
+                                            aria-label="Left Align"
+                                            onclick="EditLogin(@item.ID);">
+                                        <i class="fa fa-edit"></i>Edit
+                                    </button>
 
-                                            </td>
-                                            @*<td align="center">
-                                                <button type="button" class="btn bg-gradient-danger btn-sm" aria-label="Left Align" onclick="Delete(@item.ID);">
-                                                    <i class="fa fa-remove"></i>Delete
-                                                </button>
+                                </td>
+                                @*<td align="center">
+            <button type="button" class="btn bg-gradient-danger btn-sm" aria-label="Left Align" onclick="Delete(@item.ID);">
+                <i class="fa fa-remove"></i>Delete
+            </button>
 
-                                            </td>*@
-                                        </tr>
+        </td>*@
+                            </tr>
 
 
                                     }
