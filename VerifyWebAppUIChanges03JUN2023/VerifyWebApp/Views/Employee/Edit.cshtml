@@ -84,7 +84,8 @@
         </div>
         <div class="modal-footer">
             <!-- Save Button -->
-            <button type="submit" class="btn btn-primary" id="btnSave">Save</button>
+            @*<button type="submit" class="btn btn-primary" id="btnSave">Save</button>*@
+            <button type="submit" class="btn saveBtn btn-sm" id="btnSave">Save</button>
             <!-- Close Button -->
             <button type="button" class="btn clBtn btn-sm" data-bs-dismiss="modal">Close</button>
         </div>
@@ -92,6 +93,7 @@
 </div><!-- /.modal-content -->
 
 <script type="text/javascript">
+    
     $(document).ready(function ($) {
         $('#frmNewEmp').submit(function (e) {
             e.preventDefault();
