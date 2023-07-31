@@ -29,26 +29,33 @@
 
                     <div class="pageconent">
                         <div class="d-flex align-items-center justify-content-center">
-                            <div style="width:800px">
-                                <div class="row">
-                                    <div class="col-md-12 ">
-                                        <button type="button" id="btnnew" value="New Practice"
+                            <div style="width:100%">
+                                <div class="row" style="padding-top:4px;padding-left:5px">
+                                    <div class="col-12 ">
+                                        @*<button type="button" id="btnnew" value="New Practice"
                                                 class="btn btn-sm btn-primary pull-right"
                                                 onclick="opennewdialog();">
 
                                             <i class="fa fa-plus-square"></i>
 
                                             Add New UOM
+                                        </button>*@
+                                        <button type="button" id="btnnew" value="New Practice"
+                                                class="btn addBtn btn-sm mb-0 btn-tooltip"
+                                                data-bs-toggle="tooltip" data-bs-placement="top" title="Add New UOM"
+                                                onclick="opennewdialog();">
+                                            <i class="fa fa-plus" aria-hidden="true"></i>
                                         </button>
                                     </div>
                                 </div>
 
 
-                                <div class="row" style="padding-top:3px">
+                                <div class="row" style="padding-top:5px">
                                     <div class="col-lg-12">
-                                        <table class="table table-bordered table-striped table-hover"
+                                        <table @*class="table table-bordered table-striped table-hover"*@
+                                               class="table table-flush table-hover "
                                                id="tbluom">
-                                            <thead>
+                                            <thead class="hcol text-uppercase" style="font-weight:bold">
                                                 <tr>
                                                     <td>
                                                         Uom
@@ -79,17 +86,17 @@
 
 
                                                             <td align="center">
-                                                                <button type="button" class="btn btn-primary btn-sm"
+                                                                <button type="button" class="btn btn modBtn btn-sm"
                                                                         aria-label="Left Align"
                                                                         onclick="EditUOM(@item.ID);">
                                                                     <i class="fa fa-edit"></i>
-                                                                    Edit
+                                                                    
                                                                 </button>
 
                                                             </td>
                                                             <td align="center">
-                                                                <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" onclick="Delete(@item.ID);">
-                                                                    <i class="fa fa-remove"></i>Delete
+                                                                <button type="button" class="btn btn-sm delBtn" aria-label="Left Align" onclick="Delete(@item.ID);">
+                                                                    <i class="fa fa-remove"></i>
                                                                 </button>
 
                                                             </td>
