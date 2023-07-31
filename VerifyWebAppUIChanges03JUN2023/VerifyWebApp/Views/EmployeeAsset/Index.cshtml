@@ -108,26 +108,26 @@
                                     foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td style="width: 5%;" class="text-xs">@Html.DisplayFor(modelitem => item.empno)</td>
-                                            <td style="width: 5%;" class="text-xs">@Html.DisplayFor(modelitem => item.str_empname)</td>
-                                            <td style="width: 5%;" class="text-xs">@Html.DisplayFor(modelitem => item.str_assetno)</td>
-                                            <td style="width: 5%;" class="text-xs">@Html.DisplayFor(modelitem => item.str_assetname)</td>
-                                            <td style="width: 5%;" class="text-xs">@Html.DisplayFor(modelitem => item.AssetIdentificationNo)</td>
-                                            <td style="width: 5%;" class="text-xs">@Html.DisplayFor(modelitem => item.str_IssueDate)</td>
-                                            <td style="width: 5%;" class="text-xs">@Html.DisplayFor(modelitem => item.AssetRecievedFlag)</td>
-                                            <td style="width: 5%;" class="text-xs">@Html.DisplayFor(modelitem => item.str_RecievedDate)</td>
+                                            <td style="width: 10%;" class="text-xs">@Html.DisplayFor(modelitem => item.empno)</td>
+                                            <td style="width: 10%;" class="text-xs">@Html.DisplayFor(modelitem => item.str_empname)</td>
+                                            <td style="width: 10%;" class="text-xs">@Html.DisplayFor(modelitem => item.str_assetno)</td>
+                                            <td style="width: 10%;" class="text-xs">@Html.DisplayFor(modelitem => item.str_assetname)</td>
+                                            <td style="width: 10%;" class="text-xs">@Html.DisplayFor(modelitem => item.AssetIdentificationNo)</td>
+                                            <td style="width: 10%;" class="text-xs">@Html.DisplayFor(modelitem => item.str_IssueDate)</td>
+                                            <td style="width: 10%;" class="text-xs">@Html.DisplayFor(modelitem => item.AssetRecievedFlag)</td>
+                                            <td style="width: 10%;" class="text-xs">@Html.DisplayFor(modelitem => item.str_RecievedDate)</td>
 
                                             <td align="center">
-                                                <button type="button" class="btn btn-primary btn-sm"
+                                                <button type="button" class="btn modBtn btn-sm"
                                                         aria-label="Left Align"
                                                         onclick="EditLogin(@item.ID);">
-                                                    <i class="fa fa-edit"></i>Edit
+                                                    <i class="fa fa-edit"></i>
                                                 </button>
 
                                             </td>
                                             <td align="center">
-                                                <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" onclick="Delete(@item.ID);">
-                                                    <i class="fa fa-remove"></i>Delete
+                                                <button type="button" class="btn btn-sm delBtn" aria-label="Left Align" onclick="Delete(@item.ID);">
+                                                    <i class="fa fa-remove"></i>
                                                 </button>
 
                                             </td>
@@ -191,8 +191,7 @@
         var url = '@Url.Action("IssueAsset","EmployeeAsset")';
         console.log(url)
         window.location = url;
-    }
-
+                            }
 
         function opennewdialog() {
 
