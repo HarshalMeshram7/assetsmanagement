@@ -125,10 +125,11 @@
                         <div class="row my-1">
                             <div class="col-md-12">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-primary" id="btnAddloc"
+                                    <button type="button" class="btn btn-sm nBtn" id="btnAddloc"
                                             data-toggle="modal">
                                         Add Location
                                     </button>
+                                   
                                 </div>
                             </div>
                         </div>
@@ -187,8 +188,8 @@
 
                     <div class="modal-footer">
                        
-                        <button type="button" class="btn btn-default" id="ocationmodal" data-bs-dismiss="modal" onclick="closeloc()">Close</button>
-                        <button type="button" class="btn btn-primary" id="btnSave" onclick="save()">Save</button>
+                        <button type="button" class="btn btn-sm saveBtn" id="ocationmodal" style="margin-right:5px;" data-bs-dismiss="modal" onclick="closeloc()">Close</button>
+                        <button type="button" class="btn btn-sm clBtn" id="btnSave" onclick="save()">Save</button>
                         @*<button type="button" class="btn btn-default" onclick="close()">Close</button>*@
                     </div>
 
@@ -244,11 +245,14 @@
 
 
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" id="btnClose" data-bs-dismiss="modal" onclick="closeeditloc();">Close</button>
+                                        <button type="button" class="btn btn-sm saveBtn" id="btnClose" data-bs-dismiss="modal" onclick="closeeditloc();">Close</button>
+                                        @*<button type="button" class="btn btn-sm saveBtn" onclick="closeaddperiod();">Close</button>*@
+
                                         @*<button type="button" class="btn btn-sm clBtn" id="btnClose" data-bs-dismiss="modal">Close</button>*@
 
 
-                                        <button type="button" class="btn btn-primary" id="btnSave" onclick="saveloc();">Save</button>
+                                        <button type="button" class="btn btn-sm clBtn" id="btnSave" onclick="saveloc();">Save</button>
+                                        @*<button type="button" class="btn btn-sm clBtn" onclick="addsubperiod();">Save</button>*@
 
                                     </div>
 
@@ -295,8 +299,8 @@
 
 
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-sm clBtn" data-bs-dismiss="modal" onclick="closeeditloc();">Close</button>
-                                        <button type="button" class="btn btn-primary" id="btnSave" onclick="saveeditloc();">Save</button>
+                                        <button type="button" class="btn btn-sm saveBtn" data-bs-dismiss="modal" onclick="closeeditloc();">Close</button>
+                                        <button type="button" class="btn btn-sm clBtn" id="btnSave" onclick="saveeditloc();">Save</button>
                                     </div>
                                 </div>
                             </div>
@@ -507,10 +511,10 @@ function Addlocationtotable() {
     //  var assetamt = $("#txtassetamount").val()
     $('#tbllocation').last().append('<tr><td>' + srnocnt + '</td><td hidden>' + alocid + '</td>'
         + '<td hidden>' + blocid + '</td ><td hidden>' + clocid + '</td>'
-        + '<td>' + alocname + '</td ><td>' + blocname + '</td><td>' + clocname + '</td><td align="center"> <button type="button" class="btn btn-primary btn-sm"'
+        + '<td>' + alocname + '</td ><td>' + blocname + '</td><td>' + clocname + '</td><td align="center"> <button type="button" class="btn modBtn btn-sm"'
         + ' aria-label="Left Align"'
         + 'onclick="Editloc(this,' + srnocnt + ');">'
-        + '  <i class="fa fa-edit"></i>Edit</button></td><td align="center"> <button type="button" class="btn btn-danger btn-sm"'
+        + '  <i class="fa fa-edit"></i>Edit</button></td><td align="center"> <button type="button" class="btn btn-sm delBtn"'
         + ' aria-label="Center Align"'
         + 'onclick="deleteloc(this);">'
         + '  <i class="fa fa-remove"></i>Delete   </button></td></tr > ');
