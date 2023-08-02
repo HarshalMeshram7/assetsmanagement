@@ -121,11 +121,12 @@
                         <div class="row my-1">
                             <div class="col-md-12">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-primary" onclick="addLocation()" id="btnAddloc"
+                                    <button type="button" class="btn btn-sm nBtn" onclick="addLocation()" id="btnAddloc"
                                             data-toggle="modal">
 
                                         Add Location
                                     </button>
+                                   
                                 </div>
                             </div>
                         </div>
@@ -196,7 +197,7 @@
                                                         <td>@Html.DisplayFor(modelitem => item.LocBName)</td>
                                                         <td>@Html.DisplayFor(modelitem => item.LocCName)</td>
                                                         <td align="center">
-                                                            <button type="button" class="btn btn-primary btn-sm"
+                                                            <button type="button" class="btn modBtn btn-sm"
                                                                     aria-label="Left Align"
                                                                     onclick="Editloc(this,@item.Srno);">
                                                                 <i class="fa fa-edit"></i>Edit
@@ -204,7 +205,7 @@
 
                                                         </td>
                                                         <td align="center">
-                                                            <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" onclick="deleteloc(this);">
+                                                            <button type="button" class="btn btn-sm delBtn" aria-label="Left Align" onclick="deleteloc(this);">
                                                                 <i class="fa fa-remove"></i>Delete
                                                             </button>
                                                             @*<button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" onclick="Delete(@item.ID);">
@@ -227,8 +228,8 @@
 
                         <div class="modal-footer">
                             @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
-                            <button type="button" class="btn btn-default" onclick="closeloc()">Close</button>
-                            <button type="button" class="btn btn-primary" id="btnSave" onclick="SaveData();">Save</button>
+                            <button type="button" class="btn btn-sm saveBtn" style="margin-right:5px;" onclick="closeloc()">Close</button>
+                            <button type="button" class="btn btn-sm clBtn" id="btnSave" onclick="SaveData();">Save</button>
                         </div>
 
                         <!-- /.modal-content -->
@@ -270,8 +271,8 @@
 
 
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-sm clBtn" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary" id="btnSave" onclick="saveloc();">Save</button>
+                                        <button type="button" class="btn btn-sm saveBtn"  data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-sm clBtn"  id="btnSave" onclick="saveloc();">Save</button>
                                     </div>
                                 </div>
                             </div>
@@ -317,8 +318,8 @@
 
 
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-sm clBtn" data-bs-dismiss="modal" onclick="closeeditloc();">Close</button>
-                                        <button type="button" class="btn btn-primary" onclick="saveeditloc();">Save</button>
+                                        <button type="button" class="btn btn-sm saveBtn" data-bs-dismiss="modal" onclick="closeeditloc();">Close</button>
+                                        <button type="button" class="btn btn-sm clBtn" onclick="saveeditloc();">Save</button>
                                     </div>
                                 </div>
                             </div>
@@ -358,8 +359,8 @@
 
 
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="closeeditloc();">Close4</button>
-                                        <button type="button" class="btn btn-primary" id="btnSave" onclick="saveeditloc();">Save</button>
+                                        <button type="button" class="btn btn-sm saveBtn" data-dismiss="modal" onclick="closeeditloc();">Close</button>
+                                        <button type="button" class="btn btn-sm clBtn" id="btnSave" onclick="saveeditloc();">Save</button>
                                     </div>
                                 </div>
                             </div>
@@ -573,10 +574,10 @@
         //  var assetamt = $("#txtassetamount").val()
         $('#tbllocation').last().append('<tr><td>' + srnocnt + '</td><td hidden>' + alocid + '</td>'
             + '<td hidden>' + blocid + '</td ><td hidden>' + clocid + '</td>'
-            + '<td>' + alocname + '</td ><td>' + blocname + '</td><td>' + clocname + '</td><td align="center"> <button type="button" class="btn btn-primary btn-sm"'
+            + '<td>' + alocname + '</td ><td>' + blocname + '</td><td>' + clocname + '</td><td align="center"> <button type="button" class="btn modBtn btn-sm"'
             + ' aria-label="Left Align"'
             + 'onclick="Editloc(this,' + srnocnt + ');">'
-            + '  <i class="fa fa-edit"></i>Edit</button></td><td align="center"> <button type="button" class="btn btn-danger btn-sm"'
+            + '  <i class="fa fa-edit"></i>Edit</button></td><td align="center"> <button type="button" class="btn btn-sm delBtn"'
             + ' aria-label="Center Align"'
             + 'onclick="deleteloc(this);">'
             + '  <i class="fa fa-remove"></i>Delete   </button></td></tr > ');

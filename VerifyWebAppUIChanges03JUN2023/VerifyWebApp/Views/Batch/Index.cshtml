@@ -27,14 +27,16 @@
         </div>
         @using (@Html.BeginForm(null, null, FormMethod.Get, new { id = "frmNewEmp", name = "frmNewEmp" }))
         {@Html.AntiForgeryToken()}
-        <div class="pagecontent">
+        <div class="pagecontent" style="padding-top:10px;">
             <div class="row">
                 <div class="col-lg-12 ">
                     <button type="button" id="btnnew" value="New Practice"
-                            class="btn btn-sm btn-primary pull-right m-1 order-1"
+                            class="btn addBtn btn-sm mb-0 btn-tooltip"
+                         data-bs-toggle="tooltip" data-bs-placement="top" title="Add New Batch"
+
                             onclick="opennewdialog();">
-                        <i class="fa fa-plus-square"></i>
-                        Add New Batch
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                       
                     </button>
 
                 </div>
@@ -90,16 +92,16 @@
                                         <td>@Html.DisplayFor(modelitem => item.IsBatchOpen)</td>
 
                                         <td align="center">
-                                            <button type="button" class="btn btn-primary btn-sm"
+                                            <button type="button" class="btn modBtn btn-sm"
                                                     aria-label="Left Align"
                                                     onclick="EditBatch(@item.ID);">
-                                                <i class="fa fa-edit"></i>Edit
+                                                <i class="fa fa-edit"></i>
                                             </button>
 
                                         </td>
                                         <td align="center">
-                                            <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" onclick="Delete(@item.ID);">
-                                                <i class="fa fa-remove"></i>Delete
+                                            <button type="button" class="btn btn-sm delBtn" aria-label="Left Align" onclick="Delete(@item.ID);">
+                                                <i class="fa fa-remove"></i>
                                             </button>
 
 
