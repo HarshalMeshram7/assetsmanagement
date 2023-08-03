@@ -106,48 +106,13 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        LoadImages();
-    });
-
-    let cardcontainer = document.getElementById("Imagecontainer");
-
-    function getCard(assetname, assetno, imgdata) {
-        let card = document.createElement('div');
-
-        let img = document.createElement('img');
-        img.align = 'center';
-        img.style.marginRight = "60px"; 
-        let str = "data:image/jpg;base64," + imgdata;
-        img.src = str;
-
-        let eH4 = document.createElement('h6');
-        eH4.innerText = "Asset Name: " + assetname;
-        eH4.style.marginRight = "60px"; 
-
-        let eH5 = document.createElement('h6');
-        eH5.innerText = "Asset No: " + assetno;
-        eH4.style.marginRight = "60px";
-
-        card.appendChild(img);
-        card.appendChild(eH4);
-        card.appendChild(eH5);
-
-        cardcontainer.appendChild(card);
-
-        return card.outerHTML;
-    }
-
-
-    function LoadImages() {
-        var ControllerURL = '@Url.Action("GetImageData", "ImageGallery")';
-        console.log(ControllerURL);
-        var table = $('#tblattachment').DataTable({
+        $('#tblattachment').DataTable({
             "destroy": true,
             "processing": true,
             "pageLength": 3,
             "lengthChange": false,
             "pagingType": 'numbers',
-            "searching": false, // Remove the search text box
+            "searching": false,
             'language': {
                 "loadingRecords": "&nbsp;",
                 "processing": "Loading...",
@@ -157,12 +122,12 @@
             "serverSide": true,
             "filter": true,
             "ajax": {
-                url: ControllerURL,
+                url: '@Url.Action("GetImageData", "ImageGallery")',
                 type: 'POST',
             },
             "columns": [
-                { "data": "assetno", "autoWidth": true }, // First visible column
-                { "data": "assetname", "autoWidth": true }, // Second visible column
+                { "data": "assetno", "autoWidth": true },
+                { "data": "assetname", "autoWidth": true },
                 {
                     "data": null,
                     "render": function (data, type, full, meta) {
@@ -181,12 +146,49 @@
                     "visible": false,
                     "searchable": false
                 }
-            ]
+            ],
+            "drawCallback": function () {
+                LoadImages();
+            }
         });
+    });
+
+    let cardcontainer = document.getElementById("Imagecontainer");
+
+    function getCard(assetname, assetno, imgdata) {
+        let card = document.createElement('div');
+
+        let img = document.createElement('img');
+        img.style.width = "250px";
+        img.style.height = "250px";
+        img.style.objectFit = "cover";
+        img.style.marginRight = "80px";
+        let str = "data:image/jpg;base64," + imgdata;
+        img.src = str;
+
+        let eH4 = document.createElement('h6');
+        eH4.innerText = "Asset Name: " + assetname;
+        eH4.style.marginRight = "80px";
+
+        let eH5 = document.createElement('h6');
+        eH5.innerText = "Asset No: " + assetno;
+
+        card.appendChild(img);
+        card.appendChild(eH4);
+        card.appendChild(eH5);
+
+        return card.outerHTML;
     }
 
-
-
+    function LoadImages() {
+        cardcontainer.innerHTML = "";
+        $('#tblattachment tbody tr').each(function () {
+            let data = $('#tblattachment').DataTable().row(this).data();
+            let card = getCard(data.assetname, data.assetno, data.image_string);
+            cardcontainer.appendChild($(card)[0]);
+        });
+    }
 </script>
+
 
 
