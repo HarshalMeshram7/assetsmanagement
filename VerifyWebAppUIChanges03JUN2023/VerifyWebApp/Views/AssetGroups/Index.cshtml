@@ -27,6 +27,7 @@
 @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
+    ;
 }
 <div class="container-fluid">
 
@@ -53,30 +54,33 @@
                     <button type="button" id="mnuEdit" value="New Practice"
                             class="btn btn-sm modBtn pull-left m-1 order-1"
                             data-bs-toggle="tooltip" data-bs-placement="top" title="Modify">
-                        <i class="fa fa-edit"  aria-hidden="true"></i>
+                        <i class="fa fa-edit" aria-hidden="true"></i>
 
                     </button>
                     <button type="button" id="mnuDelete" value="New Practice"
                             class="btn btn-sm delBtn pull-left m-1 order-1"
                             data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
-                        <i class="fa fa-trash-o"  aria-hidden="true"></i>
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
 
                     </button>
                     <button type="button" id="mnuExpand" value=""
                             class="btn btn-sm xtraBtn pull-left m-1 order-1"
                             data-bs-toggle="tooltip" data-bs-placement="top" title="Expand all locations"
                             @*data-delay='{"show":"2000", "hide":"1500"}'*@>
-                        <i class="fa fa-expand"  aria-hidden="true"></i>
+                        <i class="fa fa-expand" aria-hidden="true"></i>
 
                     </button>
                     <button type="button" id="mnuContract" value=""
                             class="btn btn-sm xtraBtn pull-left m-1 order-1"
                             data-bs-toggle="tooltip" data-bs-placement="top" title="Contract all locations"
                             @*data-delay='{"show":"2000", "hide":"1500"}'*@>
-                        <i class="fa fa-compress"  aria-hidden="true"></i>
+                        <i class="fa fa-compress" aria-hidden="true"></i>
 
                     </button>
                 </div>
+
+                
+
             </div>
 
             <div class="row">
@@ -102,8 +106,41 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
+
                 <div class="col-md-8">
+                    
+                    <form class="row">
+                        <div class="col-sm-2 p-1">
+                            <select class="form-control form-control-sm" id="cboSearchBy">
+                                <option value="1">Search By Asset No</option>
+                                <option value="2">Search By Asset Name</option>
+                                <option value="3">Search By Asset Sr No</option>
+                                <option value="4">Search By Asset Id No</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3 p-1">
+                            <input type="text" class="form-control form-control-sm"
+                                   id="txtsearch" placeholder="Enter Asset No ..">
+                        </div>
+                        <div class="col-sm-1 p-1">
+                            <button type="button" id="btnsearch" value="Search"
+                                    class="btn btn-xs addBtn"
+                                    onclick="showasset('L0-0');">
+                                <i class="fa fa-search"></i>
+                            </button>
+
+                        </div>
+                        @*<div class="col-sm-1 p-1">
+                            <div id="divspinner">
+                                <div class="fa-3x">
+                                    <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+                                </div>
+                            </div>
+                        </div>*@
+
+                    </form>
 
                     <div class="table-responsive text-xs font-weight-bold ">
                         <table class="table table-flush table-hover "
@@ -790,9 +827,9 @@
     function showasset(id) {
         let searchby = '';
         let searchstring = '';
-       // searchby = $("#cboSearchBy").val();
+        searchby = $("#cboSearchBy").val();
 
-        //searchstring = $("#txtsearch").val();
+        searchstring = $("#txtsearch").val();
 
 
          var ControllerURL = '@Url.Action("GetAssetData", "Asset")';
@@ -804,7 +841,7 @@
                  "destroy": true,
                  "paging": true,
                  "info": false,
-                 "searching": true,
+                 "searching": false,
                  "pagingType": 'numbers',
                  "proccessing": true,
                  'language': {
@@ -877,6 +914,7 @@
 
 
     }
+
      function returnDropdownButton(AssetNo) {
 
          var option_Edit;
