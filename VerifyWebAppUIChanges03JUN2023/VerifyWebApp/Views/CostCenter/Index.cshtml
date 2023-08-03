@@ -47,34 +47,34 @@
                 <div class="col-md-12">
                     <button type="button" id="mnuAdd" value="New Practice"
                             class="btn btn-sm addBtn pull-left m-1 order-1"
-                            data-toggle="tooltip" data-placement="top" title="Add New"
-                            data-delay='{"show":"2000", "hide":"1500"}'>
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Add New"
+                            @*data-delay='{"show":"2000", "hide":"1500"}'*@>
                         <i class="fa fa-plus" aria-hidden="true"></i>
                     </button>
                     <button type="button" id="mnuEdit" value="New Practice"
                             class="btn btn-sm modBtn pull-left m-1 order-1"
-                            data-toggle="tooltip" data-placement="top" title="Modify">
-                        <i class="fa fa-edit"></i>
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Modify">
+                        <i class="fa fa-edit" aria-hidden="true"></i>
                       
                     </button>
                     <button type="button" id="mnuDelete" value="New Practice"
                             class="btn btn-sm delBtn pull-left m-1 order-1"
-                            data-toggle="tooltip" data-placement="top" title="Delete">
-                        <i class="fa fa-trash-o"></i>
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
                     
                     </button>
                     <button type="button" id="mnuExpand" value=""
                             class="btn btn-sm xtraBtn pull-left m-1 order-1"
-                            data-toggle="tooltip" data-placement="top" title="Expand all locations"
-                            data-delay='{"show":"2000", "hide":"1500"}'>
-                        <i class="fa fa-expand"></i>
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Expand all locations"
+                            @*data-delay='{"show":"2000", "hide":"1500"}'*@>
+                        <i class="fa fa-expand" aria-hidden="true"></i>
 
                     </button>
                     <button type="button" id="mnuContract" value=""
                             class="btn btn-sm xtraBtn pull-left m-1 order-1"
-                            data-toggle="tooltip" data-placement="top" title="Contract all locations"
-                            data-delay='{"show":"2000", "hide":"1500"}'>
-                        <i class="fa fa-compress"></i>
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Contract all locations"
+                            @*data-delay='{"show":"2000", "hide":"1500"}'*@>
+                        <i class="fa fa-compress" aria-hidden="true"></i>
 
                     </button>
                 </div>
@@ -108,7 +108,7 @@
 
                     <div class="table-responsive">
                         <table class="table table-flush table-hover text-xs"
-                               style="width:50%" id="tblasset">
+                               style="width:100%" id="tblasset">
                             <thead class="hcol text-uppercase" style="font-weight:bold">
                                 <tr>
 
@@ -548,91 +548,83 @@
 
      function showasset(id) {
 
-         let searchby = '';
-        let searchstring = '';
-       // searchby = $("#cboSearchBy").val();
+      // alert(getHeaders());
 
-        //searchstring = $("#txtsearch").val();
+        let form = $('#frmNewEmp');
+        let token = $('input[name="__RequestVerificationToken"]', form).val();
 
+        var ControllerURL = '@Url.Action("GetAssetData", "Location")';
+        // ControllerURL = ControllerURL + "&id=" +
 
-         var ControllerURL = '@Url.Action("GetAssetData", "Asset")';
-         console.log(ControllerURL);
-         var table = $('#tblasset')
-             .on('processing.dt', function (e, settings, processing) {
-               //  $('#divspinner').css('display', processing ? 'block' : 'none');
-             }).DataTable({
-                 "destroy": true,
-                 "paging": true,
-                 "info": false,
-                 "searching": true,
-                 "pagingType": 'numbers',
-                 "proccessing": true,
-                 'language': {
-                 "loadingRecords": "&nbsp;",
-                 "decimal": ",",
-                 "thousands": ","
-             },
-             "serverSide": true,
-             "filter": true,
-             "ajax": {
+        var table = $('#tblasset').DataTable({
+            "destroy": true,
+            "paging": true,
+            "info": false,
+            "searching": true,
+            "pagingType": 'numbers',
+            "proccessing": true,
+            'language': {
+                "loadingRecords": "&nbsp;",
+                "decimal": ",",
+                "thousands": ","
+            },
+            "serverSide": true,
+            "filter": true,
 
-                 url: ControllerURL,
-                 // type: 'GET',
-                 //  data: { "term": productname },
-                 type: 'POST',
-                 "data": function (d) {
-                         d.id = id,
-                         d.searchby = searchby,
-                         d.searchstring = searchstring
-                 }
+            "ajax": {
+                "url": ControllerURL,
+                "type": 'POST',
+                "headers": getHeaders(),
+                "data": function (d) {
+                    d.id = id
+                }
+            },
 
-             },
+            "columns": [
+                { "data": "AssetNo", "autoWidth": true },
+                { "data": "AssetIdentificationNo", "autoWidth": true },
+                { "data": "AssetName", "autoWidth": true },
+                { "data": "str_VoucherDate", "autoWidth": true },
+                {
+                    "data": "AmountCapitalisedCompany",
+                    render: $.fn.dataTable.render.number(',', '.', 2)
+                    , "autoWidth": true
+                }
+            ],
+            columnDefs: [
+                {
+                    "targets": 0,
+                    "className": "text-xs",
+                    "width": "8%"
 
+                },
+                {
+                    "targets": 1,
+                    "className": "text-xs",
+                    "width": "20%"
+                },
+                {
+                    "targets": 2,
+                    "className": "text-xs text-wrap",
+                    "width": "30%"
+                },
+                {
+                    "targets": 3,
+                    "className": "text-xs",
+                    "width": "10%"
+                },
 
-             "columns": [
-                     { "data": "AssetNo", "autoWidth": true },
-                     { "data": "AssetIdentificationNo", "autoWidth": true },
-                     { "data": "AssetName", "autoWidth": true },
-                     { "data": "str_VoucherDate", "autoWidth": true },
-                     {
-                         "data": "AmountCapitalisedCompany",
-                         render: $.fn.dataTable.render.number(',', '.', 2)
-                         , "autoWidth": true
-                   }
-                 ],
-                 columnDefs: [
-                     {
-                         "targets": 0,
-                         "className": "text-xs",
-                         "width": "8%"
-
-                     },
-                     {
-                         "targets": 1,
-                         "className": "text-xs",
-                         "width": "20%"
-                     },
-                     {
-                         "targets": 2,
-                         "className": "text-xs text-wrap",
-                         "width": "30%"
-                     },
-                     {
-                         "targets": 3,
-                         "className": "text-xs",
-                         "width": "10%"
-                     },
-
-                     {
-                         "targets": 4,
-                         "className": "text-end text-xs",
-                         "width": "10%"
-                     },
+                {
+                    "targets": 4,
+                    "className": "text-end text-xs",
+                    "width": "10%"
+                },
 
 
-                 ]
+            ]
 
-     });
+        });
+
 
 
     }

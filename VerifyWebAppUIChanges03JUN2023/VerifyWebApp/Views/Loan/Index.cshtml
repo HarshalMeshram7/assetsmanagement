@@ -25,31 +25,33 @@
 
 
                 <div class="row" style="padding-left:10px">
-                    <div class="col-lg-12 ">
+                    <div class="col-lg-12 " style="padding-top:10px;">
 
                         <button type="button" id="btnnew" value="New Practice"
-                                class="btn btn-sm addBtn pull-right m-1 order-1"
-                                onclick="opennewdialog();" data-toggle="tooltip" data-placement="top" title="Add New">
+                                class="btn addBtn btn-sm mb-0 btn-tooltip"
+                                onclick="opennewdialog();" data-bs-toggle="tooltip" data-bs-placement="top" title="Add New Loan">
                             <i class="fa fa-plus" aria-hidden="true"></i>
 
                         </button>
-                        <button type="button" id="btnexport" value="New Practice"
-                                class="btn btn-sm modBtn pull-right m-1 order-2"
-                                onclick="LoanExport();" data-toggle="tooltip" data-placement="top" title="Export">
-                            <i class="fa fa-file-excel-o"></i>
-                        </button>
-
                         <button type="button" id="btndownloadexcel" value="New Practice"
-                                class="btn btn-sm xtraBtn pull-right m-1 order-3"
-                                onclick="downloadexcel();" data-toggle="tooltip" data-placement="top" title="Download">
-                            <i class="fa fa-download"></i>
+                                class="btn btn-sm xtraBtn mb-0 btn-tooltip"
+                                onclick="downloadexcel();" data-bs-toggle="tooltip" data-bs-placement="top" title="Download Template">
+                            <i class="fa fa-download" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" id="btnimport" value="Upload"
+                                class="btn btn-sm xtraBtn mb-0 btn-tooltip"
+                                onclick="Importexcel();" data-bs-toggle="tooltip" data-bs-placement="top" title="Upload Template">
+                            <i class="fa fa-upload"  aria-hidden="true"></i>
+                        </button>
+                        <button type="button" id="btnexport" value="New Practice"
+                                class="btn btn-sm modBtn mb-0 btn-tooltip"
+                                onclick="LoanExport();" data-bs-toggle="tooltip" data-bs-placement="top" title="Export List">
+                            <i class="fa fa-file-excel-o" aria-hidden="true"></i>
                         </button>
 
-                        <button type="button" id="btnimport" value="Upload"
-                                class="btn btn-sm xtraBtn pull-right m-1 order-4"
-                                onclick="Importexcel();" data-toggle="tooltip" data-placement="top" title="Import">
-                            <i class="fa fa-upload"></i>
-                        </button>
+
+
+
 
                         @*<button type="button" id="btnimport" value="Upload"
                 class="btn btn-sm xtraBtn pull-right m-1 order-4"
@@ -176,7 +178,7 @@
         });
     });
 
-            $('#btnimport').click(function (e) {
+        /*    $('#btnimport').click(function (e) {*/
 
                 if (typeof jQuery !== 'undefined') {
                     console.log('jQuery Loaded');
@@ -199,7 +201,7 @@
 
                     // alert(data);
                 }
-            });
+           // });
 
      function Delete(id)
      {
