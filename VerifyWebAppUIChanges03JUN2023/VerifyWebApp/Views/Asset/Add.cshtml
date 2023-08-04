@@ -1194,37 +1194,38 @@
                 <div class="row">
                     <div class="col-md-12">
                         <button type="button" id="mnuExpand" value=""
-                                class="btn btn-sm xtraBtn pull-left m-1 order-1"
-                                data-toggle="tooltip" data-placement="top" title="Expand all locations"
-                                data-delay='{"show":"2000", "hide":"1500"}'>
-                            <i class="fa fa-expand"></i>
+                                class="btn addBtn btn-sm mb-0 btn-tooltip"
+                                data-bs-toggle="tooltip" data-bs-placement="top" title="Expand all locations"
+                                @*data-delay='{"show":"2000", "hide":"1500"}'*@>
+                            <i class="fa fa-expand" aria-hidden="true"></i>
 
                         </button>
                         <button type="button" id="mnuContract" value=""
                                 class="btn btn-sm xtraBtn pull-left m-1 order-1"
-                                data-toggle="tooltip" data-placement="top" title="Contract all locations"
-                                data-delay='{"show":"2000", "hide":"1500"}'>
-                            <i class="fa fa-compress"></i>
+                                data-bs-toggle="tooltip" data-bs-placement="top" title="Contract all locations"
+                                @*data-delay='{"show":"2000", "hide":"1500"}'*@>
+                            <i class="fa fa-compress" aria-hidden="true"></i>
 
                         </button>
 
                         <button type="button" id="mnuSelectGroup" value="New Practice"
                                 class="btn btn-sm saveBtn pull-left m-1 order-1"
-                                data-toggle="tooltip" data-placement="top" title="Select a node first
+                                data-bs-toggle="tooltip" data-bs-placement="top" title="Select a node first
                                 to Add new location"
-                                data-delay='{"show":"2000", "hide":"1500"}'>
-                            <i class="fa fa-check"></i>
+                                @*data-delay='{"show":"2000", "hide":"1500"}'*@>
+                            <i class="fa fa-check" aria-hidden="true"></i>
                             Select Group
                         </button>
 
                         <button type="button" id="mnuAdd" value="New Practice"
                                 class="btn btn-sm clBtn pull-left m-1 order-1"
-                                data-toggle="tooltip" data-placement="top" title="Select a node first
-                                to Add new location"
-                                data-delay='{"show":"2000", "hide":"1500"}'>
-                            <i class="fa window-close"></i>
+                                data-bs-toggle="tooltip" data-bs-placement="top" title="Select a node first
+                                to Add new location" data-bs-dismiss="modal"
+                                @*data-delay='{"show":"2000", "hide":"1500"}'*@>
+                            <i class="fa window-close" aria-hidden="true"></i>
                             Close
                         </button>
+
                     </div>
 
                 </div>
