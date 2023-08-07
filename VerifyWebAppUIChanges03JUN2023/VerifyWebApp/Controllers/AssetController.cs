@@ -337,14 +337,14 @@ namespace VerifyWebApp.Controllers
                 int tempLength = id.Length;
                 string strr_id = id.Substring(3, tempLength - 3);
                 int int_id = Convert.ToInt32(strr_id);
-                
+
 
                 AssetRepository assetRepository = new AssetRepository();
                 if (search.Length > 0)
                 {
                     searchstring = search;
                 }
-                
+
 
                 if (searchstring.Length > 0)
                 {
@@ -848,7 +848,9 @@ namespace VerifyWebApp.Controllers
                         if (supplier != null)
                         {
                             item.str_suppliername = db.Suppliers.Where(x => x.ID == item.SupplierNo && x.Companyid == companyid).FirstOrDefault().SupplierName;
-                        } else {
+                        }
+                        else
+                        {
                             item.str_suppliername = "";
                         }
 
@@ -866,7 +868,8 @@ namespace VerifyWebApp.Controllers
                         if (aLocations != null)
                         {
                             item.str_mainlocation = db.ALocations.Where(x => x.ID == item.LocAID && x.Companyid == companyid).FirstOrDefault().ALocationName;
-                        } else
+                        }
+                        else
                         {
                             item.str_mainlocation = "";
                         }
@@ -3084,7 +3087,8 @@ namespace VerifyWebApp.Controllers
                     if (obj_BLocation != null)
                     {
                         item.str_locbname = obj_BLocation.BLocationName;
-                    } else { item.str_locbname = ""; }
+                    }
+                    else { item.str_locbname = ""; }
 
                 }
                 if (item.CLocID == 0 || item.CLocID == null)
@@ -4398,7 +4402,8 @@ namespace VerifyWebApp.Controllers
             JsonResult res;
             res = new JsonResult();
 
-            try {
+            try
+            {
 
                 AssetRepository assetRepository = new AssetRepository();
 
@@ -4425,7 +4430,7 @@ namespace VerifyWebApp.Controllers
                 return res;
             }
         }
-    
+
 
 
 
@@ -4848,7 +4853,8 @@ namespace VerifyWebApp.Controllers
             {
                 tDate = dtValidDate;
                 return true;
-            } else
+            }
+            else
             {
                 tDate = DateTime.MinValue;
                 return false;
@@ -4896,9 +4902,9 @@ namespace VerifyWebApp.Controllers
 
             Assets assets = new Assets();
 
-           
 
-           
+
+
             try
             {
 
@@ -4940,7 +4946,8 @@ namespace VerifyWebApp.Controllers
                             assetImportRepository.ReadExcel(workSheet);
 
                             assetImportRepository.Validate();
-                            if (assetImportRepository.lstErrors.Count == 0) { 
+                            if (assetImportRepository.lstErrors.Count == 0)
+                            {
                                 assetImportRepository.ValidateRefIntegrity();
                             }
 
@@ -4949,7 +4956,7 @@ namespace VerifyWebApp.Controllers
 
 
                                 response.status = "Error";
-                                if (assetImportRepository.lstErrors.Count >=25)
+                                if (assetImportRepository.lstErrors.Count >= 25)
                                 {
                                     response.data = JsonConvert.SerializeObject(assetImportRepository.lstErrors.Take(100));
                                 }
@@ -4959,8 +4966,8 @@ namespace VerifyWebApp.Controllers
                                 }
 
                                 res.Data = JsonConvert.SerializeObject(response);
-                                List <AssetImportError> lstErrors = new List<AssetImportError>(); ;
-                                lstErrors = assetImportRepository.lstErrors; 
+                                List<AssetImportError> lstErrors = new List<AssetImportError>(); ;
+                                lstErrors = assetImportRepository.lstErrors;
 
                                 Session["ImportErrors"] = lstErrors;
                                 return res;
@@ -4971,7 +4978,7 @@ namespace VerifyWebApp.Controllers
                                 // TODO Save Assets 
 
                                 assetImportRepository.ConvertToAssets();
-                             
+
 
                                 response.status = "Success";
                                 res.Data = JsonConvert.SerializeObject(response);
@@ -4981,7 +4988,7 @@ namespace VerifyWebApp.Controllers
                             }
 
 
-                           
+
                         }
 
                     }
@@ -5055,36 +5062,36 @@ namespace VerifyWebApp.Controllers
             Assets assets = new Assets();
             DbContextTransaction transaction = db.Database.BeginTransaction();
             try
+            {
+
+
+                if (Request != null)
                 {
-             
-                
-                    if (Request != null)
+                    bool norecordsfound = false;
+
+                    HttpPostedFileBase file;
+
+                    file = null;
+                    HttpFileCollectionBase files = Request.Files;
+                    List<string> errorlist = new List<string>();
+
+                    if (files.Count > 0)
                     {
-                        bool norecordsfound = false;
+                        file = files[0];
+                        string fileName = file.FileName;
 
-                        HttpPostedFileBase file;
-                    
-                        file = null;
-                        HttpFileCollectionBase files = Request.Files;
-                        List<string> errorlist = new List<string>();
+                        string fileContentType = file.ContentType;
+                        byte[] fileBytes = new byte[file.ContentLength];
+                        Stream stream = file.InputStream;
+                        var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
 
-                        if (files.Count > 0)
+                        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                        using (var package = new OfficeOpenXml.ExcelPackage(file.InputStream))
                         {
-                            file = files[0];
-                            string fileName = file.FileName;
-
-                            string fileContentType = file.ContentType;
-                            byte[] fileBytes = new byte[file.ContentLength];
-                            Stream stream = file.InputStream;
-                            var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
-
-                            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-                            using (var package = new OfficeOpenXml.ExcelPackage(file.InputStream))
-                            {
-                                var currentSheet = package.Workbook.Worksheets;
-                                var workSheet = currentSheet.First();
-                                var noOfCol = workSheet.Dimension.End.Column;
-                                var noOfRow = workSheet.Dimension.End.Row;
+                            var currentSheet = package.Workbook.Worksheets;
+                            var workSheet = currentSheet.First();
+                            var noOfCol = workSheet.Dimension.End.Column;
+                            var noOfRow = workSheet.Dimension.End.Row;
 
 
 
@@ -5097,1114 +5104,1120 @@ namespace VerifyWebApp.Controllers
 
                             ///
 
-                                 bool bAutoGenerateAssetNo = true;
-                                if (company.AutoGenerateAssetNo =="Y")
+                            bool bAutoGenerateAssetNo = true;
+                            if (company.AutoGenerateAssetNo == "Y")
+                            {
+                                bAutoGenerateAssetNo = true;
+                            }
+                            else
+                            {
+                                bAutoGenerateAssetNo = false;
+                            }
+
+
+
+
+
+
+                            string strsql = "select max(convert(assetno, unsigned)) assetno from tblassets order by convert(assetno, unsigned)";
+
+                            var LastAssetNo = db.Database.SqlQuery<int>(strsql).FirstOrDefault();
+
+                            int NextAssetNo = Convert.ToInt32(LastAssetNo);
+
+
+                            TimeZoneInfo istZone = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+
+                            var tnow = System.DateTime.Now.ToUniversalTime();
+                            DateTime istDate = TimeZoneInfo.ConvertTimeFromUtc(tnow.Date, istZone);
+
+                            for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
+                            {
+
+                                NextAssetNo = NextAssetNo + 1;
+
+
+                                string AssetNo = "";
+                                string int_srno = "";
+                                string AssetName = "";
+                                string AssetIdentificationNo = "";
+                                string grossvalue = "";
+                                string servicecharge = "";
+                                string otherexpense = "";
+                                string customduty = "";
+                                string exciseduty = "";
+                                string servicetax = "";
+                                string vat = "";
+                                string anyotherduty = "";
+                                string cst = "";
+                                string anyothertax = "";
+                                string totaladdition = "";
+                                string discount = "";
+                                string roundoff = "";
+                                string totaldeduction = "";
+                                string invoiceamt = "";
+                                string dutydrawback = "";
+                                string excisecredit = "";
+                                string servicetaxcredit = "";
+                                string anyotherdutycredit = "";
+                                string vatcredit = "";
+                                string anyothercredit = "";
+                                string cstcredit = "";
+                                string totalcredit = "";
+                                string amtcap = "";
+                                string amtcapcompanylaw = "";
+                                string amtcapincometax = "";
+                                string VoucherNo = "";
+                                string VoucherDate = "";
+                                string PODate = "";
+                                string ReceiptDate = "";
+                                string CommissioningDate = "";
+                                string BillDate = "";
+                                string DtPutToUse = "";
+                                string DtPutToUseIT = "";
+                                string PONo = "";
+                                string BillNo = "";
+                                string Qty = "";
+                                string SupplierNo = "";
+                                string AGroupId = "";
+                                string BGroupId = "";
+                                string CGroupId = "";
+                                string DGroupId = "";
+                                string LocAId = "";
+                                string LocBId = "";
+                                string LocCId = "";
+                                string CostCenterAId = "";
+                                string CostCenterBId = "";
+                                string NormalRate = "";
+                                string AdditionalRate = "";
+                                string TotalRate = "";
+                                string DepreciationMethod = "";
+                                string BrandName = "";
+                                string SrNo = "";
+                                string Model = "";
+                                string Remarks = "";
+                                string IsImported = "";
+                                string Currency = "";
+                                string Values = "";
+                                string cgstcredit = "";
+                                string igstcredit = "";
+                                string sgstcredit = "";
+                                string cgst = "";
+                                string igst = "";
+                                string sgst = "";
+                                string uomno = "";
+                                string residual = "";
+                                string opAccDepreciation = "";
+                                string YrofManufacturing = "";
+                                string MRRNo = "";
+                                string AccountID = "";
+                                string DepAccountId = "";
+                                string AccAccountID = "";
+                                string ITGroupID = "";
+                                string Usefullife = "";
+                                string Parent_AssetNo = "";
+                                string iscomponent = "";
+                                string ExpiryDate = "";
+
+                                bool ExpiryDateflag = false;
+                                bool iscomponentflag = false;
+                                bool Parent_AssetNoflag = false;
+                                bool Usefullifeflag = false;
+                                bool AssetNoflag = false;
+                                bool int_srnoflag = false;
+                                bool AssetNameflag = false;
+                                bool AssetIdentificationNoflag = false;
+                                bool grossvalueflag = false;
+                                bool servicechargeflag = false;
+                                bool otherexpenseflag = false;
+                                bool customdutyflag = false;
+                                bool excisedutyflag = false;
+                                bool servicetaxflag = false;
+                                bool vatflag = false;
+                                bool anyotherdutyflag = false;
+                                bool cstflag = false;
+                                bool anyothertaxflag = false;
+                                bool totaladditionflag = false;
+                                bool discountflag = false;
+                                bool roundoffflag = false;
+                                bool totaldeductionflag = false;
+                                bool invoiceamtflag = false;
+                                bool dutydrawbackflag = false;
+                                bool excisecreditflag = false;
+                                bool servicetaxcreditflag = false;
+                                bool anyotherdutycreditflag = false;
+                                bool vatcreditflag = false;
+                                bool anyothercreditflag = false;
+                                bool cstcreditflag = false;
+                                bool totalcreditflag = false;
+                                bool amtcapflag = false;
+                                bool amtcapcompanylawflag = false;
+                                bool amtcapincometaxflag = false;
+                                bool VoucherNoflag = false;
+                                bool VoucherDateflag = false;
+                                bool PODateflag = false;
+                                bool ReceiptDateflag = false;
+                                bool CommissioningDateflag = false;
+                                bool BillDateflag = false;
+                                bool DtPutToUseflag = false;
+                                bool DtPutToUseITflag = false;
+                                bool PONoflag = false;
+                                bool BillNoflag = false;
+                                bool Qtyflag = false;
+                                bool SupplierNoflag = false;
+                                bool AGroupIdflag = false;
+                                bool BGroupIdflag = false;
+                                bool CGroupIdflag = false;
+                                bool DGroupIdflag = false;
+                                bool LocAIdflag = false;
+                                bool LocBIdflag = false;
+                                bool LocCIdflag = false;
+                                bool CostCenterAIdflag = false;
+                                bool CostCenterBIdflag = false;
+                                bool NormalRateflag = false;
+                                bool AdditionalRateflag = false;
+                                bool TotalRateflag = false;
+                                bool DepreciationMethodflag = false;
+                                bool BrandNameflag = false;
+                                bool SrNoflag = false;
+                                bool Modelflag = false;
+                                bool Remarksflag = false;
+                                bool IsImportedflag = false;
+                                bool Currencyflag = false;
+                                bool Valuesflag = false;
+                                bool cgstcreditflag = false;
+                                bool igstcreditflag = false;
+                                bool sgstcreditflag = false;
+                                bool cgstflag = false;
+                                bool igstflag = false;
+                                bool sgstflag = false;
+                                bool uomnoflag = false;
+                                bool residualflag = false;
+                                bool opAccDepreciationflag = false;
+                                bool YrofManufacturingflag = false;
+                                bool MRRNoflag = false;
+                                bool AccountIDflag = false;
+                                bool DepAccountIdflag = false;
+                                bool AccAccountIDflag = false;
+                                bool ITGroupIDflag = false;
+
+
+                                if (workSheet.Cells[rowIterator, 1].Text == "")
                                 {
-                                     bAutoGenerateAssetNo = true;
+                                    int_srno = "";
+                                    int_srnoflag = false;
                                 }
                                 else
                                 {
-                                    bAutoGenerateAssetNo = false;
-                                 }
-
-
-
-                                
-
-
-                                string strsql = "select max(convert(assetno, unsigned)) assetno from tblassets order by convert(assetno, unsigned)";
-
-                                var LastAssetNo = db.Database.SqlQuery<int>(strsql).FirstOrDefault();
-
-                                int NextAssetNo = Convert.ToInt32(LastAssetNo);
-
-
-                                 TimeZoneInfo istZone = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
-
-                                var tnow = System.DateTime.Now.ToUniversalTime();
-                                DateTime istDate = TimeZoneInfo.ConvertTimeFromUtc(tnow.Date, istZone);
-
-                                for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
-                                {
-
-                                    NextAssetNo = NextAssetNo + 1;
-
-
-                                    string AssetNo = "";
-                                    string int_srno = "";
-                                    string AssetName = "";
-                                    string AssetIdentificationNo = "";
-                                    string grossvalue = "";
-                                    string servicecharge = "";
-                                    string otherexpense = "";
-                                    string customduty = "";
-                                    string exciseduty = "";
-                                    string servicetax = "";
-                                    string vat = "";
-                                    string anyotherduty = "";
-                                    string cst = "";
-                                    string anyothertax = "";
-                                    string totaladdition = "";
-                                    string discount = "";
-                                    string roundoff = "";
-                                    string totaldeduction = "";
-                                    string invoiceamt = "";
-                                    string dutydrawback = "";
-                                    string excisecredit = "";
-                                    string servicetaxcredit = "";
-                                    string anyotherdutycredit = "";
-                                    string vatcredit = "";
-                                    string anyothercredit = "";
-                                    string cstcredit = "";
-                                    string totalcredit = "";
-                                    string amtcap = "";
-                                    string amtcapcompanylaw = "";
-                                    string amtcapincometax = "";
-                                    string VoucherNo = "";
-                                    string VoucherDate = "";
-                                    string PODate = "";
-                                    string ReceiptDate = "";
-                                    string CommissioningDate = "";
-                                    string BillDate = "";
-                                    string DtPutToUse = "";
-                                    string DtPutToUseIT = "";
-                                    string PONo = "";
-                                    string BillNo = "";
-                                    string Qty = "";
-                                    string SupplierNo = "";
-                                    string AGroupId = "";
-                                    string BGroupId = "";
-                                    string CGroupId = "";
-                                    string DGroupId = "";
-                                    string LocAId = "";
-                                    string LocBId = "";
-                                    string LocCId = "";
-                                    string CostCenterAId = "";
-                                    string CostCenterBId = "";
-                                    string NormalRate = "";
-                                    string AdditionalRate = "";
-                                    string TotalRate = "";
-                                    string DepreciationMethod = "";
-                                    string BrandName = "";
-                                    string SrNo = "";
-                                    string Model = "";
-                                    string Remarks = "";
-                                    string IsImported = "";
-                                    string Currency = "";
-                                    string Values = "";
-                                    string cgstcredit = "";
-                                    string igstcredit = "";
-                                    string sgstcredit = "";
-                                    string cgst = "";
-                                    string igst = "";
-                                    string sgst = "";
-                                    string uomno = "";
-                                    string residual = "";
-                                    string opAccDepreciation = "";
-                                    string YrofManufacturing = "";
-                                    string MRRNo = "";
-                                    string AccountID = "";
-                                    string DepAccountId = "";
-                                    string AccAccountID = "";
-                                    string ITGroupID = "";
-                                    string Usefullife = "";
-                                    string Parent_AssetNo = "";
-                                    string iscomponent = "";
-                                    string ExpiryDate = "";
-
-                                    bool ExpiryDateflag = false;
-                                    bool iscomponentflag = false;
-                                    bool Parent_AssetNoflag = false;
-                                    bool Usefullifeflag = false;
-                                    bool AssetNoflag = false;
-                                    bool int_srnoflag = false;
-                                    bool AssetNameflag = false;
-                                    bool AssetIdentificationNoflag = false;
-                                    bool grossvalueflag = false;
-                                    bool servicechargeflag = false;
-                                    bool otherexpenseflag = false;
-                                    bool customdutyflag = false;
-                                    bool excisedutyflag = false;
-                                    bool servicetaxflag = false;
-                                    bool vatflag = false;
-                                    bool anyotherdutyflag = false;
-                                    bool cstflag = false;
-                                    bool anyothertaxflag = false;
-                                    bool totaladditionflag = false;
-                                    bool discountflag = false;
-                                    bool roundoffflag = false;
-                                    bool totaldeductionflag = false;
-                                    bool invoiceamtflag = false;
-                                    bool dutydrawbackflag = false;
-                                    bool excisecreditflag = false;
-                                    bool servicetaxcreditflag = false;
-                                    bool anyotherdutycreditflag = false;
-                                    bool vatcreditflag = false;
-                                    bool anyothercreditflag = false;
-                                    bool cstcreditflag = false;
-                                    bool totalcreditflag = false;
-                                    bool amtcapflag = false;
-                                    bool amtcapcompanylawflag = false;
-                                    bool amtcapincometaxflag = false;
-                                    bool VoucherNoflag = false;
-                                    bool VoucherDateflag = false;
-                                    bool PODateflag = false;
-                                    bool ReceiptDateflag = false;
-                                    bool CommissioningDateflag = false;
-                                    bool BillDateflag = false;
-                                    bool DtPutToUseflag = false;
-                                    bool DtPutToUseITflag = false;
-                                    bool PONoflag = false;
-                                    bool BillNoflag = false;
-                                    bool Qtyflag = false;
-                                    bool SupplierNoflag = false;
-                                    bool AGroupIdflag = false;
-                                    bool BGroupIdflag = false;
-                                    bool CGroupIdflag = false;
-                                    bool DGroupIdflag = false;
-                                    bool LocAIdflag = false;
-                                    bool LocBIdflag = false;
-                                    bool LocCIdflag = false;
-                                    bool CostCenterAIdflag = false;
-                                    bool CostCenterBIdflag = false;
-                                    bool NormalRateflag = false;
-                                    bool AdditionalRateflag = false;
-                                    bool TotalRateflag = false;
-                                    bool DepreciationMethodflag = false;
-                                    bool BrandNameflag = false;
-                                    bool SrNoflag = false;
-                                    bool Modelflag = false;
-                                    bool Remarksflag = false;
-                                    bool IsImportedflag = false;
-                                    bool Currencyflag = false;
-                                    bool Valuesflag = false;
-                                    bool cgstcreditflag = false;
-                                    bool igstcreditflag = false;
-                                    bool sgstcreditflag = false;
-                                    bool cgstflag = false;
-                                    bool igstflag = false;
-                                    bool sgstflag = false;
-                                    bool uomnoflag = false;
-                                    bool residualflag = false;
-                                    bool opAccDepreciationflag = false;
-                                    bool YrofManufacturingflag = false;
-                                    bool MRRNoflag = false;
-                                    bool AccountIDflag = false;
-                                    bool DepAccountIdflag = false;
-                                    bool AccAccountIDflag = false;
-                                    bool ITGroupIDflag = false;
-
-                                
-                                    if (workSheet.Cells[rowIterator, 1].Text == "")
-                                    {
-                                        int_srno = "";
-                                        int_srnoflag = false;
-                                    }
-                                    else
-                                    {
-                                        int_srno = workSheet.Cells[rowIterator, 1].Value.ToString();
-                                        int_srnoflag = true;
-                                    }
-
-                               // System.Diagnostics.Debug.WriteLine("Asset No  - " + workSheet.Cells[rowIterator, 2].Text);
-
-                                    if (workSheet.Cells[rowIterator, 2].Text == "")
-                                    {
-                                        AssetNo = "";
-                                        AssetNoflag = false;
-
-                                    }
-                                    else
-                                    {
-
-                                        if (bAutoGenerateAssetNo==false)
-                                        {
-                                            AssetNo = workSheet.Cells[rowIterator, 2].Value.ToString();
-                                            AssetNoflag = true;
-                                        }else
-                                        {
-                                            AssetNo = NextAssetNo.ToString();
-                                        }
-                                        
-                                    }
-                                System.Diagnostics.Debug.WriteLine("Import Asset No" + AssetNo);
-                                if (AssetNo  == "1571")
-                                {
-                                    int z = 0;
+                                    int_srno = workSheet.Cells[rowIterator, 1].Value.ToString();
+                                    int_srnoflag = true;
                                 }
 
-                                    if (workSheet.Cells[rowIterator, 3].Text == "")
-                                    {
-                                        AssetName = "";
-                                        AssetNameflag = false;
-                                    }
-                                    else
-                                    {
-                                        AssetName = workSheet.Cells[rowIterator, 3].Value.ToString();
-                                        AssetNameflag = true;
-                                    }
-                                    if (workSheet.Cells[rowIterator, 4].Text == "")
-                                    {
-                                        AssetIdentificationNo = "";
-                                        AssetIdentificationNoflag = false;
-                                    }
-                                    else
-                                    {
-                                        AssetIdentificationNo = workSheet.Cells[rowIterator, 4].Value.ToString();
-                                        AssetIdentificationNoflag = true;
-                                    }
-
-                                    if (workSheet.Cells[rowIterator, 5].Text == "")
-                                    {
-                                        VoucherNo = "";
-                                        VoucherNoflag = false;
-                                    }
-                                    else
-                                    {
-                                        VoucherNo = workSheet.Cells[rowIterator, 5].Value.ToString();
-                                        VoucherNoflag = true;
-                                    }
-
-                                    if (workSheet.Cells[rowIterator, 6].Text == "")
-                                    {
-                                        VoucherDate = "";
-                                        VoucherDateflag = false;
-                                    }
-                                    else
-                                    {
-                                        VoucherDate = workSheet.Cells[rowIterator, 6].Value.ToString();
-                                        VoucherDateflag = true;
-                                    }
-                                    //-----------------------------------
-                                    if (workSheet.Cells[rowIterator, 7].Text == "")
-                                    {
-                                        DtPutToUse = "";
-                                        DtPutToUseflag = false;
-                                    }
-                                    else
-                                    {
-                                        DtPutToUse = workSheet.Cells[rowIterator, 7].Value.ToString();
-                                        DtPutToUseflag = true;
-                                    }
-                                    if (workSheet.Cells[rowIterator, 8].Text == "")
-                                    {
-                                        DtPutToUseIT = "";
-                                        DtPutToUseITflag = false;
-                                    }
-                                    else
-                                    {
-                                        DtPutToUseIT = workSheet.Cells[rowIterator, 8].Value.ToString();
-                                        DtPutToUseITflag = true;
-                                    }
-                                    //------------------------------------------
-                                    if (workSheet.Cells[rowIterator, 9].Text == "")
-                                    {
-                                        PONo = "";
-                                        PONoflag = false;
-
-                                    }
-                                    else
-                                    {
-
-                                        PONo = workSheet.Cells[rowIterator, 9].Value.ToString();
-                                        PONoflag = true;
-                                    }
-                                    //----------------------------------------------
-
-                                    if (workSheet.Cells[rowIterator, 10].Text == "")
-                                    {
-                                        PODate = "";
-                                        PODateflag = false;
-                                    }
-                                    else
-                                    {
-                                        PODate = workSheet.Cells[rowIterator, 10].Value.ToString();
-                                        PODateflag = true;
-                                    }
-                                    //------------------------------------------
-                                    if (workSheet.Cells[rowIterator, 11].Text == "")
-                                    {
-                                        BillNo = "";
-                                        BillNoflag = false;
-                                    }
-                                    else
-                                    {
-                                        BillNo = workSheet.Cells[rowIterator, 11].Value.ToString();
-                                        BillNoflag = true;
-
-                                    }
-                                    if (workSheet.Cells[rowIterator, 12].Text == "")
-                                    {
-                                        BillDate = "";
-                                        BillDateflag = false;
-                                    }
-                                    else
-                                    {
-                                        BillDate = workSheet.Cells[rowIterator, 12].Value.ToString();
-                                        BillDateflag = true;
-                                    }
-
-                                    //----------------------------------------------------------
-                                    if (workSheet.Cells[rowIterator, 13].Text == "")
-                                    {
-                                        ReceiptDate = "";
-                                        ReceiptDateflag = false;
-                                    }
-                                    else
-                                    {
-                                        ReceiptDate = workSheet.Cells[rowIterator, 13].Value.ToString();
-                                        ReceiptDateflag = true;
-                                    }
-                                    if (workSheet.Cells[rowIterator, 14].Text == "")
-                                    {
-                                        CommissioningDate = "";
-                                        CommissioningDateflag = false;
-                                    }
-                                    else
-                                    {
-                                        CommissioningDate = workSheet.Cells[rowIterator, 14].Value.ToString();
-                                        CommissioningDateflag = true;
-                                    }
-
-
-                                    if (workSheet.Cells[rowIterator, 15].Text == "")
-                                    {
-                                        Qty = "";
-                                        Qtyflag = false;
-                                    }
-                                    else
-                                    {
-                                        Qty = workSheet.Cells[rowIterator, 15].Value.ToString();
-                                        Qtyflag = true;
-                                    }
-                                    if (workSheet.Cells[rowIterator, 16].Text == "")
-                                    {
-                                        uomno = "";
-                                        uomnoflag = false;
-                                    }
-                                    else
-                                    {
-                                        uomno = workSheet.Cells[rowIterator, 16].Value.ToString();
-                                        uomnoflag = true;
-                                    }
-                                    if (workSheet.Cells[rowIterator, 17].Text == "")
-                                    {
-                                        SupplierNo = "";
-                                        SupplierNoflag = false;
-                                    }
-                                    else
-                                    {
-                                        SupplierNo = workSheet.Cells[rowIterator, 17].Value.ToString();
-                                        SupplierNoflag = true;
-
-                                    }
-                                    //---------------------------------------------------------------------------------------------
-                                    if (workSheet.Cells[rowIterator, 18].Text == "")
-                                    {
-                                        AGroupId = "";
-                                        AGroupIdflag = false;
-                                    }
-                                    else
-                                    {
-                                        AGroupId = workSheet.Cells[rowIterator, 18].Value.ToString();
-                                        AGroupIdflag = true;
-
-                                    }
-
-                                    if (workSheet.Cells[rowIterator, 19].Text == "")
-                                    {
-                                        BGroupId = "";
-                                        BGroupIdflag = false;
-                                    }
-                                    else
-                                    {
-                                        BGroupId = workSheet.Cells[rowIterator, 19].Value.ToString();
-                                        BGroupIdflag = true;
-
-                                    }
-
-                                    if (workSheet.Cells[rowIterator, 20].Text == "")
-                                    {
-                                        CGroupId = "";
-                                        CGroupIdflag = false;
-                                    }
-                                    else
-                                    {
-                                        CGroupId = workSheet.Cells[rowIterator, 20].Value.ToString();
-                                        CGroupIdflag = true;
-
-                                    }
-
-                                    if (workSheet.Cells[rowIterator, 21].Text == "")
-                                    {
-                                        DGroupId = "";
-                                        DGroupIdflag = false;
-                                    }
-                                    else
-                                    {
-                                        DGroupId = workSheet.Cells[rowIterator, 21].Value.ToString();
-                                        DGroupIdflag = true;
-
-                                    }
-
-                                    if (workSheet.Cells[rowIterator, 22].Text == "")
-                                    {
-                                        LocAId = "";
-                                        LocAIdflag = false;
-                                    }
-                                    else
-                                    {
-                                        LocAId = workSheet.Cells[rowIterator, 22].Value.ToString();
-                                        LocAIdflag = true;
-
-                                    }
-                                    if (workSheet.Cells[rowIterator, 23].Text == "")
-                                    {
-                                        LocBId = "";
-                                        LocBIdflag = false;
-                                    }
-                                    else
-                                    {
-                                        LocBId = workSheet.Cells[rowIterator, 23].Value.ToString();
-                                        LocBIdflag = true;
-
-                                    }
-                                    if (workSheet.Cells[rowIterator, 24].Text == "")
-                                    {
-                                        LocCId = "";
-                                        LocCIdflag = false;
-                                    }
-                                    else
-                                    {
-                                        LocCId = workSheet.Cells[rowIterator, 24].Value.ToString();
-                                        LocCIdflag = true;
-
-                                    }
-
-                                    if (workSheet.Cells[rowIterator, 25].Text == "")
-                                    {
-                                        CostCenterAId = "";
-                                        CostCenterAIdflag = false;
-                                    }
-                                    else
-                                    {
-                                        CostCenterAId = workSheet.Cells[rowIterator, 25].Value.ToString();
-                                        CostCenterAIdflag = true;
-
-                                    }
-                                    if (workSheet.Cells[rowIterator, 26].Text == "")
-                                    {
-                                        CostCenterBId = "";
-                                        CostCenterBIdflag = false;
-                                    }
-                                    else
-                                    {
-                                        CostCenterBId = workSheet.Cells[rowIterator, 26].Value.ToString();
-                                        CostCenterBIdflag = true;
-
-                                    }
-                                    //---------------------------------------------
-                                    if (workSheet.Cells[rowIterator, 27].Text == "")
-                                    {
-                                        ITGroupID = "";
-                                        ITGroupIDflag = false;
-                                    }
-                                    else
-                                    {
-                                        ITGroupID = workSheet.Cells[rowIterator, 27].Value.ToString();
-                                        ITGroupIDflag = true;
-
-                                    }
-                                    //-------------------------------------------------
-
-                                    if (workSheet.Cells[rowIterator, 28].Text == "")
-                                    {
-                                        NormalRate = "";
-                                        NormalRateflag = false;
-                                    }
-                                    else
-                                    {
-                                        NormalRate = workSheet.Cells[rowIterator, 28].Value.ToString();
-                                        NormalRateflag = true;
-                                    }
-
-                                    if (workSheet.Cells[rowIterator, 29].Text == "")
-                                    {
-                                        AdditionalRate = "";
-                                        AdditionalRateflag = false;
-                                    }
-                                    else
-                                    {
-                                        AdditionalRate = workSheet.Cells[rowIterator, 29].Value.ToString();
-                                        AdditionalRateflag = true;
-                                    }
-
-                                    if (workSheet.Cells[rowIterator, 30].Text == "")
-                                    {
-                                        TotalRate = "";
-                                        TotalRateflag = false;
-                                    }
-                                    else
-                                    {
-                                        TotalRate = workSheet.Cells[rowIterator, 30].Value.ToString();
-                                        TotalRateflag = true;
-                                    }
-                                    if (workSheet.Cells[rowIterator, 31].Text == "")
-                                    {
-                                        DepreciationMethod = "";
-                                        DepreciationMethodflag = false;
-                                    }
-                                    else
-                                    {
-                                        DepreciationMethod = workSheet.Cells[rowIterator, 31].Value.ToString();
-                                        DepreciationMethodflag = true;
-                                    }
-                                    //-------------------------------------------------
-
-                                    if (workSheet.Cells[rowIterator, 32].Text == "")
-                                    {
-                                        grossvalue = "";
-                                        grossvalueflag = false;
-                                    }
-                                    else
-                                    {
-                                        grossvalue = workSheet.Cells[rowIterator, 32].Value.ToString();
-                                        grossvalueflag = true;
-                                    }
-                                    if (workSheet.Cells[rowIterator, 33].Text == "")
-                                    {
-                                        servicecharge = "";
-                                        servicechargeflag = false;
-                                    }
-                                    else
-                                    {
-                                        servicecharge = workSheet.Cells[rowIterator, 33].Value.ToString();
-                                        servicechargeflag = true;
-                                    }
-
-
-
-                                    if (workSheet.Cells[rowIterator, 34].Text == "")
-                                    {
-                                        otherexpense = "";
-                                        otherexpenseflag = false;
-
-                                    }
-                                    else
-                                    {
-
-                                        otherexpense = workSheet.Cells[rowIterator, 34].Value.ToString();
-                                        otherexpenseflag = true;
-                                    }
-
-                                    if (workSheet.Cells[rowIterator, 35].Text == "")
-                                    {
-                                        customduty = "";
-                                        customdutyflag = false;
-                                    }
-                                    else
-                                    {
-                                        customduty = workSheet.Cells[rowIterator, 35].Value.ToString();
-                                        customdutyflag = true;
-                                    }
-
-                                    if (workSheet.Cells[rowIterator, 36].Text == "")
-                                    {
-                                        exciseduty = "";
-                                        excisedutyflag = false;
-                                    }
-                                    else
-                                    {
-                                        exciseduty = workSheet.Cells[rowIterator, 36].Value.ToString();
-                                        excisedutyflag = true;
-
-                                    }
-
-                                    if (workSheet.Cells[rowIterator, 37].Text == "")
-                                    {
-                                        servicetax = "";
-                                        servicetaxflag = false;
-                                    }
-                                    else
-                                    {
-                                        servicetax = workSheet.Cells[rowIterator, 37].Value.ToString();
-                                        servicetaxflag = true;
-                                    }
-
-                                    if (workSheet.Cells[rowIterator, 38].Text == "")
-                                    {
-                                        anyotherduty = "";
-                                        anyotherdutyflag = false;
-                                    }
-                                    else
-                                    {
-                                        anyotherduty = workSheet.Cells[rowIterator, 38].Value.ToString();
-                                        anyotherdutyflag = true;
-                                    }
-
-                                    if (workSheet.Cells[rowIterator, 39].Text == "")
-                                    {
-                                        vat = "";
-                                        vatflag = false;
-                                    }
-                                    else
-                                    {
-                                        vat = workSheet.Cells[rowIterator, 39].Value.ToString();
-                                        vatflag = true;
-                                    }
-
-                                    if (workSheet.Cells[rowIterator, 40].Text == "")
-                                    {
-                                        cst = "";
-                                        cstflag = false;
-                                    }
-                                    else
-                                    {
-                                        cst = workSheet.Cells[rowIterator, 40].Value.ToString();
-                                        cstflag = true;
-
-                                    }
-
-                                    if (workSheet.Cells[rowIterator, 41].Text == "")
-                                    {
-                                        cgst = "";
-                                        cgstflag = false;
-
-                                    }
-                                    else
-                                    {
-
-                                        cgst = workSheet.Cells[rowIterator, 41].Value.ToString();
-                                        cgstflag = true;
-                                    }
-
-                                    if (workSheet.Cells[rowIterator, 42].Text == "")
-                                    {
-                                        igst = "";
-                                        igstflag = false;
-                                    }
-                                    else
-                                    {
-                                        igst = workSheet.Cells[rowIterator, 42].Value.ToString();
-                                        igstflag = true;
-                                    }
-
-                                    if (workSheet.Cells[rowIterator, 43].Text == "")
-                                    {
-                                        sgst = "";
-                                        sgstflag = false;
-                                    }
-                                    else
-                                    {
-                                        sgst = workSheet.Cells[rowIterator, 43].Value.ToString();
-                                        sgstflag = true;
-                                    }
-
-                                    //------------------------------------------
-
-                                    if (workSheet.Cells[rowIterator, 44].Text == "")
-                                    {
-                                        anyothertax = "";
-                                        anyothertaxflag = false;
-                                    }
-                                    else
-                                    {
-                                        anyothertax = workSheet.Cells[rowIterator, 44].Value.ToString();
-                                        anyothertaxflag = true;
-                                    }
-                                    if (workSheet.Cells[rowIterator, 45].Text == "")
-                                    {
-                                        totaladdition = "";
-                                        totaladditionflag = false;
-                                    }
-                                    else
-                                    {
-                                        totaladdition = workSheet.Cells[rowIterator, 45].Value.ToString();
-                                        totaladditionflag = true;
-                                    }
-
-
-
-                                    if (workSheet.Cells[rowIterator, 46].Text == "")
-                                    {
-                                        discount = "";
-                                        discountflag = false;
-
-                                    }
-                                    else
-                                    {
-
-                                        discount = workSheet.Cells[rowIterator, 46].Value.ToString();
-                                        discountflag = true;
-                                    }
-
-                                    if (workSheet.Cells[rowIterator, 47].Text == "")
-                                    {
-                                        roundoff = "";
-                                        roundoffflag = false;
-                                    }
-                                    else
-                                    {
-                                        roundoff = workSheet.Cells[rowIterator, 47].Value.ToString();
-                                        roundoffflag = true;
-                                    }
-
-                                    if (workSheet.Cells[rowIterator, 48].Text == "")
-                                    {
-                                        totaldeduction = "";
-                                        totaldeductionflag = false;
-                                    }
-                                    else
-                                    {
-                                        totaldeduction = workSheet.Cells[rowIterator, 48].Value.ToString();
-                                        totaldeductionflag = true;
-
-                                    }
-
-                                    if (workSheet.Cells[rowIterator, 49].Text == "")
-                                    {
-                                        invoiceamt = "";
-                                        invoiceamtflag = false;
-                                    }
-                                    else
-                                    {
-                                        invoiceamt = workSheet.Cells[rowIterator, 49].Value.ToString();
-                                        invoiceamtflag = true;
-                                    }
-                                    if (workSheet.Cells[rowIterator, 50].Text == "")
-                                    {
-                                        dutydrawback = "";
-                                        dutydrawbackflag = false;
-                                    }
-                                    else
-                                    {
-                                        dutydrawback = workSheet.Cells[rowIterator, 50].Value.ToString();
-                                        dutydrawbackflag = true;
-                                    }
-                                    if (workSheet.Cells[rowIterator, 51].Text == "")
-                                    {
-                                        excisecredit = "";
-                                        excisecreditflag = false;
-                                    }
-                                    else
-                                    {
-                                        excisecredit = workSheet.Cells[rowIterator, 51].Value.ToString();
-                                        excisecreditflag = true;
-                                    }
-
-
-
-                                    if (workSheet.Cells[rowIterator, 52].Text == "")
-                                    {
-                                        servicetaxcredit = "";
-                                        servicetaxcreditflag = false;
-
-                                    }
-                                    else
-                                    {
-
-                                        servicetaxcredit = workSheet.Cells[rowIterator, 52].Value.ToString();
-                                        servicetaxcreditflag = true;
-                                    }
-
-                                    if (workSheet.Cells[rowIterator, 53].Text == "")
-                                    {
-                                        anyotherdutycredit = "";
-                                        anyotherdutycreditflag = false;
-                                    }
-                                    else
-                                    {
-                                        anyotherdutycredit = workSheet.Cells[rowIterator, 53].Value.ToString();
-                                        anyotherdutycreditflag = true;
-                                    }
-
-                                    if (workSheet.Cells[rowIterator, 54].Text == "")
-                                    {
-                                        vatcredit = "";
-                                        vatcreditflag = false;
-                                    }
-                                    else
-                                    {
-                                        vatcredit = workSheet.Cells[rowIterator, 54].Value.ToString();
-                                        vatcreditflag = true;
-
-                                    }
-
-                                    if (workSheet.Cells[rowIterator, 55].Text == "")
-                                    {
-                                        cstcredit = "";
-                                        cstcreditflag = false;
-                                    }
-                                    else
-                                    {
-                                        cstcredit = workSheet.Cells[rowIterator, 55].Value.ToString();
-                                        cstcreditflag = true;
-                                    }
-
-
-                                    if (workSheet.Cells[rowIterator, 56].Text == "")
-                                    {
-                                        cgstcredit = "";
-                                        cgstcreditflag = false;
-                                    }
-                                    else
-                                    {
-                                        cgstcredit = workSheet.Cells[rowIterator, 56].Value.ToString();
-                                        cgstcreditflag = true;
-                                    }
-
-                                    if (workSheet.Cells[rowIterator, 57].Text == "")
-                                    {
-                                        igstcredit = "";
-                                        igstcreditflag = false;
-                                    }
-                                    else
-                                    {
-                                        igstcredit = workSheet.Cells[rowIterator, 57].Value.ToString();
-                                        igstcreditflag = true;
-                                    }
-                                    if (workSheet.Cells[rowIterator, 58].Text == "")
-                                    {
-                                        sgstcredit = "";
-                                        sgstcreditflag = false;
-                                    }
-                                    else
-                                    {
-                                        sgstcredit = workSheet.Cells[rowIterator, 58].Value.ToString();
-                                        sgstcreditflag = true;
-                                    }
-
-                                    if (workSheet.Cells[rowIterator, 59].Text == "")
-                                    {
-                                        anyothercredit = "";
-                                        anyothercreditflag = false;
-                                    }
-
-                                    else
-                                    {
-                                        anyothercredit = workSheet.Cells[rowIterator, 59].Value.ToString();
-                                        anyothercreditflag = true;
-                                    }
-
-                                    if (workSheet.Cells[rowIterator, 60].Text == "")
-                                    {
-                                        totalcredit = "";
-                                        totalcreditflag = false;
-                                    }
-                                    else
-                                    {
-                                        totalcredit = workSheet.Cells[rowIterator, 60].Value.ToString();
-                                        totalcreditflag = true;
-                                    }
-                                    if (workSheet.Cells[rowIterator, 61].Text == "")
-                                    {
-                                        amtcap = "";
-                                        amtcapflag = false;
-                                    }
-                                    else
-                                    {
-                                        amtcap = workSheet.Cells[rowIterator, 61].Value.ToString();
-                                        amtcapflag = true;
-                                    }
-                                    if (workSheet.Cells[rowIterator, 62].Text == "")
-                                    {
-                                        amtcapcompanylaw = "";
-                                        amtcapcompanylawflag = false;
-                                    }
-                                    else
-                                    {
-                                        amtcapcompanylaw = workSheet.Cells[rowIterator, 62].Value.ToString();
-                                        amtcapcompanylawflag = true;
-                                    }
-                                    if (workSheet.Cells[rowIterator, 63].Text == "")
-                                    {
-                                        amtcapincometax = "";
-                                        amtcapincometaxflag = false;
-                                    }
-                                    else
-                                    {
-                                        amtcapincometax = workSheet.Cells[rowIterator, 63].Value.ToString();
-                                        amtcapincometaxflag = true;
-                                    }
-                                    //------------------------------------------------
-                                    if (workSheet.Cells[rowIterator, 64].Text == "")
-                                    {
-                                        opAccDepreciation = "";
-                                        opAccDepreciationflag = false;
-                                    }
-                                    else
-                                    {
-                                        opAccDepreciation = workSheet.Cells[rowIterator, 64].Value.ToString();
-                                        opAccDepreciationflag = true;
-                                    }
-                                    if (workSheet.Cells[rowIterator, 65].Text == "")
-                                    {
-                                        residual = "";
-                                        residualflag = false;
-
-                                    }
-                                    else
-                                    {
-
-                                        residual = workSheet.Cells[rowIterator, 65].Value.ToString();
-                                        residualflag = true;
-                                    }
-
-                                    //-----------------------------------------------------------------------------------------                                
-                                    if (workSheet.Cells[rowIterator, 66].Text == "")
-                                    {
-                                        BrandName = "";
-                                        BrandNameflag = false;
-                                    }
-                                    else
-                                    {
-                                        BrandName = workSheet.Cells[rowIterator, 66].Value.ToString();
-                                        BrandNameflag = true;
-                                    }
-                                    if (workSheet.Cells[rowIterator, 67].Text == "")
-                                    {
-                                        SrNo = "";
-                                        SrNoflag = false;
-                                    }
-                                    else
-                                    {
-                                        SrNo = workSheet.Cells[rowIterator, 67].Value.ToString();
-                                        SrNoflag = true;
-                                    }
-                                    if (workSheet.Cells[rowIterator, 68].Text == "")
-                                    {
-                                        Model = "";
-                                        Modelflag = false;
-                                    }
-                                    else
-                                    {
-                                        Model = workSheet.Cells[rowIterator, 68].Value.ToString();
-                                        Modelflag = true;
-                                    }
-                                    if (workSheet.Cells[rowIterator, 69].Text == "")
-                                    {
-                                        Remarks = "";
-                                        Remarksflag = false;
-                                    }
-                                    else
-                                    {
-                                        Remarks = workSheet.Cells[rowIterator, 69].Value.ToString();
-                                        Remarksflag = true;
-                                    }
-                                    if (workSheet.Cells[rowIterator, 70].Text == "")
-                                    {
-                                        IsImported = "";
-                                        IsImportedflag = false;
-                                    }
-                                    else
-                                    {
-                                        IsImported = workSheet.Cells[rowIterator, 70].Value.ToString();
-                                        IsImportedflag = true;
-                                    }
-                                    if (workSheet.Cells[rowIterator, 71].Text == "")
-                                    {
-                                        Currency = "";
-                                        Currencyflag = false;
-                                    }
-                                    else
-                                    {
-                                        Currency = workSheet.Cells[rowIterator, 71].Value.ToString();
-                                        Currencyflag = true;
-                                    }
-                                    if (workSheet.Cells[rowIterator, 72].Text == "")
-                                    {
-                                        Values = "";
-                                        Valuesflag = false;
-                                    }
-                                    else
-                                    {
-                                        Values = workSheet.Cells[rowIterator, 72].Value.ToString();
-                                        Valuesflag = true;
-                                    }
-                                    //---------------------------------------
-                                    if (workSheet.Cells[rowIterator, 73].Text == "")
-                                    {
-                                        YrofManufacturing = "";
-                                        YrofManufacturingflag = false;
-                                    }
-                                    else
-                                    {
-                                        YrofManufacturing = workSheet.Cells[rowIterator, 73].Value.ToString();
-                                        YrofManufacturingflag = true;
-                                    }
-
-                                    if (workSheet.Cells[rowIterator, 74].Text == "")
-                                    {
-                                        MRRNo = "";
-                                        MRRNoflag = false;
-                                    }
-                                    else
-                                    {
-                                        MRRNo = workSheet.Cells[rowIterator, 74].Value.ToString();
-                                        MRRNoflag = true;
-                                    }
-
-                                    if (workSheet.Cells[rowIterator, 75].Text == "")
-                                    {
-                                        AccountID = "";
-                                        AccountIDflag = false;
-                                    }
-                                    else
-                                    {
-                                        AccountID = workSheet.Cells[rowIterator, 75].Value.ToString();
-                                        AccountIDflag = true;
-                                    }
-
-                                    if (workSheet.Cells[rowIterator, 76].Text == "")
-                                    {
-                                        DepAccountId = "";
-                                        DepAccountIdflag = false;
-                                    }
-                                    else
-                                    {
-                                        DepAccountId = workSheet.Cells[rowIterator, 76].Value.ToString();
-                                        DepAccountIdflag = true;
-                                    }
-                                    if (workSheet.Cells[rowIterator, 77].Text == "")
-                                    {
-                                        AccAccountID = "";
-                                        AccAccountIDflag = false;
-                                    }
-                                    else
-                                    {
-                                        AccAccountID = workSheet.Cells[rowIterator, 77].Value.ToString();
-                                        AccAccountIDflag = true;
-                                    }
-                                    if (workSheet.Cells[rowIterator, 78].Text == "")
-                                    {
-                                        Usefullife = "";
-                                        Usefullifeflag = false;
-                                    }
-                                    else
-                                    {
-                                        Usefullife = workSheet.Cells[rowIterator, 78].Value.ToString();
-                                        Usefullifeflag = true;
-                                    }
-                                    if (workSheet.Cells[rowIterator, 79].Text == "")
-                                    {
-                                        Parent_AssetNo = "";
-                                        Parent_AssetNoflag = false;
-                                    }
-                                    else
-                                    {
-                                        Parent_AssetNo = workSheet.Cells[rowIterator, 79].Value.ToString();
-                                        Parent_AssetNoflag = true;
-                                    }
-                                    if (workSheet.Cells[rowIterator, 80].Text == "")
-                                    {
-                                        iscomponent = "";
-                                        iscomponentflag = false;
-                                    }
-                                    else
-                                    {
-                                        iscomponent = workSheet.Cells[rowIterator, 80].Value.ToString();
-                                        iscomponentflag = true;
-                                    }
+                                // System.Diagnostics.Debug.WriteLine("Asset No  - " + workSheet.Cells[rowIterator, 2].Text);
+
+                                if (workSheet.Cells[rowIterator, 2].Text == "")
+                                {
+                                    AssetNo = "";
+                                    AssetNoflag = false;
+
+                                }
+                                else
+                                {
+
+                                    if (bAutoGenerateAssetNo == false)
+                                    {
+                                        AssetNo = workSheet.Cells[rowIterator, 2].Value.ToString();
+                                        AssetNoflag = true;
+                                        if (!int.TryParse(AssetNo, out int _))
+                                        {
+                                            AssetNo = "";
+                                            AssetNoflag = false;
+                                        }                                        
+                                    }
+                                    else
+                                    {
+                                        AssetNo = NextAssetNo.ToString();
+                                    }
+
+                                }
+                                System.Diagnostics.Debug.WriteLine("Import Asset No" + AssetNo);
+                                //if (AssetNo == "1571")
+                                //{
+                                //    int z = 0;
+                                //}
+
+                                if (workSheet.Cells[rowIterator, 3].Text == "")
+                                {
+                                    AssetName = "";
+                                    AssetNameflag = false;
+                                }
+                                else
+                                {
+                                    AssetName = workSheet.Cells[rowIterator, 3].Value.ToString();
+                                    AssetNameflag = true;
+                                }
+                                if (workSheet.Cells[rowIterator, 4].Text == "")
+                                {
+                                    AssetIdentificationNo = "";
+                                    AssetIdentificationNoflag = false;
+                                }
+                                else
+                                {
+                                    AssetIdentificationNo = workSheet.Cells[rowIterator, 4].Value.ToString();
+                                    AssetIdentificationNoflag = true;
+                                }
+
+                                if (workSheet.Cells[rowIterator, 5].Text == "")
+                                {
+                                    VoucherNo = "";
+                                    VoucherNoflag = false;
+                                }
+                                else
+                                {
+                                    VoucherNo = workSheet.Cells[rowIterator, 5].Value.ToString();
+                                    VoucherNoflag = true;
+                                }
+
+                                if (workSheet.Cells[rowIterator, 6].Text == "")
+                                {
+                                    VoucherDate = "";
+                                    VoucherDateflag = false;
+                                }
+                                else
+                                {
+                                    VoucherDate = workSheet.Cells[rowIterator, 6].Value.ToString();
+                                    VoucherDateflag = true;
+                                }
+                                //-----------------------------------
+                                if (workSheet.Cells[rowIterator, 7].Text == "")
+                                {
+                                    DtPutToUse = "";
+                                    DtPutToUseflag = false;
+                                }
+                                else
+                                {
+                                    DtPutToUse = workSheet.Cells[rowIterator, 7].Value.ToString();
+                                    DtPutToUseflag = true;
+                                }
+                                if (workSheet.Cells[rowIterator, 8].Text == "")
+                                {
+                                    DtPutToUseIT = "";
+                                    DtPutToUseITflag = false;
+                                }
+                                else
+                                {
+                                    DtPutToUseIT = workSheet.Cells[rowIterator, 8].Value.ToString();
+                                    DtPutToUseITflag = true;
+                                }
+                                //------------------------------------------
+                                if (workSheet.Cells[rowIterator, 9].Text == "")
+                                {
+                                    PONo = "";
+                                    PONoflag = false;
+
+                                }
+                                else
+                                {
+
+                                    PONo = workSheet.Cells[rowIterator, 9].Value.ToString();
+                                    PONoflag = true;
+                                }
+                                //----------------------------------------------
+
+                                if (workSheet.Cells[rowIterator, 10].Text == "")
+                                {
+                                    PODate = "";
+                                    PODateflag = false;
+                                }
+                                else
+                                {
+                                    PODate = workSheet.Cells[rowIterator, 10].Value.ToString();
+                                    PODateflag = true;
+                                }
+                                //------------------------------------------
+                                if (workSheet.Cells[rowIterator, 11].Text == "")
+                                {
+                                    BillNo = "";
+                                    BillNoflag = false;
+                                }
+                                else
+                                {
+                                    BillNo = workSheet.Cells[rowIterator, 11].Value.ToString();
+                                    BillNoflag = true;
+
+                                }
+                                if (workSheet.Cells[rowIterator, 12].Text == "")
+                                {
+                                    BillDate = "";
+                                    BillDateflag = false;
+                                }
+                                else
+                                {
+                                    BillDate = workSheet.Cells[rowIterator, 12].Value.ToString();
+                                    BillDateflag = true;
+                                }
+
+                                //----------------------------------------------------------
+                                if (workSheet.Cells[rowIterator, 13].Text == "")
+                                {
+                                    ReceiptDate = "";
+                                    ReceiptDateflag = false;
+                                }
+                                else
+                                {
+                                    ReceiptDate = workSheet.Cells[rowIterator, 13].Value.ToString();
+                                    ReceiptDateflag = true;
+                                }
+                                if (workSheet.Cells[rowIterator, 14].Text == "")
+                                {
+                                    CommissioningDate = "";
+                                    CommissioningDateflag = false;
+                                }
+                                else
+                                {
+                                    CommissioningDate = workSheet.Cells[rowIterator, 14].Value.ToString();
+                                    CommissioningDateflag = true;
+                                }
+
+
+                                if (workSheet.Cells[rowIterator, 15].Text == "")
+                                {
+                                    Qty = "";
+                                    Qtyflag = false;
+                                }
+                                else
+                                {
+                                    Qty = workSheet.Cells[rowIterator, 15].Value.ToString();
+                                    Qtyflag = true;
+                                }
+                                if (workSheet.Cells[rowIterator, 16].Text == "")
+                                {
+                                    uomno = "";
+                                    uomnoflag = false;
+                                }
+                                else
+                                {
+                                    uomno = workSheet.Cells[rowIterator, 16].Value.ToString();
+                                    uomnoflag = true;
+                                }
+                                if (workSheet.Cells[rowIterator, 17].Text == "")
+                                {
+                                    SupplierNo = "";
+                                    SupplierNoflag = false;
+                                }
+                                else
+                                {
+                                    SupplierNo = workSheet.Cells[rowIterator, 17].Value.ToString();
+                                    SupplierNoflag = true;
+
+                                }
+                                //---------------------------------------------------------------------------------------------
+                                if (workSheet.Cells[rowIterator, 18].Text == "")
+                                {
+                                    AGroupId = "";
+                                    AGroupIdflag = false;
+                                }
+                                else
+                                {
+                                    AGroupId = workSheet.Cells[rowIterator, 18].Value.ToString();
+                                    AGroupIdflag = true;
+
+                                }
+
+                                if (workSheet.Cells[rowIterator, 19].Text == "")
+                                {
+                                    BGroupId = "";
+                                    BGroupIdflag = false;
+                                }
+                                else
+                                {
+                                    BGroupId = workSheet.Cells[rowIterator, 19].Value.ToString();
+                                    BGroupIdflag = true;
+
+                                }
+
+                                if (workSheet.Cells[rowIterator, 20].Text == "")
+                                {
+                                    CGroupId = "";
+                                    CGroupIdflag = false;
+                                }
+                                else
+                                {
+                                    CGroupId = workSheet.Cells[rowIterator, 20].Value.ToString();
+                                    CGroupIdflag = true;
+
+                                }
+
+                                if (workSheet.Cells[rowIterator, 21].Text == "")
+                                {
+                                    DGroupId = "";
+                                    DGroupIdflag = false;
+                                }
+                                else
+                                {
+                                    DGroupId = workSheet.Cells[rowIterator, 21].Value.ToString();
+                                    DGroupIdflag = true;
+
+                                }
+
+                                if (workSheet.Cells[rowIterator, 22].Text == "")
+                                {
+                                    LocAId = "";
+                                    LocAIdflag = false;
+                                }
+                                else
+                                {
+                                    LocAId = workSheet.Cells[rowIterator, 22].Value.ToString();
+                                    LocAIdflag = true;
+
+                                }
+                                if (workSheet.Cells[rowIterator, 23].Text == "")
+                                {
+                                    LocBId = "";
+                                    LocBIdflag = false;
+                                }
+                                else
+                                {
+                                    LocBId = workSheet.Cells[rowIterator, 23].Value.ToString();
+                                    LocBIdflag = true;
+
+                                }
+                                if (workSheet.Cells[rowIterator, 24].Text == "")
+                                {
+                                    LocCId = "";
+                                    LocCIdflag = false;
+                                }
+                                else
+                                {
+                                    LocCId = workSheet.Cells[rowIterator, 24].Value.ToString();
+                                    LocCIdflag = true;
+
+                                }
+
+                                if (workSheet.Cells[rowIterator, 25].Text == "")
+                                {
+                                    CostCenterAId = "";
+                                    CostCenterAIdflag = false;
+                                }
+                                else
+                                {
+                                    CostCenterAId = workSheet.Cells[rowIterator, 25].Value.ToString();
+                                    CostCenterAIdflag = true;
+
+                                }
+                                if (workSheet.Cells[rowIterator, 26].Text == "")
+                                {
+                                    CostCenterBId = "";
+                                    CostCenterBIdflag = false;
+                                }
+                                else
+                                {
+                                    CostCenterBId = workSheet.Cells[rowIterator, 26].Value.ToString();
+                                    CostCenterBIdflag = true;
+
+                                }
+                                //---------------------------------------------
+                                if (workSheet.Cells[rowIterator, 27].Text == "")
+                                {
+                                    ITGroupID = "";
+                                    ITGroupIDflag = false;
+                                }
+                                else
+                                {
+                                    ITGroupID = workSheet.Cells[rowIterator, 27].Value.ToString();
+                                    ITGroupIDflag = true;
+
+                                }
+                                //-------------------------------------------------
+
+                                if (workSheet.Cells[rowIterator, 28].Text == "")
+                                {
+                                    NormalRate = "";
+                                    NormalRateflag = false;
+                                }
+                                else
+                                {
+                                    NormalRate = workSheet.Cells[rowIterator, 28].Value.ToString();
+                                    NormalRateflag = true;
+                                }
+
+                                if (workSheet.Cells[rowIterator, 29].Text == "")
+                                {
+                                    AdditionalRate = "";
+                                    AdditionalRateflag = false;
+                                }
+                                else
+                                {
+                                    AdditionalRate = workSheet.Cells[rowIterator, 29].Value.ToString();
+                                    AdditionalRateflag = true;
+                                }
+
+                                if (workSheet.Cells[rowIterator, 30].Text == "")
+                                {
+                                    TotalRate = "";
+                                    TotalRateflag = false;
+                                }
+                                else
+                                {
+                                    TotalRate = workSheet.Cells[rowIterator, 30].Value.ToString();
+                                    TotalRateflag = true;
+                                }
+                                if (workSheet.Cells[rowIterator, 31].Text == "")
+                                {
+                                    DepreciationMethod = "";
+                                    DepreciationMethodflag = false;
+                                }
+                                else
+                                {
+                                    DepreciationMethod = workSheet.Cells[rowIterator, 31].Value.ToString();
+                                    DepreciationMethodflag = true;
+                                }
+                                //-------------------------------------------------
+
+                                if (workSheet.Cells[rowIterator, 32].Text == "")
+                                {
+                                    grossvalue = "";
+                                    grossvalueflag = false;
+                                }
+                                else
+                                {
+                                    grossvalue = workSheet.Cells[rowIterator, 32].Value.ToString();
+                                    grossvalueflag = true;
+                                }
+                                if (workSheet.Cells[rowIterator, 33].Text == "")
+                                {
+                                    servicecharge = "";
+                                    servicechargeflag = false;
+                                }
+                                else
+                                {
+                                    servicecharge = workSheet.Cells[rowIterator, 33].Value.ToString();
+                                    servicechargeflag = true;
+                                }
+
+
+
+                                if (workSheet.Cells[rowIterator, 34].Text == "")
+                                {
+                                    otherexpense = "";
+                                    otherexpenseflag = false;
+
+                                }
+                                else
+                                {
+
+                                    otherexpense = workSheet.Cells[rowIterator, 34].Value.ToString();
+                                    otherexpenseflag = true;
+                                }
+
+                                if (workSheet.Cells[rowIterator, 35].Text == "")
+                                {
+                                    customduty = "";
+                                    customdutyflag = false;
+                                }
+                                else
+                                {
+                                    customduty = workSheet.Cells[rowIterator, 35].Value.ToString();
+                                    customdutyflag = true;
+                                }
+
+                                if (workSheet.Cells[rowIterator, 36].Text == "")
+                                {
+                                    exciseduty = "";
+                                    excisedutyflag = false;
+                                }
+                                else
+                                {
+                                    exciseduty = workSheet.Cells[rowIterator, 36].Value.ToString();
+                                    excisedutyflag = true;
+
+                                }
+
+                                if (workSheet.Cells[rowIterator, 37].Text == "")
+                                {
+                                    servicetax = "";
+                                    servicetaxflag = false;
+                                }
+                                else
+                                {
+                                    servicetax = workSheet.Cells[rowIterator, 37].Value.ToString();
+                                    servicetaxflag = true;
+                                }
+
+                                if (workSheet.Cells[rowIterator, 38].Text == "")
+                                {
+                                    anyotherduty = "";
+                                    anyotherdutyflag = false;
+                                }
+                                else
+                                {
+                                    anyotherduty = workSheet.Cells[rowIterator, 38].Value.ToString();
+                                    anyotherdutyflag = true;
+                                }
+
+                                if (workSheet.Cells[rowIterator, 39].Text == "")
+                                {
+                                    vat = "";
+                                    vatflag = false;
+                                }
+                                else
+                                {
+                                    vat = workSheet.Cells[rowIterator, 39].Value.ToString();
+                                    vatflag = true;
+                                }
+
+                                if (workSheet.Cells[rowIterator, 40].Text == "")
+                                {
+                                    cst = "";
+                                    cstflag = false;
+                                }
+                                else
+                                {
+                                    cst = workSheet.Cells[rowIterator, 40].Value.ToString();
+                                    cstflag = true;
+
+                                }
+
+                                if (workSheet.Cells[rowIterator, 41].Text == "")
+                                {
+                                    cgst = "";
+                                    cgstflag = false;
+
+                                }
+                                else
+                                {
+
+                                    cgst = workSheet.Cells[rowIterator, 41].Value.ToString();
+                                    cgstflag = true;
+                                }
+
+                                if (workSheet.Cells[rowIterator, 42].Text == "")
+                                {
+                                    igst = "";
+                                    igstflag = false;
+                                }
+                                else
+                                {
+                                    igst = workSheet.Cells[rowIterator, 42].Value.ToString();
+                                    igstflag = true;
+                                }
+
+                                if (workSheet.Cells[rowIterator, 43].Text == "")
+                                {
+                                    sgst = "";
+                                    sgstflag = false;
+                                }
+                                else
+                                {
+                                    sgst = workSheet.Cells[rowIterator, 43].Value.ToString();
+                                    sgstflag = true;
+                                }
+
+                                //------------------------------------------
+
+                                if (workSheet.Cells[rowIterator, 44].Text == "")
+                                {
+                                    anyothertax = "";
+                                    anyothertaxflag = false;
+                                }
+                                else
+                                {
+                                    anyothertax = workSheet.Cells[rowIterator, 44].Value.ToString();
+                                    anyothertaxflag = true;
+                                }
+                                if (workSheet.Cells[rowIterator, 45].Text == "")
+                                {
+                                    totaladdition = "";
+                                    totaladditionflag = false;
+                                }
+                                else
+                                {
+                                    totaladdition = workSheet.Cells[rowIterator, 45].Value.ToString();
+                                    totaladditionflag = true;
+                                }
+
+
+
+                                if (workSheet.Cells[rowIterator, 46].Text == "")
+                                {
+                                    discount = "";
+                                    discountflag = false;
+
+                                }
+                                else
+                                {
+
+                                    discount = workSheet.Cells[rowIterator, 46].Value.ToString();
+                                    discountflag = true;
+                                }
+
+                                if (workSheet.Cells[rowIterator, 47].Text == "")
+                                {
+                                    roundoff = "";
+                                    roundoffflag = false;
+                                }
+                                else
+                                {
+                                    roundoff = workSheet.Cells[rowIterator, 47].Value.ToString();
+                                    roundoffflag = true;
+                                }
+
+                                if (workSheet.Cells[rowIterator, 48].Text == "")
+                                {
+                                    totaldeduction = "";
+                                    totaldeductionflag = false;
+                                }
+                                else
+                                {
+                                    totaldeduction = workSheet.Cells[rowIterator, 48].Value.ToString();
+                                    totaldeductionflag = true;
+
+                                }
+
+                                if (workSheet.Cells[rowIterator, 49].Text == "")
+                                {
+                                    invoiceamt = "";
+                                    invoiceamtflag = false;
+                                }
+                                else
+                                {
+                                    invoiceamt = workSheet.Cells[rowIterator, 49].Value.ToString();
+                                    invoiceamtflag = true;
+                                }
+                                if (workSheet.Cells[rowIterator, 50].Text == "")
+                                {
+                                    dutydrawback = "";
+                                    dutydrawbackflag = false;
+                                }
+                                else
+                                {
+                                    dutydrawback = workSheet.Cells[rowIterator, 50].Value.ToString();
+                                    dutydrawbackflag = true;
+                                }
+                                if (workSheet.Cells[rowIterator, 51].Text == "")
+                                {
+                                    excisecredit = "";
+                                    excisecreditflag = false;
+                                }
+                                else
+                                {
+                                    excisecredit = workSheet.Cells[rowIterator, 51].Value.ToString();
+                                    excisecreditflag = true;
+                                }
+
+
+
+                                if (workSheet.Cells[rowIterator, 52].Text == "")
+                                {
+                                    servicetaxcredit = "";
+                                    servicetaxcreditflag = false;
+
+                                }
+                                else
+                                {
+
+                                    servicetaxcredit = workSheet.Cells[rowIterator, 52].Value.ToString();
+                                    servicetaxcreditflag = true;
+                                }
+
+                                if (workSheet.Cells[rowIterator, 53].Text == "")
+                                {
+                                    anyotherdutycredit = "";
+                                    anyotherdutycreditflag = false;
+                                }
+                                else
+                                {
+                                    anyotherdutycredit = workSheet.Cells[rowIterator, 53].Value.ToString();
+                                    anyotherdutycreditflag = true;
+                                }
+
+                                if (workSheet.Cells[rowIterator, 54].Text == "")
+                                {
+                                    vatcredit = "";
+                                    vatcreditflag = false;
+                                }
+                                else
+                                {
+                                    vatcredit = workSheet.Cells[rowIterator, 54].Value.ToString();
+                                    vatcreditflag = true;
+
+                                }
+
+                                if (workSheet.Cells[rowIterator, 55].Text == "")
+                                {
+                                    cstcredit = "";
+                                    cstcreditflag = false;
+                                }
+                                else
+                                {
+                                    cstcredit = workSheet.Cells[rowIterator, 55].Value.ToString();
+                                    cstcreditflag = true;
+                                }
+
+
+                                if (workSheet.Cells[rowIterator, 56].Text == "")
+                                {
+                                    cgstcredit = "";
+                                    cgstcreditflag = false;
+                                }
+                                else
+                                {
+                                    cgstcredit = workSheet.Cells[rowIterator, 56].Value.ToString();
+                                    cgstcreditflag = true;
+                                }
+
+                                if (workSheet.Cells[rowIterator, 57].Text == "")
+                                {
+                                    igstcredit = "";
+                                    igstcreditflag = false;
+                                }
+                                else
+                                {
+                                    igstcredit = workSheet.Cells[rowIterator, 57].Value.ToString();
+                                    igstcreditflag = true;
+                                }
+                                if (workSheet.Cells[rowIterator, 58].Text == "")
+                                {
+                                    sgstcredit = "";
+                                    sgstcreditflag = false;
+                                }
+                                else
+                                {
+                                    sgstcredit = workSheet.Cells[rowIterator, 58].Value.ToString();
+                                    sgstcreditflag = true;
+                                }
+
+                                if (workSheet.Cells[rowIterator, 59].Text == "")
+                                {
+                                    anyothercredit = "";
+                                    anyothercreditflag = false;
+                                }
+
+                                else
+                                {
+                                    anyothercredit = workSheet.Cells[rowIterator, 59].Value.ToString();
+                                    anyothercreditflag = true;
+                                }
+
+                                if (workSheet.Cells[rowIterator, 60].Text == "")
+                                {
+                                    totalcredit = "";
+                                    totalcreditflag = false;
+                                }
+                                else
+                                {
+                                    totalcredit = workSheet.Cells[rowIterator, 60].Value.ToString();
+                                    totalcreditflag = true;
+                                }
+                                if (workSheet.Cells[rowIterator, 61].Text == "")
+                                {
+                                    amtcap = "";
+                                    amtcapflag = false;
+                                }
+                                else
+                                {
+                                    amtcap = workSheet.Cells[rowIterator, 61].Value.ToString();
+                                    amtcapflag = true;
+                                }
+                                if (workSheet.Cells[rowIterator, 62].Text == "")
+                                {
+                                    amtcapcompanylaw = "";
+                                    amtcapcompanylawflag = false;
+                                }
+                                else
+                                {
+                                    amtcapcompanylaw = workSheet.Cells[rowIterator, 62].Value.ToString();
+                                    amtcapcompanylawflag = true;
+                                }
+                                if (workSheet.Cells[rowIterator, 63].Text == "")
+                                {
+                                    amtcapincometax = "";
+                                    amtcapincometaxflag = false;
+                                }
+                                else
+                                {
+                                    amtcapincometax = workSheet.Cells[rowIterator, 63].Value.ToString();
+                                    amtcapincometaxflag = true;
+                                }
+                                //------------------------------------------------
+                                if (workSheet.Cells[rowIterator, 64].Text == "")
+                                {
+                                    opAccDepreciation = "";
+                                    opAccDepreciationflag = false;
+                                }
+                                else
+                                {
+                                    opAccDepreciation = workSheet.Cells[rowIterator, 64].Value.ToString();
+                                    opAccDepreciationflag = true;
+                                }
+                                if (workSheet.Cells[rowIterator, 65].Text == "")
+                                {
+                                    residual = "";
+                                    residualflag = false;
+
+                                }
+                                else
+                                {
+
+                                    residual = workSheet.Cells[rowIterator, 65].Value.ToString();
+                                    residualflag = true;
+                                }
+
+                                //-----------------------------------------------------------------------------------------                                
+                                if (workSheet.Cells[rowIterator, 66].Text == "")
+                                {
+                                    BrandName = "";
+                                    BrandNameflag = false;
+                                }
+                                else
+                                {
+                                    BrandName = workSheet.Cells[rowIterator, 66].Value.ToString();
+                                    BrandNameflag = true;
+                                }
+                                if (workSheet.Cells[rowIterator, 67].Text == "")
+                                {
+                                    SrNo = "";
+                                    SrNoflag = false;
+                                }
+                                else
+                                {
+                                    SrNo = workSheet.Cells[rowIterator, 67].Value.ToString();
+                                    SrNoflag = true;
+                                }
+                                if (workSheet.Cells[rowIterator, 68].Text == "")
+                                {
+                                    Model = "";
+                                    Modelflag = false;
+                                }
+                                else
+                                {
+                                    Model = workSheet.Cells[rowIterator, 68].Value.ToString();
+                                    Modelflag = true;
+                                }
+                                if (workSheet.Cells[rowIterator, 69].Text == "")
+                                {
+                                    Remarks = "";
+                                    Remarksflag = false;
+                                }
+                                else
+                                {
+                                    Remarks = workSheet.Cells[rowIterator, 69].Value.ToString();
+                                    Remarksflag = true;
+                                }
+                                if (workSheet.Cells[rowIterator, 70].Text == "")
+                                {
+                                    IsImported = "";
+                                    IsImportedflag = false;
+                                }
+                                else
+                                {
+                                    IsImported = workSheet.Cells[rowIterator, 70].Value.ToString();
+                                    IsImportedflag = true;
+                                }
+                                if (workSheet.Cells[rowIterator, 71].Text == "")
+                                {
+                                    Currency = "";
+                                    Currencyflag = false;
+                                }
+                                else
+                                {
+                                    Currency = workSheet.Cells[rowIterator, 71].Value.ToString();
+                                    Currencyflag = true;
+                                }
+                                if (workSheet.Cells[rowIterator, 72].Text == "")
+                                {
+                                    Values = "";
+                                    Valuesflag = false;
+                                }
+                                else
+                                {
+                                    Values = workSheet.Cells[rowIterator, 72].Value.ToString();
+                                    Valuesflag = true;
+                                }
+                                //---------------------------------------
+                                if (workSheet.Cells[rowIterator, 73].Text == "")
+                                {
+                                    YrofManufacturing = "";
+                                    YrofManufacturingflag = false;
+                                }
+                                else
+                                {
+                                    YrofManufacturing = workSheet.Cells[rowIterator, 73].Value.ToString();
+                                    YrofManufacturingflag = true;
+                                }
+
+                                if (workSheet.Cells[rowIterator, 74].Text == "")
+                                {
+                                    MRRNo = "";
+                                    MRRNoflag = false;
+                                }
+                                else
+                                {
+                                    MRRNo = workSheet.Cells[rowIterator, 74].Value.ToString();
+                                    MRRNoflag = true;
+                                }
+
+                                if (workSheet.Cells[rowIterator, 75].Text == "")
+                                {
+                                    AccountID = "";
+                                    AccountIDflag = false;
+                                }
+                                else
+                                {
+                                    AccountID = workSheet.Cells[rowIterator, 75].Value.ToString();
+                                    AccountIDflag = true;
+                                }
+
+                                if (workSheet.Cells[rowIterator, 76].Text == "")
+                                {
+                                    DepAccountId = "";
+                                    DepAccountIdflag = false;
+                                }
+                                else
+                                {
+                                    DepAccountId = workSheet.Cells[rowIterator, 76].Value.ToString();
+                                    DepAccountIdflag = true;
+                                }
+                                if (workSheet.Cells[rowIterator, 77].Text == "")
+                                {
+                                    AccAccountID = "";
+                                    AccAccountIDflag = false;
+                                }
+                                else
+                                {
+                                    AccAccountID = workSheet.Cells[rowIterator, 77].Value.ToString();
+                                    AccAccountIDflag = true;
+                                }
+                                if (workSheet.Cells[rowIterator, 78].Text == "")
+                                {
+                                    Usefullife = "";
+                                    Usefullifeflag = false;
+                                }
+                                else
+                                {
+                                    Usefullife = workSheet.Cells[rowIterator, 78].Value.ToString();
+                                    Usefullifeflag = true;
+                                }
+                                if (workSheet.Cells[rowIterator, 79].Text == "")
+                                {
+                                    Parent_AssetNo = "";
+                                    Parent_AssetNoflag = false;
+                                }
+                                else
+                                {
+                                    Parent_AssetNo = workSheet.Cells[rowIterator, 79].Value.ToString();
+                                    Parent_AssetNoflag = true;
+                                }
+                                if (workSheet.Cells[rowIterator, 80].Text == "")
+                                {
+                                    iscomponent = "";
+                                    iscomponentflag = false;
+                                }
+                                else
+                                {
+                                    iscomponent = workSheet.Cells[rowIterator, 80].Value.ToString();
+                                    iscomponentflag = true;
+                                }
                                 if (workSheet.Cells[rowIterator, 81].Text == "")
                                 {
                                     ExpiryDate = "";
@@ -6224,78 +6237,79 @@ namespace VerifyWebApp.Controllers
                                 //         && DepreciationMethodflag == true)
 
                                 if (AssetNoflag == true && AssetNameflag == true
-                                 && VoucherDateflag == true && Qtyflag == true 
+                                 && VoucherDateflag == true && Qtyflag == true
                                  && amtcapflag == true && amtcapcompanylawflag == true && amtcapincometaxflag == true
                                  && DtPutToUseflag == true && DtPutToUseITflag == true && Usefullifeflag == true
                                  && DepreciationMethodflag == true)
                                 {
 
-                                        norecordsfound = true;
-                                        Assets assetexits = new Assets();
-                                        
-                                        assetexits = db.Assetss.Where(r => r.AssetNo == AssetNo && r.Companyid == companyid).FirstOrDefault();
+                                    norecordsfound = true;
+                                    Assets assetexits = new Assets();
 
-                                        if (assetexits != null)
+                                    assetexits = db.Assetss.Where(r => r.AssetNo == AssetNo && r.Companyid == companyid).FirstOrDefault();
+
+                                    if (assetexits != null)
+                                    {
+                                        errorlist.Add("Asset no record already exists in master,i.e of  row " + rowIterator);
+                                        res.Data = errorlist;
+                                        logger.Info("Asset No Already Exists" + rowIterator);
+
+                                    }
+                                    else
+                                    {
+                                        if (BillDate != "")
                                         {
-                                            errorlist.Add("Asset no record already exists in master,i.e of  row " + rowIterator);
-                                            res.Data = errorlist;
-                                            logger.Info("Asset No Already Exists" + rowIterator);
+                                            DateTime temp_BillDate = DateTime.MinValue;
+
+                                            if (GetDate(BillDate, out temp_BillDate))
+                                            {
+
+                                                assets.BillDate = temp_BillDate;
+                                            }
+                                        }
+                                        if (ReceiptDate != "")
+                                        {
+                                            DateTime temp_receiptDate = DateTime.MinValue;
+                                            if (GetDate(ReceiptDate, out temp_receiptDate))
+                                            {
+
+                                                assets.ReceiptDate = temp_receiptDate;
+                                            }
 
                                         }
-                                        else
+
+                                        if (CommissioningDate != "")
                                         {
-                                            if (BillDate != "")
-                                            {
-                                                DateTime temp_BillDate = DateTime.MinValue;
 
-                                                if  (GetDate(BillDate, out temp_BillDate)) {
+                                            DateTime temp_CommDate = DateTime.MinValue;
 
-                                                      assets.BillDate = temp_BillDate;
-                                                }
-                                            }
-                                            if (ReceiptDate != "")
-                                            {
-                                               DateTime temp_receiptDate = DateTime.MinValue;
-                                                if (GetDate(ReceiptDate, out temp_receiptDate))
-                                                {
-
-                                                    assets.ReceiptDate = temp_receiptDate;
-                                                }
-
-                                            }
-
-                                            if (CommissioningDate != "")
+                                            if (GetDate(CommissioningDate, out temp_CommDate))
                                             {
 
-                                                DateTime temp_CommDate = DateTime.MinValue;
-
-                                                if (GetDate(CommissioningDate, out temp_CommDate))
-                                                {
-
-                                                    assets.CommissioningDate = temp_CommDate;
-                                                }
+                                                assets.CommissioningDate = temp_CommDate;
                                             }
-                                            if (PODate != "")
+                                        }
+                                        if (PODate != "")
+                                        {
+                                            DateTime temp_POdate = DateTime.MinValue;
+
+                                            if (GetDate(PODate, out temp_POdate))
                                             {
-                                                DateTime temp_POdate = DateTime.MinValue;
 
-                                                if (GetDate(PODate, out temp_POdate))
-                                                {
-
-                                                    assets.PODate = temp_POdate;
-                                                }
+                                                assets.PODate = temp_POdate;
                                             }
+                                        }
 
-                                            if (VoucherDate != "")
+                                        if (VoucherDate != "")
+                                        {
+                                            DateTime temp_voucherDate = DateTime.MinValue;
+
+                                            if (GetDate(VoucherDate, out temp_voucherDate))
                                             {
-                                                DateTime temp_voucherDate = DateTime.MinValue;
 
-                                                if (GetDate(VoucherDate, out temp_voucherDate))
-                                                {
-
-                                                    assets.VoucherDate = temp_voucherDate;
-                                                }
+                                                assets.VoucherDate = temp_voucherDate;
                                             }
+                                        }
 
                                         if (DtPutToUse != "")
                                         {
@@ -6337,89 +6351,89 @@ namespace VerifyWebApp.Controllers
                                         }
                                         List<Period> period = new List<Period>();
 
-                                            var firstperiod = db.Periods.Where(x => x.Companyid == companyid).First();
-                                            // string checkflag = "";
-                                            // DateTime vdate = Convert.ToDateTime(strvdate);
-                                            if (firstperiod != null)
+                                        var firstperiod = db.Periods.Where(x => x.Companyid == companyid).First();
+                                        // string checkflag = "";
+                                        // DateTime vdate = Convert.ToDateTime(strvdate);
+                                        if (firstperiod != null)
+                                        {
+
+                                            if (assets.VoucherDate < firstperiod.FromDate)
                                             {
-
-                                                if (assets.VoucherDate < firstperiod.FromDate)
+                                                decimal oppaccdep = Convert.ToDecimal(opAccDepreciation);
+                                                if (oppaccdep < 0)
                                                 {
-                                                    decimal oppaccdep = Convert.ToDecimal(opAccDepreciation);
-                                                    if (oppaccdep < 0)
-                                                    {
-                                                        errorlist.Add("Openingaccumulated should not be zero.For row" + rowIterator);
-                                                        continue;
-                                                    }
-                                                    else
-                                                    {
-                                                        assets.OPAccDepreciation = oppaccdep;
-                                                    }
-
-                                                    // res.Data = checkflag;
+                                                    errorlist.Add("Openingaccumulated should not be zero.For row" + rowIterator);
+                                                    continue;
                                                 }
-
                                                 else
                                                 {
-
-                                                    assets.OPAccDepreciation = 0;
-
+                                                    assets.OPAccDepreciation = oppaccdep;
                                                 }
 
+                                                // res.Data = checkflag;
                                             }
+
                                             else
                                             {
-                                                // res.Data = "Noperiod";
-                                                errorlist.Add("No period entered in master. For row" + rowIterator);
-                                                res.Data = errorlist;
-                                                continue;
-                                            }
-                                            ///////////////////////////////
-                                            //for voucher date
 
-                                            var checkvoucherdate = ImportDatevalidation(Convert.ToDateTime(assets.VoucherDate), companyid);
-                                            if (checkvoucherdate == "Yes")
-                                            {
-                                                errorlist.Add("For voucher date period is lock you cannot add asset. For row" + rowIterator);
-                                                continue;
-                                            }
-                                            if (checkvoucherdate == "No")
-                                            {
-                                                assets.VoucherDate = assets.VoucherDate;
+                                                assets.OPAccDepreciation = 0;
 
                                             }
-                                            if (checkvoucherdate == "Nosubperiod")
-                                            {
-                                                errorlist.Add("For voucher date No Sub period found. For row" + rowIterator);
-                                                continue;
-                                            }
-                                            if (checkvoucherdate == "Depalreadycalculated")
-                                            {
-                                                errorlist.Add("Depriciation is calculated you cannot add asset. For row" + rowIterator);
-                                                continue;
-                                            }
-                                            //for dateputtousecompany
-                                            var checkdateputtousecomp = ImportDatevalidation(Convert.ToDateTime(assets.DtPutToUse), companyid);
-                                            if (checkdateputtousecomp == "Yes")
-                                            {
-                                                errorlist.Add("For voucher date period is lock you cannot add asset.For row" + rowIterator);
-                                                continue;
-                                            }
-                                            if (checkdateputtousecomp == "No")
-                                            {
-                                                assets.DtPutToUse = assets.DtPutToUse;
 
-                                            }
-                                            if (checkvoucherdate == "Nosubperiod")
-                                            {
-                                                errorlist.Add("For voucher date No Sub period found. For row" + rowIterator);
-                                                continue;
-                                            }
-                                            if (checkvoucherdate == "Depalreadycalculated")
-                                            {
-                                                errorlist.Add("Depriciation is calculated you cannot add asset. For row" + rowIterator);
-                                                continue;
-                                            }
+                                        }
+                                        else
+                                        {
+                                            // res.Data = "Noperiod";
+                                            errorlist.Add("No period entered in master. For row" + rowIterator);
+                                            res.Data = errorlist;
+                                            continue;
+                                        }
+                                        ///////////////////////////////
+                                        //for voucher date
+
+                                        var checkvoucherdate = ImportDatevalidation(Convert.ToDateTime(assets.VoucherDate), companyid);
+                                        if (checkvoucherdate == "Yes")
+                                        {
+                                            errorlist.Add("For voucher date period is lock you cannot add asset. For row" + rowIterator);
+                                            continue;
+                                        }
+                                        if (checkvoucherdate == "No")
+                                        {
+                                            assets.VoucherDate = assets.VoucherDate;
+
+                                        }
+                                        if (checkvoucherdate == "Nosubperiod")
+                                        {
+                                            errorlist.Add("For voucher date No Sub period found. For row" + rowIterator);
+                                            continue;
+                                        }
+                                        if (checkvoucherdate == "Depalreadycalculated")
+                                        {
+                                            errorlist.Add("Depriciation is calculated you cannot add asset. For row" + rowIterator);
+                                            continue;
+                                        }
+                                        //for dateputtousecompany
+                                        var checkdateputtousecomp = ImportDatevalidation(Convert.ToDateTime(assets.DtPutToUse), companyid);
+                                        if (checkdateputtousecomp == "Yes")
+                                        {
+                                            errorlist.Add("For voucher date period is lock you cannot add asset.For row" + rowIterator);
+                                            continue;
+                                        }
+                                        if (checkdateputtousecomp == "No")
+                                        {
+                                            assets.DtPutToUse = assets.DtPutToUse;
+
+                                        }
+                                        if (checkvoucherdate == "Nosubperiod")
+                                        {
+                                            errorlist.Add("For voucher date No Sub period found. For row" + rowIterator);
+                                            continue;
+                                        }
+                                        if (checkvoucherdate == "Depalreadycalculated")
+                                        {
+                                            errorlist.Add("Depriciation is calculated you cannot add asset. For row" + rowIterator);
+                                            continue;
+                                        }
                                         //for dateputtousecompany
                                         DateTime dtputtuseit;
 
@@ -6431,7 +6445,7 @@ namespace VerifyWebApp.Controllers
                                         {
                                             DateTime temp_DtPutToUseIT = DateTime.MinValue;
 
-                                            if (GetDate(DtPutToUseIT,out temp_DtPutToUseIT))
+                                            if (GetDate(DtPutToUseIT, out temp_DtPutToUseIT))
                                             {
 
 
@@ -6458,332 +6472,332 @@ namespace VerifyWebApp.Controllers
                                                 }
                                             }
                                         }
-                 
 
-                                            assets.SrNo = int_srno;
-                                            assets.AssetName = AssetName;
-                                            assets.AssetNo = AssetNo;
-                                            assets.AssetIdentificationNo = AssetIdentificationNo;
-                                            assets.VoucherNo = VoucherNo;
-                                            assets.iscomponent = iscomponent;
-                                            assets.PONo = PONo;
-                                            assets.BillNo = BillNo;
-                                            if (SupplierNo != "")
-                                            {
-                                                assets.SupplierNo = Convert.ToInt32(SupplierNo);
-                                            }
-                                            if (uomno != "")
-                                            {
-                                                   assets.UOMNo = Convert.ToInt32(uomno);
-                                            }
 
-                                            assets.ResidualVal = ToDecimal(residual);
-                                            assets.Qty = Convert.ToInt32(Qty);
-                                            assets.GrossVal = ToDecimal(grossvalue);
-                                            assets.ServiceCharges = ToDecimal(servicecharge);
-                                            assets.ExciseDuty = ToDecimal(exciseduty);
-                                            assets.CustomDuty = ToDecimal(customduty);
-                                            assets.AnyOtherDuty = ToDecimal(anyotherduty);
-                                            assets.VAT = ToDecimal(vat);
-                                            assets.AnyOtherTax = ToDecimal(anyothertax);
-                                            assets.CSt = ToDecimal(cst);
-                                            assets.CGST = ToDecimal(cgst);
-                                            assets.SGST = ToDecimal(sgst);
-                                            assets.IGST = ToDecimal(igst);
-                                            assets.NormalRatae = ToDecimal(NormalRate);
-                                            assets.AdditionalRate = ToDecimal(AdditionalRate);
-                                            assets.TotalRate = ToDecimal(TotalRate);
-                                            assets.ServiceTax = ToDecimal(servicetax);
-                                            assets.OtherExp = ToDecimal(otherexpense);
-                                            assets.TotalAddition = ToDecimal(totaladdition);
-                                            assets.Discount = ToDecimal(discount);
-                                            assets.Roundingoff = ToDecimal(roundoff);
-                                            assets.TotDeduction = ToDecimal(totaldeduction);
-                                            assets.InvoiceAmt = ToDecimal(invoiceamt);
-                                            assets.AnyOtherCredit = ToDecimal(anyothercredit);
-                                            assets.DutyDrawback = ToDecimal(dutydrawback);
-                                            assets.ExciseCredit = ToDecimal(excisecredit);
-                                            assets.AnyOtherCredit = ToDecimal(anyothercredit);
-                                            assets.ServiceTaxCredit = ToDecimal(servicetaxcredit);
-                                            assets.VATCredit = ToDecimal(vatcredit);
-                                            assets.CSTCredit = ToDecimal(cstcredit);
-                                            assets.CGSTCredit = ToDecimal(cgstcredit);
-                                            assets.SGSTCredit = ToDecimal(sgstcredit);
-                                            assets.IGSTCredit = ToDecimal(igstcredit);
-                                            assets.MRRNo = MRRNo;
-                                             assets.DepreciationMethod = DepreciationMethod;
-                                            assets.TotalCredit = ToDecimal(totalcredit);
-                                            assets.AmountCapitalised = ToDecimal(amtcap);
-                                            assets.AmountCapitalisedCompany = ToDecimal(amtcapcompanylaw);
-                                            assets.AmountCApitalisedIT = ToDecimal(amtcapincometax);
-                                            assets.AnyOtherDutyCredit = ToDecimal(anyotherdutycredit);
-                                            assets.BrandName = BrandName;
-                                            assets.SrNo = SrNo;
-                                            assets.Model = Model;
-                                            assets.Remarks = Remarks;
-                                            assets.IsImported = IsImported;
-                                            assets.Currency = Currency;
-                                            if (Values == "")
-                                            {
-                                                assets.Values = 0;
-                                            }
-                                            else
-                                            {
-                                                assets.Values = ToDecimal(Values);
-                                            }
-
-                                            assets.Usefullife = ToDecimal(Usefullife);
-                                            if (ITGroupID == "")
-                                            {
-                                                assets.ITGroupIDID = 0;
-                                            }
-                                            else
-                                            {
-                                                assets.ITGroupIDID = Convert.ToInt32(ITGroupID);
-                                            }
-
-                                            assets.iscomponent = iscomponent;
-                                            if (Parent_AssetNo == "" || Parent_AssetNo == "0")
+                                        assets.SrNo = int_srno;
+                                        assets.AssetName = AssetName;
+                                        assets.AssetNo = AssetNo;
+                                        assets.AssetIdentificationNo = AssetIdentificationNo;
+                                        assets.VoucherNo = VoucherNo;
+                                        assets.iscomponent = iscomponent;
+                                        assets.PONo = PONo;
+                                        assets.BillNo = BillNo;
+                                        if (SupplierNo != "")
                                         {
-                                                assets.Parent_AssetId = 0;
-                                            }
-                                            else
-                                            {
-                                                var parentassetid = db.Assetss.Where(x => x.AssetNo == Parent_AssetNo).FirstOrDefault().ID;
-                                                assets.Parent_AssetId = parentassetid;
-                                            }
+                                            assets.SupplierNo = Convert.ToInt32(SupplierNo);
+                                        }
+                                        if (uomno != "")
+                                        {
+                                            assets.UOMNo = Convert.ToInt32(uomno);
+                                        }
 
-                                            if (AccountID == "")
-                                            {
-                                                assets.AccountID = 0;
-                                            }
-                                            else
-                                            {
-                                                assets.AccountID = Convert.ToInt32(AccountID);
-                                            }
-                                            if (DepAccountId == "")
-                                            {
-                                                assets.DepAccountId = 0;
-                                            }
-                                            else
-                                            {
-                                                assets.DepAccountId = Convert.ToInt32(DepAccountId);
-                                            }
-                                            if (AccAccountID == "")
-                                            {
-                                                assets.AccAccountID = 0;
-                                            }
-                                            else
-                                            {
-                                                assets.AccAccountID = Convert.ToInt32(AccAccountID);
-                                            }
+                                        assets.ResidualVal = ToDecimal(residual);
+                                        assets.Qty = Convert.ToInt32(Qty);
+                                        assets.GrossVal = ToDecimal(grossvalue);
+                                        assets.ServiceCharges = ToDecimal(servicecharge);
+                                        assets.ExciseDuty = ToDecimal(exciseduty);
+                                        assets.CustomDuty = ToDecimal(customduty);
+                                        assets.AnyOtherDuty = ToDecimal(anyotherduty);
+                                        assets.VAT = ToDecimal(vat);
+                                        assets.AnyOtherTax = ToDecimal(anyothertax);
+                                        assets.CSt = ToDecimal(cst);
+                                        assets.CGST = ToDecimal(cgst);
+                                        assets.SGST = ToDecimal(sgst);
+                                        assets.IGST = ToDecimal(igst);
+                                        assets.NormalRatae = ToDecimal(NormalRate);
+                                        assets.AdditionalRate = ToDecimal(AdditionalRate);
+                                        assets.TotalRate = ToDecimal(TotalRate);
+                                        assets.ServiceTax = ToDecimal(servicetax);
+                                        assets.OtherExp = ToDecimal(otherexpense);
+                                        assets.TotalAddition = ToDecimal(totaladdition);
+                                        assets.Discount = ToDecimal(discount);
+                                        assets.Roundingoff = ToDecimal(roundoff);
+                                        assets.TotDeduction = ToDecimal(totaldeduction);
+                                        assets.InvoiceAmt = ToDecimal(invoiceamt);
+                                        assets.AnyOtherCredit = ToDecimal(anyothercredit);
+                                        assets.DutyDrawback = ToDecimal(dutydrawback);
+                                        assets.ExciseCredit = ToDecimal(excisecredit);
+                                        assets.AnyOtherCredit = ToDecimal(anyothercredit);
+                                        assets.ServiceTaxCredit = ToDecimal(servicetaxcredit);
+                                        assets.VATCredit = ToDecimal(vatcredit);
+                                        assets.CSTCredit = ToDecimal(cstcredit);
+                                        assets.CGSTCredit = ToDecimal(cgstcredit);
+                                        assets.SGSTCredit = ToDecimal(sgstcredit);
+                                        assets.IGSTCredit = ToDecimal(igstcredit);
+                                        assets.MRRNo = MRRNo;
+                                        assets.DepreciationMethod = DepreciationMethod;
+                                        assets.TotalCredit = ToDecimal(totalcredit);
+                                        assets.AmountCapitalised = ToDecimal(amtcap);
+                                        assets.AmountCapitalisedCompany = ToDecimal(amtcapcompanylaw);
+                                        assets.AmountCApitalisedIT = ToDecimal(amtcapincometax);
+                                        assets.AnyOtherDutyCredit = ToDecimal(anyotherdutycredit);
+                                        assets.BrandName = BrandName;
+                                        assets.SrNo = SrNo;
+                                        assets.Model = Model;
+                                        assets.Remarks = Remarks;
+                                        assets.IsImported = IsImported;
+                                        assets.Currency = Currency;
+                                        if (Values == "")
+                                        {
+                                            assets.Values = 0;
+                                        }
+                                        else
+                                        {
+                                            assets.Values = ToDecimal(Values);
+                                        }
+
+                                        assets.Usefullife = ToDecimal(Usefullife);
+                                        if (ITGroupID == "")
+                                        {
+                                            assets.ITGroupIDID = 0;
+                                        }
+                                        else
+                                        {
+                                            assets.ITGroupIDID = Convert.ToInt32(ITGroupID);
+                                        }
+
+                                        assets.iscomponent = iscomponent;
+                                        if (Parent_AssetNo == "" || Parent_AssetNo == "0")
+                                        {
+                                            assets.Parent_AssetId = 0;
+                                        }
+                                        else
+                                        {
+                                            var parentassetid = db.Assetss.Where(x => x.AssetNo == Parent_AssetNo).FirstOrDefault().ID;
+                                            assets.Parent_AssetId = parentassetid;
+                                        }
+
+                                        if (AccountID == "")
+                                        {
+                                            assets.AccountID = 0;
+                                        }
+                                        else
+                                        {
+                                            assets.AccountID = Convert.ToInt32(AccountID);
+                                        }
+                                        if (DepAccountId == "")
+                                        {
+                                            assets.DepAccountId = 0;
+                                        }
+                                        else
+                                        {
+                                            assets.DepAccountId = Convert.ToInt32(DepAccountId);
+                                        }
+                                        if (AccAccountID == "")
+                                        {
+                                            assets.AccAccountID = 0;
+                                        }
+                                        else
+                                        {
+                                            assets.AccAccountID = Convert.ToInt32(AccAccountID);
+                                        }
 
 
-                                            if (AGroupId == "")
-                                            {
-                                                assets.AGroupID = 0;
-                                            }
-                                            else
-                                            {
-                                                assets.AGroupID = Convert.ToInt32(AGroupId);
-                                            }
-                                            if (BGroupId == "")
-                                            {
-                                                assets.BGroupID = 0;
-                                            }
-                                            else
-                                            {
-                                                assets.BGroupID = Convert.ToInt32(BGroupId);
-                                            }
-                                            if (CGroupId == "")
-                                            {
-                                                assets.CGroupID = 0;
-                                            }
-                                            else
-                                            {
-                                                assets.CGroupID = Convert.ToInt32(CGroupId);
-                                            }
-                                            if (DGroupId == "")
-                                            {
-                                                assets.DGroupID = 0;
-                                            }
-                                            else
-                                            {
-                                                assets.DGroupID = Convert.ToInt32(DGroupId);
-                                            }
-                                            if (LocAId == "")
-                                            {
-                                                assets.LocAID = 0;
-                                            }
-                                            else
-                                            {
-                                                assets.LocAID = Convert.ToInt32(LocAId);
-                                            }
-                                            if (LocBId == "")
-                                            {
-                                                assets.LocBID = 0;
-                                            }
-                                            else
-                                            {
-                                                assets.LocBID = Convert.ToInt32(LocBId);
-                                            }
-                                            if (LocCId == "")
-                                            {
-                                                assets.LocCID = 0;
-                                            }
-                                            else
-                                            {
-                                                assets.LocCID = Convert.ToInt32(LocCId);
-                                            }
-                                            ///////////////////costcenter
-                                            if (CostCenterAId == "")
-                                            {
-                                                assets.CostCenterAID = 0;
-                                            }
-                                            else
-                                            {
-                                                assets.CostCenterAID = Convert.ToInt32(CostCenterAId);
-                                            }
-                                            if (CostCenterBId == "")
-                                            {
-                                                assets.CostCenterBID = 0;
-                                            }
-                                            else
-                                            {
-                                                assets.CostCenterBID = Convert.ToInt32(CostCenterBId);
-                                            }
-                                            //////////////
+                                        if (AGroupId == "")
+                                        {
+                                            assets.AGroupID = 0;
+                                        }
+                                        else
+                                        {
+                                            assets.AGroupID = Convert.ToInt32(AGroupId);
+                                        }
+                                        if (BGroupId == "")
+                                        {
+                                            assets.BGroupID = 0;
+                                        }
+                                        else
+                                        {
+                                            assets.BGroupID = Convert.ToInt32(BGroupId);
+                                        }
+                                        if (CGroupId == "")
+                                        {
+                                            assets.CGroupID = 0;
+                                        }
+                                        else
+                                        {
+                                            assets.CGroupID = Convert.ToInt32(CGroupId);
+                                        }
+                                        if (DGroupId == "")
+                                        {
+                                            assets.DGroupID = 0;
+                                        }
+                                        else
+                                        {
+                                            assets.DGroupID = Convert.ToInt32(DGroupId);
+                                        }
+                                        if (LocAId == "")
+                                        {
+                                            assets.LocAID = 0;
+                                        }
+                                        else
+                                        {
+                                            assets.LocAID = Convert.ToInt32(LocAId);
+                                        }
+                                        if (LocBId == "")
+                                        {
+                                            assets.LocBID = 0;
+                                        }
+                                        else
+                                        {
+                                            assets.LocBID = Convert.ToInt32(LocBId);
+                                        }
+                                        if (LocCId == "")
+                                        {
+                                            assets.LocCID = 0;
+                                        }
+                                        else
+                                        {
+                                            assets.LocCID = Convert.ToInt32(LocCId);
+                                        }
+                                        ///////////////////costcenter
+                                        if (CostCenterAId == "")
+                                        {
+                                            assets.CostCenterAID = 0;
+                                        }
+                                        else
+                                        {
+                                            assets.CostCenterAID = Convert.ToInt32(CostCenterAId);
+                                        }
+                                        if (CostCenterBId == "")
+                                        {
+                                            assets.CostCenterBID = 0;
+                                        }
+                                        else
+                                        {
+                                            assets.CostCenterBID = Convert.ToInt32(CostCenterBId);
+                                        }
+                                        //////////////
 
 
-                                            assets.Companyid = companyid;
-                                            assets.CreatedDate = istDate;
-                                            assets.CreatedUserId = userid;
+                                        assets.Companyid = companyid;
+                                        assets.CreatedDate = istDate;
+                                        assets.CreatedUserId = userid;
 
-                                            db.Assetss.Add(assets);
+                                        db.Assetss.Add(assets);
+                                        db.SaveChanges();
+
+
+                                        Childlocation childlocation = new Childlocation();
+                                        if (LocAId == "")
+                                        {
+                                            childlocation.ALocID = 0;
+                                        }
+                                        else
+                                        {
+                                            childlocation.ALocID = Convert.ToInt32(LocAId);
+                                        }
+                                        if (LocBId == "")
+                                        {
+                                            childlocation.BLocID = 0;
+                                        }
+                                        else
+                                        {
+                                            childlocation.BLocID = Convert.ToInt32(LocBId);
+                                        }
+                                        if (LocCId == "")
+                                        {
+                                            childlocation.CLocID = 0;
+                                        }
+                                        else
+                                        {
+                                            childlocation.CLocID = Convert.ToInt32(LocCId);
+                                        }//check if locationdate and costcenter is less then voucherdate if asked by team
+                                         //childlocation.Date =;
+                                        childlocation.AssetID = assets.ID;
+                                        childlocation.Date = istDate;
+                                        childlocation.Companyid = companyid;
+                                        childlocation.CreatedDate = istDate;
+                                        childlocation.CreatedUserId = userid;
+
+                                        if (childlocation.ALocID != 0)
+                                        {
+                                            db.childlocations.Add(childlocation);
                                             db.SaveChanges();
+                                        }
+                                        Childcostcenter childcostcenter = new Childcostcenter();
+                                        if (CostCenterAId == "")
+                                        {
+                                            childcostcenter.AcostcenterID = 0;
+                                        }
+                                        else
+                                        {
+                                            childcostcenter.AcostcenterID = Convert.ToInt32(CostCenterAId);
+                                        }
+                                        if (CostCenterBId == "")
+                                        {
+                                            childcostcenter.BcostcenterID = 0;
+                                        }
+                                        else
+                                        {
+                                            childcostcenter.BcostcenterID = Convert.ToInt32(CostCenterBId);
+                                        }
 
-
-                                            Childlocation childlocation = new Childlocation();
-                                            if (LocAId == "")
-                                            {
-                                                childlocation.ALocID = 0;
-                                            }
-                                            else
-                                            {
-                                                childlocation.ALocID = Convert.ToInt32(LocAId);
-                                            }
-                                            if (LocBId == "")
-                                            {
-                                                childlocation.BLocID = 0;
-                                            }
-                                            else
-                                            {
-                                                childlocation.BLocID = Convert.ToInt32(LocBId);
-                                            }
-                                            if (LocCId == "")
-                                            {
-                                                childlocation.CLocID = 0;
-                                            }
-                                            else
-                                            {
-                                                childlocation.CLocID = Convert.ToInt32(LocCId);
-                                            }//check if locationdate and costcenter is less then voucherdate if asked by team
-                                             //childlocation.Date =;
-                                            childlocation.AssetID = assets.ID;
-                                            childlocation.Date = istDate;
-                                            childlocation.Companyid = companyid;
-                                            childlocation.CreatedDate = istDate;
-                                            childlocation.CreatedUserId = userid;
-
-                                            if (childlocation.ALocID != 0)
-                                            {
-                                                db.childlocations.Add(childlocation);
-                                                db.SaveChanges();
-                                            }
-                                            Childcostcenter childcostcenter = new Childcostcenter();
-                                            if (CostCenterAId == "")
-                                            {
-                                                childcostcenter.AcostcenterID = 0;
-                                            }
-                                            else
-                                            {
-                                                childcostcenter.AcostcenterID = Convert.ToInt32(CostCenterAId);
-                                            }
-                                            if (CostCenterBId == "")
-                                            {
-                                                childcostcenter.BcostcenterID = 0;
-                                            }
-                                            else
-                                            {
-                                                childcostcenter.BcostcenterID = Convert.ToInt32(CostCenterBId);
-                                            }
-
-                                            //childlocation.Date =;
-                                            childcostcenter.Ass_ID = assets.ID;
-                                            childcostcenter.CreatedDate = istDate;
-                                            childcostcenter.CreatedUserId = userid;
-                                            childcostcenter.Percentage = "100";
-                                            childcostcenter.Companyid = companyid;
+                                        //childlocation.Date =;
+                                        childcostcenter.Ass_ID = assets.ID;
+                                        childcostcenter.CreatedDate = istDate;
+                                        childcostcenter.CreatedUserId = userid;
+                                        childcostcenter.Percentage = "100";
+                                        childcostcenter.Companyid = companyid;
                                         if (childcostcenter.AcostcenterID != 0)
                                         {
                                             db.childcostcenters.Add(childcostcenter);
                                             db.SaveChanges();
                                         }
-                                        }
-
-                                    }
-                                    else
-                                    {
-                                        errorlist.Add("Something  went wrong or some value missing in the row  " + rowIterator);
                                     }
 
-                               
+                                }
+                                else
+                                {
+                                    errorlist.Add("Something  went wrong or some value missing in the row  " + rowIterator);
+                                }
+
+
                             }
 
 
                             transaction.Commit();
                             if (norecordsfound == false)
-                                {
-                                    res.Data = "nodata";
-                                    return res;
-                                }
-                                if (errorlist.Count == 0)
-                                {
-                                    res.Data = "Success";
-                                    return res;
-                                }
-                                else
-                                {
-                                    res.Data = errorlist;
-                                    return res;
-                                }
-
+                            {
+                                res.Data = "nodata";
+                                return res;
+                            }
+                            if (errorlist.Count == 0)
+                            {
+                                res.Data = "Success";
+                                return res;
+                            }
+                            else
+                            {
+                                res.Data = errorlist;
+                                return res;
                             }
 
                         }
+
                     }
-                    else
-                    {
-                        res.Data = "error";
-                        logger.Info("Error Request null");
+                }
+                else
+                {
+                    res.Data = "error";
+                    logger.Info("Error Request null");
                     return res;
 
-                    }
-
-
                 }
-                catch (Exception ex)
-                {
 
-                    string strError;
-                    strError = ex.Message + "|" + ex.InnerException;
-                        
+
+            }
+            catch (Exception ex)
+            {
+
+                string strError;
+                strError = ex.Message + "|" + ex.InnerException;
+
                 transaction.Rollback();
                 logger.Log(LogLevel.Error, strError);
                 res.Data = "error";
-                    return res;
-                }
-            
+                return res;
+            }
+
             return res;
         }
 
@@ -6857,7 +6871,8 @@ namespace VerifyWebApp.Controllers
 
                     }
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 res.Data = "error";
                 return res;
@@ -6883,13 +6898,13 @@ namespace VerifyWebApp.Controllers
             List<ITPeriod> itperiod = new List<ITPeriod>();
 
             // period = db.ITPeriods.Where(x=>x.PeriodlockFlag==1).ToList();
-            itperiod = db.ITPeriods.Where(x=>x.Companyid==companyid).ToList();
+            itperiod = db.ITPeriods.Where(x => x.Companyid == companyid).ToList();
             // string checkflag = "";
             // DateTime vdate = Convert.ToDateTime(strvdate);
             //if (itperiod.Count!=0)
             //{
             List<ITPeriod> itperiodlock = new List<ITPeriod>();
-            itperiodlock = db.ITPeriods.Where(x => x.PeriodlockFlag == 1 && x.Companyid==companyid).ToList();
+            itperiodlock = db.ITPeriods.Where(x => x.PeriodlockFlag == 1 && x.Companyid == companyid).ToList();
             if (itperiodlock.Count != 0)
             {
                 foreach (ITPeriod item in itperiodlock)
@@ -6932,14 +6947,14 @@ namespace VerifyWebApp.Controllers
             //{
             //  periodid = item.ID;
             List<SubPeriod> slist = new List<SubPeriod>();
-            slist = db.SubPeriods.Where(x=>x.Companyid==companyid).ToList();
+            slist = db.SubPeriods.Where(x => x.Companyid == companyid).ToList();
             if (slist != null)
             {
                 SubPeriod checkdepflag = new SubPeriod();
-                checkdepflag = db.SubPeriods.Where(x => x.DepFlag == "Y" && x.FromDate <= date && x.ToDate >= date && x.Companyid==companyid).FirstOrDefault();
+                checkdepflag = db.SubPeriods.Where(x => x.DepFlag == "Y" && x.FromDate <= date && x.ToDate >= date && x.Companyid == companyid).FirstOrDefault();
                 if (checkdepflag == null)
                 {
-                    subperiod = db.SubPeriods.Where(x => x.PeriodLockFlag == "Y" && x.Companyid==companyid).ToList();
+                    subperiod = db.SubPeriods.Where(x => x.PeriodLockFlag == "Y" && x.Companyid == companyid).ToList();
                     if (subperiod.Count != 0)
                     {
                         foreach (SubPeriod itemsub in subperiod)
@@ -6973,7 +6988,7 @@ namespace VerifyWebApp.Controllers
                 return checkflag;
             }
 
-            
+
             //}
             //else
             //{
@@ -7017,7 +7032,7 @@ namespace VerifyWebApp.Controllers
         }
         [HttpPost]
         [AllowAnonymous]
-        
+
         public ActionResult Delete(string id)
         {
             int userid = 0;
@@ -7047,11 +7062,11 @@ namespace VerifyWebApp.Controllers
                 return RedirectToAction("CompanySelection", "Company");
             }
 
-           
+
             JsonResult res;
             res = new JsonResult();
-           
-           
+
+
 
             try
             {
@@ -7061,7 +7076,7 @@ namespace VerifyWebApp.Controllers
                 assets = db.Assetss.Where(x => x.ID == assetid && x.Companyid == companyid).FirstOrDefault();
                 assets.str_VoucherDate = Convert.ToDateTime(assets.VoucherDate).ToString("yyyy-MM-dd");
                 DateTime checkvoucherdate;
-                string checklockflag="";
+                string checklockflag = "";
                 //= DateTime.Parse(assets.str_VoucherDate);
                 if (DateTime.TryParseExact(assets.str_VoucherDate, "yyyy-MM-dd",
                                                                       System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out checkvoucherdate))
@@ -7088,7 +7103,8 @@ namespace VerifyWebApp.Controllers
                 List<Depreciation> deplist = new List<Depreciation>();
                 deplist = db.Depreciations.Where(x => x.Companyid == companyid && x.AssetId == assets.ID).ToList();
                 if (deplist.Count() != 0)
-                {res.Data = "Depalreadycalculated";
+                {
+                    res.Data = "Depalreadycalculated";
                     return res;
                 }
                 if (checklockflag == "No")
@@ -7169,7 +7185,7 @@ namespace VerifyWebApp.Controllers
         }
         public static Decimal decimalToDecimal(decimal? number)
         {
-            if (number!=null)
+            if (number != null)
             {
                 return Convert.ToDecimal(number);
             }
@@ -7213,7 +7229,7 @@ namespace VerifyWebApp.Controllers
             {
                 lstList = (List<AssetImportError>)Session["ImportErrors"];
             }
-        
+
 
             return View(lstList);
         }
