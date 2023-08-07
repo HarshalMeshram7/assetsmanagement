@@ -123,14 +123,14 @@
                                                     @{
                                                         if (ViewBag.AutoGenerateAssetNo == "Y")
                                                         {
-                                                            <input type='text' id="txtassetno" class="form-control form-control-sm" tabindex="1" value="@ViewBag.NextAssetNo"
+                                                            <input type='number' maxlength="100" id="txtassetno" class="form-control form-control-sm" tabindex="1" value="@ViewBag.NextAssetNo"
                                                                    readonly="readonly"
                                                                    onblur="assetnoalreadyexists()" />
 
                                                         }
                                                         else
                                                         {
-                                                            <input type='text' id="txtassetno" class="form-control form-control-sm" tabindex="1" value="@ViewBag.NextAssetNo"
+                                                            <input type='number' maxlength="100" id="txtassetno" class="form-control form-control-sm" tabindex="1" value="@ViewBag.NextAssetNo"
                                                                    onblur="assetnoalreadyexists()" />
                                                         }
 
