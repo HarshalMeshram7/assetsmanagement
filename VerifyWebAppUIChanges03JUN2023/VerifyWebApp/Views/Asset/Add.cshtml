@@ -22,7 +22,7 @@
 
 @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
 {
-    @Html.AntiForgeryToken()
+    @Html.AntiForgeryToken();
 
     <div class="container-fluid py-3">
         <div class="row my-1">
@@ -214,9 +214,6 @@
 
                                                     <input id="txtreceiptDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" tabindex="9" value="" type="date" />
 
-
-
-
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
@@ -224,8 +221,6 @@
                                                     <label for="praticesname">Commisioning date</label>
 
                                                     <input id="txtcommDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" tabindex="10" value="" type="date" />
-
-
 
                                                 </div>
                                             </div>
@@ -236,7 +231,6 @@
                                                     <input id="txtdpucomDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy"
                                                            tabindex="11" value="" type="date" />
 
-
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
@@ -244,10 +238,6 @@
                                                     <label for="praticesname">Date Put To Use  (IT Law)<span style="color:#CC0000;">*</span></label>
 
                                                     <input id="txtdpuItDate" class="form-control form-control-sm" placeholder="dd-mm-yyyy" tabindex="12" value="" type="date" />
-
-
-
-
 
                                                 </div>
                                             </div>
