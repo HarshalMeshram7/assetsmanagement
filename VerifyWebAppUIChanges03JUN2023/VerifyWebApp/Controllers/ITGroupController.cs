@@ -18,7 +18,7 @@ namespace VerifyWebApp.Controllers
     {
         public VerifyDB db = new VerifyDB();
 
-        
+        private AssetGroupsRepository repository = new AssetGroupsRepository(new VerifyDB());
 
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
@@ -90,41 +90,65 @@ namespace VerifyWebApp.Controllers
             }
 
             bool bResult = true;
-            try
+            using (var transaction = db.Database.BeginTransaction())
             {
-                TimeZoneInfo istZone = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
-                // var value1 = Request.Form.Get(keys[]);
-                var tnow = System.DateTime.Now.ToUniversalTime();
-
-                JsonResult res = new JsonResult();
-                DateTime istDate = TimeZoneInfo.ConvertTimeFromUtc(tnow.Date, istZone);
-
-                string Level = "";
-                Level = node.id.Substring(0, 2);
-                int tempLength = node.id.Length;
-                string id = node.id.Substring(3, tempLength - 3);
-
-                if (Level == "L0") // selected parent level
+                try
                 {
-                    ITGroup aLocation = new ITGroup();
-                    aLocation.ClientID = 1;
-                    aLocation.GroupName = node.GroupName;
-                    aLocation.OPWDV = node.OPWDV;
-                    aLocation.DepRate = node.DepRate;
-                    aLocation.DepMethod = node.DepMethod;
-                    aLocation.Companyid = companyid;
-                    aLocation.CreatedUserId = userid;
-                    aLocation.CreatedDate = istDate;
+                    TimeZoneInfo istZone = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+                    // var value1 = Request.Form.Get(keys[]);
+                    var tnow = System.DateTime.Now.ToUniversalTime();
 
-                    db.ITGroups.Add(aLocation);
-                    db.SaveChanges();
+                    JsonResult res = new JsonResult();
+                    DateTime istDate = TimeZoneInfo.ConvertTimeFromUtc(tnow.Date, istZone);
+
+                   // string GroupName = "";
+
+
+
+                    string Level = "";
+                    Level = node.id.Substring(0, 2);
+                    int tempLength = node.id.Length;
+                    string id = node.id.Substring(3, tempLength - 3);
+
+                    if (Level == "L0") // selected parent level
+                    {
+                        ITGroup aLocation = new ITGroup();
+                        aLocation.ClientID = 1;
+                        aLocation.GroupName = node.GroupName;
+                        aLocation.OPWDV = node.OPWDV;
+                        aLocation.DepRate = node.DepRate;
+                        aLocation.DepMethod = node.DepMethod;
+                        aLocation.Companyid = companyid;
+                        aLocation.CreatedUserId = userid;
+                        aLocation.CreatedDate = istDate;
+
+                        //repository.SaveGroup(aLocation);
+
+                        //AuditLog auditLog = new AuditLog();
+
+                        //auditLog.SaveRecord("GroupName", "", node.GroupName);
+                        //auditLog.SaveRecord("OPWDV", "", node.OPWDV.ToString());
+                        //auditLog.SaveRecord("DepRate", "", node.DepRate.ToString());
+                        //auditLog.SaveRecord("DepMethod", "", node.DepMethod.ToString());
+                        //auditLog.SaveRecord("Companyid", "", companyid.ToString());
+
+
+                        //auditLog.InsertLog(userid, companyid, AuditLog.Event_Insert, AuditLog.Record_Type_CompanyLawGroup, db);
+
+                        //var jsonString = JsonConvert.SerializeObject(agroup);
+
+                        db.ITGroups.Add(aLocation);
+                        db.SaveChanges();
+                       transaction.Commit();
+
+                    }
 
                 }
-
-            }
-            catch (Exception ex)
-            {
-                bResult = false;
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    bResult = false;
+                }
             }
             return new JsonResult { Data = bResult, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
@@ -192,7 +216,7 @@ namespace VerifyWebApp.Controllers
                 {
                     alist = assetRepository.GetAssetDataSearch(companyid, Level, int_id, startRec, pageSize, searchby, searchstring);
 
-                    int totalRecords = db.Assetss.Count(x => x.Companyid == companyid);
+                    int totalRecords = db.Assetss.Count(x => x.Companyid == companyid && x.ITGroupIDID == int_id );
                     int recFilter = totalRecords;
 
                     var lstAssets = alist.Select(x => new
@@ -221,7 +245,7 @@ namespace VerifyWebApp.Controllers
                 }
                 else
                 {
-                    alist = assetRepository.GetAssetData(companyid, Level, int_id, startRec, pageSize);
+                    alist = assetRepository.GetAssetDataIT(companyid, Level, int_id, startRec, pageSize);
 
                     int totalRecords = db.Assetss.Count(x => x.Companyid == companyid);
                     int recFilter = totalRecords;
@@ -407,6 +431,120 @@ namespace VerifyWebApp.Controllers
                 bResult = false;
             }
             return new JsonResult { Data = bResult, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+        [ValidateJsonAntiForgeryToken]
+        public ActionResult GetAssetGroup()
+        {
+            int userid = 0;
+            Login user = (Login)(Session["PUser"]);
+
+            if (user != null)
+            {
+                ViewBag.LogonUser = user.UserName;
+                userid = user.ID;
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            int companyid = 0;
+            Company company = (Company)(Session["Cid"]);
+
+            if (company != null)
+            {
+                ViewBag.LoggedCompany = company.CompanyName;
+                companyid = company.ID;
+                ViewBag.companyid = companyid;
+                ViewBag.LoggedCompany = company.CompanyName;
+            }
+            else
+            {
+                return RedirectToAction("CompanySelection", "Company");
+            }
+
+            List<JsTreeModel> list = new List<JsTreeModel>();
+
+            List<AGroup> lstAGroup = new List<AGroup>();
+            List<BGroup> lstBGroup = new List<BGroup>();
+            List<CGroup> lstCGroup = new List<CGroup>();
+            List<DGroup> lstDGroup = new List<DGroup>();
+
+            lstAGroup = db.AGroups.Where(x => x.Companyid == companyid).ToList();
+
+            lstBGroup = db.BGroups.Where(x => x.Companyid == companyid).ToList();
+
+            lstCGroup = db.CGroups.Where(x => x.Companyid == companyid).ToList();
+
+            lstDGroup = db.DGroups.Where(x => x.Companyid == companyid).ToList();
+
+            JsTreeModel oNodeL0 = new JsTreeModel();
+
+            oNodeL0.id = "L0-0";
+            oNodeL0.text = "ITGroups List";
+            oNodeL0.parent = "#";
+            oNodeL0.children = false;
+
+
+            list.Add(oNodeL0);
+
+            //  Level 1
+            foreach (var item in lstAGroup)
+            {
+
+                JsTreeModel oModel = new JsTreeModel();
+
+                oModel.id = "L1-" + item.ID.ToString();
+                oModel.text = item.AGroupName;
+                oModel.parent = "L0-0";
+                oModel.children = false;
+
+                list.Add(oModel);
+
+            }
+
+            foreach (var item in lstBGroup)
+            {
+
+                JsTreeModel oModel = new JsTreeModel();
+
+                oModel.id = "L2-" + item.ID.ToString();
+                oModel.text = item.BGroupName;
+                oModel.parent = "L1-" + item.AGrpID.ToString();
+                oModel.children = false;
+
+                list.Add(oModel);
+
+            }
+
+            foreach (var item in lstCGroup)
+            {
+
+                JsTreeModel oModel = new JsTreeModel();
+
+                oModel.id = "L3-" + item.ID.ToString();
+                oModel.text = item.CGroupName;
+                oModel.parent = "L2-" + item.BGrpID.ToString();
+                oModel.children = false;
+
+                list.Add(oModel);
+
+            }
+
+            foreach (var item in lstDGroup)
+            {
+
+                JsTreeModel oModel = new JsTreeModel();
+
+                oModel.id = "L4-" + item.ID.ToString();
+                oModel.text = item.DGroupName;
+                oModel.parent = "L3-" + item.CGrpID.ToString();
+                oModel.children = false;
+
+                list.Add(oModel);
+
+            }
+
+            return new JsonResult { Data = list, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         [ValidateJsonAntiForgeryToken]

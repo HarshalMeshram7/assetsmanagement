@@ -46,7 +46,7 @@
                 <div class="row my-2" style="padding-left:10px">
                     <div class="col-md-12" style="padding-left:10px">
                         <button type="button" id="mnuAdd" value="New Practice"
-                                class="btn btn-sm addBtn m-1 order-1"
+                                class="btn btn-sm addBtn pull-left m-1 order-1"
                                 data-bs-toggle="tooltip" data-bs-placement="top" title="Add New"
                                 @*data-delay='{"show":"2000", "hide":"1500"}' style="font-size:5px"*@>
                             <i class="fa fa-plus" aria-hidden="true"></i>
@@ -749,7 +749,7 @@
         searchstring = $("#txtsearch").val();
 
 
-         var ControllerURL = '@Url.Action("GetAssetData", "Asset")';
+         var ControllerURL = '@Url.Action("GetAssetData", "ITGroup")';
          console.log(ControllerURL);
          var table = $('#tblasset')
              .on('processing.dt', function (e, settings, processing) {
