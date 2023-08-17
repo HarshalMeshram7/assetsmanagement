@@ -917,7 +917,7 @@
                                             <div class="col-md-12">
                                                 <div class="pull-right">
                                                     <button type="button" class="btn btn-sm nBtn" 
-                                                            id="btnAddloc"
+                                                            id="btnAddloc" 
                                                             data-toggle="modal">
                                                         Add Location 
                                                     </button>
@@ -1976,7 +1976,7 @@
 
                 ////////////////////////////////////
 
-
+             
                 ///image display
                 function readIMG(input) {
                     if (input.files && input.files[0]) {
@@ -2744,15 +2744,15 @@
     function closeloc() {
         $('#locationmodal').modal('hide');
     }
-    function deleteloc(obj) {
+    //function deleteloc(obj) {
 
-        swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
-            if (result == true) {
-                $(obj).parent().parent().remove();
-                srnocnt - 1;
-            }
-        });
-    }
+    //    swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+    //        if (result == true) {
+    //            $(obj).parent().parent().remove();
+    //            srnocnt - 1;
+    //        }
+    //    });
+    //}
     function saveloc() {
 
         if ($("#txtlocDate").val() == '') {
