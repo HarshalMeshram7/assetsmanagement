@@ -96,7 +96,7 @@ namespace VerifyWebApp.BusinessLogic
                                                && x.AssetNo.ToString().ToLower().StartsWith(searchstring.ToLower())
                                            ).OrderBy(x => x.ID)
                                .Skip(startrec).Take(pagesize).ToList();
-                        
+
 
 
                         //AssetList = AssetList.Where(p => p.AssetNo.ToString().ToLower().StartsWith(searchstring.ToLower())).ToList();
@@ -138,7 +138,7 @@ namespace VerifyWebApp.BusinessLogic
 
                 }
 
-                
+
                 foreach (Assets item in AssetList)
                 {
                     if (item.VoucherDate != null)
@@ -147,7 +147,7 @@ namespace VerifyWebApp.BusinessLogic
                     }
 
                 }
-              
+
 
 
             }
@@ -159,7 +159,7 @@ namespace VerifyWebApp.BusinessLogic
             return AssetList;
         }
 
-        public List<Assets> GetAssetData(int CompanyID, string Level, int GroupID, int startrec,int pagesize)
+        public List<Assets> GetAssetData(int CompanyID, string Level, int GroupID, int startrec, int pagesize)
         {
 
             List<Assets> AssetList = new List<Assets>();
@@ -189,7 +189,7 @@ namespace VerifyWebApp.BusinessLogic
                                             && x.DisposalFlag == 0
                               ).OrderBy(x => x.ID)
                                .Skip(startrec).Take(pagesize).ToList();
-                                
+
                 }
                 else if (Level == "L3")  // Asset on cgroup
                 {
@@ -241,7 +241,7 @@ namespace VerifyWebApp.BusinessLogic
 
 
                     AssetList = db.Assetss.Where(x => x.Companyid == CompanyID && x.DisposalFlag == 0)
-                        .OrderBy(x=>x.ID)
+                        .OrderBy(x => x.ID)
                         .Skip(startrec).Take(pagesize).ToList();
 
 
@@ -251,7 +251,7 @@ namespace VerifyWebApp.BusinessLogic
 
                 foreach (Assets item in AssetList)
                 {
-                    if(item.VoucherDate!=null)
+                    if (item.VoucherDate != null)
                     {
                         item.str_VoucherDate = Convert.ToDateTime(item.VoucherDate).ToString("dd/MM/yyyy");
                     }
@@ -265,6 +265,141 @@ namespace VerifyWebApp.BusinessLogic
             }
             return AssetList;
         }
+
+        public List<Assets> GetAssetDataIT(int CompanyID, string Level, int GroupID, int startrec, int pagesize)
+        {
+            List<Assets> Assetlist = new List<Assets>();
+            try
+            {
+                if (Level == "L1")
+                {
+                    Assetlist = db.Assetss.Where(x => x.Companyid == CompanyID
+
+                            && x.ITGroupIDID == GroupID
+                             && x.DisposalFlag == 0)
+
+                            .OrderBy(x => x.ID)
+                            .Skip(startrec).Take(pagesize).ToList();
+
+                }
+
+
+                else
+                {
+                    Assetlist = db.Assetss.Where(x => x.Companyid == CompanyID && x.ITGroupIDID != 0 && x.DisposalFlag == 0)
+                         .OrderBy(x => x.ID)
+                        .Skip(startrec).Take(pagesize).ToList();
+                }
+
+                foreach (Assets item in Assetlist)
+                {
+                    if (item.VoucherDate != null)
+                    {
+                        item.str_VoucherDate = Convert.ToDateTime(item.VoucherDate).ToString("dd/MM/yyyy");
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                // TODO Log Error message 
+                Assetlist = new List<Assets>();
+            }
+            return Assetlist;
+
+
+        }
+
+        public List<Assets> GetAssetDataSearchIT(int CompanyID, string Level, int GroupID, int startrec, int pagesize, string searchby = "", string searchstring = "")
+        {
+
+            List<Assets> AssetList = new List<Assets>();
+            try
+            {
+                if (Level == "L1") // Asset 
+                {
+                    AssetList = db.Assetss.Where(x => x.Companyid == CompanyID
+                                            && x.ITGroupIDID == GroupID
+                                            && x.DisposalFlag == 0
+                                        ).ToList();
+                }
+                else
+                {
+                    //  Should it be error -- Mandar ?
+
+
+                    if (searchby == "1")
+                    {
+
+                        AssetList = db.Assetss.Where(x => x.Companyid == CompanyID
+                                               && x.DisposalFlag == 0
+                                               && x.AssetNo.ToString().ToLower().StartsWith(searchstring.ToLower())
+                                           ).OrderBy(x => x.ID)
+                               .Skip(startrec).Take(pagesize).ToList();
+
+
+
+                        //AssetList = AssetList.Where(p => p.AssetNo.ToString().ToLower().StartsWith(searchstring.ToLower())).ToList();
+                    }
+
+                    if (searchby == "2")
+                    {
+
+                        AssetList = db.Assetss.Where(x => x.Companyid == CompanyID
+                                               && x.DisposalFlag == 0
+                                               && x.AssetName.ToString().ToLower().StartsWith(searchstring.ToLower())
+                                           ).OrderBy(x => x.ID)
+                               .Skip(startrec).Take(pagesize).ToList();
+
+                        //AssetList = AssetList.Where(p => p.AssetName.ToString().ToLower().Contains(searchstring.ToLower())).ToList();
+                    }
+
+                    //if (searchby == "3")
+                    //{
+                    //    //AssetList = AssetList.Where(p => p.SrNo.ToString().ToLower().StartsWith(searchstring.ToLower())).ToList();
+
+                    //    AssetList = db.Assetss.Where(x => x.Companyid == CompanyID
+                    //                           && x.DisposalFlag == 0
+                    //                           && x.SrNo.ToString().ToLower().StartsWith(searchstring.ToLower())
+                    //                       ).OrderBy(x => x.ID)
+                    //           .Skip(startrec).Take(pagesize).ToList();
+
+                    //}
+                    //if (searchby == "4")
+                    //{
+                    //    //AssetList = AssetList.Where(p => p.AssetIdentificationNo.ToString().ToLower().StartsWith(searchstring.ToLower())).ToList();
+
+                    //    AssetList = db.Assetss.Where(x => x.Companyid == CompanyID
+                    //                        && x.DisposalFlag == 0
+                    //                        && x.AssetIdentificationNo.ToString().ToLower().StartsWith(searchstring.ToLower())
+                    //                    ).OrderBy(x => x.ID)
+                    //           .Skip(startrec).Take(pagesize).ToList();
+                    //}
+
+                }
+
+
+                foreach (Assets item in AssetList)
+                {
+                    if (item.VoucherDate != null)
+                    {
+                        item.str_VoucherDate = Convert.ToDateTime(item.VoucherDate).ToString("dd/MM/yyyy");
+                    }
+
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                // TODO Log Error message 
+                AssetList = new List<Assets>();
+            }
+            return AssetList;
+        }
+
         public List<Assets> GetAssetData_Costcenter(int CompanyID, string Level, int CostcenterID)
         {
 
@@ -295,7 +430,7 @@ namespace VerifyWebApp.BusinessLogic
                                             && x.DisposalFlag == 0
                               ).ToList();
                 }
-               
+
                 else
                 {
                     //  Should it be error -- Mandar ?
@@ -368,7 +503,7 @@ namespace VerifyWebApp.BusinessLogic
                                              ).ToList();
 
                 }
-              
+
                 else
                 {
                     //  Should it be error -- Mandar ?
@@ -405,7 +540,7 @@ namespace VerifyWebApp.BusinessLogic
         }
         */
 
-        public bool UpdateAsset(AssetGroupViewmodel assetGroup,int userId,ref string Message)
+        public bool UpdateAsset(AssetGroupViewmodel assetGroup, int userId, ref string Message)
         {
             bool result = false;
 
@@ -438,7 +573,7 @@ namespace VerifyWebApp.BusinessLogic
                                 ITPeriodLocked = true;
                                 break;
                             }
-                       }
+                        }
                     }
 
 
@@ -461,7 +596,7 @@ namespace VerifyWebApp.BusinessLogic
 
                     /// Validate if Depreiation is calculated or not for this asset
                     int depcount = 0;
-                    depcount = db.Depreciations.Where(x => x.Companyid == assetGroup.CompanyID 
+                    depcount = db.Depreciations.Where(x => x.Companyid == assetGroup.CompanyID
                     && x.AssetId == assetGroup.ID).Count();
                     if (depcount > 0)
                     {
@@ -470,7 +605,7 @@ namespace VerifyWebApp.BusinessLogic
 
                     Assets obj_asset;
 
-                    obj_asset = db.Assetss.Where(x => x.ID == assetGroup.ID 
+                    obj_asset = db.Assetss.Where(x => x.ID == assetGroup.ID
                         && x.Companyid == assetGroup.CompanyID).FirstOrDefault();
                     if (obj_asset == null)
                     {
@@ -478,7 +613,7 @@ namespace VerifyWebApp.BusinessLogic
                         return false;
                     }
 
-                    if (ITPeriodLocked  == false && CompanyLawPeriodLocked ==false
+                    if (ITPeriodLocked == false && CompanyLawPeriodLocked == false
                          && DepreciationIsCalculatedForAssset == false)
                     {
                         obj_asset.AssetNo = assetGroup.AssetNo;
@@ -494,7 +629,7 @@ namespace VerifyWebApp.BusinessLogic
                         {
                             var parentassetid = db.Assetss.Where(x => x.AssetNo == parentassetno
                                 && x.Companyid == assetGroup.CompanyID).FirstOrDefault().ID;
-                             obj_asset.Parent_AssetId = parentassetid;
+                            obj_asset.Parent_AssetId = parentassetid;
                         }
                         obj_asset.iscomponent = assetGroup.iscomponent;
 
@@ -952,7 +1087,7 @@ namespace VerifyWebApp.BusinessLogic
                     result = true;
                     return result;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     transaction.Rollback();
                     Message = "Error occurred.";
@@ -974,5 +1109,5 @@ namespace VerifyWebApp.BusinessLogic
             }
         }
     }
-    
+
 }
