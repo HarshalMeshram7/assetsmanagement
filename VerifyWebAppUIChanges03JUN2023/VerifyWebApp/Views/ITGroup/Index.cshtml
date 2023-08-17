@@ -329,7 +329,13 @@
                 return  headers;
             }
 
-            $(document).ready(function () {
+                $(document).ready(function () {
+
+                    //$('#tblassets').DataTable({
+                    //    pagingType: 'numbers'
+                    //});
+
+
 
                 $('#btnSave').click(function (event) {
                     // alert("Add");
@@ -758,7 +764,7 @@
                  "destroy": true,
                  "paging": true,
                  "info": false,
-                 "searching": false,
+                 "searching": true,
                  "pagingType": 'numbers',
                  "proccessing": true,
                  'language': {

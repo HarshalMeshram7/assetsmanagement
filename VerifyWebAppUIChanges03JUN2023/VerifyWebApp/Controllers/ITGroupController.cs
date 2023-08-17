@@ -214,7 +214,7 @@ namespace VerifyWebApp.Controllers
 
                 if (searchstring.Length > 0)
                 {
-                    alist = assetRepository.GetAssetDataSearch(companyid, Level, int_id, startRec, pageSize, searchby, searchstring);
+                    alist = assetRepository.GetAssetDataSearchIT(companyid, Level, int_id, startRec, pageSize, searchby, searchstring);
 
                     int totalRecords = db.Assetss.Count(x => x.Companyid == companyid && x.ITGroupIDID == int_id );
                     int recFilter = totalRecords;
