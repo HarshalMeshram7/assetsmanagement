@@ -33,7 +33,9 @@
                             <div><label style="font-size:12px;color:red;"><span>*</span> Mandatory Fields</label></div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-sm saveBtn" id="btngetreport">Show Report</button>
+                            @*<button type="button" class="btn btn-sm saveBtn" id="btngetreport">Show Report</button>*@
+                            <button type="button" class="btn btn-sm saveBtn" style="margin-right:5px" id="btnGetExcelReport">Export Excel</button>
+                            <button type="button" class="btn btn-sm saveBtn" id="btnGetPdfReport">Export PDF</button>
                         </div>
                     }
                 </div>
@@ -59,17 +61,25 @@
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('#btngetreport').click(function(e) {
+    $(document).ready(function () {
+        $('#btnGetExcelReport').click(function (e) {
             e.preventDefault();
             var fromdate = $('#Fromdate').val();
             var todate = $('#Todate').val();
-            getreport(fromdate, todate);
-            /*alert("hii");*/
+            getExcelReport(fromdate, todate);
+        });
+
+        $('#btnGetPdfReport').click(function (e) {
+            e.preventDefault();
+            var fromdate = $('#Fromdate').val();
+            var todate = $('#Todate').val();
+            getPdfReport(fromdate, todate);
         });
     });
 
-    function getreport(fromdate, todate) {
+
+
+    function getExcelReport(fromdate, todate) {
         fromdate = moment(fromdate, 'DD/MM/YYYY').format('YYYY-MM-DD');
         todate = moment(todate, 'DD/MM/YYYY').format('YYYY-MM-DD');
         var data = {
@@ -100,6 +110,43 @@
                 alert('Error occurred during report generation.');
             },
             complete: function() {
+                $('#progressbar').modal('hide');
+            }
+        });
+    }
+
+    function getPdfReport(fromdate, todate) {
+        fromdate = moment(fromdate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+        todate = moment(todate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+        var data = {
+            fromdate: fromdate,
+            todate: todate
+        };
+        var form = $('#frmNewEmp');
+        var token = $('input[name="__RequestVerificationToken"]', form).val();
+        var headers = {};
+        headers['__RequestVerificationToken'] = token;
+        var ControllerURL = '@Url.Action("GetFAReport_New", "FARReport")';
+        var ControllerURL = '@Url.Action("GetPdfReport", "FARReport")';
+        var DownloadURL = '@Url.Action("Download", "FARReport")';
+
+        $.ajax({
+            type: 'POST',
+            url: ControllerURL,
+            contentType: 'application/json',
+            headers: headers,
+            data: JSON.stringify(data),
+            //beforeSend: function () {
+            //    $('#progressbar').modal('show');
+            //},
+            success: function (data) {
+                var fileurl = DownloadURL + '?fileGuid=' + data.FileGuid + '&filename=' + data.FileName;
+                window.location.href = fileurl;
+            },
+            error: function () {
+                alert('Error occurred during report generation.');
+            },
+            complete: function () {
                 $('#progressbar').modal('hide');
             }
         });

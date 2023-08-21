@@ -10,6 +10,8 @@ using VerifyWebApp.Models;
 using VerifyWebApp.ViewModel;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace VerifyWebApp.Controllers
 {
@@ -360,7 +362,7 @@ namespace VerifyWebApp.Controllers
                         worksheet.Cells[rowIterator, 19].Value = item.VoucherNo;
 
 
-                        
+
                         if (item.voucherDate.HasValue)
                         {
                             DateTime dtVouucherDate = item.voucherDate.Value.Date;
@@ -383,14 +385,14 @@ namespace VerifyWebApp.Controllers
                         {
                             DateTime dtBillDate = item.BillDate.Value.Date;
                             worksheet.Cells[rowIterator, 23].Value = dtBillDate.Date.ToString("dd/MM/yyyy");
-                            
+
                         }
                         else
                         {
                             worksheet.Cells[rowIterator, 23].Value = "";
                         }
 
-                        
+
 
 
 
@@ -432,18 +434,13 @@ namespace VerifyWebApp.Controllers
 
                     }
 
+
                     string excelName = "FARReport.xlsx";
 
                     string handle = Guid.NewGuid().ToString();
                     excel.SaveAs(memoryStream);
                     memoryStream.Position = 0;
                     TempData[handle] = memoryStream.ToArray();
-
-
-
-
-
-
 
 
                     return new JsonResult()
@@ -453,7 +450,7 @@ namespace VerifyWebApp.Controllers
 
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 // log error to database 
                 int i = 0;
@@ -466,6 +463,148 @@ namespace VerifyWebApp.Controllers
 
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult GetPdfReport(DateTime FromDate, DateTime ToDate)
+        {
+
+            try
+            {
+                DateTime asondate = DateTime.Now;
+
+
+                // DateTime Asondate = Convert.ToDateTime(asondate);
+
+                int userid = 0;
+                Login user = (Login)(Session["PUser"]);
+
+                if (user != null)
+                {
+                    ViewBag.LogonUser = user.UserName;
+                    userid = user.ID;
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Login");
+                }
+                int companyid = 0;
+                Company company = (Company)(Session["Cid"]);
+
+                if (company != null)
+                {
+                    ViewBag.LoggedCompany = company.CompanyName;
+                    companyid = company.ID;
+                    ViewBag.companyid = companyid;
+                    //ViewBag.LoggedCompany = company.CompanyName;
+                }
+                else
+                {
+                    return RedirectToAction("CompanySelection", "Company");
+                }
+
+                List<Assets> alist = new List<Assets>();
+                List<FARReportViewmodel> FARList = new List<FARReportViewmodel>();
+
+
+                BusinessLogic.FARReportRepository reportRepository = new BusinessLogic.FARReportRepository();
+
+                FARList = reportRepository.getFAR_New(companyid, FromDate, ToDate);
+
+
+                MemoryStream memoryStream = new MemoryStream();
+                Document document = new Document(new Rectangle(PageSize.A4.Width * 6, PageSize.A4.Height));
+                PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
+                document.Open();
+
+                document.Add(new Paragraph("Fixed Asset Register Report"));
+                document.Add(new Paragraph("FromDate: " + FromDate.ToString("dd/MM/yyyy") + " ToDate: " + ToDate.ToString("dd/MM/yyyy")));
+                document.Add(new Paragraph(" "));
+
+                string[] headerRow = { "AGroupName", "BGroupName", "CGroupName ", "DGroupName","AssetNo", "AssetIdentificationNo ", "AssetName ", "VoucherDate ",
+                    "OpGross","Addition ","Disposal","ClGross","OpDep","DepForPeriod","DispoDep","TotDep","NetBalance",
+                    "ResidualVal",
+                    "VoucherNo","VoucherDate", "BillNo","PONo","BillDate","DtPutUse(Company)","DepRate","DepMethod",
+                    "Opening Qty","DisposedQtyTillFromDate", "Disposed Qty", "Closing Qty", "Product Serial No","Model","Remarks",
+                    "ALocName ","BLocName","CLocName","SupplierName",};
+
+                float[] columnWidths = { 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f };
+
+                PdfPTable table = new PdfPTable(columnWidths);
+                table.WidthPercentage = 100;
+
+                foreach (string header in headerRow)
+                {
+                    PdfPCell cell = new PdfPCell(new Phrase(header));
+                    table.AddCell(cell);
+                }
+
+                foreach (var item in FARList)
+                {
+                    table.AddCell(item.AGroupName);
+                    table.AddCell(item.BGroupName);
+                    table.AddCell(item.CGroupName);
+                    table.AddCell(item.DGroupName);
+                    table.AddCell(item.AssetNo);
+                    table.AddCell(item.AssetIdentificationNo);
+                    table.AddCell(item.AssetName);
+                    table.AddCell(item.str_voucherdate);
+                    table.AddCell(item.OpGross.ToString());
+                    table.AddCell(item.Addition.ToString());
+                    table.AddCell(item.Disposal.ToString());
+                    table.AddCell(item.ClGross.ToString());
+                    table.AddCell(item.OpDep.ToString());
+                    table.AddCell(item.UpToDep.ToString());
+                    table.AddCell(item.DispoDep.ToString());
+                    table.AddCell(item.TotDep.ToString());
+                    table.AddCell(item.NetBalance.ToString());
+                    table.AddCell(item.ResidualVal.ToString());
+                    table.AddCell(item.VoucherNo);
+                    table.AddCell(item.voucherDate.ToString());
+                    table.AddCell(item.BillNo);
+                    table.AddCell(item.PONo);
+                    table.AddCell(item.BillDate.ToString());
+                    table.AddCell(item.DTPutUse.ToString());
+                    table.AddCell(item.DepRate.ToString());
+                    table.AddCell(item.DepMethod);
+                    table.AddCell(item.OpeningQty.ToString());
+                    table.AddCell(item.OpeningQty.ToString());
+                    table.AddCell(item.DisposedQty.ToString());
+                    table.AddCell(item.ClosingQty.ToString());
+                    table.AddCell(item.SrNo);
+                    table.AddCell(item.Model);
+                    table.AddCell(item.Remarks);
+                    table.AddCell(item.ALocName);
+                    table.AddCell(item.BLocName);
+                    table.AddCell(item.CLocName);
+                    table.AddCell(item.SupplierName);
+
+                    table.CompleteRow();
+                }
+
+                document.Add(table);
+                document.Close();
+
+                string pdfName = "FARReport.pdf";
+
+                string handle = Guid.NewGuid().ToString();
+                TempData[handle] = memoryStream.ToArray();
+
+                return new JsonResult()
+                {
+                    Data = new { FileGuid = handle, FileName = pdfName }
+                };
+            }
+            catch (Exception ex)
+            {
+                int i = 0;
+
+                return View("~/Views/Shared/Error.cshtm");
+
+            }
+
+        }
+
+       
         [HttpGet]
         [AllowAnonymous]
         public ActionResult FARReport_New() 
@@ -573,6 +712,7 @@ namespace VerifyWebApp.Controllers
             {
                 byte[] data = TempData[fileGuid] as byte[];
                 return File(data, "application/vnd.ms-excel", fileName);
+                // how can i return pdf and excel here
             }
             else
             {
