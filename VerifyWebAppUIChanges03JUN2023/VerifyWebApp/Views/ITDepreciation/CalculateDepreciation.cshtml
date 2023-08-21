@@ -48,24 +48,24 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="form-group">
-                        <label for="praticesname"> Dep.Amount Round off to</label>&nbsp;&nbsp;&nbsp;
+                        <label for="praticesname"> Dep.Amount Round off to</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         Actual Amount(in decimal) @Html.RadioButton("roundoff", "0", new { id = "actualamount", @tabindex = "12", })
                         Rs1 @Html.RadioButton("roundoff", "1", new { id = "rs1", @tabindex = "12", @checked = "true" })
                         Rs10 @Html.RadioButton("roundoff", "10", new { id = "rs10", @tabindex = "12", })
                         Rs100 @Html.RadioButton("roundoff", "100", new { id = "rs100", @tabindex = "12" })
-                      Rs1000 @Html.RadioButton("roundoff", "1000", new { id = "rs1000", @tabindex = "12", })
-                      
+                        Rs1000 @Html.RadioButton("roundoff", "1000", new { id = "rs1000", @tabindex = "12", })
 
-                </div>
+
+                    </div>
             </div>
             </div>
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     <div class="form-group">
-                        <label for="praticesname"> Use 30th Sept as cut off date</label>&nbsp;&nbsp;&nbsp;
+                        <label for="praticesname"> Use 30th Sept as cut off date (less than 180 days)</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         Yes @Html.RadioButton("cutoff", "yes", new { id = "ctyes", @tabindex = "13", @checked = "true" })
                         No @Html.RadioButton("cutoff", "no", new { id = "ctno", @tabindex = "13", })
-                       
+
 
 
                     </div>
