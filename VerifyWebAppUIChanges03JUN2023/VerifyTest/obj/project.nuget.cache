@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "4Lat9iEPqs1k/iQwOEW1vOWU8+Y6loK72Ew2c1aZ4EwYaYR0OJt/tzYSUipdTBgZIsPHVm0piWgFho+Pq+RPfg==",
+  "dgSpecHash": "S3O2oKc9w3e/B/wWY95dwEp8JbeJy3pZ634SCJy3ziLrc3/4n/Q2kBdae1JEC/VfyyI7oT1fk6qzTZ0fQrFilQ==",
   "success": true,
-  "projectFilePath": "D:\\pixonixassetsmanagement\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj",
+  "projectFilePath": "D:\\Asset_Management_New_21_08_2023\\assetmanagement_latest\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.codecoverage\\16.5.0\\microsoft.codecoverage.16.5.0.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.net.test.sdk\\16.5.0\\microsoft.net.test.sdk.16.5.0.nupkg.sha512",

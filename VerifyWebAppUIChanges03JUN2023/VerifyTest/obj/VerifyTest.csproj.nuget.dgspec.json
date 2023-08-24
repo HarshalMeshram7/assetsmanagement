@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\pixonixassetsmanagement\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj": {}
+    "D:\\Asset_Management_New_21_08_2023\\assetmanagement_latest\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj": {}
   },
   "projects": {
-    "D:\\pixonixassetsmanagement\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj": {
+    "D:\\Asset_Management_New_21_08_2023\\assetmanagement_latest\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\pixonixassetsmanagement\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj",
+        "projectUniqueName": "D:\\Asset_Management_New_21_08_2023\\assetmanagement_latest\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj",
         "projectName": "VerifyTest",
-        "projectPath": "D:\\pixonixassetsmanagement\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj",
+        "projectPath": "D:\\Asset_Management_New_21_08_2023\\assetmanagement_latest\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj",
         "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-        "outputPath": "D:\\pixonixassetsmanagement\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\obj\\",
+        "outputPath": "D:\\Asset_Management_New_21_08_2023\\assetmanagement_latest\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

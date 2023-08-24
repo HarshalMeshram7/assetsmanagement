@@ -58,6 +58,9 @@
                                             <thead class="hcol text-uppercase" style="font-weight:bold">
                                                 <tr>
                                                     <td>
+                                                        ID
+                                                    </td>
+                                                    <td>
                                                         Uom
                                                     </td>
 
@@ -80,27 +83,28 @@
                                                 {
                                                     foreach (var item in Model)
                                                     {
-                                                        <tr>
-                                                            <td>@Html.DisplayFor(modelitem => item.Unit)</td>
+                                            <tr>
+                                                <td>@Html.DisplayFor(modelitem => item.ID)</td>
+                                                <td>@Html.DisplayFor(modelitem => item.Unit)</td>
 
 
 
-                                                            <td align="center">
-                                                                <button type="button" class="btn btn modBtn btn-sm"
-                                                                        aria-label="Left Align"
-                                                                        onclick="EditUOM(@item.ID);">
-                                                                    <i class="fa fa-edit"></i>
-                                                                    
-                                                                </button>
+                                                <td align="center">
+                                                    <button type="button" class="btn btn modBtn btn-sm"
+                                                            aria-label="Left Align"
+                                                            onclick="EditUOM(@item.ID);">
+                                                        <i class="fa fa-edit"></i>
 
-                                                            </td>
-                                                            <td align="center">
-                                                                <button type="button" class="btn btn-sm delBtn" aria-label="Left Align" onclick="Delete(@item.ID);">
-                                                                    <i class="fa fa-remove"></i>
-                                                                </button>
+                                                    </button>
 
-                                                            </td>
-                                                        </tr>
+                                                </td>
+                                                <td align="center">
+                                                    <button type="button" class="btn btn-sm delBtn" aria-label="Left Align" onclick="Delete(@item.ID);">
+                                                        <i class="fa fa-remove"></i>
+                                                    </button>
+
+                                                </td>
+                                            </tr>
 
 
                                                     }

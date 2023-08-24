@@ -6,7 +6,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>D:\Source\Verify\VerifyWebAppUIChanges\VerifyWebApp\bin\Release\Publish</_PublishTargetUrl>
+    <_PublishTargetUrl>bin\Release\Publish</_PublishTargetUrl>
     <History>True|2023-05-06T06:26:57.1441551Z;True|2022-11-24T13:15:03.2224889+05:30;True|2022-11-23T09:38:42.8600174+05:30;</History>
   </PropertyGroup>
   <ItemGroup>
