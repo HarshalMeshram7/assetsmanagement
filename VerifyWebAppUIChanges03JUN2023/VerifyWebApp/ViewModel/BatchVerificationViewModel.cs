@@ -22,5 +22,9 @@ namespace VerifyWebApp.ViewModel
         public string Remarks { get; set; }
         public string GeoLocation { get; set; }
 
+        public DateTime ? Lastupdatetimestamp { get; set; }
+
+        //public string nameofperson { get; set; }
+
     }
 }
