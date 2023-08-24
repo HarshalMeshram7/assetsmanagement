@@ -6,8 +6,10 @@ using VerifyWebApp.Models;
 
 namespace VerifyWebApp.BusinessLogic
 {
+    
     public class AuditLog
     {
+        public VerifyDB db = new VerifyDB();
 
         public const int Event_Login = 1;
         public  const int Event_Logout = 2;
@@ -26,9 +28,12 @@ namespace VerifyWebApp.BusinessLogic
         public const int Record_Type_AccountDetails = 108;
         public const int Record_Type_EmployeeDetails = 109;
         public const int Record_Type_VerificationBatch = 110;
+
         const int Record_Type_LoanDetails = 111;
         const int Record_Type_InsuranceDetails = 112;
         const int Record_Type_AMCDetails = 113;
+
+        public const int Record_Type_Asset = 114;
 
 
 
@@ -46,11 +51,7 @@ namespace VerifyWebApp.BusinessLogic
             record.oldvalue = _oldvalue;
             record.newvalue = _newvalue;
 
-            values.Add(_column, record);
-
-
-
-        }
+            values.Add(_column, record);        }
 
         public bool InsertLog(int UserID,int CompanyID ,int EventID,int RecordType,
             VerifyDB context)
@@ -78,12 +79,10 @@ namespace VerifyWebApp.BusinessLogic
                     AuditRecord audit = item.Value;
                     record.oldvalue = audit.oldvalue;
                     record.newvalue = audit.newvalue;
-
-
                     context.AuditLogs.Add(record);
 
                 }
-                //db.SaveChanges();
+                db.SaveChanges();
 
                 return true;
             }
