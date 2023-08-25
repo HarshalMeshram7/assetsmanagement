@@ -24,7 +24,8 @@ namespace VerifyWebApp.ViewModel
 
         public DateTime ? Lastupdatetimestamp { get; set; }
 
-        //public string nameofperson { get; set; }
+        public int userid { get; set; }
+        public string username { get; set; }
 
     }
 }

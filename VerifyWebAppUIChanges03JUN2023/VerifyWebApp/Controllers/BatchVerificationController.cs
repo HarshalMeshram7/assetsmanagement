@@ -171,7 +171,7 @@ namespace VerifyWebApp.Controllers
                 excel.Workbook.Worksheets.Add("Worksheet2");
 
                 string[] headerRow = { "AssetNo", "AssetIdentification No", "Asset Name",
-                    "VerificationStatus", "SrNo", "Model ", "Location ","Sub Location","Sub-SubLocation", "Remarks ","GeoLocation","Datetime"};
+                    "VerificationStatus", "SrNo", "Model ", "Location ","Sub Location","Sub-SubLocation", "Remarks ","GeoLocation","Datetime","User"};
 
 
 
@@ -239,7 +239,10 @@ namespace VerifyWebApp.Controllers
 
 
                     }
-                    //worksheet.Cells[rowIterator, 13].Value = item.nameofperson;
+
+                    worksheet.Cells[rowIterator, 13].Value =item.username;
+
+          
 
 
 
