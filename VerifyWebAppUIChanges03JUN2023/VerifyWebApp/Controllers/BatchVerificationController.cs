@@ -171,7 +171,7 @@ namespace VerifyWebApp.Controllers
                 excel.Workbook.Worksheets.Add("Worksheet2");
 
                 string[] headerRow = { "AssetNo", "AssetIdentification No", "Asset Name",
-                    "VerificationStatus", "SrNo", "Model ", "Location ","Sub Location","Sub-SubLocation", "Remarks ","GeoLocation" };
+                    "VerificationStatus", "SrNo", "Model ", "Location ","Sub Location","Sub-SubLocation", "Remarks ","GeoLocation","Datetime"};
 
 
 
@@ -196,8 +196,10 @@ namespace VerifyWebApp.Controllers
 
                 }
                 int rowIterator = 5;
+                
                 foreach (var item in FARList)
                 {
+                    
                     worksheet.Cells[rowIterator, 1].Value = item.AssetNo;
                     worksheet.Cells[rowIterator, 2].Value = item.AssetIdentificationno;
                     worksheet.Cells[rowIterator, 3].Value = item.AssetName;
@@ -210,6 +212,36 @@ namespace VerifyWebApp.Controllers
                     worksheet.Cells[rowIterator, 9].Value = item.Sub_SubLocation;
                     worksheet.Cells[rowIterator, 10].Value = item.Remarks;
                     worksheet.Cells[rowIterator, 11].Value = item.GeoLocation;
+
+
+                    //if (item.Lastupdatetimestamp != null)
+                    //{
+
+                    //    string lastdate = Convert.ToString(item.Lastupdatetimestamp );
+
+
+
+                    //    worksheet.Cells[rowIterator, 12].Value = lastdate;
+
+
+                    //}
+                    if (item.Lastupdatetimestamp != null)
+                    {
+                        DateTime? lastUpdate = item.Lastupdatetimestamp;
+                        //string lastDate = lastUpdate.Value.ToString("yyyy-MM-dd");
+                        string lastDate = lastUpdate.Value.ToString("dd-MM-yyyy");
+                        //string lastdate = Convert.ToString(item.Lastupdatetimestamp);
+
+
+
+                        //worksheet.Cells[rowIterator, 12].Value = lastdate;
+                        worksheet.Cells[rowIterator, 12].Value = lastDate;
+
+
+                    }
+                    //worksheet.Cells[rowIterator, 13].Value = item.nameofperson;
+
+
 
 
                     rowIterator = rowIterator + 1;
