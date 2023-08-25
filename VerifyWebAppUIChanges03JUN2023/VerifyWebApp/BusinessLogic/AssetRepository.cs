@@ -815,15 +815,8 @@ namespace VerifyWebApp.BusinessLogic
                         db.SaveChanges();
 
 
-
-                        AuditLog auditLog = new AuditLog();
-
-                        auditLog.SaveRecord("AssetNo", obj_asset.AssetNo, assetGroup.AssetNo);
-                        auditLog.SaveRecord("AssetName", obj_asset.AssetName.ToString(), assetGroup.AssetName.ToString());
-
-                        
-
-                       auditLog.InsertLog(userId, 1, AuditLog.Event_Update, AuditLog.Record_Type_Asset, db);
+                        AddAuditlog(userId, assetGroup, db);
+                        //obj_asset,
 
 
                         ////////////////////////////////////////////////////
@@ -1112,6 +1105,18 @@ namespace VerifyWebApp.BusinessLogic
             }
 
         }
+
+        private void AddAuditlog(int userId, AssetGroupViewmodel assetGroup, VerifyDB db)
+        {
+            //Assets obj_asset,
+           AuditLog auditLog = new AuditLog();
+
+            auditLog.SaveRecord("AssetNo", "", assetGroup.AssetNo);
+            auditLog.SaveRecord("AssetName"," ", assetGroup.AssetName.ToString());
+
+            auditLog.InsertLog(userId, assetGroup.CompanyID, AuditLog.Event_Update, AuditLog.Record_Type_Asset, db);
+        }
+
         public static Decimal decimalToDecimal(decimal? number)
         {
             if (number != null)
@@ -1125,8 +1130,11 @@ namespace VerifyWebApp.BusinessLogic
         }
 
 
+    
+
+
         //function for auditlogoldvalue create
-   //     AssetGroupViewmodel assetGroup_Auditlog = new AssetGroupViewmodel();
+        //     AssetGroupViewmodel assetGroup_Auditlog = new AssetGroupViewmodel();
         //private void Auditlog( assetGroup_Auditlog,  assetGroup)
         //{
         //    AuditLog auditLog = new AuditLog();
@@ -1138,20 +1146,20 @@ namespace VerifyWebApp.BusinessLogic
 
         //}
 
-        
-        
-          
-        
-        public void SaveRecord(string _col, string _oldv, string _newval)
-        {
 
-            values = new Dictionary<string, AuditRecord>();
-            AuditRecord record = new AuditRecord();
-            record.column = _col;
-            record.oldvalue = _oldv;
-            record.newvalue = _newval;
 
-            values.Add(_col, record);
+
+
+        //public void SaveRecord(string _col, string _oldv, string _newval)
+        //{
+
+        //    values = new Dictionary<string, AuditRecord>();
+        //    AuditRecord record = new AuditRecord();
+        //    record.column = _col;
+        //    record.oldvalue = _oldv;
+        //    record.newvalue = _newval;
+
+        //    values.Add(_col, record);
         }
 
 
@@ -1159,4 +1167,3 @@ namespace VerifyWebApp.BusinessLogic
 
     }
 
-}
