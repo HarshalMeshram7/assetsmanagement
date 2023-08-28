@@ -10,6 +10,8 @@ using VerifyWebApp.Models;
 using VerifyWebApp.ViewModel;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace VerifyWebApp.Controllers
 {
@@ -267,6 +269,127 @@ namespace VerifyWebApp.Controllers
 
         }
 
+        // pdf Report Function
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateJsonAntiForgeryToken]
+        public ActionResult GetPdfReport(int BatchId)
+        {
+
+            try
+            {
+                //DateTime asondate = DateTime.Now;
+
+
+                // DateTime Asondate = Convert.ToDateTime(asondate);
+
+                int userid = 0;
+                Login user = (Login)(Session["PUser"]);
+
+                if (user != null)
+                {
+                    ViewBag.LogonUser = user.UserName;
+                    userid = user.ID;
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Login");
+                }
+                int companyid = 0;
+                Company company = (Company)(Session["Cid"]);
+
+                if (company != null)
+                {
+                    ViewBag.LoggedCompany = company.CompanyName;
+                    companyid = company.ID;
+                    ViewBag.companyid = companyid;
+                    //ViewBag.LoggedCompany = company.CompanyName;
+                }
+                else
+                {
+                    return RedirectToAction("CompanySelection", "Company");
+                }
+
+                List<Assets> alist = new List<Assets>();
+                List<BatchVerificationViewModel> FARList = new List<BatchVerificationViewModel>();
+
+
+                BusinessLogic.BatchVerificationRepository reportRepository = new BusinessLogic.BatchVerificationRepository();
+
+                FARList = reportRepository.getVerifiedAssets(companyid, BatchId);
+
+
+                MemoryStream memoryStream = new MemoryStream();
+                Document document = new Document(new Rectangle(PageSize.A4.Width * 6, PageSize.A4.Height));
+                PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
+                document.Open();
+
+                string batchcode = db.Batchs.Where(x => x.Companyid == companyid && x.ID == BatchId).FirstOrDefault().batchcode;
+
+                document.Add(new Paragraph("Verified Assets"));
+                document.Add(new Paragraph("Batch: " + batchcode));
+                document.Add(new Paragraph(" "));
+
+                string[] headerRow = { "AssetNo", "AssetIdentification No", "Asset Name",
+                    "VerificationStatus", "SrNo", "Model ", "Location ","Sub Location","Sub-SubLocation", "Remarks ","GeoLocation","Datetime","User"};
+
+                float[] columnWidths = { 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f };
+
+                PdfPTable table = new PdfPTable(columnWidths);
+                table.WidthPercentage = 100;
+
+                foreach (string header in headerRow)
+                {
+                    PdfPCell cell = new PdfPCell(new Phrase(header));
+                    table.AddCell(cell);
+                }
+
+                foreach (var item in FARList)
+                {
+                    table.AddCell(item.AssetNo);
+                    table.AddCell(item.AssetIdentificationno);
+                    table.AddCell(item.AssetName);
+                    //table.AddCell(item.systemassetid);
+                    //table.AddCell(item.AssetNo);
+                    table.AddCell(item.VerificationStatus);
+                    table.AddCell(item.SrNo);
+                    table.AddCell(item.Model);
+                    table.AddCell(item.Location);
+                    table.AddCell(item.SubLocation);
+                    table.AddCell(item.Sub_SubLocation);
+                    table.AddCell(item.Remarks);
+                    table.AddCell(item.GeoLocation);
+                    table.AddCell(item.Lastupdatetimestamp.ToString());
+                    table.AddCell(item.username);
+
+                    
+                    table.CompleteRow();
+                }
+
+                document.Add(table);
+                document.Close();
+
+                string pdfName = "Verifiedassets.pdf";
+
+                string handle = Guid.NewGuid().ToString();
+                TempData[handle] = memoryStream.ToArray();
+
+                return new JsonResult()
+                {
+                    Data = new { FileGuid = handle, FileName = pdfName }
+                };
+            }
+            catch (Exception ex)
+            {
+                int i = 0;
+
+                return View("~/Views/Shared/Error.cshtm");
+
+            }
+
+        }
+
+
         //public byte[] generateVerifiedAssetsexcel(int companyid, int BatchId)
         //{
 
@@ -289,7 +412,7 @@ namespace VerifyWebApp.Controllers
 
         //        string[] headerRow = { "AssetNo", "AssetIdentification No", "Asset Name ", "System Identification No", "SrNo", "Model ", "Location ", "Remarks " };
 
-                  
+
 
 
         //        // Determine the header range (e.g. A1:D1)
