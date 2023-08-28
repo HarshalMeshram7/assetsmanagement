@@ -7,7 +7,7 @@ using VerifyWebApp.ViewModel;
 
 namespace VerifyWebApp.BusinessLogic
 {
-    public class AssetRepository :AuditLog
+    public class AssetRepository : AuditLog
     {
         public VerifyDB db = new VerifyDB();
 
@@ -543,7 +543,7 @@ namespace VerifyWebApp.BusinessLogic
         public bool UpdateAsset(AssetGroupViewmodel assetGroup, int userId, ref string Message)
         {
             bool result = false;
-
+            AssetGroupViewmodel assetGroupAudit = GetAuditModel(assetGroup.ID, assetGroup.CompanyID);
             TimeZoneInfo istZone = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
 
             var tnow = System.DateTime.Now.ToUniversalTime();
@@ -802,9 +802,9 @@ namespace VerifyWebApp.BusinessLogic
                             obj_asset.ITGroupIDID = assetGroup.ITGroupIDID;
                         }
 
-                        
 
-                       
+
+
 
                         obj_asset.Usefullife = assetGroup.Usefullife;
                         obj_asset.YrofManufacturing = assetGroup.YrofManufacturing;
@@ -815,8 +815,10 @@ namespace VerifyWebApp.BusinessLogic
                         db.SaveChanges();
 
 
-                        AddAuditlog(userId, assetGroup, db);
+                        //AddAuditlog(userId, assetGroup, db);
                         //obj_asset,
+
+                        AddAuditlog(userId, assetGroupAudit, assetGroup, db);
 
 
                         ////////////////////////////////////////////////////
@@ -1106,17 +1108,6 @@ namespace VerifyWebApp.BusinessLogic
 
         }
 
-        private void AddAuditlog(int userId, AssetGroupViewmodel assetGroup, VerifyDB db)
-        {
-            //Assets obj_asset,
-           AuditLog auditLog = new AuditLog();
-
-            auditLog.SaveRecord("AssetNo", "", assetGroup.AssetNo);
-            auditLog.SaveRecord("AssetName"," ", assetGroup.AssetName.ToString());
-
-            auditLog.InsertLog(userId, assetGroup.CompanyID, AuditLog.Event_Update, AuditLog.Record_Type_Asset, db);
-        }
-
         public static Decimal decimalToDecimal(decimal? number)
         {
             if (number != null)
@@ -1129,41 +1120,30 @@ namespace VerifyWebApp.BusinessLogic
             }
         }
 
+        private AssetGroupViewmodel GetAuditModel(int assetid, int comapnyid)
+        {            
+            AssetGroupViewmodel objassetgroupviewmodel = new AssetGroupViewmodel();  
+            Assets assets = new Assets();
+            assets = db.Assetss.Where(x => x.ID == assetid && x.Companyid == comapnyid).FirstOrDefault();
+            objassetgroupviewmodel.ID = assets.ID;
+            objassetgroupviewmodel.AssetNo = assets.AssetNo;
+            objassetgroupviewmodel.AssetName = assets.AssetName;
+            return objassetgroupviewmodel;
+        }
 
-    
+        private void AddAuditlog(int userId, AssetGroupViewmodel obj_assetAudit, AssetGroupViewmodel assetGroup, VerifyDB db)
+        {
+            AuditLog auditLog = new AuditLog();
 
+            auditLog.SaveRecord("AssetNo", obj_assetAudit.AssetNo, assetGroup.AssetNo);
+            auditLog.SaveRecord("AssetName", obj_assetAudit.AssetName.ToString(), assetGroup.AssetName.ToString());
 
-        //function for auditlogoldvalue create
-        //     AssetGroupViewmodel assetGroup_Auditlog = new AssetGroupViewmodel();
-        //private void Auditlog( assetGroup_Auditlog,  assetGroup)
-        //{
-        //    AuditLog auditLog = new AuditLog();
-        //    auditLog.SaveRecord("AssetName", assetGroup_Auditlog.AssetNo.ToString(), assetGroup.AssetName.ToString());
-        //    auditLog.SaveRecord("AssetNo", assetGroup_Auditlog.AssetNo, assetGroup.AssetNo);
-
-
-        //    auditLog.InsertLog(userid, companyid, AuditLog.Event_Update, AuditLog.Record_Type_Asset, db);
-
-        //}
-
-
-
-
-
-        //public void SaveRecord(string _col, string _oldv, string _newval)
-        //{
-
-        //    values = new Dictionary<string, AuditRecord>();
-        //    AuditRecord record = new AuditRecord();
-        //    record.column = _col;
-        //    record.oldvalue = _oldv;
-        //    record.newvalue = _newval;
-
-        //    values.Add(_col, record);
+            auditLog.InsertLog(userId, assetGroup.CompanyID, AuditLog.Event_Update, AuditLog.Record_Type_Asset, db);
         }
 
 
 
-
+        
     }
+}
 
