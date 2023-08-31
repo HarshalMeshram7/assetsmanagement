@@ -368,7 +368,7 @@ namespace VerifyWebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetEmployeeAssetsTrackingReport(DateTime? startdate, DateTime? enddate, string fromassetno, string toassetno, string strempid)
+        public ActionResult GetEmployeeAssetsTrackingReport(/*DateTime? startdate, DateTime? enddate,*/ string fromassetno, string toassetno, string strempid)
         {
 
             int userid = 0;
@@ -403,7 +403,7 @@ namespace VerifyWebApp.Controllers
             List<EmployeeAssetReport> FARList = new List<EmployeeAssetReport>();
             //  alist=BusinessLogic.ReportRepository.
             BusinessLogic.AssetTrackinReportRepository reportRepository = new BusinessLogic.AssetTrackinReportRepository();
-            FARList = reportRepository.getEmployeeAssettracking(companyid, startdate, enddate, fromassetno, toassetno, strempid);
+            FARList = reportRepository.getEmployeeAssettracking(companyid, /*startdate, enddate,*/ fromassetno, toassetno, strempid);
 
 
             var memoryStream = new MemoryStream();
@@ -429,8 +429,8 @@ namespace VerifyWebApp.Controllers
                 var worksheet = excel.Workbook.Worksheets["Worksheet1"];
                 var worksheet2 = excel.Workbook.Worksheets["Worksheet2"];
                 var currentSheet = excel.Workbook.Worksheets;
-                string str_startdate = Convert.ToDateTime(startdate).ToString("dd/MM/yyyy");
-                string str_enddate = Convert.ToDateTime(enddate).ToString("dd/MM/yyyy");
+                //string str_startdate = Convert.ToDateTime(startdate).ToString("dd/MM/yyyy");
+                //string str_enddate = Convert.ToDateTime(enddate).ToString("dd/MM/yyyy");
                 string empname = "";
                 if (strempid != "")
                 {
@@ -444,7 +444,7 @@ namespace VerifyWebApp.Controllers
                
                 worksheet.Cells[1, 1].Value = "Employee Assets Tracking Report";
 
-                worksheet.Cells[2, 2].Value = "StartDate:" + str_startdate + "  Enddate:" + str_enddate + "   Fromassetno:" + fromassetno
+                worksheet.Cells[2, 2].Value = /*"StartDate:" + str_startdate + "  Enddate:" + str_enddate + " */  "Fromassetno:" + fromassetno
                                               + "Toassetno:" + toassetno + " Employee:  " + empname;
                 int col = 1;
                 for (int i = 0; i <= headerRow.Count() - 1; i++)

@@ -125,7 +125,7 @@ namespace VerifyWebApp.BusinessLogic
             return result;
 
         }
-        public List<EmployeeAssetReport> getEmployeeAssettracking(int companyid, DateTime? Startdate, DateTime? Enddate, string fromassetno, string toassetno, string str_empid)
+        public List<EmployeeAssetReport> getEmployeeAssettracking(int companyid,/* DateTime? Startdate, DateTime? Enddate,*/ string fromassetno, string toassetno, string str_empid)
         {
             string strSQL = null;
             string str_comid = companyid.ToString();
@@ -144,22 +144,25 @@ namespace VerifyWebApp.BusinessLogic
             {
                 empid = "0";
             }
-            string conv_startdate = "";
-            string conv_enddate = "";
-            if (Startdate != null)
-            {
-                conv_startdate = Convert.ToDateTime(Startdate).ToString("yyyy-MM-dd");
-            }
+            //by me
+            //string conv_startdate = "";
+            //string conv_enddate = "";
+            //if (Startdate != null)
+            //{
+            //    conv_startdate = Convert.ToDateTime(Startdate).ToString("yyyy-MM-dd");
+            //}
+            //=============
             //}
 
             //     if (Enddate != "")
             //   {
             //     DateTime enddate = Convert.ToDateTime(Enddate);
-            if (Enddate != null)
-            {
-                conv_enddate = Convert.ToDateTime(Enddate).ToString("yyyy-MM-dd");
-            }
-
+            // by me
+            //if (Enddate != null)
+            //{
+            //    conv_enddate = Convert.ToDateTime(Enddate).ToString("yyyy-MM-dd");
+            //}
+            //======
 
 
 
@@ -168,12 +171,13 @@ namespace VerifyWebApp.BusinessLogic
             strSQL = "";
             strSQL = "Call employeeassettrackingreport(";
             strSQL = strSQL + companyid + ",";
-            strSQL = strSQL + "'" + conv_startdate + "'," + "'" + conv_enddate + "',";
+            //strSQL = strSQL + "'" + conv_startdate + "'," + "'" + conv_enddate + "',";
             strSQL = strSQL + "'" + fromassetno + "'," + "'" + toassetno + "',";
             strSQL = strSQL + empid + ")";
 
 
             var result = db.Database.SqlQuery<EmployeeAssetReport>(strSQL).ToList();
+            // by me
             foreach (EmployeeAssetReport item in result)
             {
                 if (item.IssueDate != null)
