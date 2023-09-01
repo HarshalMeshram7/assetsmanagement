@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 
 namespace VerifyWebApp.Controllers
 {
-    public class AssetController : Controller
+    public class AssetController : Controller 
     {
         // GET: AssetGroup
 
@@ -2563,6 +2563,17 @@ namespace VerifyWebApp.Controllers
                     db.Assetss.Add(asset);
                     // db.Entry(asset).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
+
+                    AuditLog auditLog = new AuditLog();
+
+                    auditLog.SaveRecord("AssetNo", "", assetGroup.AssetNo);
+                    auditLog.SaveRecord("AssetName", "", assetGroup.AssetName.ToString());
+
+                    auditLog.InsertLog(userid, companyid, AuditLog.Event_Insert, AuditLog.Record_Type_Asset, db);
+
+
+
+
                     //var assetid = db.Assetss.Max(x => x.AssetNo);
                     var assetid = db.Assetss.Where(x => x.Companyid == companyid).OrderByDescending(x => x.ID).FirstOrDefault().ID;
                     var abc = asset.ID;
@@ -7079,7 +7090,7 @@ namespace VerifyWebApp.Controllers
                 string checklockflag = "";
                 //= DateTime.Parse(assets.str_VoucherDate);
                 if (DateTime.TryParseExact(assets.str_VoucherDate, "yyyy-MM-dd",
-                                                                      System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out checkvoucherdate))
+                                 System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out checkvoucherdate))
                 {
                     var date = checkvoucherdate;
                     checklockflag = ImportDatevalidation(date, companyid);
@@ -7147,6 +7158,15 @@ namespace VerifyWebApp.Controllers
                         var assetdeleteobj = db.Assetss.Where(x => x.ID == assetid).FirstOrDefault();
                         db.Entry(assetdeleteobj).State = System.Data.Entity.EntityState.Deleted;
                         db.SaveChanges();
+
+                        AuditLog auditLog = new AuditLog();
+
+                        auditLog.SaveRecord("AGroupID", assetdeleteobj.ID.ToString(), assetdeleteobj.ID.ToString());
+                      //  auditLog.SaveRecord("AssetNo", " ", assetdeleteobj.AssetNo.ToString());
+                       // auditLog.SaveRecord("AssetName", " ", assetdeleteobj.AssetName.ToString());
+
+                        auditLog.InsertLog(userid, companyid, AuditLog.Event_Delete, AuditLog.Record_Type_Asset, db);
+
                         res.Data = "Success";
 
                     }
