@@ -108,6 +108,9 @@ namespace VerifyWebApp.Controllers
             ViewBag.alocationlist = new SelectList(db.ALocations.Where(x => x.Companyid == companyid).OrderBy(e => e.ID), "ID", "ALocationName");
             ViewBag.blocationlist = new SelectList("", "ID", "BLocationName");
             ViewBag.clocationlist = new SelectList("", "ID", "CLocationName");
+
+            ViewBag.costalist = new SelectList(db.ACostCenters.Where(x => x.Companyid == companyid).OrderBy(e => e.ID), "ID", "CCDescription");
+            ViewBag.costblist = new SelectList(db.BCostCenters.OrderBy(e => e.ID), "ID", "SCCDescription");
             //return PartialView();
             return View();
 
@@ -186,6 +189,44 @@ namespace VerifyWebApp.Controllers
             SelectList ob = new SelectList(clist, "ID", "CLocationName", 0);
             return Json(ob);
 
+
+        }
+
+        [HttpPost]
+        public ActionResult getcostcenterb(string id)
+        {
+            int userid = 0;
+            Login user = (Login)(Session["PUser"]);
+
+            if (user != null)
+            {
+                ViewBag.LogonUser = user.UserName;
+                userid = user.ID;
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            int companyid = 0;
+            Company company = (Company)(Session["Cid"]);
+
+            if (company != null)
+            {
+                ViewBag.LoggedCompany = company.CompanyName;
+                companyid = company.ID;
+                ViewBag.companyid = companyid;
+                // ViewBag.LoggedCompany = company.CompanyName;
+            }
+            else
+            {
+                return RedirectToAction("CompanySelection", "Company");
+            }
+            int int_id = Convert.ToInt32(id);
+
+            List<BCostCenter> blist = new List<BCostCenter>();
+            blist = db.BCostCenters.Where(x => x.CCID == int_id && x.Companyid == companyid).ToList();
+            SelectList ob = new SelectList(blist, "ID", "SCCDescription", 0);
+            return Json(ob);
 
         }
 
