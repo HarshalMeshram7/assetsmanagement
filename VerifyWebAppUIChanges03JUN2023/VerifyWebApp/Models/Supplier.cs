@@ -12,6 +12,8 @@ namespace VerifyWebApp.Models
     {
         // [Key]
         public int ID { get; set; }
+        [Required(ErrorMessage = "Supplier Code is required")]
+        [MaxLength(100, ErrorMessage = "Code cannot be longer than 100 characters.")]
         public string SupplierCode { get; set; }
         [Required(ErrorMessage = "Supplier Name is required")]
         [MaxLength(150, ErrorMessage = "Name cannot be longer than 150 characters.")]
