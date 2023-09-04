@@ -18,7 +18,7 @@
                     <div class="col-md-8">
                         <div class="form-group">
                             <label for="SupplierName">Supplier Name<span>*</span></label>
-                            @Html.TextBoxFor(m => m.SupplierName, new { @class = "form-control form-control-sm", required = "required" })
+                            @Html.TextBoxFor(m => m.SupplierName, new { @class = "form-control form-control-sm", @required = "required" })
                             <div class="valid-feedback">
                                 Looks good!
                             </div>
@@ -26,9 +26,8 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="SupplierCode">Code<span></span></label>
-                            @Html.TextBoxFor(m => m.SupplierCode, new { @class = "form-control form-control-sm" })
-
+                            <label for="SupplierCode">Supplier Code<span>*</span></label>
+                            @Html.TextBoxFor(m => m.SupplierCode, new { @class = "form-control form-control-sm", @required = "required" })
                         </div>
                     </div>
 
