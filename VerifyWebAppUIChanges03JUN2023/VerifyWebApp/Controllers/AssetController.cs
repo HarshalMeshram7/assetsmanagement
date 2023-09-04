@@ -7147,7 +7147,7 @@ namespace VerifyWebApp.Controllers
 
 
                     List<Child_Asset_Attachment> childassetattchlist = new List<Child_Asset_Attachment>();
-                    childassetattchlist = db.Child_Asset_Attachments.Where(x => x.Companyid == companyid && x.AssetID == assetid).ToList();
+                    childassetattchlist = db.Child_Asset_Attachments.Where(x => x.Companyid == companyid && x.AssetID == assetid).ToList(); 
 
 
                     if (subinslist.Count == 0 && loanlist.Count == 0 && amclist.Count == 0 && deplist.Count == 0
@@ -7156,18 +7156,18 @@ namespace VerifyWebApp.Controllers
                     {
 
                         var assetdeleteobj = db.Assetss.Where(x => x.ID == assetid).FirstOrDefault();
-                        db.Entry(assetdeleteobj).State = System.Data.Entity.EntityState.Deleted;
-                        db.SaveChanges();
 
                         AuditLog auditLog = new AuditLog();
 
-                        auditLog.SaveRecord("AGroupID", assetdeleteobj.ID.ToString(), assetdeleteobj.ID.ToString());
-                      //  auditLog.SaveRecord("AssetNo", " ", assetdeleteobj.AssetNo.ToString());
-                       // auditLog.SaveRecord("AssetName", " ", assetdeleteobj.AssetName.ToString());
-
+                        // auditLog.SaveRecord("AssetID", assetdeleteobj.ID.ToString(), assetdeleteobj.ID.ToString());
+                        auditLog.SaveRecord("AssetNo", " ", assetdeleteobj.AssetNo.ToString());
+                        auditLog.SaveRecord("AssetName", " ", assetdeleteobj.AssetName.ToString());
                         auditLog.InsertLog(userid, companyid, AuditLog.Event_Delete, AuditLog.Record_Type_Asset, db);
 
-                        res.Data = "Success";
+                        db.Entry(assetdeleteobj).State = System.Data.Entity.EntityState.Deleted;
+                        db.SaveChanges();
+
+                       res.Data = "Success";
 
                     }
                     else
