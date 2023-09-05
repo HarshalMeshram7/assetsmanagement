@@ -3,11 +3,11 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
-**/bin/Debug/
-**/bin/Release/
+# **/bin/Debug/
+# **/bin/Release/
 VerifyWebApp/bin/VerifyWebApp.dll
 VerifyWebApp/bin/VerifyWebApp.pdb
-web.config
+# web.config
 
 # User-specific files
 *.rsuser
@@ -23,18 +23,18 @@ web.config
 mono_crash.*
 
 # Build results
-[Dd]ebug/
-[Dd]ebugPublic/
-[Rr]elease/
-[Rr]eleases/
+# [Dd]ebug/
+# [Dd]ebugPublic/
+# [Rr]elease/
+# [Rr]eleases/
 x64/
 x86/
 [Ww][Ii][Nn]32/
 [Aa][Rr][Mm]/
 [Aa][Rr][Mm]64/
 bld/
-[Bb]in/
-[Oo]bj/
+# [Bb]in/
+# [Oo]bj/
 [Ll]og/
 [Ll]ogs/
 
@@ -57,14 +57,14 @@ nunit-*.xml
 
 # Build Results of an ATL Project
 [Dd]ebugPS/
-[Rr]eleasePS/
+# [Rr]eleasePS/
 dlldata.c
 
 # Benchmark Results
 BenchmarkDotNet.Artifacts/
 
 # .NET Core
-project.lock.json
+/project.lock.json
 project.fragment.lock.json
 artifacts/
 
@@ -180,7 +180,7 @@ DocProject/Help/Html2
 DocProject/Help/html
 
 # Click-Once directory
-publish/
+# publish/
 
 # Publish Web Output
 *.[Pp]ublish.xml
@@ -196,9 +196,9 @@ publish/
 PublishScripts/
 
 # NuGet Packages
-*.nupkg
+# *.nupkg
 # NuGet Symbol Packages
-*.snupkg
+# *.snupkg
 # The packages folder can be ignored because of Package Restore
 
 # except build/, which is used as an MSBuild target.
@@ -206,20 +206,20 @@ PublishScripts/
 # Uncomment if necessary however generally it will be regenerated when needed
 #!**/[Pp]ackages/repositories.config
 # NuGet v3's project.json files produces more ignorable files
-*.nuget.props
-*.nuget.targets
+# *.nuget.props
+# *.nuget.targets
 
 # Microsoft Azure Build Output
-csx/
-*.build.csdef
+# csx/
+# *.build.csdef
 
 # Microsoft Azure Emulator
 ecf/
 rcf/
 
 # Windows Store app package directories and files
-AppPackages/
-BundleArtifacts/
+# AppPackages/
+# BundleArtifacts/
 Package.StoreAssociation.xml
 _pkginfo.txt
 *.appx
