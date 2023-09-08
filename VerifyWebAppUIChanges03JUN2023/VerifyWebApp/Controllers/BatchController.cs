@@ -561,7 +561,7 @@ namespace VerifyWebApp.Controllers
 
                     ccsrno++;
                 }
-                batchViewmodel.costcenterlist = cclist;
+              //  batchViewmodel.costcenterlist = cclist;
 
                 splist = db.SubBatchs.Where(x => x.BatchId == id && x.Companyid == companyid).ToList();
                 batch = db.Batchs.Where(x => x.ID == id && x.Companyid == companyid).FirstOrDefault();
