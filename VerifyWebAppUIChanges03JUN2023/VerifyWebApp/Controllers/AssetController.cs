@@ -2257,11 +2257,12 @@ namespace VerifyWebApp.Controllers
                         return res;
                     }
 
-                    if (assetGroup.VoucherDate > assetGroup.DtPutToUse)
-                    {
-                        res.Data = "Voucher Date cannot be greater than Dateputtouse";
-                        return res;
-                    }
+                    //if (assetGroup.VoucherDate > assetGroup.DtPutToUse)
+                    //{
+                    //    res.Data = "Voucher Date cannot be greater than Dateputtouse";
+                    //    return res;
+                        
+                    //}
                     if (assetGroup.VoucherDate > assetGroup.ExpiryDate)
                     {
                         res.Data = "Voucher Date cannot be greater than ExpiryDate";
@@ -3296,9 +3297,9 @@ namespace VerifyWebApp.Controllers
 
         [AuthUser]
         [HttpGet]
-        public ActionResult Edit(string id)
-
+        public ActionResult Edit(string id)       //.................httpget
         {
+
             int userid = 0;
             Login user = (Login)(Session["PUser"]);
 
@@ -3748,9 +3749,10 @@ namespace VerifyWebApp.Controllers
                 }
                 locsrno++;
             }
+            assetGroupViewmodel.locationlist = cllist;
             //////////////////////////////////////////
             //costcenter
-            assetGroupViewmodel.locationlist = cllist;
+
             List<Childcostcenter> cclist = new List<Childcostcenter>();
             int ccsrno = 1;
             cclist = db.childcostcenters.Where(x => x.Ass_ID == assetid && x.Companyid == companyid).ToList();
@@ -4011,11 +4013,11 @@ namespace VerifyWebApp.Controllers
                         return res;
                     }
 
-                    if (assetGroup.VoucherDate > assetGroup.DtPutToUse)
-                    {
-                        res.Data = "Voucher Date cannot be greater than Dateputtouse";
-                        return res;
-                    }
+                    //if (assetGroup.VoucherDate > assetGroup.DtPutToUse)
+                    //{
+                    //    res.Data = "Voucher Date cannot be greater than Dateputtouse";
+                    //    return res;
+                    //}
                     if (assetGroup.VoucherDate > assetGroup.ExpiryDate)
                     {
                         res.Data = "Voucher Date cannot be greater than ExpiryDate";
@@ -4382,7 +4384,7 @@ namespace VerifyWebApp.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult EditAsset(AssetGroupViewmodel assetGroup)
+        public ActionResult EditAsset(AssetGroupViewmodel assetGroup)     //...................HTTPPOST
         {
             int userid = 0;
             Login user = (Login)(Session["PUser"]);
