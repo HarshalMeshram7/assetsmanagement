@@ -43,10 +43,10 @@
                                 <div class="form-group">
                                     <label for="praticesname">From Date</label>
                                     <!--<div class='input-group date' id='dtStartDate'>
-                            <input type="date" id="txtStartDate" class="form-control" required />-->
+                <input type="date" id="txtStartDate" class="form-control" required />-->
                                     @*<div class="input-group-addon">
-                                      <span class="input-group-text"><span class="fa fa-calendar"></span></span>
-                                </div>*@
+                          <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                    </div>*@
                                     @Html.TextBoxFor(m => m.FromDate, "{0:yyyy-MM-dd}", new
                                {
                                    @class = "form-control form-control-sm",
@@ -64,10 +64,10 @@
                                     <label for="praticesname">To Date</label>
 
                                     <!--<div class='input-group date' id='dtEndDate'>
-                            <input type='date' id="txtEndDate" class="form-control" required />-->
+                <input type='date' id="txtEndDate" class="form-control" required />-->
                                     @*<div class="input-group-addon">
-                                <span class="input-group-text"><span class="fa fa-calendar"></span></span>
-                                </div>*@
+                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                    </div>*@
 
 
 
@@ -86,16 +86,16 @@
                         <div class="row">
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                  <label for="praticesname">Batch Description</label>
+                                    <label for="praticesname">Batch Description</label>
                                     <!--<div class='input-group date'>
-                            <input id="BatchDescription" class="form-control" type="text"/>-->
+                <input id="BatchDescription" class="form-control" type="text"/>-->
                                     @Html.TextBoxFor(m => m.BatchDescription, new
                                {
                                         @class = "form-control",
                                    required = "required",
                                    id = "BatchDescription"
                                })
-                                   
+
                                 </div>
                             </div>
 
@@ -126,7 +126,7 @@
 
                                         Add Location
                                     </button>
-                                   
+
                                 </div>
                             </div>
                         </div>
@@ -136,9 +136,9 @@
                         @*<div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>*@
                         @*<div class="row">
 
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <button type="button" class="btn btn-primary" id="btnAddloc" data-toggle="modal">Add Location</button>
-                    </div>*@
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-primary" id="btnAddloc" data-toggle="modal">Add Location</button>
+        </div>*@
 
 
                         <div class="row">
@@ -209,8 +209,8 @@
                                                                 <i class="fa fa-remove"></i>Delete
                                                             </button>
                                                             @*<button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" onclick="Delete(@item.ID);">
-                                                            <i class="fa fa-remove"></i>Delete
-                                                        </button>*@
+                                                <i class="fa fa-remove"></i>Delete
+                                            </button>*@
 
                                                         </td>
                                                     </tr>
@@ -224,6 +224,27 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                CostCenter List for Batch
+                            </div>
+                        </div>
+                        <div class="row my-1">
+                            <div class="col-md-12">
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-sm nBtn" id="btnAddCC"
+                                            data-toggle="modal">
+                                        Add CostCenter
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
 
 
                         <div class="modal-footer">
@@ -271,8 +292,8 @@
 
 
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-sm saveBtn"  data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-sm clBtn"  id="btnSave" onclick="saveloc();">Save</button>
+                                        <button type="button" class="btn btn-sm saveBtn" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-sm clBtn" id="btnSave" onclick="saveloc();">Save</button>
                                     </div>
                                 </div>
                             </div>
@@ -419,7 +440,7 @@
         $("#BatchDescription").val('@ViewBag.BatchDescription');
         $("#IsBatchOpen").val('@ViewBag.IsBatchOpen');
 
-        debugger;
+        //debugger;
 
         if ('@ViewBag.IsBatchOpen' == "Yes" || '@ViewBag.IsBatchOpen' == "yes") {
             $("#IsBatchOpen").prop("checked", true);
@@ -1041,6 +1062,45 @@ function getlocationb(id) {
 
         }
  }
+
+
+    //-----------------------------------------------------------------------
+    $('#txtccA').change(function () {
+
+        var index = $("#txtccA option:selected").val();
+
+
+        //  $('#txtassetno').val(index);
+        getcostcenterb(index);
+    });
+
+    $('#txteditccA').change(function () {
+
+
+        var index = $("#txteditccA option:selected").val();
+
+
+        //  $('#txtassetno').val(index);
+        geteditcostcenterb(index);
+    });
+
+    ////////////////////////////////////////////////////////
+    $("#btnAddCC").click(function () {
+
+        $("#txtccA").val("");
+        $("#txtccB").val("");
+       // $("#txtpercentage").val("")
+       // $("#txtccDate").val("");
+        $('#ccmodal').modal('show');
+
+
+    });
+
+    /////////////////////////////////////
+    function closecc() {
+        $('#ccmodal').modal('hide');
+    }
+
 
 
 
