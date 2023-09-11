@@ -27,5 +27,11 @@ namespace VerifyWebApp.Models
         public string LocCName { get; set; }
 
         public int BatchId { get; set; }
+
+        public int CCId { get; set; }
+        public int SCCId { get; set; }
+        public string CCDescription { get; set; }
+        public string SCCDescription { get; set; }
+
     }
 }

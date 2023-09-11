@@ -197,7 +197,7 @@
                             <div class="row my-1">
                                 <div class="col-md-12">
                                     <div class="pull-right">
-                                        <button type="button" class="btn btn-sm nBtn" id="btnAddCC" onclick="ShowAddCostCenterModal();"
+                                        <button type="button" class="btn btn-sm nBtn" id="btnAddCC"
                                                 data-toggle="modal">
                                             Add CostCenter
                                         </button>
@@ -224,12 +224,14 @@
                                                         ccbid
                                                     </td>
 
+                                                    
                                                     <td>
                                                         Cost Center
                                                     </td>
                                                     <td>
                                                         Sub-Cost Center
                                                     </td>
+                                                    
                                                     <td align="center">
                                                         Edit
                                                     </td>
@@ -369,7 +371,48 @@
                             </div>
                         </div>
 
-                     
+
+                        <!--<div id="ccmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
+
+            <div class="modal-dialog modal-lg">-->
+
+                        <!-- Modal content-->
+                        <!--<div class="modal-content">
+                    <div class="modal-header">
+
+                        <h4 class="modal-title">Add Cost Center</h4>
+                    </div>
+                    <div class="modal-body ">
+
+
+                        <div class="row">
+                            <div class="form-group col-lg-6">
+                                <label for="praticesname">Cost Center<span style="color:#CC0000;">*</span></label>
+                                @Html.DropDownList("txtccA", (SelectList)ViewBag.costalist, "Select Cost Center", new { @class = "form-control form-control-sm", id = "txtccA", @required = true })
+                                <div style="color:#CC0000;font-weight:400" id="ccaerror"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-6">
+                                <label for="praticesname">Sub-Cost Center</label>
+
+                                <select id="txtccB" name="txtccB" class="form-control form-control-sm"></select>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn saveBtn btn-sm" onclick="saveloc();">Save</button>
+                        <button type="button" class="btn clBtn btn-sm" onclick="closeeditloc();">Close</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>-->
+
                         <div id="ccmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
 
                             <div class="modal-dialog modal-lg">
@@ -381,7 +424,18 @@
                                         <h4 class="modal-title">Add Cost Center</h4>
                                     </div>
                                     <div class="modal-body ">
-                                        
+                                        @*<div class="row">
+                                            <div class="form-group col-md-3">
+                                                <label for="praticesname"> Date<span style="color:#CC0000;">*</span></label>
+
+                                                <input id="txtccDate" required class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
+
+                                                <div style="color:#CC0000;font-weight:400" id="ccdateemerror"></div>
+                                                <div style="color:#CC0000;font-weight:400" id="ccdateerror">Date should be greater than voucher date</div>
+
+                                            </div>
+
+                                        </div>*@
 
                                         <div class="row">
                                             <div class="form-group col-lg-6">
@@ -397,21 +451,81 @@
                                                 <select id="txtccB" name="txtccB" class="form-control form-control-sm"></select>
                                             </div>
                                         </div>
-                                       
+                                        @*<div class="row">
+                                            <div class="form-group col-lg-6">
+                                                <label for="praticesname">Percentage<span style="color:#CC0000;">*</span></label>
+
+                                                <input type="number" id="txtpercentage" name="txtpercentage" class="form-control form-control-sm" value="100" required />
+                                                <div style="color:#CC0000;font-weight:400" id="ccpercentageerror"></div>
+                                            </div>
+                                        </div>*@
                                     </div>
-                                 
+                                    <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
 
 
                                     <div class="modal-footer">
-                                        <button type="button" class="btn saveBtn btn-sm" onclick="saveloc();">Save</button>
-                                        <button type="button" class="btn clBtn btn-sm" onclick="closeeditloc();">Close</button>
+                                        <button type="button" class="btn saveBtn btn-sm" onclick="savecc();">Save</button>
+                                        <button type="button" class="btn clBtn btn-sm" onclick="closecc();">Close</button>
 
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div id="editccmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
+
+                            <div class="modal-dialog modal-lg">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+
+                                        <h4 class="modal-title">Edit Cost Center</h4>
+                                    </div>
+                                    <div class="modal-body ">
+                                        @*<div class="row">
+                                            <div class="form-group col-md-3">
+                                                <label for="praticesname"> Date<span style="color:#CC0000;">*</span></label>
+                                                <input id="txteditccDate" required class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
+                                                <div style="color:#CC0000;font-weight:400" id="editccdateemerror"></div>
+                                                <div style="color:#CC0000;font-weight:400" id="editccdateerror">Date should be greater than voucher date</div>
+
+                                            </div>
+
+                                        </div>*@
+
+                                        <div class="row">
+                                            <div class="form-group col-lg-6">
+                                                <label for="praticesname">Cost Center<span style="color:#CC0000;">*</span></label>
+                                                @Html.DropDownList("txteditccA", (SelectList)ViewBag.costalist, "Select Cost center", new { @class = "form-control form-control-sm", id = "txteditccA", @required = true })
+                                                <div style="color:#CC0000;font-weight:400" id="editccaerror"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-lg-6">
+                                                <label for="praticesname">Sub-Cost Center</label>
+
+                                                <select id="txteditccB" name="txteditccB" class="form-control form-control-sm"></select>
+                                            </div>
+                                        </div>
+                                        @*<div class="row">
+                                            <div class="form-group col-lg-6">
+                                                <label for="praticesname">Percentage <span style="color:#CC0000;">*</span></label>
+                                                <input type="number" id="txteditpercentage" name="txteditpercentage" class="form-control form-control-sm" required />
+                                                <div style="color:#CC0000;font-weight:400" id="editccpercentageerror"></div>
+                                            </div>
+                                        </div>*@
+                                    </div>
+                                    <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
 
 
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn saveBtn" onclick="saveeditcc();">Save</button>
+                                        <button type="button" class="btn clBtn" onclick="closeeditcc();">Close</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                     }
                     @*</div>*@
@@ -569,7 +683,7 @@ $("#btnAddloc").click(function () {
             $("#locdateerror,#editlocdateerror,#ccdateerror,#editccdateerror,#assetfdateerror,#editassetfdateerror").hide();
             $('#locaerror,#locdateemeerror,#editlocaerror,#editlocdateemerror,#ccaerror,#ccdateemerror,#ccaerror,#ccpercentageerror,#editccaerror,#editccpercentageerror,#editccdateemerror,#editccaerror,' +
                 +' #assetfdateemrror, #editassetfdateemerror, #assetfdescriptionerror, #editassetfdescriptionerror').hide();
-          
+
 
 
         });
@@ -1115,9 +1229,261 @@ function deletesubbatch(obj) {
     }
 }///--------------------else---------------------------------
 
+///------------------------------------------------------------------------Costcenter started
+
+        function closeeditcc() {
+            $('#editccmodal').modal('hide');
+        }
+
+        function closecc() {
+            $('#ccmodal').modal('hide');
+        }
+
+        function savecc() {
+
+            //if ($("#txtlocDate").val() == '') {
+            //    alert("test")
+            //    $("#locdateemerror").html(" * Please select date");
+            //    $("#locdateemerror").show();
+
+            //}
+
+            if ($("#txtccA").find("option:selected").text() == 'Select CostCENTER') {
+                $("#ccaerror").html(" * Please select location");
+                $("#ccaerror").show();
+
+            }
+
+            if ($("#txtccA").find("option:selected").text() != 'Select CostCENTER'
+                && $("#txtccDate").val() != '') {
+
+                Addcostcentertotable();
 
 
 
+                $('#ccmodal').modal('hide');
+
+
+            }
+        }
+
+        function Addcostcentertotable() {
+
+            var ccdescription = $("#txtccA").find("option:selected").text();
+            var sccdescription = $("#txtccB").find("option:selected").text();
+
+
+            var ccids = $("#txtccA").val();
+            var accid = $("#txtccA option:selected").val();
+            var bsccid = $("#txtsccB option:selected").val();
+
+            var date = $("#txtccDate").val();
+           // var percentage = $("#txtpercentage").val();
+
+            if (ccdescription == "Select costCenter") {
+                ccdescription = "";
+            }
+            if (sccdescription == "Select costCenter") {
+                sccdescription = "";
+            }
+
+
+            //  var assetamt = $("#txtassetamount").val()
+            $('#tblcostcenter').last().append('<tr><td>' + srnocnt + '</td><td hidden>' + accid + '</td>'
+                + '<td hidden>' + bsccid + '</td >' 
+                + '<td>' + ccdescription + '</td ><td>' + sccdescription + '</td><td align="center"> <button type="button" class="btn modBtn btn-sm"'
+                + ' aria-label="Left Align"'
+                + 'onclick="Editcc(this,' + srnocnt + ');">'
+                + '  <i class="fa fa-edit"></i>Edit</button></td><td align="center"> <button type="button" class="btn btn-sm delBtn"'
+                + ' aria-label="Center Align"'
+                + 'onclick="deletecc(this);">'
+                + '  <i class="fa fa-remove"></i>Delete   </button></td></tr > ');
+
+            srnocnt++;
+        }
+
+       function SaveData() {
+
+    //var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+    //var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+
+            //var startdate = $('#txtStartDate').val();
+            //var enddate = $('#txtEndDate').val();
+
+            var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
+            var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
+
+
+    if (new Date(startdate) >= new Date(enddate)) {
+        swal("Alert", "To Date must be greater than From Date", "warning");
+    }
+    else {
+        //var tbllocation = $('#tbllocation tbody tr:has(td)').map(function (i, v) {
+        //    var $td = $('td', this);
+        //    var Tablelocationa = $td.eq(1).html();
+        //    alert(Tablelocationa)
+
+        //    var Tablelocationb = $td.eq(2).html();
+        //    alert(Tablelocationb)
+        //    var Tablelocationc = $td.eq(3).html();
+
+        //    return {
+
+        //        LocAid: Tablelocationa,
+        //        LocBid: Tablelocationb,
+        //        LocCid: Tablelocationc
+        //    }
+        //}).get();
+        //alert(tbllocation)
+
+        var StartDate = $('#txtStartDate').val();
+        var EndDate = $('#txtEndDate').val();
+
+        var BatchDescription = $('#BatchDescription').val();
+        var IsBatchOpen = isbatchopenflag;
+
+
+        if (StartDate == '') {
+            StartDateStatus = false;
+        }
+        else {
+            //$('#assignError').hide();
+            StartDateStatus = true;
+        }
+        if (EndDate == '') {
+            EndDateStatus = false;
+        }
+        else {
+            //$('#assignError').hide();
+            EndDateStatus = true;
+        }
+
+        if (StartDateStatus == true && EndDateStatus == true) {
+            $("#startdateerror,#enddateerror").hide();
+
+            var tblcostcenter = $('#tblcostcenter tbody tr:has(td)').map(function (i, v) {
+                var $td = $('td', this);
+                var Tablecostcentera = $td.eq(1).html();
+                //alert(Tablelocationa)
+
+                var Tablecostcenterb = $td.eq(2).html();
+                //alert(Tablelocationb)
+                
+
+                return {
+
+                    CCid: Tablecostcentera,
+                    SCCid: Tablecostcenterb
+                    
+                }
+            }).get();
+
+            var Strstartdate = moment($('#txtStartDate').val()).format("YYYY-MM-DD");
+            var StrEnddate = moment($('#txtEndDate').val()).format("YYYY-MM-DD");
+            // var Editid = '@ViewBag.ID';
+            debugger;
+            var postdata =
+            {
+                "FromDate": Strstartdate,
+                "ToDate": StrEnddate,
+                "BatchDescription": BatchDescription,
+                "IsBatchOpen": IsBatchOpen,
+                "locationlist": tbllocation,
+                //"ID": Editid
+
+                //"LoanViewModellist": tbl
+            };
+            debugger;
+
+            var form = $('#frmNewEmp');
+            var token = $('input[name="__RequestVerificationToken"]', form).val();
+            var headers = {};
+            headers['__RequestVerificationToken'] = token;
+            swal({
+                title: "Are You Sure?", text: "You won't be able to revert this!",
+                icon: "warning", buttons: true, dangerMode: true
+            }).then((result) => {
+                if (result == true) {
+
+                    var ControllerURL = '@Url.Action("Add", "Batch")';
+
+                    //alert(ControllerURL);
+                    var returnURL = '@Url.Action("Index", "Batch")';
+                    $.ajax({
+                        type: 'POST',
+                        url: ControllerURL,
+                        headers: headers,
+                        contentType: "application/json",
+                        data: JSON.stringify(postdata),
+                        success: function (res) {
+                            if (res == "Failed") {
+                                swal("Alert", "You Cannot Add this Record", "warning");
+                            }
+                            else {
+                                swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
+                                    if (result == true) {
+                                        window.location.replace(returnURL);
+                                    }
+                                });
+                            }
+
+                        },
+
+                        failure: function () { alert("Error"); }
+
+                    });
+                }
+            });
+            ////////////------------------
+            var ControllerURL = '@Url.Action("Edit", "Batch")';
+
+            //  alert(ControllerURL);
+            var returnURL = '@Url.Action("Index", "Batch")';
+            $.ajax({
+                type: 'POST',
+                url: ControllerURL,
+                contentType: "application/json",
+                data: JSON.stringify(postdata),
+                success: function (res) {
+
+                    if (res == "Failed") {
+                        // swal("Alert", "You Cannot Add this Record", "warning");
+                    }
+                    else {
+                        // swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
+                        if (result == true) {
+                            window.location.replace(returnURL);
+                        }
+                        // });
+                    }
+
+                },
+
+                failure: function () { alert("Error"); }
+
+            });
+
+        }//----------------------if ----
+        else {
+            if (StartDateStatus == true && EndDateStatus == false) {
+                $('#enddateerror').show();
+                $('#startdateerror').hide();
+
+            } else if (EndDateStatus == true && StartDateStatus == false) {
+                $('#enddateerror').hide();
+
+                $('#startdateerror').show();
+            } else {
+                $('#enddateerror').show();
+
+                $('#startdateerror').show();
+
+            }
+
+            return false;
+        }
+    }
+}
 
     </script>
 
