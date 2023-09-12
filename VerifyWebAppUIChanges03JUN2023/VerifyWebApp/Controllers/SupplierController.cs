@@ -1059,7 +1059,7 @@ namespace VerifyWebApp.Controllers
                                 //    && cstnoflag == true && emailflag == true && gstnoflag == true
                                 //    && shopactnoflag == true)
                                 //{
-                                    if (srnoflag == true && /*suppliercodeflag == true &&*/ suppliernameflag == true )/*&& contactpersonflag == true*/
+                                    if (srnoflag == true && suppliercodeflag == true && suppliernameflag == true )/*&& contactpersonflag == true*/
                                     //&& addressflag == true && cityflag == true && pincodeflag == true && phonenoflag == true
                                     //&& mobilenoflag == true && faxnoflag == true && excisenoflag == true && servicetaxnoflag == true &&
                                     //vatnoflag == true && pannoflag == true && tannnoflag == true && othernoflag == true

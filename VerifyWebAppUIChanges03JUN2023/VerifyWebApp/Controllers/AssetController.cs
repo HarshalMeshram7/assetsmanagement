@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 
 namespace VerifyWebApp.Controllers
 {
-    public class AssetController : Controller
+    public class AssetController : Controller 
     {
         // GET: AssetGroup
 
@@ -2257,11 +2257,12 @@ namespace VerifyWebApp.Controllers
                         return res;
                     }
 
-                    if (assetGroup.VoucherDate > assetGroup.DtPutToUse)
-                    {
-                        res.Data = "Voucher Date cannot be greater than Dateputtouse";
-                        return res;
-                    }
+                    //if (assetGroup.VoucherDate > assetGroup.DtPutToUse)
+                    //{
+                    //    res.Data = "Voucher Date cannot be greater than Dateputtouse";
+                    //    return res;
+                        
+                    //}
                     if (assetGroup.VoucherDate > assetGroup.ExpiryDate)
                     {
                         res.Data = "Voucher Date cannot be greater than ExpiryDate";
@@ -2563,6 +2564,17 @@ namespace VerifyWebApp.Controllers
                     db.Assetss.Add(asset);
                     // db.Entry(asset).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
+
+                    AuditLog auditLog = new AuditLog();
+
+                    auditLog.SaveRecord("AssetNo", "", assetGroup.AssetNo);
+                    auditLog.SaveRecord("AssetName", "", assetGroup.AssetName.ToString());
+
+                    auditLog.InsertLog(userid, companyid, AuditLog.Event_Insert, AuditLog.Record_Type_Asset, db);
+
+
+
+
                     //var assetid = db.Assetss.Max(x => x.AssetNo);
                     var assetid = db.Assetss.Where(x => x.Companyid == companyid).OrderByDescending(x => x.ID).FirstOrDefault().ID;
                     var abc = asset.ID;
@@ -3285,9 +3297,9 @@ namespace VerifyWebApp.Controllers
 
         [AuthUser]
         [HttpGet]
-        public ActionResult Edit(string id)
-
+        public ActionResult Edit(string id)       //.................httpget
         {
+
             int userid = 0;
             Login user = (Login)(Session["PUser"]);
 
@@ -3737,9 +3749,10 @@ namespace VerifyWebApp.Controllers
                 }
                 locsrno++;
             }
+            assetGroupViewmodel.locationlist = cllist;
             //////////////////////////////////////////
             //costcenter
-            assetGroupViewmodel.locationlist = cllist;
+
             List<Childcostcenter> cclist = new List<Childcostcenter>();
             int ccsrno = 1;
             cclist = db.childcostcenters.Where(x => x.Ass_ID == assetid && x.Companyid == companyid).ToList();
@@ -4000,11 +4013,11 @@ namespace VerifyWebApp.Controllers
                         return res;
                     }
 
-                    if (assetGroup.VoucherDate > assetGroup.DtPutToUse)
-                    {
-                        res.Data = "Voucher Date cannot be greater than Dateputtouse";
-                        return res;
-                    }
+                    //if (assetGroup.VoucherDate > assetGroup.DtPutToUse)
+                    //{
+                    //    res.Data = "Voucher Date cannot be greater than Dateputtouse";
+                    //    return res;
+                    //}
                     if (assetGroup.VoucherDate > assetGroup.ExpiryDate)
                     {
                         res.Data = "Voucher Date cannot be greater than ExpiryDate";
@@ -4371,7 +4384,7 @@ namespace VerifyWebApp.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult EditAsset(AssetGroupViewmodel assetGroup)
+        public ActionResult EditAsset(AssetGroupViewmodel assetGroup)     //...................HTTPPOST
         {
             int userid = 0;
             Login user = (Login)(Session["PUser"]);
@@ -7079,7 +7092,7 @@ namespace VerifyWebApp.Controllers
                 string checklockflag = "";
                 //= DateTime.Parse(assets.str_VoucherDate);
                 if (DateTime.TryParseExact(assets.str_VoucherDate, "yyyy-MM-dd",
-                                                                      System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out checkvoucherdate))
+                                 System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out checkvoucherdate))
                 {
                     var date = checkvoucherdate;
                     checklockflag = ImportDatevalidation(date, companyid);
@@ -7136,7 +7149,7 @@ namespace VerifyWebApp.Controllers
 
 
                     List<Child_Asset_Attachment> childassetattchlist = new List<Child_Asset_Attachment>();
-                    childassetattchlist = db.Child_Asset_Attachments.Where(x => x.Companyid == companyid && x.AssetID == assetid).ToList();
+                    childassetattchlist = db.Child_Asset_Attachments.Where(x => x.Companyid == companyid && x.AssetID == assetid).ToList(); 
 
 
                     if (subinslist.Count == 0 && loanlist.Count == 0 && amclist.Count == 0 && deplist.Count == 0
@@ -7145,9 +7158,18 @@ namespace VerifyWebApp.Controllers
                     {
 
                         var assetdeleteobj = db.Assetss.Where(x => x.ID == assetid).FirstOrDefault();
+
+                        AuditLog auditLog = new AuditLog();
+
+                        // auditLog.SaveRecord("AssetID", assetdeleteobj.ID.ToString(), assetdeleteobj.ID.ToString());
+                        auditLog.SaveRecord("AssetNo", " ", assetdeleteobj.AssetNo.ToString());
+                        auditLog.SaveRecord("AssetName", " ", assetdeleteobj.AssetName.ToString());
+                        auditLog.InsertLog(userid, companyid, AuditLog.Event_Delete, AuditLog.Record_Type_Asset, db);
+
                         db.Entry(assetdeleteobj).State = System.Data.Entity.EntityState.Deleted;
                         db.SaveChanges();
-                        res.Data = "Success";
+
+                       res.Data = "Success";
 
                     }
                     else

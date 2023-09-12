@@ -19,7 +19,7 @@
                         @Html.AntiForgeryToken();
 
                         <div class="modal-body">
-                            <div class="row">
+                            @*<div class="row">
                                 <div class="form-group col-md-3">
                                     <label for="startdate" class="form-control-sm">From Date</label>
                                     <input type="date" id="startdate" name="startdate" class="form-control form-control-sm" />
@@ -30,7 +30,7 @@
                                     <label for="enddate" class="form-control-sm">To Date</label>
                                     <input type="date" id="enddate" name="enddate" class="form-control form-control-sm" />
                                 </div>
-                            </div>
+                            </div>*@
                             <div class="row">
                                 <div class="form-group col-md-4">
                                     <label for="strempid" class="form-control-sm">Employee</label>
@@ -49,10 +49,10 @@
     </div>
 </div>
 
-<div id="progressbar" class="modal fade" role="dialog" style="height: auto;" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-lx">
+<!--<div id="progressbar" class="modal fade" role="dialog" style="height: auto;" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lx">-->
         <!-- Modal content-->
-        <div class="modal-content" style="height:auto;width:auto;overflow:auto">
+        <!--<div class="modal-content" style="height:auto;width:auto;overflow:auto">
             <div class="modal-header">
                 <label style="color:red;text-align: center;">Please wait........</label>
             </div>
@@ -63,21 +63,21 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#progressbar').modal('hide');
+        //$('#progressbar').modal('hide');
 
         $("#frmNewEmp").submit(function (e) {
             e.preventDefault();
-            var fromdate = $("#startdate").val();
-            var todate = $("#enddate").val();
+            //var fromdate = $("#startdate").val();
+            //var todate = $("#enddate").val();
 
-            if (fromdate !== "" && todate !== "") {
-                fromdate = moment(fromdate, 'YYYY-MM-DD').format('YYYY-MM-DD');
-                todate = moment(todate, 'YYYY-MM-DD').format('YYYY-MM-DD');
-            }
+            //if (fromdate !== "" && todate !== "") {
+            //    fromdate = moment(fromdate, 'YYYY-MM-DD').format('YYYY-MM-DD');
+            //    todate = moment(todate, 'YYYY-MM-DD').format('YYYY-MM-DD');
+            //}
 
             var employee = $("#strempid").val();
 
@@ -85,14 +85,14 @@
                 employee = "0";
             }
 
-            getreport(fromdate, todate, employee);
+            getreport(/*fromdate, todate,*/ employee);
         });
     });
 
-    function getreport(fromdate, todate, employee) {
+    function getreport(/*fromdate, todate,*/ employee) {
         var data = {
-            "startdate": fromdate,
-            "enddate": todate,
+            //"startdate": fromdate,
+            //"enddate": todate,
             "strempid": employee
         };
 
@@ -101,7 +101,7 @@
         var headers = {};
         headers['__RequestVerificationToken'] = token;
 
-        $('#progressbar').modal('show');
+        //$('#progressbar').modal('show');
 
         var ControllerURL = '@Url.Action("GetEmployeeAssetsTrackingReport", "AssetTrackingReport")';
         var DownloadURL = '@Url.Action("Download", "AssetTrackingReport")';

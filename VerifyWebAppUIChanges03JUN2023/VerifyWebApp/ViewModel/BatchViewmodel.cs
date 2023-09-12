@@ -13,6 +13,8 @@ namespace VerifyWebApp.ViewModel
         {
             this.locationlist = new List<Subbatch>();
             // this.BatchViewModellist = new List<SubbatchTable>();
+
+            this.costcenterlist = new List<Subbatch>();
         }
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
@@ -25,6 +27,8 @@ namespace VerifyWebApp.ViewModel
 
         public IEnumerable<Subbatch> locationlist { get; set; }
         // public IEnumerable<SubbatchTable> BatchViewModellist { get; set; }
+
+        public IEnumerable<Subbatch> costcenterlist { get; set; }
     }
 
     //public class SubbatchTable

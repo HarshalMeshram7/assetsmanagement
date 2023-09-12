@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "AddNew";
 }
 
@@ -84,22 +83,22 @@
                                             </div>
                                         </div>
                                         <div class="row my-1">
-                                            <div class="col-md-2 align-content-center">
+                                            <div class="col-md-2 align-content-center" style="padding-top:30px">
 
-                                                <button type="button" onclick="ShowGroups();" class="btn btn-link">Select Group</button>
+                                                <button type="button" onclick="ShowGroups();" class="btn btn-sm nBtn">Select Group</button>
 
 
                                             </div>
 
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <label for="praticesname">A Group</label>
+                                                    <label for="praticesname">A Group<span style="color:#CC0000;">*</span></label>
                                                     <input type='text' id="txtAgroupname" readonly class="form-control  form-control-sm" tabindex="1" />
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <label for="praticesname">B Group</label>
+                                                    <label for="praticesname">B Group<span style="color:#CC0000;">*</span></label>
                                                     <input type='text' id="txtBgroupname" readonly class="form-control form-control-sm" tabindex="1" />
                                                 </div>
                                             </div>
@@ -119,18 +118,18 @@
                                         <div class="row my-1">
                                             <div class="col-md-2">
                                                 <div class="form-group">
-                                                    <label for="praticesname">Asset No</label>
+                                                    <label for="praticesname">Asset No<span style="color:#CC0000;">*</span></label>
                                                     @{
                                                         if (ViewBag.AutoGenerateAssetNo == "Y")
                                                         {
-                                                            <input type='number' maxlength="100" id="txtassetno" class="form-control form-control-sm" tabindex="1" value="@ViewBag.NextAssetNo"
+                                                            <input type='number' maxlength="100" id="txtassetno" class="form-control form-control-sm"required tabindex="1" value="@ViewBag.NextAssetNo"
                                                                    readonly="readonly"
                                                                    onblur="assetnoalreadyexists()" />
 
                                                         }
                                                         else
                                                         {
-                                                            <input type='number' maxlength="100" id="txtassetno" class="form-control form-control-sm" tabindex="1" value="@ViewBag.NextAssetNo"
+                                                            <input type='number' maxlength="100" id="txtassetno" class="form-control form-control-sm"required tabindex="1" value="@ViewBag.NextAssetNo"
                                                                    onblur="assetnoalreadyexists()" />
                                                         }
 
@@ -140,7 +139,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="praticesname">Asset Identification no<span style="color:#CC0000;">*</span></label>
-                                                    <input type='text' id="assetidno" class="form-control form-control-sm" tabindex="2" />
+                                                    <input type='text' id="assetidno" class="form-control form-control-sm" required tabindex="2" />
 
                                                 </div>
                                             </div>
@@ -269,10 +268,10 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <label for="praticesname">Uom</label>
+                                                    <label for="praticesname">Uom<span style="color:#CC0000;">*</span></label>
                                                     <div class='input-group dropdown ' id='dtuom' tabindex="17">
 
-                                                        @Html.DropDownList("UomId", (SelectList)ViewBag.uomlist, "Select Uom", new { @class = "form-control form-control-sm", id = "UomId" })
+                                                        @Html.DropDownList("UomId", (SelectList)ViewBag.uomlist, "Select Uom", new { @class = "form-control form-control-sm", id = "UomId",@required="required" })
 
                                                     </div>
 
@@ -323,10 +322,10 @@
 
                                         <div class="row my-1">
                                             <div class="col">
-                                                <label for="praticesname">Normal Rate(A)</label>
+                                                <label for="praticesname">Normal Rate(A)<span style="color:#CC0000;">*</span></label>
                                             </div>
                                             <div class="col">
-                                                <input type="number" class="form-control form-control-sm" id="txtNRate" tabindex="20" step=".01" onblur="totalrate()" />
+                                                <input type="number" class="form-control form-control-sm" id="txtNRate" required tabindex="20" step=".01" onblur="totalrate()" />
                                             </div>
                                         </div>
                                         <div class="row my-1">
@@ -349,7 +348,7 @@
                                         </div>
 
                                         <div class="row my-1">
-                                            <div class="col"><label> Useful Life(in years)</label></div>
+                                            <div class="col"><label> Useful Life(in years)<span style="color:#CC0000;">*</span></label></div>
                                             <div class="col">   <input type='text' id="txtuseful" class="form-control form-control-sm" required tabindex="24" onchange="generateexpirydate()" /></div>
                                         </div>
 
@@ -1294,7 +1293,7 @@
                 <div class="row">
                     <div class="form-group col-lg-6">
                         <label for="praticesname">Uom></label>
-                        @Html.DropDownList("txteditassetfuom", (SelectList)ViewBag.uomlist, "Select Uom", new { @class = "form-control", id = "txteditassetfuom" })
+                        @Html.DropDownList("txteditassetfuom", (SelectList)ViewBag.uomlist, "Select Uom", new { @class = "form-control", id = "txteditassetfuom",@required="required" })
 
                     </div>
                 </div>

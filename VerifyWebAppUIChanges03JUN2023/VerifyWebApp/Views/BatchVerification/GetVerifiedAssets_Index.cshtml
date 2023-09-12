@@ -30,7 +30,9 @@
                             <div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn saveBtn btn-sm" id="btngetreport">Show Report</button>
+                            @*<button type="button" class="btn saveBtn btn-sm" id="btngetreport">Show Report</button>*@
+                            <button type="button" class="btn btn-sm saveBtn" style="margin-right:5px" id="btngetreport">Export Excel</button>
+                            <button type="button" class="btn btn-sm saveBtn" id="btnGetPdfReport">Export PDF</button>
                         </div>
                     }
                 </div>
@@ -65,10 +67,49 @@
             var BatchId = $("#BatchId").val();
             getreport(BatchId);
         });
+        $("#btnGetPdfReport").on("click", function (e) {
+            e.preventDefault();
+            var BatchId = $("#BatchId").val();
+            GetPdfReport(BatchId);
+        });
     });
 
     function getreport(BatchId) {
         var url = '@Url.Action("GetVerifiedAssets", "BatchVerification")';
+        var downloadUrl = '@Url.Action("Download", "BatchVerification")';
+
+        var data = {
+            BatchId: BatchId
+        };
+
+        var form = $('#frmNewEmp');
+        var token = $('input[name="__RequestVerificationToken"]', form).val();
+        var headers = {};
+        headers['__RequestVerificationToken'] = token;
+
+        /*$('#progressbar').modal('show');*/
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            headers: headers,
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data) {
+                var fileurl = downloadUrl + '?fileGuid=' + data.FileGuid + '&filename=' + data.FileName;
+                $('#progressbar').modal('hide');
+                window.location.href = fileurl;
+            },
+            error: function () {
+                $('#progressbar').modal('hide');
+                alert("Error");
+            }
+        });
+    }
+
+    function GetPdfReport(BatchId) {
+        var url = '@Url.Action("GetVerifiedAssets", "BatchVerification")';
+        var url = '@Url.Action("GetPdfReport", "BatchVerification")';
         var downloadUrl = '@Url.Action("Download", "BatchVerification")';
 
         var data = {

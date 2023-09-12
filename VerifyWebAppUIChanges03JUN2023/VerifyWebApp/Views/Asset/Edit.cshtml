@@ -2471,31 +2471,32 @@
 
 
       /////Date put to use is less then voucher date warning
-            function dtputusevalidatewithvoucher() {
-                var voucherdate = moment($("#txtVDate").val()).format('YYYY-MM-DD');
-                var dtputuse = moment($("#txtdpucomDate").val()).format('YYYY-MM-DD');
-                if (voucherdate != "Invalid date" && dtputuse != "Invalid date") {
-                    if (new Date(dtputuse) < new Date(voucherdate)) {
+            //function dtputusevalidatewithvoucher() {
+            //    var voucherdate = moment($("#txtVDate").val()).format('YYYY-MM-DD');
+            //    var dtputuse = moment($("#txtdpucomDate").val()).format('YYYY-MM-DD');
+            //    if (voucherdate != "Invalid date" && dtputuse != "Invalid date") {
+            //        if (new Date(dtputuse) < new Date(voucherdate)) {
 
-                        swal("Alert", "Date put to use is less than voucher date ", "warning");
-                        //  document.getElementById("txtdpucomDate").focus();
-                    }
-                    else { }
-                }
-                else {
-                    //  swal("Alert", "Please check if you have entered voucher date and date put use (Company) ", "warning");
-                    swal({ title: "Please check if you have entered voucher date and date put use (Company)", icon: "warning" }).then((result) => {
-                        if (result == true) {
-                            //window.location.replace(returnURL);
-                            //document.getElementById("txtdpucomDate").focus();
-                        }
-                        else {
-                           // document.getElementById("txtdpucomDate").focus();
-                        }
-                    });
+            //            swal("Alert", "Date put to use is less than voucher date ", "warning");
+            //            //  document.getElementById("txtdpucomDate").focus();
+            //        }
+            //        else { }
+            //    }
+            //    else {
+            //        //  swal("Alert", "Please check if you have entered voucher date and date put use (Company) ", "warning");
+            //        swal({ title: "Please check if you have entered voucher date and date put use (Company)", icon: "warning" }).then((result) => {
+            //            if (result == true) {
+            //                //window.location.replace(returnURL);
+            //                //document.getElementById("txtdpucomDate").focus();
+            //            }
+            //            else {
+            //               // document.getElementById("txtdpucomDate").focus();
+            //            }
+            //        });
 
-                }
-            }
+            //    }
+            //}
+
         ///// satutory expiry dateis less then voucher date warning
             function expiredatevalidatewithvoucher() {
                 var voucherdate = moment($("#txtVDate").val()).format('YYYY-MM-DD');

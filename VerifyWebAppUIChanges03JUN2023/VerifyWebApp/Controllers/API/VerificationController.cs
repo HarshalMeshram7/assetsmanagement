@@ -12,18 +12,24 @@ using VerifyWebApp.Models;
 using System.Transactions;
 using Newtonsoft.Json;
 using NLog;
+using System.Data.SqlClient;
+using System.Configuration;
+using System.Data;
 namespace VerifyWebApp.APIControllers
 {
     public class VerificationController : ApiController
     {
         public VerifyDB db = new VerifyDB();
+
+     
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         [HttpPost]
         [Route("api/verification/uploadsingle")]
         public APIResponse SaveSingleAsset([FromBody] BatchVerification asset)
         {
-
+            //query/filter/wheere datatable for ID = asset.UserID >> 1 Datarow >> Mobile  into variable
+           
             // validate client code
 
             //Client client = null;
@@ -65,6 +71,9 @@ namespace VerifyWebApp.APIControllers
                     }
                     else
                     {
+                        Int32 iUserID_mySQL = OpenSqlConnection(asset.UserID);
+                        if (iUserID_mySQL > 0)
+                        { asset.UserID = iUserID_mySQL; }
                         db.BatchVerification.Add(asset);
                         db.Entry(asset).State = EntityState.Added;
                         db.SaveChanges();
@@ -196,7 +205,6 @@ namespace VerifyWebApp.APIControllers
         [Route("api/verification/getlist")]
         public List<BatchVerification> GetAssetList(int ClientCode, int BatchID)
         {
-
             List<BatchVerification> lstAssetList = new List<BatchVerification>();
             try
             {
@@ -212,7 +220,39 @@ namespace VerifyWebApp.APIControllers
             return lstAssetList;
         }
 
+        private string GetSqlConnectionString()
+        {
+            return ConfigurationManager.AppSettings["SQLConnectionString"];
+        }
 
+        private Int32 OpenSqlConnection(int userid)
+        {
+            Int32 iReturn = -1;
+            DataTable dataTable = new DataTable();
+            string connectionString = GetSqlConnectionString();
 
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                String SSQL = "SELECT * FROM tblClientEmployee";
+
+                using (SqlCommand command = new SqlCommand(SSQL, connection))
+                {
+                    using (SqlDataAdapter dataAdapter = new SqlDataAdapter(command))
+                    {
+                        dataAdapter.Fill(dataTable);
+                        //dataTable.Select();
+                        DataRow[] filteredRows = dataTable.Select("ID =" + userid);
+                        String sMobile = filteredRows[0]["mobile"].ToString();
+
+                        Login user = new Login();
+                        String strSQL = "select * from tbllogin where MobileNo='" + sMobile + "'";
+                        user = db.Database.SqlQuery<VerifyWebApp.Models.Login>(strSQL).FirstOrDefault();
+                        iReturn = user.ID;
+                    }
+                }
+            }
+            return iReturn;
+        }
     }
 }
