@@ -218,6 +218,8 @@ function validateform() {
     var VoucherDate = $('#txtVDate').val();
     var DtPutToUse = $('#txtdpucomDate').val();
 
+    var Agroup = $("#txtAgroupname").val();
+    var Uom = $("#UomId").val();
 
     var UsefulLife = $("#txtuseful").val();
     var AssetName = $('#assetname').val();
@@ -228,6 +230,15 @@ function validateform() {
     var assetno = $('#txtassetno').val();
 
     let normalrate = $('#txtNRate').val();
+
+
+    if (Agroup.trim() == "") {
+        errorlist.push("A group is not entered");
+    }
+    if (Uom.trim()  == "") {
+        errorlist.push("UOM is not entered");
+    }
+
 
     if (assetno == "") {
         errorlist.push("Assetno is not entered");
