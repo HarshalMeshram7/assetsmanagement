@@ -11,10 +11,10 @@
 </style>
 
 <div class="modal-content">
-    <div class="modal-header" style="background-color:Highlight">
+    <div class="modal-header hborder">
 
         <div class="modal-title htitle"><b>Add Income Tax Period</b></div>
-        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @*<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
     </div>
     @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
     {
@@ -75,7 +75,7 @@
         </div>
 
         <div class="modal-footer">
-            <button type="button" class="btn btn-primary" id="btnSave">Save</button>
+            <button type="button" class="btn saveBtn btn-sm" id="btnSave">Save</button>
 
 
             <button type="button" class="btn btn-sm clBtn" id="btnClose" data-bs-dismiss="modal">Close</button>
