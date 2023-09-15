@@ -291,15 +291,7 @@
                                 </div>
                             </div>
 
-                            <!--<div class="modal-footer">
-
-                                <button type="button" class="btn btn-sm saveBtn" id="ocationmodal" style="margin-right:5px;" data-bs-dismiss="modal" onclick="closeloc()">Close</button>
-                                <button type="button" class="btn btn-sm clBtn" id="btnSave" onclick="save()">Save</button>-->
-                            @*<button type="button" class="btn btn-default" onclick="close()">Close</button>*@
-                            <!--</div>
-
-                            </div>-->
-
+                        
 
 
 
@@ -307,7 +299,7 @@
                             <div class="modal-footer">
 
                                 <button type="button" class="btn btn-sm saveBtn" id="ocationmodal" style="margin-right:5px;" data-bs-dismiss="modal" onclick="closeloc()">Close</button>
-                                <button type="button" class="btn btn-sm clBtn" id="btnSave" onclick="save()">Save</button>
+                                <button type="button" class="btn btn-sm clBtn" id="btnSave">Save</button>
                                 @*<button type="button" class="btn btn-default" onclick="close()">Close</button>*@
                             </div>
 
@@ -354,7 +346,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-sm saveBtn" id="btnClose" data-bs-dismiss="modal" onclick="closeeditloc();">Close</button>
 
-                                        <button type="button" class="btn btn-sm clBtn" id="btnSave" onclick="saveloc();">Save</button>
+                                        <button type="button" class="btn btn-sm clBtn" onclick="saveloc();">Save2</button>
 
                                     </div>
 
@@ -402,7 +394,7 @@
 
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-sm saveBtn" data-bs-dismiss="modal" onclick="closeeditloc();">Close</button>
-                                        <button type="button" class="btn btn-sm clBtn" id="btnSave" onclick="saveeditloc();">Save</button>
+                                        <button type="button" class="btn btn-sm clBtn" onclick="saveeditloc();">Save3</button>
                                     </div>
                                 </div>
                             </div>
@@ -618,11 +610,6 @@ var StartDateStatus = false;
 var isbatchopenflag = "no";
 $(document).ready(function ($) {
 
-
-    //$("#frmNewEmp").submit(function (e) {
-    //    SaveData();
-    //    e.preventDefault();
-    //    return false;
 });
 
 $('#IsBatchOpen').change(function () {
@@ -784,7 +771,14 @@ function deleteloc(obj) {
     });
 }
 
-
+    function deletecc(obj) {
+        swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+            if (result == true) {
+                $(obj).parent().parent().remove();
+                srnocnt - 1;
+            }
+        });
+    }
 
 function saveloc() {
 
@@ -1191,6 +1185,24 @@ function deletesubbatch(obj) {
                 }
             }).get();
 
+
+             @* var tblcostcenter = $('#tblcostcenter tbody tr:has(td)').map(function (i, v) {
+                var $td = $('td', this);
+                var Tablecostcentera = $td.eq(1).html();
+                //alert(Tablelocationa)
+
+                var Tablecostcenterb = $td.eq(2).html();
+                //alert(Tablelocationb)
+
+
+                return {
+
+                    CCid: Tablecostcentera,
+                    SCCid: Tablecostcenterb
+
+                }
+            }).get(); *@
+
             var Strstartdate = moment($('#txtStartDate').val()).format("YYYY-MM-DD");
             var StrEnddate = moment($('#txtEndDate').val()).format("YYYY-MM-DD");
             // var Editid = '@ViewBag.ID';
@@ -1202,21 +1214,21 @@ function deletesubbatch(obj) {
                 "BatchDescription": BatchDescription,
                 "IsBatchOpen": IsBatchOpen,
                 "locationlist": tbllocation,
+                @* "costcenterlist": tblcostcenter, *@
                 //"ID": Editid
 
                 //"LoanViewModellist": tbl
             };
-            debugger;
 
             var form = $('#frmNewEmp');
             var token = $('input[name="__RequestVerificationToken"]', form).val();
             var headers = {};
             headers['__RequestVerificationToken'] = token;
-            swal({
+            @* swal({
                 title: "Are You Sure?", text: "You won't be able to revert this!",
                 icon: "warning", buttons: true, dangerMode: true
             }).then((result) => {
-                if (result == true) {
+                if (result == true) { *@
 
                     var ControllerURL = '@Url.Action("Add", "Batch")';
 
@@ -1245,8 +1257,8 @@ function deletesubbatch(obj) {
                         failure: function () { alert("Error"); }
 
                     });
-                }
-            });
+                @* }
+            }); *@
             ////////////------------------
             var ControllerURL = '@Url.Action("Edit", "Batch")';
 
@@ -1313,15 +1325,9 @@ function deletesubbatch(obj) {
 
         function savecc() {
 
-            //if ($("#txtlocDate").val() == '') {
-            //    alert("test")
-            //    $("#locdateemerror").html(" * Please select date");
-            //    $("#locdateemerror").show();
-
-            //}
 
             if ($("#txtccA").find("option:selected").text() == 'Select CostCENTER') {
-                $("#ccaerror").html(" * Please select location");
+                $("#ccaerror").html(" * Please select cost center");
                 $("#ccaerror").show();
 
             }
@@ -1374,189 +1380,7 @@ function deletesubbatch(obj) {
             srnocnt++;
         }
 
-       function SaveData() {
-
-    //var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-    //var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-
-            //var startdate = $('#txtStartDate').val();
-            //var enddate = $('#txtEndDate').val();
-
-            var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
-            var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
-
-
-    if (new Date(startdate) >= new Date(enddate)) {
-        swal("Alert", "To Date must be greater than From Date", "warning");
-    }
-    else {
-        //var tbllocation = $('#tbllocation tbody tr:has(td)').map(function (i, v) {
-        //    var $td = $('td', this);
-        //    var Tablelocationa = $td.eq(1).html();
-        //    alert(Tablelocationa)
-
-        //    var Tablelocationb = $td.eq(2).html();
-        //    alert(Tablelocationb)
-        //    var Tablelocationc = $td.eq(3).html();
-
-        //    return {
-
-        //        LocAid: Tablelocationa,
-        //        LocBid: Tablelocationb,
-        //        LocCid: Tablelocationc
-        //    }
-        //}).get();
-        //alert(tbllocation)
-
-        var StartDate = $('#txtStartDate').val();
-        var EndDate = $('#txtEndDate').val();
-
-        var BatchDescription = $('#BatchDescription').val();
-        var IsBatchOpen = isbatchopenflag;
-
-
-        if (StartDate == '') {
-            StartDateStatus = false;
-        }
-        else {
-            //$('#assignError').hide();
-            StartDateStatus = true;
-        }
-        if (EndDate == '') {
-            EndDateStatus = false;
-        }
-        else {
-            //$('#assignError').hide();
-            EndDateStatus = true;
-        }
-
-        if (StartDateStatus == true && EndDateStatus == true) {
-            $("#startdateerror,#enddateerror").hide();
-
-            var tblcostcenter = $('#tblcostcenter tbody tr:has(td)').map(function (i, v) {
-                var $td = $('td', this);
-                var Tablecostcentera = $td.eq(1).html();
-                //alert(Tablelocationa)
-
-                var Tablecostcenterb = $td.eq(2).html();
-                //alert(Tablelocationb)
-
-
-                return {
-
-                    CCid: Tablecostcentera,
-                    SCCid: Tablecostcenterb
-
-                }
-            }).get();
-
-            var Strstartdate = moment($('#txtStartDate').val()).format("YYYY-MM-DD");
-            var StrEnddate = moment($('#txtEndDate').val()).format("YYYY-MM-DD");
-            // var Editid = '@ViewBag.ID';
-            debugger;
-            var postdata =
-            {
-                "FromDate": Strstartdate,
-                "ToDate": StrEnddate,
-                "BatchDescription": BatchDescription,
-                "IsBatchOpen": IsBatchOpen,
-                "locationlist": tbllocation,
-                //"ID": Editid
-
-                //"LoanViewModellist": tbl
-            };
-            debugger;
-
-            var form = $('#frmNewEmp');
-            var token = $('input[name="__RequestVerificationToken"]', form).val();
-            var headers = {};
-            headers['__RequestVerificationToken'] = token;
-            swal({
-                title: "Are You Sure?", text: "You won't be able to revert this!",
-                icon: "warning", buttons: true, dangerMode: true
-            }).then((result) => {
-                if (result == true) {
-
-                    var ControllerURL = '@Url.Action("Add", "Batch")';
-
-                    //alert(ControllerURL);
-                    var returnURL = '@Url.Action("Index", "Batch")';
-                    $.ajax({
-                        type: 'POST',
-                        url: ControllerURL,
-                        headers: headers,
-                        contentType: "application/json",
-                        data: JSON.stringify(postdata),
-                        success: function (res) {
-                            if (res == "Failed") {
-                                swal("Alert", "You Cannot Add this Record", "warning");
-                            }
-                            else {
-                                swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
-                                    if (result == true) {
-                                        window.location.replace(returnURL);
-                                    }
-                                });
-                            }
-
-                        },
-
-                        failure: function () { alert("Error"); }
-
-                    });
-                }
-            });
-            ////////////------------------
-            var ControllerURL = '@Url.Action("Edit", "Batch")';
-
-            //  alert(ControllerURL);
-            var returnURL = '@Url.Action("Index", "Batch")';
-            $.ajax({
-                type: 'POST',
-                url: ControllerURL,
-                contentType: "application/json",
-                data: JSON.stringify(postdata),
-                success: function (res) {
-
-                    if (res == "Failed") {
-                        // swal("Alert", "You Cannot Add this Record", "warning");
-                    }
-                    else {
-                        // swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
-                        if (result == true) {
-                            window.location.replace(returnURL);
-                        }
-                        // });
-                    }
-
-                },
-
-                failure: function () { alert("Error"); }
-
-            });
-
-        }//----------------------if ----
-        else {
-            if (StartDateStatus == true && EndDateStatus == false) {
-                $('#enddateerror').show();
-                $('#startdateerror').hide();
-
-            } else if (EndDateStatus == true && StartDateStatus == false) {
-                $('#enddateerror').hide();
-
-                $('#startdateerror').show();
-            } else {
-                $('#enddateerror').show();
-
-                $('#startdateerror').show();
-
-            }
-
-            return false;
-        }
-    }
-        }
-
+    
         //--------------------------------------------------Company Groups-----------------------------------------------------
         function ShowGroups() {
             $('#AssetGroupmodal').modal('show');
