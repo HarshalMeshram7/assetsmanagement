@@ -58,6 +58,9 @@
                             <thead class="hcol">
                                 <tr>
                                     <td class="text-uppercase font-weight-bolder" width="5%">
+                                        Supplier Id
+                                    </td>
+                                    <td class="text-uppercase font-weight-bolder" width="5%">
                                         Supplier Code
                                     </td>
                                     <td class="text-uppercase font-weight-bolder " width="5%">
@@ -109,8 +112,6 @@
                     <button style="display:inline-block; margin-left:10px" type="button" class="btn btn-primary btn-md" id="btneditsupplier">
                         Edit Supplier
                     </button>
-
-
                     <button style="display:inline-block ; margin-left:10px" type="button" class="btn btn-secondary btn-md" id="btnpreviewsupplier">
                         Preview Supplier
                     </button>
@@ -247,14 +248,15 @@
                  url: ControllerURL,
                  type: 'POST',
                  "data": function (d) {
-                   //  d.id = id,
+                     //d.id = id,
                         // d.searchby = searchby,
                          //d.searchstring = searchstring
 
                  }
              },
 
-             "columns": [
+                 "columns": [
+                     { "data": "ID", "autoWidth": true },
                      { "data": "SupplierCode", "autoWidth": true },
                      { "data": "SupplierName", "autoWidth": true },
                      { "data": "Address", "autoWidth": true },
@@ -269,32 +271,32 @@
                       // }
                      ],
                  columnDefs:
-                 [
+                     [
+                      {
+                          "targets": 0,
+                          "className": "text-xs",
+                          "width": "10%"
+
+                      },
                      {
-                         "targets": 0,
+                         "targets": 1,
                          "className": "text-xs",
-                         "width": "8%"
+                         "width": "10%"
 
                      },
                      {
-                         "targets": 1,
+                         "targets": 2,
                          "className": "text-xs",
                          "width": "20%"
                      },
                      {
-                         "targets": 2,
-                         "className": "text-xs text-wrap",
-                         "width": "30%"
-                     },
-                     {
                          "targets": 3,
-                         "className": "text-xs",
-                         "width": "10%"
+                         "className": "text-xs ",
+                         "width": "20%"
                      },
-
                      {
                          "targets": 4,
-                         "className": "text-end text-xs",
+                         "className": "text-xs",
                          "width": "10%"
                      },
                      {
@@ -304,6 +306,11 @@
                      },
                      {
                          "targets": 6,
+                         "className": "text-end text-xs",
+                         "width": "10%"
+                     },
+                     {
+                         "targets": 7,
                          "className": "text-start text-xs",
                          "width": "10%",
                          "render": function (data, type, full, meta) {
