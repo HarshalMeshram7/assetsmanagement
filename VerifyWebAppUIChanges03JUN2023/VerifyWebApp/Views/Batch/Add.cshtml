@@ -138,12 +138,6 @@
                         </div>
 
 
-                        @*<div><label style="font-size:12px;color:red "><span>*</span> Mandatory Fields</label></div>*@
-                        @*<div class="row">
-
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <button type="button" class="btn btn-primary" id="btnAddloc" data-toggle="modal">Add Location</button>
-                            </div>*@
 
 
                         <div class="row">
@@ -320,18 +314,7 @@
 
 
                         </div>
-                        @*</div>*@
-
-                        <!--<div class="modal-footer">-->
-                        @*<button type="button" class="btn btn-sm clBtn" id="btnClose" data-bs-dismiss="modal">Close</button>*@
-                        @*<button type="button" class="btn btn-sm clBtn" id="btnClose" data-bs-dismiss="modal" onclick="closeloc();">Close</button>*@
-                        @*<button type="button" class="btn btn-primary" id="btnSave" onabort="click">Save</button>*@
-                        <!--<button type="button" class="btn btn-sm clBtn" id="locationmodal" data-bs-dismiss="modal" onclick="closeloc();">Close</button>
-                            <button type="button" class="btn btn-primary" id="btnSave" onclick="save()">Save</button>
-                        </div>-->
-
-                        <!-- /.modal-content -->
-                        @*</div>*@
+                       
                         <div id="locationmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
 
                             <div class="modal-dialog modal-lg">
@@ -370,13 +353,8 @@
 
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-sm saveBtn" id="btnClose" data-bs-dismiss="modal" onclick="closeeditloc();">Close</button>
-                                        @*<button type="button" class="btn btn-sm saveBtn" onclick="closeaddperiod();">Close</button>*@
-
-                                        @*<button type="button" class="btn btn-sm clBtn" id="btnClose" data-bs-dismiss="modal">Close</button>*@
-
 
                                         <button type="button" class="btn btn-sm clBtn" id="btnSave" onclick="saveloc();">Save</button>
-                                        @*<button type="button" class="btn btn-sm clBtn" onclick="addsubperiod();">Save</button>*@
 
                                     </div>
 
@@ -431,46 +409,6 @@
                         </div>
 
 
-                        <!--<div id="ccmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
-
-                        <div class="modal-dialog modal-lg">-->
-
-                        <!-- Modal content-->
-                        <!--<div class="modal-content">
-                                    <div class="modal-header">
-
-                                        <h4 class="modal-title">Add Cost Center</h4>
-                                    </div>
-                                    <div class="modal-body ">
-
-
-                                        <div class="row">
-                                            <div class="form-group col-lg-6">
-                                                <label for="praticesname">Cost Center<span style="color:#CC0000;">*</span></label>
-                                                @Html.DropDownList("txtccA", (SelectList)ViewBag.costalist, "Select Cost Center", new { @class = "form-control form-control-sm", id = "txtccA", @required = true })
-                                                <div style="color:#CC0000;font-weight:400" id="ccaerror"></div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-lg-6">
-                                                <label for="praticesname">Sub-Cost Center</label>
-
-                                                <select id="txtccB" name="txtccB" class="form-control form-control-sm"></select>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-
-
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn saveBtn btn-sm" onclick="saveloc();">Save</button>
-                                        <button type="button" class="btn clBtn btn-sm" onclick="closeeditloc();">Close</button>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>-->
 
                         <div id="ccmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
 
@@ -483,18 +421,7 @@
                                         <h4 class="modal-title">Add Cost Center</h4>
                                     </div>
                                     <div class="modal-body ">
-                                        @*<div class="row">
-                                                <div class="form-group col-md-3">
-                                                    <label for="praticesname"> Date<span style="color:#CC0000;">*</span></label>
-
-                                                    <input id="txtccDate" required class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
-
-                                                    <div style="color:#CC0000;font-weight:400" id="ccdateemerror"></div>
-                                                    <div style="color:#CC0000;font-weight:400" id="ccdateerror">Date should be greater than voucher date</div>
-
-                                                </div>
-
-                                            </div>*@
+                                      
 
                                         <div class="row">
                                             <div class="form-group col-lg-6">
@@ -510,14 +437,7 @@
                                                 <select id="txtccB" name="txtccB" class="form-control form-control-sm"></select>
                                             </div>
                                         </div>
-                                        @*<div class="row">
-                                                <div class="form-group col-lg-6">
-                                                    <label for="praticesname">Percentage<span style="color:#CC0000;">*</span></label>
-
-                                                    <input type="number" id="txtpercentage" name="txtpercentage" class="form-control form-control-sm" value="100" required />
-                                                    <div style="color:#CC0000;font-weight:400" id="ccpercentageerror"></div>
-                                                </div>
-                                            </div>*@
+                                       
                                     </div>
                                     <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
 
@@ -541,16 +461,7 @@
                                         <h4 class="modal-title">Edit Cost Center</h4>
                                     </div>
                                     <div class="modal-body ">
-                                        @*<div class="row">
-                                                <div class="form-group col-md-3">
-                                                    <label for="praticesname"> Date<span style="color:#CC0000;">*</span></label>
-                                                    <input id="txteditccDate" required class="form-control form-control-sm" placeholder="dd-mm-yyyy" value="" type="date" />
-                                                    <div style="color:#CC0000;font-weight:400" id="editccdateemerror"></div>
-                                                    <div style="color:#CC0000;font-weight:400" id="editccdateerror">Date should be greater than voucher date</div>
-
-                                                </div>
-
-                                            </div>*@
+                                      
 
                                         <div class="row">
                                             <div class="form-group col-lg-6">
@@ -566,13 +477,7 @@
                                                 <select id="txteditccB" name="txteditccB" class="form-control form-control-sm"></select>
                                             </div>
                                         </div>
-                                        @*<div class="row">
-                                                <div class="form-group col-lg-6">
-                                                    <label for="praticesname">Percentage <span style="color:#CC0000;">*</span></label>
-                                                    <input type="number" id="txteditpercentage" name="txteditpercentage" class="form-control form-control-sm" required />
-                                                    <div style="color:#CC0000;font-weight:400" id="editccpercentageerror"></div>
-                                                </div>
-                                            </div>*@
+                                   
                                     </div>
                                     <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
 
@@ -773,13 +678,7 @@ $('#txteditlocB').change(function () {
     geteditlocationc(index);
 });
 
-//  alert("test1111");
 $("#btnAddloc").click(function () {
-
-   // alert("test22");
-    //$("#txtlocA").val("");
-    //$("#txtlocB ").val("");
-    //$("#txtlocC ").val("");
 
     $('#locationmodal').modal('show');
     $("#txtlocA").val("");
@@ -825,6 +724,38 @@ $("#btnAddloc").click(function () {
 
 
         });
+
+    function getcostcenterb(id) {
+    if (id == "") {
+        id = 0;
+
+        var index = $("#txtccB option:selected").val(0);
+    }
+    else {
+        var ControllerURL = '@Url.Action("getcostcenterb", "Batch")';
+        var url = ControllerURL + "/" + id;
+        var procemessage = "<option value='0'> Please wait...</option>";
+        $("txtlocB").html(procemessage).show();
+
+
+        $.ajax({
+            url: url,
+
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markup = "<option value='0'>Select Costcenter</option>";
+                for (var x = 0; x < data.length; x++) {
+                    markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                }
+                $("#txtccB").html(markup).show();
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+    }
+}
 //-------------------
 
 var EndDateStatus = false;
@@ -1375,7 +1306,10 @@ function deletesubbatch(obj) {
 
         function closecc() {
             $('#ccmodal').modal('hide');
-        }
+    }
+
+
+   //.........................................................
 
         function savecc() {
 
