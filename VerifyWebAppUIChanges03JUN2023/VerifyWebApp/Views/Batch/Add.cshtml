@@ -722,7 +722,7 @@ $("#btnAddloc").click(function () {
         var ControllerURL = '@Url.Action("getcostcenterb", "Batch")';
         var url = ControllerURL + "/" + id;
         var procemessage = "<option value='0'> Please wait...</option>";
-        $("txtlocB").html(procemessage).show();
+        $("txtccB").html(procemessage).show();
 
 
         $.ajax({
@@ -1186,7 +1186,7 @@ function deletesubbatch(obj) {
             }).get();
 
 
-             @* var tblcostcenter = $('#tblcostcenter tbody tr:has(td)').map(function (i, v) {
+              var tblcostcenter = $('#tblcostcenter tbody tr:has(td)').map(function (i, v) {
                 var $td = $('td', this);
                 var Tablecostcentera = $td.eq(1).html();
                 //alert(Tablelocationa)
@@ -1201,7 +1201,7 @@ function deletesubbatch(obj) {
                     SCCid: Tablecostcenterb
 
                 }
-            }).get(); *@
+            }).get(); 
 
             var Strstartdate = moment($('#txtStartDate').val()).format("YYYY-MM-DD");
             var StrEnddate = moment($('#txtEndDate').val()).format("YYYY-MM-DD");
@@ -1214,7 +1214,7 @@ function deletesubbatch(obj) {
                 "BatchDescription": BatchDescription,
                 "IsBatchOpen": IsBatchOpen,
                 "locationlist": tbllocation,
-                @* "costcenterlist": tblcostcenter, *@
+                "costcenterlist": tblcostcenter, 
                 //"ID": Editid
 
                 //"LoanViewModellist": tbl
@@ -1333,7 +1333,7 @@ function deletesubbatch(obj) {
             }
 
             if ($("#txtccA").find("option:selected").text() != 'Select CostCENTER'
-                && $("#txtccDate").val() != '') {
+               ) {
 
                 Addcostcentertotable();
 
@@ -1351,9 +1351,9 @@ function deletesubbatch(obj) {
             var sccdescription = $("#txtccB").find("option:selected").text();
 
 
-            var ccids = $("#txtccA").val();
+          //  var accids = $("#txtccA").val();
             var accid = $("#txtccA option:selected").val();
-            var bsccid = $("#txtsccB option:selected").val();
+            var bsccid = $("#txtccB option:selected").val();
 
             var date = $("#txtccDate").val();
            // var percentage = $("#txtpercentage").val();

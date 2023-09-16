@@ -332,7 +332,7 @@ namespace VerifyWebApp.Controllers
 
 
                             db.SubBatchs.Add(subbatch);
-                            db.SaveChanges();
+                            //db.SaveChanges();
 
                             string SQL = "select * from tblassets where companyid = " + companyid;
                             if (item.LocAId != 0)
@@ -413,7 +413,7 @@ namespace VerifyWebApp.Controllers
 
 
                             db.SubBatchs.Add(subbatch);
-                            db.SaveChanges();
+                            //db.SaveChanges();
 
                             string SQL = "select * from tblassets where companyid = " + companyid;
                             if (item.CCId != 0)
@@ -425,42 +425,23 @@ namespace VerifyWebApp.Controllers
                                 SQL = SQL + " and SCCId=" + item.SCCId;
                             }
 
-                            List<Assets> lstTempAssets = db.Database.SqlQuery<Assets>(SQL).ToList();
+                            //List<Assets> lstTempAssets = db.Database.SqlQuery<Assets>(SQL).ToList();
 
-                            foreach (Assets objAsset in lstTempAssets)
-                            {
-                                BatchAsset batchAssets = new BatchAsset();
+                            //foreach (Assets objAsset in lstTempAssets)
+                            //{
+                            //    BatchAsset batchAssets = new BatchAsset();
 
-                                batchAssets.AssetID = objAsset.ID;
-                                batchAssets.assetno = objAsset.AssetNo;
-                                batchAssets.Companyid = companyid;
-                                batchAssets.BatchID = batchid;
-                                db.BatchAssets.Add(batchAssets);
+                            //    batchAssets.AssetID = objAsset.ID;
+                            //    batchAssets.assetno = objAsset.AssetNo;
+                            //    batchAssets.Companyid = companyid;
+                            //    batchAssets.BatchID = batchid;
+                            //    db.BatchAssets.Add(batchAssets);
 
-                            }
+                            //}
                             db.SaveChanges();
                         }
                     }
-                    else // alll assets selected 
-                    {
-
-                        string SQL = "select * from tblassets where companyid = " + companyid;
-                        List<Assets> lstTempAssets = db.Database.SqlQuery<Assets>(SQL).ToList();
-
-                        foreach (Assets objAsset in lstTempAssets)
-                        {
-                            BatchAsset batchAssets = new BatchAsset();
-
-                            batchAssets.AssetID = objAsset.ID;
-                            batchAssets.assetno = objAsset.AssetNo;
-                            batchAssets.Companyid = companyid;
-                            batchAssets.BatchID = batchid;
-                            db.BatchAssets.Add(batchAssets);
-
-                        }
-                        db.SaveChanges();
-
-                    }
+                    
 
 
                     transaction.Commit();
