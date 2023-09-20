@@ -55,7 +55,7 @@ namespace VerifyWebApp.Controllers
                 {
                     item.Srno = srno;
                     item.str_fromdate = item.FromDate.ToString("dd/MM/yyyy");
-                    item.str_todate = item.ToDate.ToString("dd/MM/yyyy"); 
+                    item.str_todate = item.ToDate.ToString("dd/MM/yyyy");
                     srno++;
                 }
             }
@@ -113,8 +113,8 @@ namespace VerifyWebApp.Controllers
             ViewBag.clocationlist = new SelectList("", "ID", "CLocationName");
 
             ViewBag.costalist = new SelectList(db.ACostCenters.Where(x => x.Companyid == companyid).OrderBy(e => e.ID), "ID", "CCDescription");
-             // ViewBag.costblist = new SelectList(db.BCostCenters.Where(x => x.Companyid == companyid).OrderBy(e => e.ID), "ID", "SCCDescription");
-             ViewBag.costblist = new SelectList(db.BCostCenters.OrderBy(e => e.ID), "ID", "SCCDescription");
+            // ViewBag.costblist = new SelectList(db.BCostCenters.Where(x => x.Companyid == companyid).OrderBy(e => e.ID), "ID", "SCCDescription");
+            ViewBag.costblist = new SelectList(db.BCostCenters.OrderBy(e => e.ID), "ID", "SCCDescription");
             // ViewBag.costblist = new SelectList(" ","ID", "SCCDescription");
             //return PartialView();
             return View();
@@ -235,8 +235,8 @@ namespace VerifyWebApp.Controllers
 
         }
 
-       
-        
+
+
 
 
         [HttpPost]
@@ -348,7 +348,7 @@ namespace VerifyWebApp.Controllers
                                 SQL = SQL + " and LocCID=" + item.LocCId;
                             }
 
-                            List<Assets> lstTempAssets=  db.Database.SqlQuery<Assets>(SQL).ToList();
+                            List<Assets> lstTempAssets = db.Database.SqlQuery<Assets>(SQL).ToList();
 
                             foreach (Assets objAsset in lstTempAssets)
                             {
@@ -361,7 +361,7 @@ namespace VerifyWebApp.Controllers
                                 db.BatchAssets.Add(batchAssets);
 
                             }
-                            db.SaveChanges();
+                          //  db.SaveChanges();
                         }
                     }
                     else // alll assets selected 
@@ -441,7 +441,7 @@ namespace VerifyWebApp.Controllers
                             db.SaveChanges();
                         }
                     }
-                    
+
 
 
                     transaction.Commit();
@@ -509,46 +509,6 @@ namespace VerifyWebApp.Controllers
                 //batch = db.Batchs.Where(x => x.ID == id && x.Companyid == companyid).FirstOrDefault();
                 BatchViewmodel batchViewmodel = new BatchViewmodel();
 
-
-                List<Childcostcenter> cclist = new List<Childcostcenter>();
-                int ccsrno = 1;
-                int assetid = id;
-                cclist = db.childcostcenters.Where(x => x.Ass_ID == assetid && x.Companyid == companyid).ToList();
-                foreach (Childcostcenter item in cclist)
-                {
-                    item.Srno = ccsrno;
-                    if (item.Date == null)
-                    {
-
-                        item.str_date = "";
-                    }
-                    else
-                    {
-                        item.str_date = Convert.ToDateTime(item.Date).ToString("dd/MM/yyyy");
-                    }
-                    if (item.AcostcenterID == 0)
-                    {
-
-                        item.str_costcenteraname = "";
-                    }
-                    else
-                    {
-                        item.str_costcenteraname = db.ACostCenters.Where(x => x.ID == item.AcostcenterID && x.Companyid == companyid).FirstOrDefault().CCDescription;
-                    }
-                    if (item.BcostcenterID == 0)
-                    {
-
-                        item.str_costcenterbname = "";
-                    }
-                    else
-                    {
-                        item.str_costcenterbname = db.BCostCenters.Where(x => x.ID == item.BcostcenterID && x.CCID == item.AcostcenterID && x.Companyid == companyid).FirstOrDefault().SCCDescription;
-                    }
-
-                    ccsrno++;
-                }
-               // batchViewmodel.costcenterlist = cclist;
-
                 splist = db.SubBatchs.Where(x => x.BatchId == id && x.Companyid == companyid).ToList();
                 batch = db.Batchs.Where(x => x.ID == id && x.Companyid == companyid).FirstOrDefault();
 
@@ -566,45 +526,64 @@ namespace VerifyWebApp.Controllers
                     item.LocAId = item.LocAId;
                     item.LocBId = item.LocBId;
                     item.LocCId = item.LocCId;
+                    item.CCId = item.CCId;
+                    item.SCCId = item.SCCId;
 
-                    //if (item.LocAId != 0)
+                    //if (item.CCId == 0)
                     //{
-                    //    item.LocAName = db.ALocations.Where(x => x.ID == item.LocAId).FirstOrDefault().ALocationName;
-                    //item.LocBName = db.BLocations.Where(x => x.ID == item.LocBId && x.ALocID == item.LocAId).FirstOrDefault().BLocationName;
-                    //// item.LocCName = db.CLocations.Where(x => x.ALocID == item.LocCId && x.BLocID == item.LocBId && x.ID == item.LocCId).FirstOrDefault().CLocationName;
-                    //item.LocCName = db.CLocations.Where(x => x.ALocID == item.LocAId && x.BLocID == item.LocBId && x.ID == item.LocCId).FirstOrDefault().CLocationName;
-                    if (item.LocAId == 0)
-                    {
 
-                        item.LocAName = "";
-                    }
-                    else
-                    {
-                        item.LocAName = db.ALocations.Where(x => x.ID == item.LocAId && x.Companyid == companyid).FirstOrDefault().ALocationName;
-                    }
-                    if (item.LocBId == 0)
-                    {
+                    //    item.CCDescription = "";
+                    //}
+                    //else
+                    //{
+                    //    item.CCDescription = db.ACostCenters.Where(x => x.ID == item.CCId && x.Companyid == companyid).FirstOrDefault().CCDescription;
+                    //}
+                    //if (item.SCCId == 0)
+                    //{
 
-                        item.LocBName = "";
-                    }
-                    else
-                    {
-                        item.LocBName = db.BLocations.Where(x => x.ID == item.LocBId && x.ALocID == item.LocAId && x.Companyid == companyid).FirstOrDefault().BLocationName;
-                    }
-                    if (item.LocCId == 0)
-                    {
+                    //    item.SCCDescription = "";
+                    //}
+                    //else
+                    //{
+                    //    item.SCCDescription = db.BCostCenters.Where(x => x.ID == item.LocBId && x.CCID == item.LocAId && x.Companyid == companyid).FirstOrDefault().SCCDescription;
+                    //}
 
-                        item.LocCName = "";
-                    }
-                    else
-                    {
-                        item.LocCName = db.CLocations.Where(x => x.ALocID == item.LocAId && x.BLocID == item.LocBId && x.ID == item.LocCId && x.Companyid == companyid).FirstOrDefault().CLocationName;
-                    }
+                    //if (item.LocAId == 0)
+                    //{
+
+                    //    item.LocAName = "";
+                    //}
+                    //else
+                    //{
+                    //    item.LocAName = db.ALocations.Where(x => x.ID == item.LocAId && x.Companyid == companyid).FirstOrDefault().ALocationName;
+                    //}
+                    //if (item.LocBId == 0)
+                    //{
+
+                    //    item.LocBName = "";
+                    //}
+                    //else
+                    //{
+                    //    item.LocBName = db.BLocations.Where(x => x.ID == item.LocBId && x.ALocID == item.LocAId && x.Companyid == companyid).FirstOrDefault().BLocationName;
+                    //}
+                    //if (item.LocCId == 0)
+                    //{
+
+                    //    item.LocCName = "";
+                    //}
+                    //else
+                    //{
+                    //    item.LocCName = db.CLocations.Where(x => x.ALocID == item.LocAId && x.BLocID == item.LocBId && x.ID == item.LocCId && x.Companyid == companyid).FirstOrDefault().CLocationName;
+                    //}
                     srno++;
                 }
                 ViewBag.alocationlist = new SelectList(db.ALocations.Where(x => x.Companyid == companyid).OrderBy(e => e.ID), "ID", "ALocationName");
                 ViewBag.blocationlist = new SelectList("", "ID", "BLocationName");
-                ViewBag.clocationlist = new SelectList("", "ID", "CLocationName");
+                ViewBag.clocationlist = new SelectList("", "ID", "CLocationName"); 
+
+                ViewBag.costalist = new SelectList(db.ACostCenters.Where(x => x.Companyid == companyid).OrderBy(e => e.ID), "ID", "CCDescription");
+                ViewBag.costblist = new SelectList(db.BCostCenters.OrderBy(e => e.ID), "ID", "SCCDescription");
+
                 ViewBag.Srno = srno;
                 batch.Srno = srno;
                 batch.SubbatchTable = splist;
@@ -613,35 +592,36 @@ namespace VerifyWebApp.Controllers
                 //{
                 //    item.Srno = srno;
                 //    item.CCId = item.CCId;
-                //    item.SCCBId = item.SCCBId;
+                //    item.SCCId = item.SCCId;
 
                 //    if (item.CCId == 0)
                 //    {
 
-                //        item.CCName = "";
+                //        item.CCDescription = "";
                 //    }
                 //    else
                 //    {
-                //       // item.CCName = db.ACostCenters.Where(x => x.ID == item.CCId && x.Companyid == companyid).FirstOrDefault().ACostCenters;
+                //        item.CCDescription = db.ACostCenters.Where(x => x.ID == item.CCId && x.Companyid == companyid).FirstOrDefault().CCDescription;
                 //    }
-                //    if (item.SCCBId == 0)
+                //    if (item.SCCId == 0)
                 //    {
 
-                //        item.SCCName = "";
+                //        item.SCCDescription = "";
                 //    }
                 //    else
                 //    {
-                //       // item.SCCName = db.BCostCenters.Where(x => x.ID == item.LocBId && x.CCID == item.LocAId && x.Companyid == companyid).FirstOrDefault().BCostCenters;
+                //        item.SCCDescription = db.BCostCenters.Where(x => x.ID == item.LocBId && x.CCID == item.LocAId && x.Companyid == companyid).FirstOrDefault().SCCDescription;
                 //    }
-                //    ViewBag.costcenterlist = new SelectList(db.ACostCenters.Where(x => x.Companyid == companyid).OrderBy(e => e.ID), "ID", "CCDescription");
-                //    ViewBag.blocationlist = new SelectList("", "ID", "SCCDescription");
-
+                //    srno++;
 
                 //}
+                //ViewBag.Srno = srno;
+                //batch.Srno = srno;
+                //batch.SubbatchTable = splist;
 
+                // batchViewmodel.costcenterlist = splist;
 
-
-                }
+            }
             catch (Exception ex)
             {
                 string strError;
@@ -804,6 +784,22 @@ namespace VerifyWebApp.Controllers
 
                         }
                     }
+                    if (batchViewmodel.costcenterlist.Count() != 0)
+                    {
+                        foreach (var item in batchViewmodel.costcenterlist)
+                        {
+                            subbatch.BatchId = batchViewmodel.ID;
+                            subbatch.CCId = item.CCId;
+                            subbatch.SCCId = item.SCCId;
+                            subbatch.ModifiedDate = istDate;
+                            subbatch.Modified_Userid = userid;
+                            subbatch.Companyid = companyid;
+
+                            db.SubBatchs.Add(subbatch);
+                            db.SaveChanges();
+                        }
+                    }
+
                     transaction.Commit();
                     return RedirectToAction("Index", "Batch");
                     //res.Data = "Success";
