@@ -293,7 +293,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-sm saveBtn" id="btnClose" data-bs-dismiss="modal" onclick="closeeditloc();">Close</button>
 
-                                        <button type="button" class="btn btn-sm clBtn" onclick="saveloc();">Save2</button>
+                                        <button type="button" class="btn btn-sm clBtn" onclick="saveloc();">Save</button>
 
                                     </div>
 
@@ -341,7 +341,7 @@
 
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-sm saveBtn" data-bs-dismiss="modal" onclick="closeeditloc();">Close</button>
-                                        <button type="button" class="btn btn-sm clBtn" onclick="saveeditloc();">Save3</button>
+                                        <button type="button" class="btn btn-sm clBtn" onclick="saveeditloc();">Save</button>
                                     </div>
                                 </div>
                             </div>
@@ -1041,8 +1041,8 @@ function deletesubbatch(obj) {
     $(obj).parent().parent().remove();
 }
 
-        function SaveData() {
-
+    function SaveData() {
+       
     //var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
     //var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
 
@@ -1138,7 +1138,7 @@ function deletesubbatch(obj) {
             var Strstartdate = moment($('#txtStartDate').val()).format("YYYY-MM-DD");
             var StrEnddate = moment($('#txtEndDate').val()).format("YYYY-MM-DD");
             // var Editid = '@ViewBag.ID';
-            debugger;
+          //  debugger;
             var postdata =
             {
                 "FromDate": Strstartdate,
@@ -1192,7 +1192,7 @@ function deletesubbatch(obj) {
                 @* }
             }); *@
             ////////////------------------
-            var ControllerURL = '@Url.Action("Edit", "Batch")';
+            @*var ControllerURL = '@Url.Action("Edit", "Batch")';
 
             //  alert(ControllerURL);
             var returnURL = '@Url.Action("Index", "Batch")';
@@ -1218,7 +1218,7 @@ function deletesubbatch(obj) {
 
                 failure: function () { alert("Error"); }
 
-            });
+            });*@
 
         }//----------------------if ----
         else {
@@ -1247,14 +1247,14 @@ function deletesubbatch(obj) {
     function savecc() {
 
 
-        if ($("#txtccA").find("option:selected").text() == 'Select CostCENTER') {
+        if ($("#txtccA").find("option:selected").text() == 'Select Costcenter') {
             $("#ccaerror").html(" * Please select cost center");
             $("#ccaerror").show();
 
         }
 
-        if ($("#txtccA").find("option:selected").text() != 'Select CostCENTER'
-        ) {
+        if ($("#txtccA").find("option:selected").text() != 'Select Costcenter'
+            && $("#txtccDate").val() != '') {
 
             Addcostcentertotable();
 
@@ -1269,7 +1269,7 @@ function deletesubbatch(obj) {
         var ccdescription = $("#txtccA").find("option:selected").text();
         var sccdescription = $("#txtccB").find("option:selected").text();
 
-        debugger;
+      //  debugger;
         //  var accids = $("#txtccA").val();
         var accid = $("#txtccA option:selected").val();
         var bsccid = $("#txtccB option:selected").val();
@@ -1296,7 +1296,7 @@ function deletesubbatch(obj) {
             + 'onclick="deletecc(this);">'
             + '  <i class="fa fa-remove"></i>Delete   </button></td></tr > ');
 
-        debugger;
+      //  debugger;
         srnocnt++;
     }
 
@@ -1345,7 +1345,7 @@ function deletesubbatch(obj) {
         // $("#txtedassetno").prop('selectedIndex', assetno)
         $('#txteditccB').val(ccbid);
 
-            debugger;
+           // debugger;
         geteditcostcenterb2(ccaid, ccbid)
         $('#editccmodal').modal('show');
     }
