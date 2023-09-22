@@ -638,10 +638,10 @@
                 var spenddate = moment(spenddate).format('DD/MM/YYYY');
                 $("#spinvaliddateerror").hide();
                 $('#tblSubPeriod').last().append('<tr><td>' + srnocnt + '</td><td>' + spstartdate + '</td>'
-                    + '<td>' + spenddate + '</td ><td>' + periodlock + '</td > <td>' + depriciation + '</td > <td align="center"> <button type="button" class="btn btn-primary btn-sm"'
+                    + '<td>' + spenddate + '</td ><td>' + periodlock + '</td > <td>' + depriciation + '</td > <td align="center"> <button type="button" class="btn modBtn btn-sm"'
                     + ' aria-label="Left Align"'
                     + 'onclick="Editsubperiod(this,' + srnocnt + ');">'
-                    + '  <i class="fa fa-edit"></i></button></td><td align="center"> <button type="button" class="btn btn-primary btn-sm"'
+                    + '  <i class="fa fa-edit"></i></button></td><td align="center"> <button type="button" class="btn btn-sm delBtn"'
                     + ' aria-label="Center Align"'
                     + 'onclick="deletesubperiod(this);">'
                     + '  <i class="fa fa-remove"></i>  </button></td></tr > ');

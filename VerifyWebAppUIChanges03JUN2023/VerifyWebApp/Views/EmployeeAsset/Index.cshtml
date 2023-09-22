@@ -39,7 +39,7 @@
 
                     <button type="button" id="btnimportdate" value="New Practice"
                             class="btn btn-sm xtraBtn pull-right m-1 order-2"
-                            onclick="EmployeeAssetimportdate();" data-bs-toggle="tooltip" data-bs-placement="top" title="Import Excel File">
+                            onclick="EmployeeAssetimportdate();" data-bs-toggle="tooltip" data-bs-placement="top" title="Import Spreadsheet File">
                         <i class="fa fa-file-excel-o"></i>
                     </button>
                     <button type="button" id="btndownloadexcel" value="New Practice"
@@ -50,7 +50,7 @@
 
                     <button type="button" id="btnimport" value="Upload"
                             class="btn btn-sm xtraBtn pull-right m-1 order-4"
-                            onclick="Importexcel();" data-bs-toggle="tooltip" data-bs-placement="top" title="Import Excel File">
+                            onclick="Importexcel();" data-bs-toggle="tooltip" data-bs-placement="top" title="Import Spreadsheet File">
                         <i class="fa fa-upload"></i>
                     </button>
 
@@ -167,8 +167,8 @@
 
 
                        
-                        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-                        <script type="text/javascript">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
                             $(document).ready(function () {
 
                                 $('#tblemployee').DataTable({
@@ -191,7 +191,7 @@
         var url = '@Url.Action("IssueAsset","EmployeeAsset")';
         console.log(url)
         window.location = url;
-                            }
+        }
 
         function opennewdialog() {
 
@@ -211,7 +211,7 @@
                 $("#divEditContent").html(data);
                 $('#divEdit').modal('show')
             });
-       }
+        }
 
     function closeEditModal() {
         $('#divEdit').modal('hide');
@@ -254,9 +254,9 @@
             }
         });
 
-        }
+     }
 
-          function EmployeeAssetExport()
+     function EmployeeAssetExport()
      {
 
          window.location.href = '@Url.Action("EmployeeAssetExport", "EmployeeAsset")';
@@ -291,7 +291,7 @@
                 $('#divUpload').modal('show')
             });
      }
-                        </script>
+</script>
 
 
 
