@@ -30,7 +30,13 @@ namespace VerifyWebApp.Models
         [NotMapped]
         public int Srno { get; set; }
 
+        [NotMapped]
+        public int Srnocc { get; set; }
+
         public List<Subbatch> SubbatchTable { get; set; }
+
+        [NotMapped]
+        public List<Subbatch> SubbatchTable2 { get; set; }
 
         public string batchcode
         {

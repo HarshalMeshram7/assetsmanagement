@@ -28,6 +28,8 @@ namespace VerifyWebApp.Models
 
         public int BatchId { get; set; }
 
+        [NotMapped]
+        public int Srnocc { get; set; }
         public int CCId { get; set; }
         public int SCCId { get; set; }
         public string CCDescription { get; set; }

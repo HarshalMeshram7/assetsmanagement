@@ -174,7 +174,7 @@
                                                     <td>
                                                         Cost Center
                                                     </td>
-                                                    <td>
+                                                    <td >
                                                         Sub-Cost Center
                                                     </td>
                                                     <td align="center">
@@ -527,7 +527,8 @@
     e.preventDefault();
     return false;
 });
-var srnocnt = 1;
+    var srnocnt = 1;
+    var srnocntt = 1;
 var srnocccnt = 1;
 var srnoassetfcnt = 1;
 var editindex = 0;
@@ -1042,7 +1043,7 @@ function deletesubbatch(obj) {
 }
 
     function SaveData() {
-       
+      
     //var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
     //var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
 
@@ -1096,7 +1097,7 @@ function deletesubbatch(obj) {
             //$('#assignError').hide();
             EndDateStatus = true;
         }
-
+        //debugger;
         if (StartDateStatus == true && EndDateStatus == true) {
             $("#startdateerror,#enddateerror").hide();
 
@@ -1117,7 +1118,7 @@ function deletesubbatch(obj) {
                 }
             }).get();
 
-
+            //debugger;
               var tblcostcenter = $('#tblcostcenter tbody tr:has(td)').map(function (i, v) {
                 var $td = $('td', this);
                 var Tablecostcentera = $td.eq(1).html();
@@ -1135,6 +1136,8 @@ function deletesubbatch(obj) {
                 }
             }).get();
 
+           // debugger;
+
             var Strstartdate = moment($('#txtStartDate').val()).format("YYYY-MM-DD");
             var StrEnddate = moment($('#txtEndDate').val()).format("YYYY-MM-DD");
             // var Editid = '@ViewBag.ID';
@@ -1151,6 +1154,8 @@ function deletesubbatch(obj) {
 
                 //"LoanViewModellist": tbl
             };
+
+            //debugger;
 
             var form = $('#frmNewEmp');
             var token = $('input[name="__RequestVerificationToken"]', form).val();
@@ -1284,20 +1289,20 @@ function deletesubbatch(obj) {
             sccdescription = "";
         }
 
-        debugger;
+       // debugger;
         //  var assetamt = $("#txtassetamount").val()
-        $('#tblcostcenter').last().append('<tr><td>' + srnocnt + '</td><td hidden>' + accid + '</td>'
+        $('#tblcostcenter').last().append('<tr><td>' + srnocntt + '</td><td hidden>' + accid + '</td>'
             + '<td hidden>' + bsccid + '</td >'
             + '<td>' + ccdescription + '</td ><td>' + sccdescription + '</td><td align="center"> <button type="button" class="btn modBtn btn-sm"'
             + ' aria-label="Left Align"'
-            + 'onclick="Editcc(this,' + srnocnt + ');">'
+            + 'onclick="Editcc(this,' + srnocntt + ');">'
             + '  <i class="fa fa-edit"></i>Edit</button></td><td align="center"> <button type="button" class="btn btn-sm delBtn"'
             + ' aria-label="Center Align"'
             + 'onclick="deletecc(this);">'
             + '  <i class="fa fa-remove"></i>Delete   </button></td></tr > ');
 
       //  debugger;
-        srnocnt++;
+        srnocntt++;
     }
 
     function closecc() {
@@ -1308,7 +1313,7 @@ function deletesubbatch(obj) {
         swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
             if (result == true) {
                 $(obj).parent().parent().remove();
-                srnocnt - 1;
+                srnocntt - 1;
             }
         });
     }

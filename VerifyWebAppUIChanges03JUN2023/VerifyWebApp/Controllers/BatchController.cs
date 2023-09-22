@@ -296,11 +296,16 @@ namespace VerifyWebApp.Controllers
                     //var batchid = db.Batchs.Max(x => x.ID);
                     var batchid = batchobj.ID;
 
-                    Subbatch subbatch = new Subbatch();
+                    
+                    String sLocation = null;
+                  
+
+
                     if (batchViewmodel.locationlist.Count() != 0)
                     {
                         foreach (var item in batchViewmodel.locationlist)
                         {
+                            Subbatch subbatch = new Subbatch();
                             subbatch.BatchId = batchid;
                             subbatch.LocAId = item.LocAId;
                             subbatch.LocBId = item.LocBId;
@@ -311,82 +316,77 @@ namespace VerifyWebApp.Controllers
                             var filterLocAID = 0;
                             var filterLocBID = 0;
                             var filterLocCID = 0;
+
                             if (item.LocAId != 0)
                             {
                                 subbatch.LocAName = db.ALocations.Where(x => x.ID == item.LocAId && x.Companyid == companyid).FirstOrDefault().ALocationName;
                                 filterLocAID = item.LocAId;
+
+                                if (sLocation == null)
+                                {
+                                    sLocation = "( LocAID = " + item.LocAId;
+                                }
+                                else
+                                {
+                                    sLocation = sLocation + " OR (LocAID = " + item.LocAId;
+
+                                }
                             }
+
                             if (item.LocBId != 0)
                             {
                                 subbatch.LocBName = db.BLocations.Where(x => x.ID == item.LocBId && x.Companyid == companyid).FirstOrDefault().BLocationName;
                                 filterLocBID = item.LocBId;
+                                sLocation = sLocation + " AND LocBID = " + item.LocBId;
+
                             }
+
                             if (item.LocCId != 0)
                             {
                                 subbatch.LocCName = db.CLocations.Where(x => x.ID == item.LocCId && x.Companyid == companyid).FirstOrDefault().CLocationName;
                                 filterLocCID = item.LocCId;
+                                sLocation = sLocation + " AND LocCID = " + item.LocCId ;
                             }
-
+                          
+                            sLocation = sLocation + ")";
 
                             db.SubBatchs.Add(subbatch);
-                           // db.SaveChanges();
 
-                            string SQL = "select * from tblassets where companyid = " + companyid;
-                            if (item.LocAId != 0)
-                            {
-                                SQL = SQL + " and LocAID=" + item.LocAId;
-                            }
-                            if (item.LocBId != 0)
-                            {
-                                SQL = SQL + " and LocBID=" + item.LocBId;
-                            }
-                            if (item.LocCId != 0)
-                            {
-                                SQL = SQL + " and LocCID=" + item.LocCId;
-                            }
-
-                            List<Assets> lstTempAssets = db.Database.SqlQuery<Assets>(SQL).ToList();
-
-                            foreach (Assets objAsset in lstTempAssets)
-                            {
-                                BatchAsset batchAssets = new BatchAsset();
-
-                                batchAssets.AssetID = objAsset.ID;
-                                batchAssets.assetno = objAsset.AssetNo;
-                                batchAssets.Companyid = companyid;
-                                batchAssets.BatchID = batchid;
-                                db.BatchAssets.Add(batchAssets);
-
-                            }
-                           db.SaveChanges();
                         }
+                        sLocation = "(" + sLocation + ")";
+                        db.SaveChanges();
                     }
                     else // alll assets selected 
                     {
 
-                        string SQL = "select * from tblassets where companyid = " + companyid;
-                        List<Assets> lstTempAssets = db.Database.SqlQuery<Assets>(SQL).ToList();
+                        //string SQL = "select * from tblassets where companyid = " + companyid;
+                        //List<Assets> lstTempAssets = db.Database.SqlQuery<Assets>(SQL).ToList();
 
-                        foreach (Assets objAsset in lstTempAssets)
-                        {
-                            BatchAsset batchAssets = new BatchAsset();
+                        //foreach (Assets objAsset in lstTempAssets)
+                        //{
+                        //    BatchAsset batchAssets = new BatchAsset();
 
-                            batchAssets.AssetID = objAsset.ID;
-                            batchAssets.assetno = objAsset.AssetNo;
-                            batchAssets.Companyid = companyid;
-                            batchAssets.BatchID = batchid;
-                            db.BatchAssets.Add(batchAssets);
+                        //    batchAssets.AssetID = objAsset.ID;
+                        //    batchAssets.assetno = objAsset.AssetNo;
+                        //    batchAssets.Companyid = companyid;
+                        //    batchAssets.BatchID = batchid;
+                        //    db.BatchAssets.Add(batchAssets);
 
-                        }
-                        db.SaveChanges();
+                        //}
+                        //db.SaveChanges();
 
                     }
 
                     //------------------------costcenterlist by mayuri--------------------------
+
+                    String sCostcenter = null;
+
+
                     if (batchViewmodel.costcenterlist.Count() != 0)
                     {
                         foreach (var item in batchViewmodel.costcenterlist)
                         {
+                            Subbatch subbatch = new Subbatch();
                             subbatch.BatchId = batchid;
                             subbatch.CCId = item.CCId;
                             subbatch.SCCId = item.SCCId;
@@ -400,48 +400,70 @@ namespace VerifyWebApp.Controllers
                             {
                                 subbatch.CCDescription = db.ACostCenters.Where(x => x.ID == item.CCId && x.Companyid == companyid).FirstOrDefault().CCDescription;
                                 filterCCId = item.CCId;
+
+                                if(sCostcenter == null)
+                                {
+                                    sCostcenter = "( CCId = " + item.CCId;
+                                }
+                                else
+                                {
+                                    sCostcenter = sCostcenter + " OR ( CCId = " + item.CCId;
+                                }
+                                
                             }
+                            
+
                             if (item.SCCId != 0)
                             {
                                 //both SCCDescription are not comming from same table.1st from subbatch.cs(tblsubbatch) and 2nd from ACostCenter.cs(tblacostcenter) 
                                 subbatch.SCCDescription = db.BCostCenters.Where(x => x.ID == item.SCCId && x.Companyid == companyid).FirstOrDefault().SCCDescription;
-                                 filterSCCId = item.SCCId;
+                                filterSCCId = item.SCCId;
+                                sCostcenter = sCostcenter + " AND SCCId = " + item.SCCId + ")";
+                            }
+                            else
+                            {
+                                sCostcenter = sCostcenter + ")";
                             }
 
+                            //
 
                             db.SubBatchs.Add(subbatch);
-                            //db.SaveChanges();
 
-                            string SQL = "select * from tblassets where companyid = " + companyid;
-                            if (item.CCId != 0)
-                            {
-                                SQL = SQL + " and CCId=" + item.CCId;
-                            }
-                            if (item.SCCId != 0)
-                            {
-                                SQL = SQL + " and SCCId=" + item.SCCId;
-                            }
-
-                            //List<Assets> lstTempAssets = db.Database.SqlQuery<Assets>(SQL).ToList();
-
-                            //foreach (Assets objAsset in lstTempAssets)
-                            //{
-                            //    BatchAsset batchAssets = new BatchAsset();
-
-                            //    batchAssets.AssetID = objAsset.ID;
-                            //    batchAssets.assetno = objAsset.AssetNo;
-                            //    batchAssets.Companyid = companyid;
-                            //    batchAssets.BatchID = batchid;
-                            //    db.BatchAssets.Add(batchAssets);
-
-                            //}
-                            db.SaveChanges();
                         }
+                        sCostcenter = "(" + sCostcenter + ")";
+                        db.SaveChanges();
                     }
 
+                  
+                    string SQL = "select AssetID,assetno from tblassets where companyid = " + companyid;
 
+                    if (sLocation != null)
+                    {
+                        SQL = SQL + " AND " + sLocation;
+                    }
 
-                    transaction.Commit();
+                    if (sCostcenter != null)
+                    {
+                        SQL = SQL + " AND " + sCostcenter;
+
+                    }  
+                    //List<Assets> lstTempAssets = db.Database.SqlQuery<Assets>(SQL).ToList();
+
+                        //foreach (Assets objAsset in lstTempAssets)
+                        //{
+                        //    BatchAsset batchAssets = new BatchAsset();
+
+                        //    batchAssets.AssetID = objAsset.ID;
+                        //    batchAssets.assetno = objAsset.AssetNo;
+                        //    batchAssets.Companyid = companyid;
+                        //    batchAssets.BatchID = batchid;
+                        //    db.BatchAssets.Add(batchAssets);
+
+                        //}
+                        // db.SaveChanges();
+                    
+
+                     transaction.Commit();
                     return RedirectToAction("Index", "Batch");
                     //res.Data = "Success";
                     //return res;
@@ -501,12 +523,14 @@ namespace VerifyWebApp.Controllers
 
             Batch batch = new Batch();
             List<Subbatch> splist = new List<Subbatch>();
+            List<Subbatch> cclist = new List<Subbatch>();
             try
             {
                 //batch = db.Batchs.Where(x => x.ID == id && x.Companyid == companyid).FirstOrDefault();
                 BatchViewmodel batchViewmodel = new BatchViewmodel();
 
-                splist = db.SubBatchs.Where(x => x.BatchId == id && x.Companyid == companyid).ToList();
+                splist = db.SubBatchs.Where(x => x.BatchId == id && x.Companyid == companyid && x.LocAId > 0).ToList();
+                cclist = db.SubBatchs.Where(x => x.BatchId == id && x.Companyid == companyid && x.CCId > 0).ToList();
                 batch = db.Batchs.Where(x => x.ID == id && x.Companyid == companyid).FirstOrDefault();
 
                 ViewBag.FromDate = batch.FromDate.ToString("dd/MM/yyyy");
@@ -519,32 +543,13 @@ namespace VerifyWebApp.Controllers
                 int srno = 1;
                 foreach (Subbatch item in splist)
                 {
+
                     item.Srno = srno;
                     item.LocAId = item.LocAId;
                     item.LocBId = item.LocBId;
                     item.LocCId = item.LocCId;
-                    item.CCId = item.CCId;
-                    item.SCCId = item.SCCId;
 
-                    if (item.CCId == 0)
-                    {
-
-                        item.CCDescription = "";
-                    }
-                    else
-                    {
-                        item.CCDescription = db.ACostCenters.Where(x => x.ID == item.CCId && x.Companyid == companyid).FirstOrDefault().CCDescription;
-                    }
-                    if (item.SCCId == 0)
-                    {
-
-                        item.SCCDescription = "";
-                    }
-                    else
-                    {
-                        item.SCCDescription = db.BCostCenters.Where(x => x.ID == item.SCCId && x.CCID == item.CCId && x.Companyid == companyid).FirstOrDefault().SCCDescription;
-                    }
-             //-----------------------------------------
+                    //-----------------------------------------
                     if (item.LocAId == 0)
                     {
 
@@ -576,49 +581,52 @@ namespace VerifyWebApp.Controllers
                 }
                 ViewBag.alocationlist = new SelectList(db.ALocations.Where(x => x.Companyid == companyid).OrderBy(e => e.ID), "ID", "ALocationName");
                 ViewBag.blocationlist = new SelectList("", "ID", "BLocationName");
-                ViewBag.clocationlist = new SelectList("", "ID", "CLocationName"); 
-
-                ViewBag.costalist = new SelectList(db.ACostCenters.Where(x => x.Companyid == companyid).OrderBy(e => e.ID), "ID", "CCDescription");
-                ViewBag.costblist = new SelectList(db.BCostCenters.OrderBy(e => e.ID), "ID", "SCCDescription");
-
+                ViewBag.clocationlist = new SelectList("", "ID", "CLocationName");
                 ViewBag.Srno = srno;
                 batch.Srno = srno;
                 batch.SubbatchTable = splist;
 
-                //foreach (Subbatch item in splist)
-                //{
-                //    item.Srno = srno;
-                //    item.CCId = item.CCId;
-                //    item.SCCId = item.SCCId;
+                 int srnocc = 1;
 
-                //    if (item.CCId == 0)
-                //    {
+                foreach (Subbatch item in cclist)
+                {
+                    item.Srnocc = srnocc;
+                    item.CCId = item.CCId;
+                    item.SCCId = item.SCCId;
 
-                //        item.CCDescription = "";
-                //    }
-                //    else
-                //    {
-                //        item.CCDescription = db.ACostCenters.Where(x => x.ID == item.CCId && x.Companyid == companyid).FirstOrDefault().CCDescription;
-                //    }
-                //    if (item.SCCId == 0)
-                //    {
+                    if (item.CCId == 0)
+                    {
 
-                //        item.SCCDescription = "";
-                //    }
-                //    else
-                //    {
-                //        item.SCCDescription = db.BCostCenters.Where(x => x.ID == item.LocBId && x.CCID == item.LocAId && x.Companyid == companyid).FirstOrDefault().SCCDescription;
-                //    }
-                //    srno++;
+                        item.CCDescription = "";
+                    }
+                    else
+                    {
+                        item.CCDescription = db.ACostCenters.Where(x => x.ID == item.CCId && x.Companyid == companyid).FirstOrDefault().CCDescription;
+                    }
+                    if (item.SCCId == 0)
+                    {
 
-                //}
-                //ViewBag.Srno = srno;
-                //batch.Srno = srno;
-                //batch.SubbatchTable = splist;
+                        item.SCCDescription = "";
+                    }
+                    else
+                    {
+                        item.SCCDescription = db.BCostCenters.Where(x => x.ID == item.SCCId && x.CCID == item.CCId && x.Companyid == companyid).FirstOrDefault().SCCDescription;
+                    }
+                    srnocc++;
 
-                // batchViewmodel.costcenterlist = splist;
+                }
+
+                ViewBag.costalist = new SelectList(db.ACostCenters.Where(x => x.Companyid == companyid).OrderBy(e => e.ID), "ID", "CCDescription");
+                ViewBag.costblist = new SelectList(db.BCostCenters.OrderBy(e => e.ID), "ID", "SCCDescription");
+
+                ViewBag.Srnocc = srnocc;
+                batch.Srnocc = srnocc;
+                batch.SubbatchTable2 = cclist;
+
+                
 
             }
+
             catch (Exception ex)
             {
                 string strError;
@@ -759,44 +767,93 @@ namespace VerifyWebApp.Controllers
 
 
                     List<Subbatch> slist = new List<Subbatch>();
+                    //List<Subbatch> clistt = new List<Subbatch>();
+                    
                     slist = db.SubBatchs.Where(x => x.BatchId == batchViewmodel.ID && x.Companyid == companyid).ToList();
+                   // clistt= db.SubBatchs.Where(x => x.BatchId == batchViewmodel.ID && x.Companyid == companyid).ToList();
                     db.SubBatchs.RemoveRange(slist);
-                   // db.SaveChanges();
+                    db.SaveChanges();
 
-                    Subbatch subbatch = new Subbatch();
+                   // var batchid = batchobj.ID;
+
                     if (batchViewmodel.locationlist.Count() != 0)
                     {
+                        Subbatch subbatch = new Subbatch();
                         foreach (var item in batchViewmodel.locationlist)
                         {
+
                             subbatch.BatchId = batchViewmodel.ID;
+                          //  subbatch.Srno = item.Srno;
                             subbatch.LocAId = item.LocAId;
                             subbatch.LocBId = item.LocBId;
                             subbatch.LocCId = item.LocCId;
+                            subbatch.LocAName = item.LocAName;
+                            subbatch.LocBName = item.LocBName;
+                            subbatch.LocCName = item.LocCName;
                             subbatch.ModifiedDate = istDate;
                             subbatch.Modified_Userid = userid;
                             subbatch.Companyid = companyid;
+                            var filterLocAID = 0;
+                            var filterLocBID = 0;
+                            var filterLocCID = 0;
+
+                            if (item.LocAId != 0)
+                            {
+                                subbatch.LocAName = db.ALocations.Where(x => x.ID == item.LocAId && x.Companyid == companyid).FirstOrDefault().ALocationName;
+                                filterLocAID = item.LocAId;
+                            }
+                            if (item.LocBId != 0)
+                            {
+                                subbatch.LocBName = db.BLocations.Where(x => x.ID == item.LocBId && x.Companyid == companyid).FirstOrDefault().BLocationName;
+                                filterLocBID = item.LocBId;
+                            }
+                            if (item.LocCId != 0)
+                            {
+                                subbatch.LocCName = db.CLocations.Where(x => x.ID == item.LocCId && x.Companyid == companyid).FirstOrDefault().CLocationName;
+                                filterLocCID = item.LocCId;
+                            }
+
+
 
                             db.SubBatchs.Add(subbatch);
-                           // db.SaveChanges();
+                            db.SaveChanges();
 
                         }
                     }
                     if (batchViewmodel.costcenterlist.Count() != 0)
                     {
+                        Subbatch subbatch2 = new Subbatch();
                         foreach (var item in batchViewmodel.costcenterlist)
                         {
-                            subbatch.BatchId = batchViewmodel.ID;
-                            subbatch.CCId = item.CCId;
-                            subbatch.SCCId = item.SCCId;
-                            subbatch.ModifiedDate = istDate;
-                            subbatch.Modified_Userid = userid;
-                            subbatch.Companyid = companyid;
+                            subbatch2.BatchId = batchViewmodel.ID;
+                          //  subbatch.Srno = item.Srno;
+                            subbatch2.CCId = item.CCId;
+                            subbatch2.SCCId = item.SCCId;
+                            subbatch2.CCDescription = item.CCDescription;
+                            subbatch2.SCCDescription = item.SCCDescription;
+                            subbatch2.ModifiedDate = istDate;
+                            subbatch2.Modified_Userid = userid;
+                            subbatch2.Companyid = companyid;
+                            var filterCCId = 0;
+                            var filterSCCId = 0;
 
-                            db.SubBatchs.Add(subbatch);
-                          //  db.SaveChanges();
+                            if (item.CCId != 0)
+                            {
+                                subbatch2.CCDescription = db.ACostCenters.Where(x => x.ID == item.CCId && x.Companyid == companyid).FirstOrDefault().CCDescription;
+                                filterCCId = item.CCId;
+                            }
+                            if (item.SCCId != 0)
+                            {
+                                //both SCCDescription are not comming from same table.1st from subbatch.cs(tblsubbatch) and 2nd from ACostCenter.cs(tblacostcenter) 
+                                subbatch2.SCCDescription = db.BCostCenters.Where(x => x.ID == item.SCCId && x.Companyid == companyid).FirstOrDefault().SCCDescription;
+                                filterSCCId = item.SCCId;
+                            }
+
+                            db.SubBatchs.Add(subbatch2);
+                           db.SaveChanges();
                         }
                     }
-                    db.SaveChanges();
+                  //  db.SaveChanges();
 
                     transaction.Commit();
                     return RedirectToAction("Index", "Batch");
