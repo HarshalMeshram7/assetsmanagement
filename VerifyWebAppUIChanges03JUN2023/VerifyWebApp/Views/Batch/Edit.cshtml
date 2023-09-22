@@ -102,12 +102,14 @@
                             <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for="praticesname" class="form-group">Isbatchopen </label>&nbsp;&nbsp;
-                                    @Html.TextBoxFor(m => m.IsBatchOpen, new
-                                   {
-                                       @class = "form-control",
-                                       required = "required",
-                                       id = "IsBatchOpen"
-                                    })
+
+                                    <input id="IsBatchOpen" type="checkbox" class="largerCheckbox" />
+                                    @*@Html.TextBoxFor(m => m.IsBatchOpen, new
+                                        {
+                                            @class = "form-control",
+                                            required = "required",
+                                            id = "IsBatchOpen"
+                                         })*@
 
                                 </div>
                             </div>
@@ -121,8 +123,8 @@
                         <div class="row my-1">
                             <div class="col-md-12">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-sm nBtn" onclick="addLocation()" id="btnAddloc">
-
+                                    <button type="button" class="btn btn-sm nBtn" id="btnAddloc" data-toggle="modal">
+                                        @*onclick="addLocation()"*@
                                         Add Location
                                     </button>
 
@@ -245,7 +247,7 @@
                                                     ccaid
                                                 </td>
                                                 <td hidden>
-                                                    ccbid
+                                                    sccid
                                                 </td>
                                                 <td>
                                                     Cost Center
@@ -263,16 +265,16 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if (Model.SubbatchTable.Count() == 0)
+                                            @if (Model.SubbatchTable2.Count() == 0)
                                             {
 
                                             }
                                             else
                                             {
-                                                foreach (var item in Model.SubbatchTable)
+                                                foreach (var item in Model.SubbatchTable2)
                                                 {
                                                     <tr>
-                                                        <td>@item.Srno</td>
+                                                        <td>@item.Srnocc</td>
 
                                                         <td hidden>@Html.DisplayFor(modelitem => item.CCId)</td>
                                                         <td hidden>@Html.DisplayFor(modelitem => item.SCCId)</td>
@@ -283,7 +285,7 @@
                                                         <td align="center">
                                                             <button type="button" class="btn modBtn btn-sm"
                                                                     aria-label="Left Align"
-                                                                    onclick="Editcc(this,@item.Srno);">
+                                                                    onclick="Editcc(this,@item.Srnocc);">
                                                                 <i class="fa fa-edit"></i>Edit
                                                             </button>
 
@@ -315,8 +317,9 @@
 
                         <div class="modal-footer">
                             @*<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>*@
-                            <button type="button" class="btn btn-sm saveBtn" style="margin-right:5px;" onclick="closeloc()">Close</button>
-                            <button type="button" class="btn btn-sm clBtn" id="btnSave" onclick="SaveData();">Save11</button>
+                            <button type="button" class="btn btn-sm saveBtn" data-dismiss="modal" style="margin-right:5px;" onclick="closeloc()">Close</button>
+                            <button type="button" class="btn btn-sm clBtn" id="btnSave" onclick="SaveData();">Save</button>
+                            @*<button type="button" class="btn btn-sm clBtn" data-dismiss="modal"  onclick="closeloc()">close</button>*@
                         </div>
 
                         <!-- /.modal-content -->
@@ -359,7 +362,7 @@
 
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-sm saveBtn" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-sm clBtn" id="btnSave" onclick="saveloc();">Save14</button>
+                                        <button type="button" class="btn btn-sm clBtn" id="btnSave" onclick="saveloc();">Save</button>
                                     </div>
                                 </div>
                             </div>
@@ -406,7 +409,7 @@
 
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-sm saveBtn" data-bs-dismiss="modal" onclick="closeeditloc();">Close</button>
-                                        <button type="button" class="btn btn-sm clBtn" onclick="saveeditloc();">Save15</button>
+                                        <button type="button" class="btn btn-sm clBtn" onclick="saveeditloc();">Save</button>
                                     </div>
                                 </div>
                             </div>
@@ -447,7 +450,7 @@
 
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-sm saveBtn" data-dismiss="modal" onclick="closeeditloc();">Close</button>
-                                        <button type="button" class="btn btn-sm clBtn" id="btnSave" onclick="saveeditloc();">Save16</button>
+                                        <button type="button" class="btn btn-sm clBtn" id="btnSave" onclick="saveeditloc();">Save</button>
                                     </div>
                                 </div>
                             </div>
@@ -486,13 +489,15 @@
 
 
                                     <div class="modal-footer">
-                                        <button type="button" class="btn saveBtn btn-sm" onclick="savecc();">Save12</button>
-                                        <button type="button" class="btn clBtn btn-sm" onclick="closecc();">Close</button>
-
+                                        <button type="button" class="btn saveBtn btn-sm" onclick="savecc();">Save</button>
+                                        <button type="button" class="btn clBtn btn-sm" data-bs-dismiss="modal" onclick="closecc();">Close</button>
+                                        @*<button type="button" class="btn btn-sm saveBtn" data-bs-dismiss="modal">Close</button>*@
+                                        @*<button type="button" class="btn btn-sm clBtn" id="btnSave" onclick="saveloc();">Save</button>*@
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                         <div id="editccmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
 
                             <div class="modal-dialog modal-lg">
@@ -526,8 +531,8 @@
 
 
                                     <div class="modal-footer">
-                                        <button type="button" class="btn saveBtn" onclick="saveeditcc();">Save13</button>
-                                        <button type="button" class="btn clBtn" onclick="closeeditcc();">Close</button>
+                                        <button type="button" class="btn saveBtn" onclick="saveeditcc();">Save</button>
+                                        <button type="button" class="btn clBtn" data-bs-dismiss="modal" onclick="closeeditcc();">Close</button>
 
                                     </div>
                                 </div>
@@ -584,45 +589,58 @@
 
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+@*<script type="text/javascript">
+
+        $('#btnSave').click(function (event) {
+           // SaveData();
+            e.preventDefault();
+            return false;
+        });
+
+        //$('#dtStartDate').datetimepicker({
+        //    format: 'DD/MM/YYYY',
+        //    icons:
+        //    {
+        //        next: 'fa fa-angle-right',
+        //        previous: 'fa fa-angle-left'
+        //    },
+
+        //});
+        //$('#dtEndDate').datetimepicker({
+        //    format: 'DD/MM/YYYY',
+        //    icons:
+        //    {
+        //        next: 'fa fa-angle-right',
+        //        previous: 'fa fa-angle-left'
+        //    },
+        //});
+
+
+
+    </script>*@
 
 
 <script type="text/javascript">
+
     var srnocnt = '@ViewBag.Srno';
+    var srnocntt = '@ViewBag.Srnocc';
     var srnocccnt = 1;
+
     var srnoassetfcnt = 1;
     var editindex = 0;
     var isbatchopenflag = "no";
 
 
-    //$('#dtStartDate').datetimepicker({
-    //    format: 'DD/MM/YYYY',
-    //    icons:
-    //    {
-    //        next: 'fa fa-angle-right',
-    //        previous: 'fa fa-angle-left'
-    //    },
-
-    //});
-    //$('#dtEndDate').datetimepicker({
-    //    format: 'DD/MM/YYYY',
-    //    icons:
-    //    {
-    //        next: 'fa fa-angle-right',
-    //        previous: 'fa fa-angle-left'
-    //    },
-    //});
-
     var EndDateStatus = false;
     var StartDateStatus = false;
 
-    $(document).ready(function ($) {
-        /////initialisation of values batch
-        @*$("#txtStartDate").val('@ViewBag.FromDate');
+
+    $(document).ready(function () {
+
+        @* $("#txtStartDate").val('@ViewBag.FromDate');
         $("#txtEndDate").val('@ViewBag.ToDate');*@
         $("#BatchDescription").val('@ViewBag.BatchDescription');
         $("#IsBatchOpen").val('@ViewBag.IsBatchOpen');
-
-        //debugger;
 
         if ('@ViewBag.IsBatchOpen' == "Yes" || '@ViewBag.IsBatchOpen' == "yes") {
             $("#IsBatchOpen").prop("checked", true);
@@ -642,116 +660,152 @@
             }
         });
 
+        //console.log('vvvv');
 
-        $("#frmNewEmp").submit(function (e) {
-            SaveData();
-            e.preventDefault();
-            return false;
+        $("#btnAddloc").click(function () {
+            $('#locationmodal').modal('show');
+            $("#txtlocA").val("");
+            $("#txtlocB ").val("");
+            $("#txtlocC ").val("");
         });
 
+    });
 
 
-//--------------------loc---------------------------------------------------------------
-
-    ///onlocation a select load location b dropdown
-   $('#txtlocA').change(function () {
-
-                        var index = $("#txtlocA option:selected").val();
 
 
-                      //  $('#txtassetno').val(index);
-                         getlocationb(index);
-                    });
-
-                    $('#txtlocB').change(function () {
-
-                        var index = $("#txtlocB option:selected").val();
 
 
-                       // $('#txtassetno').val(index);
-                        getlocationc(index);
-                    });
-
-                    ///on edit modal location a select load location b dropdown
-                    $('#txteditlocA').change(function () {
-
-
-                        var index = $("#txteditlocA option:selected").val();
-
-
-                        //  $('#txtassetno').val(index);
-                        geteditlocationb(index);
-                    });
-
-                    $('#txteditlocB').change(function () {
-
-                        var index = $("#txteditlocB option:selected").val();
-
-
-                        // $('#txtassetno').val(index);
-                        geteditlocationc(index);
-                    });
-
-      });
 //-------------------
 
-    var EndDateStatus = false;
-    var StartDateStatus = false;
+        ///onlocation a select load location b dropdown
+        $('#txtlocA').change(function () {
+
+            var index = $("#txtlocA option:selected").val();
+
+            //  $('#txtassetno').val(index);
+            getlocationb(index);
+        });
+
+        $('#txtlocB').change(function () {
+
+            var index = $("#txtlocB option:selected").val();
+
+            // $('#txtassetno').val(index);
+            getlocationc(index);
+        });
+
+        ///on edit modal location a select load location b dropdown
+        $('#txteditlocA').change(function () {
+
+            var index = $("#txteditlocA option:selected").val();
+            alert('aaa');
+            //  $('#txtassetno').val(index);
+            geteditlocationb(index);
+        });
+
+        $('#txteditlocB').change(function () {
+
+            var index = $("#txteditlocB option:selected").val();
+
+            // $('#txtassetno').val(index);
+            geteditlocationc(index);
+        });
+
+    $("#startdateerror,#enddateerror").hide();
+
+    function deleteloc(obj) {
+        swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+            if (result == true) {
+                $(obj).parent().parent().remove();
+                srnocnt - 1;
+            }
+        });
+    }
+
+    function saveloc() {
+
+        if ($("#txtlocA").find("option:selected").text() == 'Select Location') {
+            $("#locaerror").html(" * Please select location");
+            $("#locaerror").show();
+
+        }
+
+        if ($("#txtlocA").find("option:selected").text() != 'Select Location'
+            && $("#txtlocDate").val() != '') {
+
+            Addlocationtotable();
+
+            $('#locationmodal').modal('hide');
+        }
+    }
+
+    function getlocationb(id) {
+        if (id == "") {
+            id = 0;
+
+            var index = $("#txtlocB option:selected").val(0);
+        }
+        else {
+            var ControllerURL = '@Url.Action("getlocationb", "Batch")';
+            var url = ControllerURL + "/" + id;
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("txtlocB").html(procemessage).show();
 
 
-     $("#startdateerror,#enddateerror").hide();
+            $.ajax({
+                url: url,
 
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value='0'>Select Location</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#txtlocB").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+        }
+    }
 
-//----------------------------------------------------------------------
-     function closeloc() {
-            var url = '@Url.Action("index", "Batch")';
-            window.location = url;
+    function getlocationc(id) {
+            if (id == "")
+            {
+                id = 0;
 
-    $('#locationmodal').modal('hide');
-}
+                    var index = $("#txtlocC option:selected").val(0);
+            }
+            else
+            {
+                var ControllerURL = '@Url.Action("getlocationc", "Batch")';
+                      var url = ControllerURL + "/" + id;
+                      $.ajax({
+                        url: url,
 
-    function addLocation() {
-    $('#locationmodal').modal('show');
-}
+                        cache: false,
+                        type: "POST",
+                             success: function (data)
+                             {
+                                var markup = "<option value='0'>Select Location</option>";
+                                for (var x = 0; x < data.length; x++) {
+                                    markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                                }
+                                $("#txtlocC").html(markup).show();
+                             },
+                             error: function (reponse)
+                             {
+                                alert("error : " + reponse);
+                             }
+                      });
+            }
 
-     function deleteloc(obj) {
-         swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
-             if (result == true) {
-                 $(obj).parent().parent().remove();
-                 srnocnt - 1;
-             }
-         });
-     }
+    }
 
-     function saveloc() {
-
-         //if ($("#txtlocDate").val() == '') {
-         //    alert("test")
-         //    $("#locdateemerror").html(" * Please select date");
-         //    $("#locdateemerror").show();
-
-         //}
-
-         if ($("#txtlocA").find("option:selected").text() == 'Select Location') {
-             $("#locaerror").html(" * Please select location");
-             $("#locaerror").show();
-
-         }
-
-         if ($("#txtlocA").find("option:selected").text() != 'Select Location'
-             && $("#txtlocDate").val() != '') {
-
-             Addlocationtotable();
-
-
-
-             $('#locationmodal').modal('hide');
-
-
-         }
-     }
-
-     function Addlocationtotable() {
+    function Addlocationtotable() {
 
         var alocname = $("#txtlocA").find("option:selected").text();
         var blocname = $("#txtlocB").find("option:selected").text();
@@ -786,249 +840,7 @@
         srnocnt++;
     }
 
-     function getlocationb(id) {
-            if (id == "") {
-                id = 0;
-
-                    var index = $("#txtlocB option:selected").val(0);
-            }
-            else {
-                var ControllerURL = '@Url.Action("getlocationb", "Batch")';
-                    var url = ControllerURL + "/" + id;
-                    var procemessage = "<option value='0'> Please wait...</option>";
-                    $("txtlocB").html(procemessage).show();
-
-
-                    $.ajax({
-                        url: url,
-
-                        cache: false,
-                        type: "POST",
-                        success: function (data) {
-                            var markup = "<option value='0'>Select Location</option>";
-                            for (var x = 0; x < data.length; x++) {
-                                markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
-                            }
-                            $("#txtlocB").html(markup).show();
-                        },
-                        error: function (reponse) {
-                            alert("error : " + reponse);
-                        }
-                    });
-            }
-     }
-
-     function getlocationc(id) {
-            if (id == "") {
-                id = 0;
-
-                    var index = $("#txtlocC option:selected").val(0);
-            }
-            else {
-                var ControllerURL = '@Url.Action("getlocationc", "Batch")';
-                      var url = ControllerURL + "/" + id;
-                         $.ajax({
-                        url: url,
-
-                        cache: false,
-                        type: "POST",
-                        success: function (data) {
-                            var markup = "<option value='0'>Select Location</option>";
-                            for (var x = 0; x < data.length; x++) {
-                                markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
-                            }
-                            $("#txtlocC").html(markup).show();
-                        },
-                        error: function (reponse) {
-                            alert("error : " + reponse);
-                        }
-                    });
-                   }
-
-                    }
-/////////////////////////////////////////////////////////-------Add Location-Logic-End------////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////-------Edit Location-Logic-------////////////////////////////////////////////////////////////////////////////////////////
-    function closeeditloc()
-    {
-         $('#editlocationmodal').modal('hide');
-    }
-
-
-    function Editloc(id, editcnt)
-    {
-                        //$(id).parent();
-                        editindex = editcnt;
-                        var tr = $(id).parent().parent();
-                        var locaid = $(tr).find("td").eq(1).html();
-                        var locbid = $(tr).find("td").eq(2).html();
-                        var loccid = $(tr).find("td").eq(3).html();
-
-
-                        $("#txteditlocA").val(locaid);
-
-                        // $("#txtedassetno").prop('selectedIndex', assetno)
-                        $('#txteditlocB').val(locbid);
-                        $('#txteditlocC').val(loccid);
-
-
-                        geteditlocationb2(locaid, locbid, loccid)
-                        $('#editlocationmodal').modal('show');
-                    }
-
-    function saveeditloc() {
-
-
-                        if ($("#txteditlocA").find("option:selected").text() == 'Select Location') {
-                            $("#editlocaerror").html(" * Please select location");
-                            $("#editlocaerror").show();
-
-                        }
-
-                        if ($("#txteditlocA").find("option:selected").text() != 'Select Location'
-                              != '') {
-
-                            editlocationtotable();
-                            $('#editlocationmodal').modal('hide');
-
-                        }
-        }
-
-    function editlocationtotable() {
-                        var alocname = $("#txteditlocA").find("option:selected").text();
-                        var blocname = $("#txteditlocB").find("option:selected").text();
-                        var clocname = $("#txteditlocC").find("option:selected").text();
-                        //alert(blocname)
-                        //alert(clocname)
-
-                        var alocid = $("#txteditlocA option:selected").val();
-                        var blocid = $("#txteditlocB option:selected").val();
-                        var clocid = $("#txteditlocC option:selected").val();
-
-                        if (alocname == "Select Location") {
-                            alocname = "";
-                        }
-                        if (blocname == "Select Location") {
-                            blocname = "";
-                        }
-                        if (clocname == "Select Location") {
-                            clocname = "";
-                        }
-                        var tbl = $('#tbllocation tbody tr:has(td)').each(function () {
-                            var srno = $(this).find("td").eq(0).html();
-                            if (srno == editindex) {
-                                //alert('check');
-                                $(this).find("td").eq(1).html(alocid);
-                                $(this).find("td").eq(2).html(blocid);
-                                $(this).find("td").eq(3).html(clocid);
-
-                                $(this).find("td").eq(4).html(alocname);
-                                $(this).find("td").eq(5).html(blocname);
-                                $(this).find("td").eq(6).html(clocname);
-                            }
-                        })
-
-                    }
-    function geteditlocationb(id) {
-            if (id == "") {
-                id = 0;
-
-                    var index = $("#txteditlocB option:selected").val(0);
-            }
-            else {
-                var ControllerURL = '@Url.Action("getlocationb", "Batch")';
-                    var url = ControllerURL + "/" + id;
-                    var procemessage = "<option value='0'> Please wait...</option>";
-                    $("txteditlocB").html(procemessage).show();
-
-
-                    $.ajax({
-                        url: url,
-
-                        cache: false,
-                        type: "POST",
-                        success: function (data) {
-                            var markup = "<option value='0'>Select location</option>";
-                            for (var x = 0; x < data.length; x++) {
-                                markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
-                            }
-                            $("#txteditlocB").html(markup).show();
-                        },
-                        error: function (reponse) {
-                            alert("error : " + reponse);
-                        }
-                    });
-            }
-    }
-    function geteditlocationc(id)
-    function geteditlocationb2(locaid, locbid, loccid) {
-                if (locaid == "") {
-                    locaid = 0;
-
-                    var index = $("#txteditlocB option:selected").val(0);
-            }
-            else {
-                var ControllerURL = '@Url.Action("getlocationb", "Batch")';
-                    var url = ControllerURL + "/" + locaid;
-                    var procemessage = "<option value='0'> Please wait...</option>";
-                    $("txteditlocB").html(procemessage).show();
-
-
-                    $.ajax({
-                        url: url,
-
-                        cache: false,
-                        type: "POST",
-                        success: function (data) {
-                            var markup = "<option value='0'>Select location</option>";
-                            for (var x = 0; x < data.length; x++) {
-                                markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
-                            }
-                            $("#txteditlocB").html(markup).show();
-                            $("#txteditlocB ").val(locbid);
-                            geteditlocationc2(locbid, loccid)
-                        },
-                        error: function (reponse) {
-                            alert("error : " + reponse);
-                        }
-                    });
-                    }
-                    }
-    function geteditlocationc2(locbid,loccid) {
-                if (locbid == "") {
-                    locbid = 0;
-
-                    var index = $("#txteditlocC option:selected").val(0);
-            }
-            else {
-                var ControllerURL = '@Url.Action("getlocationc", "Batch")';
-                    var url = ControllerURL + "/" + locbid;
-                         $.ajax({
-                        url: url,
-
-                        cache: false,
-                        type: "POST",
-                        success: function (data) {
-                            var markup = "<option value='0'>Select Location</option>";
-                            for (var x = 0; x < data.length; x++) {
-                                markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
-                            }
-                            $("#txteditlocC").html(markup).show();
-                            $("#txteditlocC").val(loccid);
-                        },
-                        error: function (reponse) {
-                            alert("error : " + reponse);
-                        }
-                    });
-                   }
-
-        }
-//----------------------------edit loc end/////////////////////////////////////
-    function deletesubbatch(obj)
-    {
-        $(obj).parent().parent().remove();
-    }
-
-    function SaveData()
+     function SaveData()
  {
      var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
      var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
@@ -1082,6 +894,8 @@
              EndDateStatus = true;
          }
 
+         debugger;
+
          if (StartDateStatus == true && EndDateStatus == true)
          {
              $("#startdateerror,#enddateerror").hide();
@@ -1103,12 +917,31 @@
                  }
              }).get();
 
+             //debugger;
+
+             var tblcostcenter = $('#tblcostcenter tbody tr:has(td)').map(function (i, v) {
+                 var $td = $('td', this);
+                 var Tablecostcentera = $td.eq(1).html();
+                 //alert(Tablelocationa)
+
+                 var Tablecostcenterb = $td.eq(2).html();
+                 //alert(Tablelocationb)
+
+
+                 return {
+
+                     CCid: Tablecostcentera,
+                     SCCid: Tablecostcenterb
+
+                 }
+             }).get();
+
              //var Strstartdate = moment(StartDate, "DD/MM/YYYY").format("YYYY-MM-DD");
              //var StrEnddate = moment(EndDate, "DD/MM/YYYY").format("YYYY-MM-DD");
              var Strstartdate = moment($('#txtStartDate').val()).format("YYYY-MM-DD");
              var StrEnddate = moment($('#txtEndDate').val()).format("YYYY-MM-DD");
 
-
+           //  debugger;
 
              var StartDate = $('#txtStartDate').val();
              var EndDate = $('#txtEndDate').val();
@@ -1120,6 +953,7 @@
                  "BatchDescription": BatchDescription,
                  "IsBatchOpen": IsBatchOpen,
                  "locationlist": tbllocation,
+                 "costcenterlist": tblcostcenter,
                  "ID": Editid
 
                  //"LoanViewModellist": tbl
@@ -1213,11 +1047,239 @@
              return false;
          }///--------------------else---------------------------------
 
+     }
+    }
+
+     function closeloc() {
+            var url = '@Url.Action("index", "Batch")';
+            window.location = url;
+
+    $('#locationmodal').modal('hide');
+}
+
+
+
+    //---------------------------------------------Edit Loc--------------
+
+    function Editloc(id, editcnt) {
+        //$(id).parent();
+        editindex = editcnt;
+        var tr = $(id).parent().parent();
+        var locaid = $(tr).find("td").eq(1).html();
+        var locbid = $(tr).find("td").eq(2).html();
+        var loccid = $(tr).find("td").eq(3).html();
+
+
+        $("#txteditlocA").val(locaid);
+
+        // $("#txtedassetno").prop('selectedIndex', assetno)
+        $('#txteditlocB').val(locbid);
+        $('#txteditlocC').val(loccid);
+
+
+        geteditlocationb2(locaid, locbid, loccid)
+        $('#editlocationmodal').modal('show');
+    }
+
+    function saveeditloc() {
+
+
+        if ($("#txteditlocA").find("option:selected").text() == 'Select Location') {
+            $("#editlocaerror").html(" * Please select location");
+            $("#editlocaerror").show();
+
         }
- }
+
+        if ($("#txteditlocA").find("option:selected").text() != 'Select Location'
+            != '') {
+
+            editlocationtotable();
+            $('#editlocationmodal').modal('hide');
+
+        }
+    }
+
+    function editlocationtotable() {
+        var alocname = $("#txteditlocA").find("option:selected").text();
+        var blocname = $("#txteditlocB").find("option:selected").text();
+        var clocname = $("#txteditlocC").find("option:selected").text();
+        //alert(blocname)
+        //alert(clocname)
+
+        var alocid = $("#txteditlocA option:selected").val();
+        var blocid = $("#txteditlocB option:selected").val();
+        var clocid = $("#txteditlocC option:selected").val();
+
+        if (alocname == "Select Location") {
+            alocname = "";
+        }
+        if (blocname == "Select Location") {
+            blocname = "";
+        }
+        if (clocname == "Select Location") {
+            clocname = "";
+        }
+        var tbl = $('#tbllocation tbody tr:has(td)').each(function () {
+            var srno = $(this).find("td").eq(0).html();
+            if (srno == editindex) {
+                //alert('check');
+                $(this).find("td").eq(1).html(alocid);
+                $(this).find("td").eq(2).html(blocid);
+                $(this).find("td").eq(3).html(clocid);
+
+                $(this).find("td").eq(4).html(alocname);
+                $(this).find("td").eq(5).html(blocname);
+                $(this).find("td").eq(6).html(clocname);
+            }
+        })
+
+    }
+
+    function geteditlocationb(id) {
+            if (id == "") {
+                id = 0;
+
+                    var index = $("#txteditlocB option:selected").val(0);
+            }
+            else {
+                var ControllerURL = '@Url.Action("getlocationb", "Batch")';
+                    var url = ControllerURL + "/" + id;
+                    var procemessage = "<option value='0'> Please wait...</option>";
+                    $("txteditlocB").html(procemessage).show();
 
 
-    //-----------------------------------------------------------------------
+                    $.ajax({
+                        url: url,
+
+                        cache: false,
+                        type: "POST",
+                        success: function (data) {
+                            var markup = "<option value='0'>Select location</option>";
+                            for (var x = 0; x < data.length; x++) {
+                                markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                            }
+                            $("#txteditlocB").html(markup).show();
+                        },
+                        error: function (reponse) {
+                            alert("error : " + reponse);
+                        }
+                    });
+                    }
+    }
+
+    function geteditlocationc(id) {
+            if (id == "") {
+                id = 0;
+
+                    var index = $("#txteditlocC option:selected").val(0);
+            }
+            else {
+                var ControllerURL = '@Url.Action("getlocationc", "Batch")';
+                      var url = ControllerURL + "/" + id;
+                         $.ajax({
+                        url: url,
+
+                        cache: false,
+                        type: "POST",
+                        success: function (data) {
+                            var markup = "<option value='0'>Select Location</option>";
+                            for (var x = 0; x < data.length; x++) {
+                                markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                            }
+                            $("#txteditlocC").html(markup).show();
+                        },
+                        error: function (reponse) {
+                            alert("error : " + reponse);
+                        }
+                    });
+                   }
+
+    }
+
+    function geteditlocationb2(locaid,locbid,loccid) {
+                if (locaid == "") {
+                    locaid = 0;
+
+                    var index = $("#txteditlocB option:selected").val(0);
+            }
+            else {
+                var ControllerURL = '@Url.Action("getlocationb", "Batch")';
+                    var url = ControllerURL + "/" + locaid;
+                    var procemessage = "<option value='0'> Please wait...</option>";
+                    $("txteditlocB").html(procemessage).show();
+
+
+                    $.ajax({
+                        url: url,
+
+                        cache: false,
+                        type: "POST",
+                        success: function (data) {
+                            var markup = "<option value='0'>Select location</option>";
+                            for (var x = 0; x < data.length; x++) {
+                                markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                            }
+                            $("#txteditlocB").html(markup).show();
+                            $("#txteditlocB ").val(locbid);
+                            geteditlocationc2(locbid, loccid)
+                        },
+                        error: function (reponse) {
+                            alert("error : " + reponse);
+                        }
+                    });
+                    }
+    }
+
+    function geteditlocationc2(locbid,loccid) {
+                if (locbid == "") {
+                    locbid = 0;
+
+                    var index = $("#txteditlocC option:selected").val(0);
+            }
+            else {
+                var ControllerURL = '@Url.Action("getlocationc", "Batch")';
+                    var url = ControllerURL + "/" + locbid;
+                         $.ajax({
+                        url: url,
+
+                        cache: false,
+                        type: "POST",
+                        success: function (data) {
+                            var markup = "<option value='0'>Select Location</option>";
+                            for (var x = 0; x < data.length; x++) {
+                                markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                            }
+                            $("#txteditlocC").html(markup).show();
+                            $("#txteditlocC").val(loccid);
+                        },
+                        error: function (reponse) {
+                            alert("error : " + reponse);
+                        }
+                    });
+                   }
+
+        }
+
+
+
+
+
+
+        //-------------------------------------------------------------------------------
+
+
+
+
+    $("#btnAddCC").click(function () {
+
+            $("#txtccA").val("");
+            $("#txtccB").val("");
+            // $("#txtpercentage").val("")
+            // $("#txtccDate").val("");
+            $('#ccmodal').modal('show');
+
+        });
+
     $('#txtccA').change(function () {
 
         var index = $("#txtccA option:selected").val();
@@ -1236,89 +1298,6 @@
         //  $('#txtassetno').val(index);
         geteditcostcenterb(index);
     });
-
-    ////////////////////////////////////////////////////////
-    $("#btnAddCC").click(function () {
-
-        $("#txtccA").val("");
-        $("#txtccB").val("");
-       // $("#txtpercentage").val("")
-       // $("#txtccDate").val("");
-        $('#ccmodal').modal('show');
-
-
-    });
-
-    /////////////////////////////////////
-
-    function closecc() {
-            var url = '@Url.Action("index", "Batch")';
-            window.location = url;
-
-    $('#ccmodal').modal('hide');
-}
-
-    function addcostcenter() {
-        $('#ccmodal').modal('show');
-    }
-
-    function deletecc(obj) {
-        swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
-            if (result == true) {
-                $(obj).parent().parent().remove();
-                srnocnt - 1;
-            }
-        });
-    }
-
-    function savecc() {
-
-        if ($("#txtccA").find("option:selected").text() == 'Select Costcenter') {
-            $("#ccaerror").html(" * Please select cost center");
-            $("#ccaerror").show();
-
-        }
-        if ($("#txtccA").find("option:selected").text() != 'Select Costcenter') {
-
-            Addcostcentertotable();
-            $('#ccmodal').modal('hide');
-        }
-    }
-
-    function Addcostcentertotable() {
-
-        var ccdescription = $("#txtccA").find("option:selected").text();
-        var sccdescription = $("#txtccB").find("option:selected").text();
-
-
-        //  var accids = $("#txtccA").val();
-        var accid = $("#txtccA option:selected").val();
-        var bsccid = $("#txtccB option:selected").val();
-
-        var date = $("#txtccDate").val();
-        // var percentage = $("#txtpercentage").val();
-
-        if (ccdescription == "Select costCenter") {
-            ccdescription = "";
-        }
-        if (sccdescription == "Select costCenter") {
-            sccdescription = "";
-        }
-
-
-        //  var assetamt = $("#txtassetamount").val()
-        $('#tblcostcenter').last().append('<tr><td>' + srnocnt + '</td><td hidden>' + accid + '</td>'
-            + '<td hidden>' + bsccid + '</td >'
-            + '<td>' + ccdescription + '</td ><td>' + sccdescription + '</td><td align="center"> <button type="button" class="btn modBtn btn-sm"'
-            + ' aria-label="Left Align"'
-            + 'onclick="Editcc(this,' + srnocnt + ');">'
-            + '  <i class="fa fa-edit"></i>Edit</button></td><td align="center"> <button type="button" class="btn btn-sm delBtn"'
-            + ' aria-label="Center Align"'
-            + 'onclick="deletecc(this);">'
-            + '  <i class="fa fa-remove"></i>Delete   </button></td></tr > ');
-
-        srnocnt++;
-    }
 
     function getcostcenterb(id) {
     if (id == "") {
@@ -1344,6 +1323,7 @@
                     markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
                 }
                 $("#txtccB").html(markup).show();
+               // debugger;
             },
             error: function (reponse) {
                 alert("error : " + reponse);
@@ -1352,27 +1332,66 @@
     }
 }
 
-    //--------------------------------------------------logic for edit costcenter----------------------
+    function Addcostcentertotable() {
 
-    function closeeditcc() {
-        $('#editccmodal').modal('hide');
+        var ccdescription = $("#txtccA").find("option:selected").text();
+        var sccdescription = $("#txtccB").find("option:selected").text();
+
+
+        //  var accids = $("#txtccA").val();
+        var accid = $("#txtccA option:selected").val();
+        var bsccid = $("#txtccB option:selected").val();
+
+        var date = $("#txtccDate").val();
+        // var percentage = $("#txtpercentage").val();
+
+        if (ccdescription == "Select costCenter") {
+            ccdescription = "";
+        }
+        if (sccdescription == "Select costCenter") {
+            sccdescription = "";
+        }
+
+        //debugger;
+        //  var assetamt = $("#txtassetamount").val()
+        $('#tblcostcenter').last().append('<tr><td>' + srnocntt + '</td><td hidden>' + accid + '</td>'
+            + '<td hidden>' + bsccid + '</td >'
+            + '<td>' + ccdescription + '</td ><td>' + sccdescription + '</td><td align="center"> <button type="button" class="btn modBtn btn-sm"'
+            + ' aria-label="Left Align"'
+            + 'onclick="Editcc(this,' + srnocntt + ');">'
+            + '  <i class="fa fa-edit"></i>Edit</button></td><td align="center"> <button type="button" class="btn btn-sm delBtn"'
+            + ' aria-label="Center Align"'
+            + 'onclick="deletecc(this);">'
+            + '  <i class="fa fa-remove"></i>Delete   </button></td></tr > ');
+
+        srnocntt++;
     }
 
-    function Editcc(id, editcnt) {
-        //$(id).parent();
-        editindex = editcnt;
-        var tr = $(id).parent().parent();
-        var ccaid = $(tr).find("td").eq(1).html();
-        var ccbid = $(tr).find("td").eq(2).html();
+    function savecc() {
 
-        $("#txteditccA").val(ccaid);
+        if ($("#txtccA").find("option:selected").text() == 'Select Costcenter') {
+            $("#ccaerror").html(" * Please select cost center");
+            $("#ccaerror").show();
 
-        // $("#txtedassetno").prop('selectedIndex', assetno)
-        $('#txteditccB').val(ccbid);
+        }
+        if ($("#txtccA").find("option:selected").text() != 'Select Costcenter') {
 
-        geteditcostcenterb2(ccaid, ccbid)
-        $('#editccmodal').modal('show');
+            Addcostcentertotable();
+           // debugger;
+            $('#ccmodal').modal('hide');
+        }
     }
+
+    function deletecc(obj) {
+        swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+            if (result == true) {
+                $(obj).parent().parent().remove();
+                srnocntt - 1;
+            }
+        });
+    }
+
+    //------------------------------------Edit Costcenter-----------------------
 
     function saveeditcc() {
 
@@ -1382,12 +1401,91 @@
 
         }
         if ($("#txteditccA").find("option:selected").text() != 'Select Costcenter'
-           != '') {
+            != '') {
 
             editcostcentertotable();
+           // debugger;
             $('#editccmodal').modal('hide');
 
         }
+    }
+
+    function Editcc(id, editcnt) {
+        //$(id).parent();
+        editindex = editcnt;
+        var tr = $(id).parent().parent();
+        var ccaid = $(tr).find("td").eq(1).html();
+        var sccid = $(tr).find("td").eq(2).html();
+
+        $("#txteditccA").val(ccaid);
+
+        // $("#txtedassetno").prop('selectedIndex', assetno)
+        $('#txteditccB').val(sccid);
+
+        geteditcostcenterb2(ccaid, sccid)
+        //debugger;
+        $('#editccmodal').modal('show');
+    }
+
+    function geteditcostcenterb(id) {
+            if (id == "") {
+                id = 0;
+
+                    var index = $("#txteditccB option:selected").val(0);
+            }
+            else {
+                var ControllerURL = '@Url.Action("getcostcenterb", "Batch")';
+                var url = ControllerURL + "/" + id;
+               // debugger;
+                         $.ajax({
+                        url: url,
+
+                        cache: false,
+                        type: "POST",
+                        success: function (data) {
+                            var markup = "<option value='0'>Select costcenter</option>";
+                            for (var x = 0; x < data.length; x++) {
+                                markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                            }
+                            $("#txteditccB").html(markup).show();
+                        },
+                        error: function (reponse) {
+                            alert("error : " + reponse);
+                        }
+                    });
+            }
+
+    }
+
+    function geteditcostcenterb2(ccaid,sccid) {
+                if (ccaid == "") {
+                    ccaid = 0;
+
+                    var index = $("#txteditccB option:selected").val(0);
+            }
+            else {
+                var ControllerURL = '@Url.Action("getcostcenterb", "Batch")';
+                    var url = ControllerURL + "/" + ccaid;
+                         $.ajax({
+                        url: url,
+
+                        cache: false,
+                        type: "POST",
+                        success: function (data) {
+                            var markup = "<option value='0'>Select Costcenter</option>";
+                            for (var x = 0; x < data.length; x++) {
+                                markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                            }
+                            $("#txteditccB").html(markup).show();
+                            $("#txteditccB").val(sccid);
+                           // debugger;
+                        },
+                        error: function (reponse) {
+                            alert("error : " + reponse);
+                        }
+                    });
+                }
+
     }
 
     function editcostcentertotable() {
@@ -1404,6 +1502,7 @@
             sccdescription = "";
         }
 
+      //  debugger;
         var tbl = $('#tblcostcenter tbody tr:has(td)').each(function () {
             var srno = $(this).find("td").eq(0).html();
             if (srno == editindex) {
@@ -1411,79 +1510,13 @@
                 $(this).find("td").eq(1).html(accid);
                 $(this).find("td").eq(2).html(bsccid);
 
-                $(this).find("td").eq(4).html(ccdescription);
-                $(this).find("td").eq(5).html(sccdescription);
+                $(this).find("td").eq(3).html(ccdescription);
+                $(this).find("td").eq(4).html(sccdescription);
 
+                debugger;
             }
         })
 
     }
 
-    function geteditcostcenterb2(ccaid,ccbid) {
-        if (ccaid == "") {
-            ccaid = 0;
-
-                    var index = $("#txteditccB option:selected").val(0);
-            }
-            else {
-                var ControllerURL = '@Url.Action("getcostcenterb", "Batch")';
-                var url = ControllerURL + "/" + ccaid;
-                         $.ajax({
-                        url: url,
-
-                        cache: false,
-                        type: "POST",
-                        success: function (data) {
-                            var markup = "<option value='0'>Select Costcenter</option>";
-                            for (var x = 0; x < data.length; x++) {
-                                markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
-                            }
-                            $("#txteditccA").html(markup).show();
-                            $("#txteditccB").val(ccbid);
-                        },
-                        error: function (reponse) {
-                            alert("error : " + reponse);
-                        }
-        });
-    }
-
-    }
-
-    function geteditcostcenterb2(ccaid,ccbid) {
-        if (ccaid == "") {
-            ccaid = 0;
-
-            var index = $("#txteditccB option:selected").val(0);
-        }
-        else {
-            var ControllerURL = '@Url.Action("getcostcenterb", "Batch")';
-            var url = ControllerURL + "/" + ccaid;
-            var procemessage = "<option value='0'> Please wait...</option>";
-            $("txteditccB").html(procemessage).show();
-
-
-            $.ajax({
-                url: url,
-
-                cache: false,
-                type: "POST",
-                success: function (data) {
-                    var markup = "<option value='0'>Select Costcenter</option>";
-                    for (var x = 0; x < data.length; x++) {
-                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
-                    }
-                    $("#txteditccB").html(markup).show();
-                    $("#txteditccB ").val(ccbid);
-                    geteditcostcenter2(ccbid)
-                },
-                error: function (reponse) {
-                    alert("error : " + reponse);
-                }
-            });
-        }
-    }
-
-
-
 </script>
-
