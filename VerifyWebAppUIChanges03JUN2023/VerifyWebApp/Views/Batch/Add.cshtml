@@ -49,12 +49,17 @@
                                     <label for="praticesname">To Date</label>
 
                                     @*<div class='input-group date' id='dtStartDate'>*@
-                                    <input type="date" id="txtEndtDate" class="form-control" required />
+                                    @*<input type="date" id="txtEndtDate" class="form-control" required />*@
 
                                     @*<div class="input-group-addon">
-                                            <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+        <span class="input-group-text"><span class="fa fa-calendar"></span></span>
 
-                                        </div>*@
+                                </div>*@
+                                    <div class='input-group date' id='dtEndDate'>
+                                        <input type='date' id="txtEndDate"
+                                               name="ToDate"
+                                               class="form-control form-control-sm" required />
+                                    </div>
                                     <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
                                 </div>
                             </div>
@@ -556,20 +561,38 @@ var editindex = 0;
 var EndDateStatus = false;
 var StartDateStatus = false;
 var isbatchopenflag = "no";
-$(document).ready(function ($) {
+    $(document).ready(function ($) {
+
+        $("#frmNewEmp").submit(function (e) {
+            console.log("form submitted")
+            SaveData();
+            e.preventDefault();
+            return false;
+        });
+
+        $('#IsBatchOpen').change(function () {
+            if ($(this).prop("checked")) {
+                isbatchopenflag = "yes";
+
+            }
+            else {
+
+                isbatchopenflag = "no";
+            }
+        });
 
 });
 
-$('#IsBatchOpen').change(function () {
-    if ($(this).prop("checked")) {
-        isbatchopenflag = "yes";
+//$('#IsBatchOpen').change(function () {
+//    if ($(this).prop("checked")) {
+//        isbatchopenflag = "yes";
 
-    }
-    else {
+//    }
+//    else {
 
-        isbatchopenflag = "no";
-    }
-});
+//        isbatchopenflag = "no";
+//    }
+//});
 
 //--------------------loc---------------------------------------------------------------
 
@@ -620,6 +643,7 @@ $("#btnAddloc").click(function () {
     $("#txtlocC ").val("");
 
 });
+
 
         //.................................
     ///oncostcenter a select load subcostcenter dropdown
@@ -690,8 +714,9 @@ $("#btnAddloc").click(function () {
 }
 //-------------------
 
-var EndDateStatus = false;
-var StartDateStatus = false;
+
+    var EndDateStatus = false;
+    var StartDateStatus = false;
 
 
 $("#startdateerror,#enddateerror").hide();
@@ -1052,7 +1077,7 @@ function deletesubbatch(obj) {
 
             var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
             var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
-
+       // debugger;
 
     if (new Date(startdate) >= new Date(enddate)) {
         swal("Alert", "To Date must be greater than From Date", "warning");
@@ -1081,7 +1106,7 @@ function deletesubbatch(obj) {
 
         var BatchDescription = $('#BatchDescription').val();
         var IsBatchOpen = isbatchopenflag;
-
+       // debugger;
 
         if (StartDate == '') {
             StartDateStatus = false;
@@ -1155,7 +1180,7 @@ function deletesubbatch(obj) {
                 //"LoanViewModellist": tbl
             };
 
-            //debugger;
+           // debugger;
 
             var form = $('#frmNewEmp');
             var token = $('input[name="__RequestVerificationToken"]', form).val();
