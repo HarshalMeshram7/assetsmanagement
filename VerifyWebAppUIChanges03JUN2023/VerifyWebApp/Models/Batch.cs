@@ -38,6 +38,11 @@ namespace VerifyWebApp.Models
         [NotMapped]
         public List<Subbatch> SubbatchTable2 { get; set; }
 
+        [NotMapped]
+        public int Srnoac { get; set; }
+        
+        public List<Subbatch> SubbatchTable3 { get; set; }
+
         public string batchcode
         {
             get { return  BatchDescription  + " -- "+ID ; }

@@ -35,5 +35,10 @@ namespace VerifyWebApp.Models
         public string CCDescription { get; set; }
         public string SCCDescription { get; set; }
 
+        [NotMapped]
+        public int Srnoac { get; set; }
+        public int Minvalue { get; set; }
+        public int Maxvalue { get; set; }
+
     }
 }

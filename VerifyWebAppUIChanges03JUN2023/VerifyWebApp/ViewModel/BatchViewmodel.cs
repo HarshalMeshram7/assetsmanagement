@@ -15,6 +15,8 @@ namespace VerifyWebApp.ViewModel
             // this.BatchViewModellist = new List<SubbatchTable>();
 
             this.costcenterlist = new List<Subbatch>();
+
+            this.rangelist = new List<Subbatch>();
         }
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
@@ -29,6 +31,8 @@ namespace VerifyWebApp.ViewModel
         // public IEnumerable<SubbatchTable> BatchViewModellist { get; set; }
 
         public IEnumerable<Subbatch> costcenterlist { get; set; }
+
+        public IEnumerable<Subbatch> rangelist { get; set; }
     }
 
     //public class SubbatchTable

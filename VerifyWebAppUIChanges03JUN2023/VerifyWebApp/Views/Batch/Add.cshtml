@@ -3,626 +3,660 @@
 @{
     ViewBag.Title = "Add";
 }
-
-<head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/themes/smoothness/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
-</head>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <div class="container-fluid">
     <div class="row my-0">
         <div class="card">
-             <div class="card-header pb-0">
-                 <div class="row">
-                     <div class="d-sm-flex justify-content-between hborder">
-                         <div class="htitle"> <b>Add New Batch</b> </div>
-                         <button type="button" class="close" id="btnClose" data-bs-dismiss="modal" onclick="closeloc()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                         @*<button type="button" class="btn btn-sm clBtn" id="btnClose" data-bs-dismiss="modal">Close</button>*@
-                     </div>
+            <div class="card-header pb-0">
+                <div class="row">
+                    <div class="d-sm-flex justify-content-between hborder">
+                        <div class="htitle"> <b>Add New Batch</b> </div>
+                        <button type="button" class="close" id="btnClose" data-bs-dismiss="modal" onclick="closeloc()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        @*<button type="button" class="btn btn-sm clBtn" id="btnClose" data-bs-dismiss="modal">Close</button>*@
+                    </div>
 
-                     @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
-                     {
-                         @Html.AntiForgeryToken()
-                         <style>
-                             input.largerCheckbox {
-                                 width: 20px;
-                                 height: 20px;
-                             }
-                         </style>
+                    @using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmNewEmp", name = "frmNewEmp" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <style>
+                            input.largerCheckbox {
+                                width: 20px;
+                                height: 20px;
+                            }
+                        </style>
 
 
 
-                         @*<div class="pageconent">*@
+                        @*<div class="pageconent">*@
 
-                         <div class="row">
-                             <div class="col-lg-3">
-                                 <div class="form-group">
-                                     <label for="praticesname">From Date</label>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="praticesname">From Date</label>
 
-                                     @*<div class='input-group date' id='dtStartDate'>*@
-                                     <input type="date" id="txtStartDate" class="form-control" required />
-                                     @*<div class="input-group-addon">
+                                    @*<div class='input-group date' id='dtStartDate'>*@
+                                    <input type="date" id="txtStartDate" class="form-control" required />
+                                    @*<div class="input-group-addon">
                             <span class="input-group-text"><span class="fa fa-calendar"></span></span>
 
                         </div>*@
-                                 </div>
-                                 <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
-                             </div>
+                                </div>
+                                <div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>
+                            </div>
 
-                             <div class="col-lg-3">
-                                 <div class="form-group">
-                                     <label for="praticesname">To Date</label>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="praticesname">To Date</label>
 
-                                     @*<div class='input-group date' id='dtStartDate'>*@
-                                     @*<input type="date" id="txtEndtDate" class="form-control" required />*@
+                                    @*<div class='input-group date' id='dtStartDate'>*@
+                                    @*<input type="date" id="txtEndtDate" class="form-control" required />*@
 
-                                     @*<div class="input-group-addon">
+                                    @*<div class="input-group-addon">
                         <span class="input-group-text"><span class="fa fa-calendar"></span></span>
 
                                                 </div>*@
-                                     <div class='input-group date' id='dtEndDate'>
-                                         <input type='date' id="txtEndDate"
-                                                name="ToDate"
-                                                class="form-control form-control-sm" required />
-                                     </div>
-                                     <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
-                                 </div>
-                             </div>
-                         </div>
-
-
-                         <div class="row">
-                             <div class="col-md-3">
-                                 <div class="form-group">
-                                     <label for="praticesname" style="position:relative;color:black;z-index:1000000;">Batch Description</label>
-                                     <div class='input-group date'>
-                                         <input id="BatchDescription" class="form-control" />
-                                     </div>
-                                 </div>
-                             </div>
-                             <div class="col-md-9">
-                                 <div class="row my-5">
-                                     <div class="col-md-6">
-                                         <div class="form-group">
-
-                                             <input id="IsBatchOpen" type="checkbox" class="largerCheckbox" />
-                                             @*<input type="checkbox" />*@
-                                             <label class="form-check-label" for="IsBatchOpen">Batch Open</label>
-                                         </div>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
-
-
-                         <div class="row">
-                             <div class="col-md-12">
-                                 Location List for Batch
-                             </div>
-                         </div>
-                         <div class="row my-1">
-                             <div class="col-md-12">
-                                 <div class="pull-right">
-                                     <button type="button" class="btn btn-sm nBtn" id="btnAddloc"
-                                             data-toggle="modal">
-                                         Add Location
-                                     </button>
-                                 </div>
-                             </div>
-                         </div>
-                         <div class="row">
-                             <div class="col-lg-12">
-                                 <div class="table-responsive">
-                                     <table width="100%" class="table table-striped table-bordered table-hover" id="tbllocation">
-                                         <thead>
-                                             <tr>
-                                                 <td>
-                                                     Srno
-                                                 </td>
-                                                 <td hidden>
-                                                     locaid
-                                                 </td>
-                                                 <td hidden>
-                                                     locbid
-                                                 </td>
-                                                 <td hidden>
-                                                     loccid
-                                                 </td>
-                                                 <td>
-                                                     Location
-                                                 </td>
-                                                 <td>
-                                                     Sub Location
-                                                 </td>
-                                                 <td>
-                                                     Sub SubLocation
-                                                 </td>
-                                                 <td align="center">
-                                                     Edit
-                                                 </td>
-                                                 <td align="center">
-                                                     Delete
-                                                 </td>
-                                             </tr>
-                                         </thead>
-                                         <tbody></tbody>
-                                     </table>
-                                 </div>
-                             </div>
-
-                             <div class="row">
-                                 <div class="col-md-12">
-                                     CostCenter List for Batch
-                                 </div>
-                             </div>
-                             <div class="row my-1">
-                                 <div class="col-md-12">
-                                     <div class="pull-right">
-                                         <button type="button" class="btn btn-sm nBtn" id="btnAddCC"
-                                                 data-toggle="modal">
-                                             Add CostCenter
-                                         </button>
-                                     </div>
-                                 </div>
-                             </div>
-                             <div class="row">
-                                 <div class="col-lg-12">
-                                     <div class="table-responsive">
-                                         <table width="100%" class="table table-striped table-bordered table-hover" id="tblcostcenter">
-
-                                             <thead>
-                                                 <tr>
-                                                     <td>
-                                                         Srno
-                                                     </td>
-                                                     <td hidden>
-                                                         ccaid
-                                                     </td>
-                                                     <td hidden>
-                                                         ccbid
-                                                     </td>
-                                                     <td>
-                                                         Cost Center
-                                                     </td>
-                                                     <td>
-                                                         Sub-Cost Center
-                                                     </td>
-                                                     <td align="center">
-                                                         Edit
-                                                     </td>
-                                                     <td align="center">
-                                                         Delete
-                                                     </td>
-                                                 </tr>
-                                             </thead>
-                                             <tbody></tbody>
-                                         </table>
-                                     </div>
-                                 </div>
-                             </div>
-
-                             <div class="row">
-                                 <div class="col-md-12">
-                                     Group List for Batch
-                                 </div>
-                             </div>
-                             <div class="row my-1">
-                                 <div class="col-md-12">
-                                     <div class="pull-right">
-                                         <button type="button" onclick="ShowGroups();" class="btn btn-sm nBtn btn btn-link">Select Group</button>
-                                     </div>
-                                 </div>
-                             </div>
-
-                             <div class="col-lg-12">
-                                 <div class="table-responsive">
-                                     <table width="100%" class="table table-striped table-bordered table-hover" id="BatchCompanyGroups">
-                                         <thead>
-                                             <tr>
-
-                                                 <td>
-                                                     Srno
-                                                 </td>
-                                                 <td>
-                                                     A Group
-                                                 </td>
-                                                 <td>
-                                                     B Group
-                                                 </td>
-                                                 <td>
-                                                     C Group
-                                                 </td>
-
-                                                 <td>
-                                                     D Group
-                                                 </td>
-
-                                                 <td align="center">
-                                                     Edit
-                                                 </td>
-                                                 <td align="center">
-                                                     Delete
-                                                 </td>
-                                             </tr>
-                                         </thead>
-                                         <tbody></tbody>
-                                     </table>
-
-                                 </div>
-                             </div>
-                             <div class="row">
-                                 <div class="col-md-12">
-                                     Amount Capitalization for Batch
-                                 </div>
-                             </div>
-                             <div class="row my-1">
-                                 <div class="col-md-12">
-                                     <div class="pull-right">
-                                         <button type="button" class="btn btn-sm nBtn" onclick="ShowRange();" id=""
-                                                 data-toggle="modal">
-                                             Add Amount Capitalization
-                                         </button>
-                                     </div>
-                                 </div>
-                             </div>
-                             <div class="row">
-                                 <div class="col-lg-12">
-                                     <div class="table-responsive">
-                                         <table width="100%" class="table table-striped table-bordered table-hover" id="">
-
-                                             <thead>
-                                                 <tr>
-                                                     <td>
-                                                         Srno
-                                                     </td>
-
-                                                     <td>
-                                                         StartValue
-                                                     </td>
-                                                     <td>
-                                                         EndValue
-                                                     </td>
-                                                     <td align="center">
-                                                         Edit
-                                                     </td>
-                                                     <td align="center">
-                                                         Delete
-                                                     </td>
-                                                 </tr>
-                                             </thead>
-                                             <tbody></tbody>
-                                         </table>
-                                     </div>
-                                 </div>
-                             </div>
-
-
-
-
-
-                             <div class="modal-footer">
-
-                                 <button type="button" class="btn btn-sm saveBtn" id="ocationmodal" style="margin-right:5px;" data-bs-dismiss="modal" onclick="closeloc()">Close</button>
-                                 <button type="button" class="btn btn-sm clBtn" id="btnSave">Save</button>
-                                 @*<button type="button" class="btn btn-default" onclick="close()">Close</button>*@
-                             </div>
-                         </div>
-
-                         <div id="locationmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
-
-                             <div class="modal-dialog modal-lg">
-
-                                 <!-- Modal content-->
-                                 <div class="modal-content">
-                                     <div class="modal-header">
-
-                                         <h4 class="modal-title">Add Location</h4>
-                                     </div>
-                                     <div class="modal-body ">
-
-                                         <div class="row">
-                                             <div class="form-group col-lg-6">
-                                                 <label for="praticesname">Location A<span style="color:#CC0000;">*</span></label>
-                                                 @Html.DropDownList("txtlocA", (SelectList)ViewBag.alocationlist, "Select Location", new { @class = "form-control", id = "txtlocA", @required = true })
-                                                 <div style="color:#CC0000;font-weight:400" id="locaerror"></div>
-                                             </div>
-                                         </div>
-                                         <div class="row">
-                                             <div class="form-group col-lg-6">
-                                                 <label for="praticesname">Location B</label>
-
-                                                 <select id="txtlocB" name="txtlocB" class="form-control"></select>
-                                             </div>
-                                         </div>
-                                         <div class="row">
-                                             <div class="form-group col-lg-6">
-                                                 <label for="praticesname">Location C</label>
-                                                 <select id="txtlocC" name="txtlocC" class="form-control"></select>
-                                             </div>
-                                         </div>
-                                     </div>
-                                     <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
-
-
-                                     <div class="modal-footer">
-                                         <button type="button" class="btn btn-sm saveBtn" id="btnClose" data-bs-dismiss="modal" onclick="closeeditloc();">Close</button>
-
-                                         <button type="button" class="btn btn-sm clBtn" onclick="saveloc();">Save</button>
-
-                                     </div>
-
-                                 </div>
-                             </div>
-                         </div>
-
-                         <div id="editlocationmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
-
-                             <div class="modal-dialog modal-lg">
-
-                                 <!-- Modal content-->
-                                 <div class="modal-content">
-                                     <div class="modal-header">
-
-                                         <h4 class="modal-title">Edit Location</h4>
-                                     </div>
-                                     <div class="modal-body ">
-
-
-                                         <div class="row">
-                                             <div class="form-group col-lg-6">
-                                                 <label for="praticesname">Location A<span style="color:#CC0000;">*</span></label>
-                                                 @Html.DropDownList("txteditlocA", (SelectList)ViewBag.alocationlist, "Select Location", new { @class = "form-control", id = "txteditlocA", @required = true })
-                                                 <div style="color:#CC0000;font-weight:400" id="editlocaerror"></div>
-                                             </div>
-
-                                         </div>
-                                         <div class="row">
-                                             <div class="form-group col-lg-6">
-                                                 <label for="praticesname">Location B</label>
-
-                                                 <select id="txteditlocB" name="txteditlocB" class="form-control"></select>
-                                             </div>
-                                         </div>
-                                         <div class="row">
-                                             <div class="form-group col-lg-6">
-                                                 <label for="praticesname">Location C</label>
-                                                 <select id="txteditlocC" name="txteditlocC" class="form-control"></select>
-                                             </div>
-                                         </div>
-                                     </div>
-                                     <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
-
-
-                                     <div class="modal-footer">
-                                         <button type="button" class="btn btn-sm saveBtn" data-bs-dismiss="modal" onclick="closeeditloc();">Close</button>
-                                         <button type="button" class="btn btn-sm clBtn" onclick="saveeditloc();">Save</button>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
-
-
-
-                         <div id="ccmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
-
-                             <div class="modal-dialog modal-lg">
-
-                                 <!-- Modal content-->
-                                 <div class="modal-content">
-                                     <div class="modal-header">
-
-                                         <h4 class="modal-title">Add Cost Center</h4>
-                                     </div>
-                                     <div class="modal-body ">
-
-
-                                         <div class="row">
-                                             <div class="form-group col-lg-6">
-                                                 <label for="praticesname">Cost Center<span style="color:#CC0000;">*</span></label>
-                                                 @Html.DropDownList("txtccA", (SelectList)ViewBag.costalist, "Select Cost Center", new { @class = "form-control form-control-sm", id = "txtccA", @required = true })
-                                                 <div style="color:#CC0000;font-weight:400" id="ccaerror"></div>
-                                             </div>
-                                         </div>
-                                         <div class="row">
-                                             <div class="form-group col-lg-6">
-                                                 <label for="praticesname">Sub-Cost Center</label>
-
-                                                 <select id="txtccB" name="txtccB" class="form-control form-control-sm"></select>
-                                             </div>
-                                         </div>
-
-                                     </div>
-                                     <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
-
-
-                                     <div class="modal-footer">
-                                         <button type="button" class="btn saveBtn btn-sm" onclick="savecc();">Save</button>
-                                         <button type="button" class="btn clBtn btn-sm" onclick="closecc();">Close</button>
-
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
-                         <div id="editccmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
-
-                             <div class="modal-dialog modal-lg">
-
-                                 <!-- Modal content-->
-                                 <div class="modal-content">
-                                     <div class="modal-header">
-
-                                         <h4 class="modal-title">Edit Cost Center</h4>
-                                     </div>
-                                     <div class="modal-body ">
-
-
-                                         <div class="row">
-                                             <div class="form-group col-lg-6">
-                                                 <label for="praticesname">Cost Center<span style="color:#CC0000;">*</span></label>
-                                                 @Html.DropDownList("txteditccA", (SelectList)ViewBag.costalist, "Select Cost center", new { @class = "form-control form-control-sm", id = "txteditccA", @required = true })
-                                                 <div style="color:#CC0000;font-weight:400" id="editccaerror"></div>
-                                             </div>
-                                         </div>
-                                         <div class="row">
-                                             <div class="form-group col-lg-6">
-                                                 <label for="praticesname">Sub-Cost Center</label>
-
-                                                 <select id="txteditccB" name="txteditccB" class="form-control form-control-sm"></select>
-                                             </div>
-                                         </div>
-
-                                     </div>
-                                     <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
-
-
-                                     <div class="modal-footer">
-                                         <button type="button" class="btn saveBtn" onclick="saveeditcc();">Save</button>
-                                         <button type="button" class="btn clBtn" onclick="closeeditcc();">Close</button>
-
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
-
-                         <div id="AssetGroupmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
-
-                             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-
-                                 <!-- Modal content-->
-                                 <div class="modal-content">
-                                     <div class="modal-header">
-                                         <h4>Select Asset Group</h4>
-
-                                     </div>
-                                     <div class="modal-body ">
-                                         <div class="row">
-                                             <div class="col-md-12">
-                                                 <button type="button" id="mnuExpand" value=""
-                                                         class="btn addBtn btn-sm mb-0 btn-tooltip"
-                                                         data-bs-toggle="tooltip" data-bs-placement="top" title="Expand all locations"
-                                                         @*data-delay='{"show":"2000", "hide":"1500"}'*@>
-                                                     <i class="fa fa-expand" aria-hidden="true"></i>
-
-                                                 </button>
-                                                 <button type="button" id="mnuContract" value=""
-                                                         class="btn btn-sm xtraBtn pull-left m-1 order-1"
-                                                         data-bs-toggle="tooltip" data-bs-placement="top" title="Contract all locations"
-                                                         @*data-delay='{"show":"2000", "hide":"1500"}'*@>
-                                                     <i class="fa fa-compress" aria-hidden="true"></i>
-
-                                                 </button>
-
-                                                 <button type="button" id="mnuSelectGroup" value="New Practice"
-                                                         class="btn btn-sm saveBtn pull-left m-1 order-1"
-                                                         data-bs-toggle="tooltip" data-bs-placement="top" title="Select a node first
+                                    <div class='input-group date' id='dtEndDate'>
+                                        <input type='date' id="txtEndDate"
+                                               name="ToDate"
+                                               class="form-control form-control-sm" required />
+                                    </div>
+                                    <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="praticesname" style="position:relative;color:black;z-index:1000000;">Batch Description</label>
+                                    <div class='input-group date'>
+                                        <input id="BatchDescription" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="row my-5">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+
+                                            <input id="IsBatchOpen" type="checkbox" class="largerCheckbox" />
+                                            @*<input type="checkbox" />*@
+                                            <label class="form-check-label" for="IsBatchOpen">Batch Open</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <input id="IsRangeSelect" type="checkbox" class="largerCheckbox" />
+                                    @*<input type="checkbox" />*@
+                                    <label class="form-check-label" for="IsRangeSelect">Select Range</label>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="range" class="custom-range" id="minvalue" min="0" max="100" value="0" />
+
+                        <input type="range" class="custom-range" id="maxvalue" min="0" max="100" value="0" />
+
+                        <p>
+                            <label for="amount">Price range:</label>
+                            <label id="minvaluelbl"></label>
+                            <label>-</label>
+                            <label id="maxvaluelbl"></label>
+                            @*<input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;" />*@
+
+                        </p>
+
+                        @*<div id="slider-range"></div>
+            <label for="amount">Range:</label>
+            <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">*@
+
+                        @*<label id="idvalue"></label>
+            <input type="range" class="progress" step="1" id="idrange" min="0" max="1000" value="0" /
+
+                        @*<div id="slider-range"></div>
+            <label for="min">Min Value:</label>
+            <input type="text" id="min" name="min" readonly>
+            <label for="max">Max Value:</label>
+            <input type="text" id="max" name="max" readonly>*@
+                        
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="table-responsive">
+                                    <table width="100%" class="table table-striped table-bordered table-hover" id="rangetable">
+
+                                        <thead>
+                                            <tr>
+                                                <td>
+                                                    Srno
+                                                </td>
+
+                                                <td>
+                                                    Start Value
+                                                </td>
+                                                <td>
+                                                    End Value
+                                                </td>
+                                                <td align="center">
+                                                    Edit
+                                                </td>
+                                                <td align="center">
+                                                    Delete
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                Location List for Batch
+                            </div>
+                        </div>
+                        <div class="row my-1">
+                            <div class="col-md-12">
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-sm nBtn" id="btnAddloc"
+                                            data-toggle="modal">
+                                        Add Location
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="table-responsive">
+                                    <table width="100%" class="table table-striped table-bordered table-hover" id="tbllocation">
+                                        <thead>
+                                            <tr>
+                                                <td>
+                                                    Srno
+                                                </td>
+                                                <td hidden>
+                                                    locaid
+                                                </td>
+                                                <td hidden>
+                                                    locbid
+                                                </td>
+                                                <td hidden>
+                                                    loccid
+                                                </td>
+                                                <td>
+                                                    Location
+                                                </td>
+                                                <td>
+                                                    Sub Location
+                                                </td>
+                                                <td>
+                                                    Sub SubLocation
+                                                </td>
+                                                <td align="center">
+                                                    Edit
+                                                </td>
+                                                <td align="center">
+                                                    Delete
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    CostCenter List for Batch
+                                </div>
+                            </div>
+                            <div class="row my-1">
+                                <div class="col-md-12">
+                                    <div class="pull-right">
+                                        <button type="button" class="btn btn-sm nBtn" id="btnAddCC"
+                                                data-toggle="modal">
+                                            Add CostCenter
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive">
+                                        <table width="100%" class="table table-striped table-bordered table-hover" id="tblcostcenter">
+
+                                            <thead>
+                                                <tr>
+                                                    <td>
+                                                        Srno
+                                                    </td>
+                                                    <td hidden>
+                                                        ccaid
+                                                    </td>
+                                                    <td hidden>
+                                                        ccbid
+                                                    </td>
+                                                    <td>
+                                                        Cost Center
+                                                    </td>
+                                                    <td>
+                                                        Sub-Cost Center
+                                                    </td>
+                                                    <td align="center">
+                                                        Edit
+                                                    </td>
+                                                    <td align="center">
+                                                        Delete
+                                                    </td>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*<div class="row">
+                    <div class="col-md-12">
+                        Group List for Batch
+                    </div>
+                </div>
+                <div class="row my-1">
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <button type="button" onclick="ShowGroups();" class="btn btn-sm nBtn btn btn-link">Select Group</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="table-responsive">
+                        <table width="100%" class="table table-striped table-bordered table-hover" id="BatchCompanyGroups">
+                            <thead>
+                                <tr>
+
+                                    <td>
+                                        Srno
+                                    </td>
+                                    <td>
+                                        A Group
+                                    </td>
+                                    <td>
+                                        B Group
+                                    </td>
+                                    <td>
+                                        C Group
+                                    </td>
+
+                                    <td>
+                                        D Group
+                                    </td>
+
+                                    <td align="center">
+                                        Edit
+                                    </td>
+                                    <td align="center">
+                                        Delete
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+
+                    </div>
+                </div>*@
+
+                            @*<div class="row">
+                    <div class="col-md-12">
+                        Amount Capitalization for Batch
+                    </div>
+                </div>
+                <div class="row my-1">
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <button type="button" class="btn btn-sm nBtn" onclick="ShowRange();" id=""
+                                    data-toggle="modal">
+                                Add Amount Capitalization
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table width="100%" class="table table-striped table-bordered table-hover" id="rangetable">
+
+                                <thead>
+                                    <tr>
+                                        <td>
+                                            Srno
+                                        </td>
+
+                                        <td>
+                                            Start Value
+                                        </td>
+                                        <td>
+                                            End Value
+                                        </td>
+                                        <td align="center">
+                                            Edit
+                                        </td>
+                                        <td align="center">
+                                            Delete
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>*@
+
+
+
+
+
+                            <div class="modal-footer">
+
+                                <button type="button" class="btn btn-sm saveBtn" id="ocationmodal" style="margin-right:5px;" data-bs-dismiss="modal" onclick="closeloc()">Close</button>
+                                <button type="button" class="btn btn-sm clBtn" id="btnSave">Save</button>
+                                @*<button type="button" class="btn btn-default" onclick="close()">Close</button>*@
+                            </div>
+                        </div>
+
+                        <div id="locationmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
+
+                            <div class="modal-dialog modal-lg">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+
+                                        <h4 class="modal-title">Add Location</h4>
+                                    </div>
+                                    <div class="modal-body ">
+
+                                        <div class="row">
+                                            <div class="form-group col-lg-6">
+                                                <label for="praticesname">Location A<span style="color:#CC0000;">*</span></label>
+                                                @Html.DropDownList("txtlocA", (SelectList)ViewBag.alocationlist, "Select Location", new { @class = "form-control", id = "txtlocA", @required = true })
+                                                <div style="color:#CC0000;font-weight:400" id="locaerror"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-lg-6">
+                                                <label for="praticesname">Location B</label>
+
+                                                <select id="txtlocB" name="txtlocB" class="form-control"></select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-lg-6">
+                                                <label for="praticesname">Location C</label>
+                                                <select id="txtlocC" name="txtlocC" class="form-control"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
+
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-sm saveBtn" id="btnClose" data-bs-dismiss="modal" onclick="closeeditloc();">Close</button>
+
+                                        <button type="button" class="btn btn-sm clBtn" onclick="saveloc();">Save</button>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="editlocationmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
+
+                            <div class="modal-dialog modal-lg">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+
+                                        <h4 class="modal-title">Edit Location</h4>
+                                    </div>
+                                    <div class="modal-body ">
+
+
+                                        <div class="row">
+                                            <div class="form-group col-lg-6">
+                                                <label for="praticesname">Location A<span style="color:#CC0000;">*</span></label>
+                                                @Html.DropDownList("txteditlocA", (SelectList)ViewBag.alocationlist, "Select Location", new { @class = "form-control", id = "txteditlocA", @required = true })
+                                                <div style="color:#CC0000;font-weight:400" id="editlocaerror"></div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-lg-6">
+                                                <label for="praticesname">Location B</label>
+
+                                                <select id="txteditlocB" name="txteditlocB" class="form-control"></select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-lg-6">
+                                                <label for="praticesname">Location C</label>
+                                                <select id="txteditlocC" name="txteditlocC" class="form-control"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
+
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-sm saveBtn" data-bs-dismiss="modal" onclick="closeeditloc();">Close</button>
+                                        <button type="button" class="btn btn-sm clBtn" onclick="saveeditloc();">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div id="ccmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
+
+                            <div class="modal-dialog modal-lg">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+
+                                        <h4 class="modal-title">Add Cost Center</h4>
+                                    </div>
+                                    <div class="modal-body ">
+
+
+                                        <div class="row">
+                                            <div class="form-group col-lg-6">
+                                                <label for="praticesname">Cost Center<span style="color:#CC0000;">*</span></label>
+                                                @Html.DropDownList("txtccA", (SelectList)ViewBag.costalist, "Select Cost Center", new { @class = "form-control form-control-sm", id = "txtccA", @required = true })
+                                                <div style="color:#CC0000;font-weight:400" id="ccaerror"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-lg-6">
+                                                <label for="praticesname">Sub-Cost Center</label>
+
+                                                <select id="txtccB" name="txtccB" class="form-control form-control-sm"></select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
+
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn saveBtn btn-sm" onclick="savecc();">Save</button>
+                                        <button type="button" class="btn clBtn btn-sm" onclick="closecc();">Close</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="editccmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
+
+                            <div class="modal-dialog modal-lg">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+
+                                        <h4 class="modal-title">Edit Cost Center</h4>
+                                    </div>
+                                    <div class="modal-body ">
+
+
+                                        <div class="row">
+                                            <div class="form-group col-lg-6">
+                                                <label for="praticesname">Cost Center<span style="color:#CC0000;">*</span></label>
+                                                @Html.DropDownList("txteditccA", (SelectList)ViewBag.costalist, "Select Cost center", new { @class = "form-control form-control-sm", id = "txteditccA", @required = true })
+                                                <div style="color:#CC0000;font-weight:400" id="editccaerror"></div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-lg-6">
+                                                <label for="praticesname">Sub-Cost Center</label>
+
+                                                <select id="txteditccB" name="txteditccB" class="form-control form-control-sm"></select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>
+
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn saveBtn" onclick="saveeditcc();">Save</button>
+                                        <button type="button" class="btn clBtn" onclick="closeeditcc();">Close</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="AssetGroupmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
+
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4>Select Asset Group</h4>
+
+                                    </div>
+                                    <div class="modal-body ">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <button type="button" id="mnuExpand" value=""
+                                                        class="btn addBtn btn-sm mb-0 btn-tooltip"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Expand all locations"
+                                                        @*data-delay='{"show":"2000", "hide":"1500"}'*@>
+                                                    <i class="fa fa-expand" aria-hidden="true"></i>
+
+                                                </button>
+                                                <button type="button" id="mnuContract" value=""
+                                                        class="btn btn-sm xtraBtn pull-left m-1 order-1"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Contract all locations"
+                                                        @*data-delay='{"show":"2000", "hide":"1500"}'*@>
+                                                    <i class="fa fa-compress" aria-hidden="true"></i>
+
+                                                </button>
+
+                                                <button type="button" id="mnuSelectGroup" value="New Practice"
+                                                        class="btn btn-sm saveBtn pull-left m-1 order-1"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Select a node first
                                 to Add new location"
-                                                         @*data-delay='{"show":"2000", "hide":"1500"}'*@>
-                                                     <i class="fa fa-check" aria-hidden="true"></i>
-                                                     Select Group
-                                                 </button>
+                                                        @*data-delay='{"show":"2000", "hide":"1500"}'*@>
+                                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                                    Select Group
+                                                </button>
 
-                                                 <button type="button" id="mnuAdd" value="New Practice"
-                                                         class="btn btn-sm clBtn pull-left m-1 order-1"
-                                                         data-bs-toggle="tooltip" data-bs-placement="top" title="Select a node first
+                                                <button type="button" id="mnuAdd" value="New Practice"
+                                                        class="btn btn-sm clBtn pull-left m-1 order-1"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Select a node first
                                 to Add new location" data-bs-dismiss="modal"
-                                                         @*data-delay='{"show":"2000", "hide":"1500"}'*@>
-                                                     <i class="fa window-close" aria-hidden="true"></i>
-                                                     Close
-                                                 </button>
+                                                        @*data-delay='{"show":"2000", "hide":"1500"}'*@>
+                                                    <i class="fa window-close" aria-hidden="true"></i>
+                                                    Close
+                                                </button>
 
-                                             </div>
+                                            </div>
 
-                                         </div>
-                                         <div class="row">
-                                             <div class="col-md-12">
-                                                 <div class="tree m-1">
-                                                     <div class="row" style=" overflow-y: scroll;max-height:initial;">
-                                                         <div class="col-md-12">
-                                                             <div id="jstree">
-                                                                 <!-- in this example the tree is populated from inline HTML -->
-                                                                 <ul>
-                                                                     <li>
-                                                                         Root node 1
-                                                                         <ul>
-                                                                             <li id="child_node_1">Child node 1</li>
-                                                                             <li>Child node 2</li>
-                                                                         </ul>
-                                                                     </li>
-                                                                     <li style="margin-top:3px">Root node 2</li>
-                                                                 </ul>
-                                                             </div>
-                                                         </div>
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                         </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="tree m-1">
+                                                    <div class="row" style=" overflow-y: scroll;max-height:initial;">
+                                                        <div class="col-md-12">
+                                                            <div id="jstree">
+                                                                <!-- in this example the tree is populated from inline HTML -->
+                                                                <ul>
+                                                                    <li>
+                                                                        Root node 1
+                                                                        <ul>
+                                                                            <li id="child_node_1">Child node 1</li>
+                                                                            <li>Child node 2</li>
+                                                                        </ul>
+                                                                    </li>
+                                                                    <li style="margin-top:3px">Root node 2</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                     </div>
-                                 </div>
+                                    </div>
+                                </div>
 
-                             </div>
-                         </div>
-
-                         <div id="AmtCapitalizationmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
-
-                             <div class="modal-dialog modal-lg">
-
-                                 <!-- Modal content-->
-                                 <div class="modal-content">
-                                     <div class="modal-header">
-
-                                         <h4 class="modal-title">Add Amount Capitalization</h4>
-                                     </div>
-                                     <div class="modal-body ">
-                                         @*<table style="width:100%;">
-            <tr>
-                <td>
-                    <label for="praticesname">Min Value</label>
-                    <input type="text" id="txtminsalary" class="form-control" required />
-                </td>
-                <td><div id="slider" style="width:430px;"></div></td>
-                <td>
-                <label for="praticesname">Max Value</label>
-                <input type="text" id="txtmaxsalary" class="form-control" required />
-            </td>
-            </tr>
-        </table>*@
-                                         Amount:<span id="spanOutput"></span>
-                                         <br /><br />
-
-                                         <div id="slider"></div>
-                                         <label for="txtminage">Minimum Value</label>
-                                         <input type="text" id="txtminage" />
-                                         <br />
-                                         <label for="txtmaxage">Maximum Value</label>
-                                         <input type="text" id="txtmaxage" />
-
-                                     </div>
-                                     @*<div><label style="font-size:12px;color:red ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>*</span> Mandatory Fields</label></div>*@
+                            </div>
+                        </div>
 
 
-                                     <div class="modal-footer">
-                                         <button type="button" class="btn saveBtn btn-sm" onclick="saveAmt();">Save</button>
-                                         <button type="button" class="btn clBtn btn-sm" onclick="closeAmt();">Close</button>
-
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
 
 
-                     }
-                     @*</div>*@
+                    }
+                    @*</div>*@
 
-                 </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+@*<script>
+    const progress = document.querySelector('.progress');
+
+    progress.addEventListener('input', function () {
+        const value = this.value;
+
+        this.style.background = `linear-gradient(to right, #82CFD0 0%, #82CFD0 ${value - 100}%, #fff ${value - 50}%, white 100%)`
+
+    })
+</script>*@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="~/Content/assets/js/jquery.validate.js"></script>
+
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <script type="text/javascript">
 
    $('#btnSave').click(function (event) {
@@ -632,7 +666,9 @@
 });
     var srnocnt = 1;
     var srnocntt = 1;
-var srnocccnt = 1;
+    var srnocccnt = 1;
+    var srnoacnt = 1;
+
 var srnoassetfcnt = 1;
 var editindex = 0;
 
@@ -656,9 +692,10 @@ var editindex = 0;
 //    },
 //});
 
-var EndDateStatus = false;
-var StartDateStatus = false;
-var isbatchopenflag = "no";
+    var EndDateStatus = false;
+    var StartDateStatus = false;
+    var isbatchopenflag = "no";
+
     $(document).ready(function ($) {
 
         $("#frmNewEmp").submit(function (e) {
@@ -1250,12 +1287,22 @@ function deletesubbatch(obj) {
                 var Tablecostcenterb = $td.eq(2).html();
                 //alert(Tablelocationb)
 
-
-                return {
+                  return {
 
                     CCid: Tablecostcentera,
                     SCCid: Tablecostcenterb
+                }
+              }).get();
 
+            var tblrange = $('#rangetable tbody tr:has(td)').map(function (i, v) {
+                var $td = $('td', this);
+                var Minvalue = $td.eq(1).html();
+                var Maxvalue = $td.eq(2).html();
+
+                return {
+
+                    minvalue: Minvalue,
+                    maxvalue: Maxvalue
                 }
             }).get();
 
@@ -1264,7 +1311,7 @@ function deletesubbatch(obj) {
             var Strstartdate = moment($('#txtStartDate').val()).format("YYYY-MM-DD");
             var StrEnddate = moment($('#txtEndDate').val()).format("YYYY-MM-DD");
             // var Editid = '@ViewBag.ID';
-          //  debugger;
+            debugger;
             var postdata =
             {
                 "FromDate": Strstartdate,
@@ -1273,6 +1320,7 @@ function deletesubbatch(obj) {
                 "IsBatchOpen": IsBatchOpen,
                 "locationlist": tbllocation,
                 "costcenterlist": tblcostcenter,
+                "rangelist": tblrange,
                 //"ID": Editid
 
                 //"LoanViewModellist": tbl
@@ -1564,7 +1612,7 @@ function deletesubbatch(obj) {
     }
 
 }
-        //--------------------------------------------------Company Groups-----------------------------------------------------
+        //-------------------------------------Company Groups-----------------------------------------------------
         //function ShowGroups() {
         //    $('#AssetGroupmodal').modal('show');
         //}
@@ -1576,11 +1624,47 @@ function deletesubbatch(obj) {
         $('#AmtCapitalizationmodal').modal('show');
     }
 
+    function saveRange() {
+
+            AddRangetotable();
+
+            $('#AmtCapitalizationmodal').modal('hide');
+    }
+
+    function AddRangetotable() {
+
+        var minvalue = $('#minvalue').val();
+        var maxvalue = $("#maxvalue").val();
+
+      
+        $('#rangetable').last().append('<tr><td>' + srnoacnt + '</td><td>' + minvalue + '</td>'
+            + '<td>' + maxvalue + '</td >'
+            + '<td align="center"> <button type="button" class="btn modBtn btn-sm"'
+            + ' aria-label="Left Align"'
+            + 'onclick="EditAM(this,' + srnoacnt + ');">'
+            + '  <i class="fa fa-edit"></i>Edit</button></td><td align="center"> <button type="button" class="btn btn-sm delBtn"'
+            + ' aria-label="Center Align"'
+            + 'onclick="deleteAM(this);">'
+            + '  <i class="fa fa-remove"></i>Delete   </button></td></tr > ');
+
+        srnocntt++;
+    }
+
+
     function closeAmt() {
             var url = '@Url.Action("Add", "Batch")';
             window.location = url;
 
         $('#AmtCapitalizationmodal').modal('hide');
+    }
+
+    function deleteAM(obj) {
+        swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
+            if (result == true) {
+                $(obj).parent().parent().remove();
+                srnocntt - 1;
+            }
+        });
     }
 
     //$(document).ready(function(){
@@ -1609,11 +1693,88 @@ function deletesubbatch(obj) {
     //});
 
     $(document).ready(function () {
-        $('#slider').slider();
+
 
 
     });
 
+    //$(function () {
+    //    $("#slider-range").slider({
+    //        range: true, // Enable the range slider
+    //        min: 0,     // Minimum value
+    //        max: 100,   // Maximum value
+    //        values: [15000, 750000], // Initial range values
+    //        slide: function (event, ui) {
+    //            $("#min").val(ui.values[0]); // Update the min input
+    //            $("#max").val(ui.values[1]); // Update the max input
+    //        }
+    //    });
+
+    //    // Initialize the min and max input values
+    //    $("#min").val($("#slider-range").slider("values", 0));
+    //    $("#max").val($("#slider-range").slider("values", 1));
+    //});
+
+    $('#minvalue').change(function ()
+    {
+        let minvalue = $('#minvalue').val()
+        let maxvalue = $('#maxvalue').val()
+
+        $('#minvaluelbl').text(minvalue);
+
+        if (minvalue > maxvalue)
+        {
+            $('#maxvalue').val(minvalue);
+            $('#maxvaluelbl').text(minvalue);
+        }
+
+    });
+    $('#maxvalue').change(function ()
+    {
+        let minvalue = $('#minvalue').val();
+        let maxvalue = $('#maxvalue').val();
+
+        $('#maxvaluelbl').text(maxvalue);
+
+        if (minvalue > maxvalue)
+        {
+            $('#minvalue').val(maxvalue);
+            $('#minvaluelbl').text(maxvalue);
+        }
+    });
+
+    //$(function () {
+    //    $('#slider-range').slider({
+    //        range: true,
+    //        min : 0,
+    //        max : 100,
+    //        values: [75, 300],
+    //        slide: function (event, ui) {
+    //            $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+
+    //        }
+    //    });
+
+    //});
+
+
 
 </script>
 
+
+
+<script>
+    //$(function () {
+    //    $("#slider-range").slider({
+    //        range: true,
+    //        min: 0,
+    //        max: 100,
+    //        values: [25, 75],
+    //        slide: function (event, ui) {
+    //            $("#amount").val(ui.values[0] + " - " + ui.values[1]);
+    //        }
+    //    });
+    //    $("#amount").val($("#slider-range").slider("values", 0) +
+    //        " - " + $("#slider-range").slider("values", 1));
+    //});
+</script>
