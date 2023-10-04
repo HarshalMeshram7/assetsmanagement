@@ -49,16 +49,16 @@
                                 <div class="form-group">
                                     <label for="praticesname">To Date</label>
                                     @*<div class='input-group date' id='dtStartDate'>*@
-                                    <input type="date" id="txtEndtDate" class="form-control" required />
+                                    @*<input type="date" id="txtEndtDate" class="form-control" required />*@
                                     @*<div class="input-group-addon">
                         <span class="input-group-text"><span class="fa fa-calendar"></span></span>
                                                 </div>*@
 
-                                    @*<div class='input-group date' id='dtEndDate'>
+                                    <div class='input-group date' id='dtEndDate'>
                                         <input type='date' id="txtEndDate"
                                                name="ToDate"
                                                class="form-control form-control-sm" required />
-                                    </div>*@
+                                    </div>
                                     <div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>
                                 </div>
                             </div>
@@ -112,40 +112,6 @@
                             <label>-</label>
                             <label id="maxvaluelbl"></label>
                         </p>
-
-
-
-                        @*<div id="slider-range"></div>
-            <label for="amount">Range:</label>
-            <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">*@
-
-                        @*<label id="idvalue"></label>
-            <input type="range" class="progress" step="1" id="idrange" min="0" max="1000" value="0" /
-
-                        @*<div id="slider-range"></div>
-            <label for="min">Min Value:</label>
-            <input type="text" id="min" name="min" readonly>
-            <label for="max">Max Value:</label>
-            <input type="text" id="max" name="max" readonly>*@
-
-                        <!--<div class="row">
-        <div class="col-md-5">
-            <div class="form-group">
-                <div id="slide-range"  >
-                    <p class="amount">-->
-                        @*price:<input type="text" id="amount" disabled="" />*@
-                        <!--<label for="amount">Price range:</label><br />
-                            start value:<input type="text" id="minvalutxt" /><br />
-                            end value:<input type="text" id="maxvalutxt" />
-
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>-->
-
-
-
 
                         @*<div class="row">
                 <div class="col-lg-12">
@@ -338,60 +304,10 @@
                     </div>
                 </div>*@
 
-                            @*<div class="row">
-                    <div class="col-md-12">
-                        Amount Capitalization for Batch
-                    </div>
-                </div>
-                <div class="row my-1">
-                    <div class="col-md-12">
-                        <div class="pull-right">
-                            <button type="button" class="btn btn-sm nBtn" onclick="ShowRange();" id=""
-                                    data-toggle="modal">
-                                Add Amount Capitalization
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="table-responsive">
-                            <table width="100%" class="table table-striped table-bordered table-hover" id="rangetable">
-
-                                <thead>
-                                    <tr>
-                                        <td>
-                                            Srno
-                                        </td>
-
-                                        <td>
-                                            Start Value
-                                        </td>
-                                        <td>
-                                            End Value
-                                        </td>
-                                        <td align="center">
-                                            Edit
-                                        </td>
-                                        <td align="center">
-                                            Delete
-                                        </td>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>*@
-
-
-
-
-
                             <div class="modal-footer">
 
                                 <button type="button" class="btn btn-sm saveBtn" id="ocationmodal" style="margin-right:5px;" data-bs-dismiss="modal" onclick="closeloc()">Close</button>
-                                <button type="button" class="btn btn-sm clBtn" id="btnSave">Save</button>
+                                <button type="button" class="btn btn-sm clBtn" onclick="console.log('yyy')" id="btnSave">Save</button>
                                 @*<button type="button" class="btn btn-default" onclick="close()">Close</button>*@
                             </div>
                         </div>
@@ -488,7 +404,6 @@
                                 </div>
                             </div>
                         </div>
-
 
 
                         <div id="ccmodal" class="modal fade" role="dialog" style="height: 600px;" data-backdrop="static" data-keyboard="false">
@@ -726,6 +641,7 @@ var editindex = 0;
     var EndDateStatus = false;
     var StartDateStatus = false;
     var isbatchopenflag = "no";
+    var israngeselectflag = "no";
 
     $(document).ready(function ($) {
 
@@ -738,27 +654,15 @@ var editindex = 0;
 
         $('#IsBatchOpen').change(function () {
             if ($(this).prop("checked")) {
-                isbatchopenflag = "yes";
 
+                isbatchopenflag = "yes";
             }
             else {
-
                 isbatchopenflag = "no";
             }
         });
 
-});
-
-//$('#IsBatchOpen').change(function () {
-//    if ($(this).prop("checked")) {
-//        isbatchopenflag = "yes";
-
-//    }
-//    else {
-
-//        isbatchopenflag = "no";
-//    }
-//});
+    });
 
 //--------------------loc---------------------------------------------------------------
 
@@ -1241,8 +1145,9 @@ function deletesubbatch(obj) {
             //var startdate = $('#txtStartDate').val();
             //var enddate = $('#txtEndDate').val();
 
-            var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
-            var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
+        var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
+        var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
+
        // debugger;
 
     if (new Date(startdate) >= new Date(enddate)) {
@@ -1269,9 +1174,12 @@ function deletesubbatch(obj) {
 
         var StartDate = $('#txtStartDate').val();
         var EndDate = $('#txtEndDate').val();
+        var Minval = $('#selectMinValue').val();
+        var Maxval = $('#selectMaxValue').val();
 
         var BatchDescription = $('#BatchDescription').val();
         var IsBatchOpen = isbatchopenflag;
+        var IsRangeSelect = israngeselectflag;
        // debugger;
 
         if (StartDate == '') {
@@ -1296,7 +1204,6 @@ function deletesubbatch(obj) {
                 var $td = $('td', this);
                 var Tablelocationa = $td.eq(1).html();
                 //alert(Tablelocationa)
-
                 var Tablelocationb = $td.eq(2).html();
                 //alert(Tablelocationb)
                 var Tablelocationc = $td.eq(3).html();
@@ -1325,33 +1232,39 @@ function deletesubbatch(obj) {
                 }
               }).get();
 
-            var tblrange = $('#rangetable tbody tr:has(td)').map(function (i, v) {
-                var $td = $('td', this);
-                var Minvalue = $td.eq(1).html();
-                var Maxvalue = $td.eq(2).html();
+            //var tblrange = $('#rangetable tbody tr:has(td)').map(function (i, v) {
+            //    var $td = $('td', this);
+            //    var Minvalue = $td.eq(1).html();
+            //    var Maxvalue = $td.eq(2).html();
 
-                return {
+            //    return {
 
-                    minvalue: Minvalue,
-                    maxvalue: Maxvalue
-                }
-            }).get();
+            //        minvalue: Minvalue,
+            //        maxvalue: Maxvalue
+            //    }
+            //}).get();
 
            // debugger;
 
             var Strstartdate = moment($('#txtStartDate').val()).format("YYYY-MM-DD");
             var StrEnddate = moment($('#txtEndDate').val()).format("YYYY-MM-DD");
+            var minvalue = $('#minvalue').val();
+            var maxvalue = $("#maxvalue").val();
+            
             // var Editid = '@ViewBag.ID';
-            debugger;
+          //  debugger;
             var postdata =
             {
                 "FromDate": Strstartdate,
                 "ToDate": StrEnddate,
                 "BatchDescription": BatchDescription,
                 "IsBatchOpen": IsBatchOpen,
+                "IsRangeSelect": IsRangeSelect,
+                "Minimum_Value": minvalue,
+                "Maximum_Value": maxvalue,
                 "locationlist": tbllocation,
                 "costcenterlist": tblcostcenter,
-                "rangelist": tblrange,
+               // "rangelist": tblrange,
                 //"ID": Editid
 
                 //"LoanViewModellist": tbl
@@ -1369,8 +1282,8 @@ function deletesubbatch(obj) {
             }).then((result) => {
                 if (result == true) { *@
 
-                    var ControllerURL = '@Url.Action("Add", "Batch")';
-
+                   var ControllerURL = '@Url.Action("Add", "Batch")';
+           // debugger;
                     //alert(ControllerURL);
                     var returnURL = '@Url.Action("Index", "Batch")';
                     $.ajax({
@@ -1651,43 +1564,43 @@ function deletesubbatch(obj) {
 
     //---------------------------------------AmountCapitalization-----------------------------------
 
-    function ShowRange() {
-        $('#AmtCapitalizationmodal').modal('show');
-    }
+    //function ShowRange() {
+    //    $('#AmtCapitalizationmodal').modal('show');
+    //}
 
-    function saveRange() {
+    //function saveRange() {
 
-            AddRangetotable();
+    //        AddRangetotable();
 
-            $('#AmtCapitalizationmodal').modal('hide');
-    }
+    //        $('#AmtCapitalizationmodal').modal('hide');
+    //}
 
-    function AddRangetotable() {
+    //function AddRangetotable() {
 
-        var minvalue = $('#minvalue').val();
-        var maxvalue = $("#maxvalue").val();
-
-
-        $('#rangetable').last().append('<tr><td>' + srnoacnt + '</td><td>' + minvalue + '</td>'
-            + '<td>' + maxvalue + '</td >'
-            + '<td align="center"> <button type="button" class="btn modBtn btn-sm"'
-            + ' aria-label="Left Align"'
-            + 'onclick="EditAM(this,' + srnoacnt + ');">'
-            + '  <i class="fa fa-edit"></i>Edit</button></td><td align="center"> <button type="button" class="btn btn-sm delBtn"'
-            + ' aria-label="Center Align"'
-            + 'onclick="deleteAM(this);">'
-            + '  <i class="fa fa-remove"></i>Delete   </button></td></tr > ');
-
-        srnoacnt++;
-    }
+    //    var minvalue = $('#minvalue').val();
+    //    var maxvalue = $("#maxvalue").val();
 
 
-    function closeAmt() {
+    //    $('#rangetable').last().append('<tr><td>' + srnoacnt + '</td><td>' + minvalue + '</td>'
+    //        + '<td>' + maxvalue + '</td >'
+    //        + '<td align="center"> <button type="button" class="btn modBtn btn-sm"'
+    //        + ' aria-label="Left Align"'
+    //        + 'onclick="EditAM(this,' + srnoacnt + ');">'
+    //        + '  <i class="fa fa-edit"></i>Edit</button></td><td align="center"> <button type="button" class="btn btn-sm delBtn"'
+    //        + ' aria-label="Center Align"'
+    //        + 'onclick="deleteAM(this);">'
+    //        + '  <i class="fa fa-remove"></i>Delete   </button></td></tr > ');
+
+    //    srnoacnt++;
+    //}
+
+
+    @*function closeAmt() {
             var url = '@Url.Action("Add", "Batch")';
             window.location = url;
 
         $('#AmtCapitalizationmodal').modal('hide');
-    }
+    }*@
 
     function deleteAM(obj) {
         swal({ title: "Are You Sure?", text: "You won't be able to revert this!", icon: "warning", buttons: true, dangerMode: true }).then((result) => {
@@ -1698,53 +1611,11 @@ function deletesubbatch(obj) {
         });
     }
 
-    //$(document).ready(function(){
-    //    var divslider = $('#slider');
-
-    //    divslider.slider({
-    //   // $('#slider').slider({
-    //        rang: true,
-    //        min: 0,
-    //        max: 50000,
-    //        values: [0, 1],
-    //        slide: function (event, ui) {
-    //            $('#txtminsalary').val(divslider.slider('values', 0));
-    //            $('#txtmaxsalary').val(divslider.slider('values', 1));
-    //        },
-    //        stop: function(event, ui){
-    //            $('#txtminsalary').val(ui.values[0]);
-    //            $('#txtmaxsalary').val(ui.values[1]);
-    //        }
-
-    //    });
-    //    $('#slider').animate({
-    //        backgroundColor: "green",
-    //        width: 500
-    //    }, 1000);
-    //});
-
     $(document).ready(function () {
 
 
 
     });
-
-    //$(function () {
-    //    $("#slider-range").slider({
-    //        range: true, // Enable the range slider
-    //        min: 0,     // Minimum value
-    //        max: 100,   // Maximum value
-    //        values: [15000, 750000], // Initial range values
-    //        slide: function (event, ui) {
-    //            $("#min").val(ui.values[0]); // Update the min input
-    //            $("#max").val(ui.values[1]); // Update the max input
-    //        }
-    //    });
-
-    //    // Initialize the min and max input values
-    //    $("#min").val($("#slider-range").slider("values", 0));
-    //    $("#max").val($("#slider-range").slider("values", 1));
-    //});
 
     $('#minvalue').change(function ()
     {
@@ -1808,43 +1679,7 @@ function deletesubbatch(obj) {
             $('#selectMinValue').val(selectmaxvalue);
         }
     });
-
-
-
-//    $('#IsRangeSelect').change(function () {
-//    if ($(this).prop("checked")) {
-//        IsRangeSelectflag = "yes";
-
-
-//    }
-//    else {
-
-//        IsRangeSelectflag = "no";
-
-//    }
-//});
-
-    //$(function () {
-    //    $('#slider-range').slider({
-    //        range: true,
-    //        min : 0,
-    //        max : 100,
-    //        values: [75, 300],
-    //        slide: function (event, ui) {
-    //            $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
-
-    //        }
-    //    });
-
-    //});
-
-
-
-
-
-
-
-    var IsRangeSelect = "no";
+  
     $(document).ready(function () {
 
         var checkbox = $("#IsRangeSelect");
@@ -1852,7 +1687,7 @@ function deletesubbatch(obj) {
         function enableOrDisableFunctionality() {
             if ($(this).prop("checked")) {
 
-                //IsRangeSelectflag = "yes";
+                israngeselectflag = "yes";
                 $("#minvalue").prop("disabled", false);
                 $("#maxvalue").prop("disabled", false);
                 $("#minvalue").val("0");
@@ -1864,7 +1699,7 @@ function deletesubbatch(obj) {
 
             } else {
 
-               // IsRangeSelectflag = "no";
+                israngeselectflag = "no";
                 $("#minvalue").prop("disabled", true);
                 $("#maxvalue").prop("disabled", true);
                 $("#selectMinValue").prop("disabled", true);
@@ -1879,42 +1714,3 @@ function deletesubbatch(obj) {
 
 
 </script>
-@*<script>
-    //$(function () {
-    //    $("#slider-range").slider({
-    //        range: true,
-    //        min: 0,
-    //        max: 100,
-    //        values: [25, 75],
-    //        slide: function (event, ui) {
-    //            $("#amount").val(ui.values[0] + " - " + ui.values[1]);
-    //        }
-    //    });
-    //    $("#amount").val($("#slider-range").slider("values", 0) +
-    //        " - " + $("#slider-range").slider("values", 1));
-    //});
-
-    var flatprice = function () {
-        if ($().slider) {
-            $(function () {
-                $("#slider-range").slider({
-                    range: true,
-                    min: 0,
-                    max: 100,
-                    values: [25, 75],
-                    slide: function (event, ui) {
-                        $("#amount").val("$" + ui.values[0] + " .00 " + "-" + "$" + ui.values[1] + ".00");
-                    }
-
-                });
-                $("#amount").val($("#slide-range").slider("values", 0) + "$" + "-" + $("#slide-range").slider("values", 1));
-            });
-        }
-
-
-
-
-    //    $("#amount").val($("#slider-range").slider("values", 0) +
-    //        " - " + $("#slider-range").slider("values", 1));
-    //});
-</script>*@

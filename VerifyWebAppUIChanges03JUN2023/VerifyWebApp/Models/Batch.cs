@@ -22,11 +22,21 @@ namespace VerifyWebApp.Models
         public DateTime ToDate { get; set; }
         public string IsBatchOpen { get; set; } //(Flag Y/N)
         public int ClientID { get; set; }
+        public string IsRangeSelect { get; set; }//(flag y/n)
+        public int Minimum_Value { get; set; }
+        public int Maximum_Value { get; set; }
+
 
         [NotMapped]
         public string str_fromdate { get; set; }
         [NotMapped]
         public string str_todate { get; set; }
+
+        [NotMapped]
+        public int Min_Value { get; set; }
+        [NotMapped]
+        public int Max_Value { get; set; }
+
         [NotMapped]
         public int Srno { get; set; }
 
@@ -40,8 +50,8 @@ namespace VerifyWebApp.Models
 
         [NotMapped]
         public int Srnoac { get; set; }
-        
-        public List<Subbatch> SubbatchTable3 { get; set; }
+
+       
 
         public string batchcode
         {

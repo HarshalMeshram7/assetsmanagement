@@ -16,7 +16,7 @@ namespace VerifyWebApp.ViewModel
 
             this.costcenterlist = new List<Subbatch>();
 
-            this.rangelist = new List<Subbatch>();
+            //this.rangelist = new List<Subbatch>();
         }
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
@@ -26,13 +26,19 @@ namespace VerifyWebApp.ViewModel
         public int ID { get; set; }
         public string str_FromDate { get; set; }
         public string str_ToDate { get; set; }
+        public string IsRangeSelect { get; set; }
+        public int Minimum_value{ get; set; }
+        public int Maximum_value { get; set; }
+
+        public int min_value { get; set; }
+        public int max_value { get; set; }
 
         public IEnumerable<Subbatch> locationlist { get; set; }
         // public IEnumerable<SubbatchTable> BatchViewModellist { get; set; }
 
         public IEnumerable<Subbatch> costcenterlist { get; set; }
 
-        public IEnumerable<Subbatch> rangelist { get; set; }
+       // public IEnumerable<Subbatch> rangelist { get; set; }
     }
 
     //public class SubbatchTable

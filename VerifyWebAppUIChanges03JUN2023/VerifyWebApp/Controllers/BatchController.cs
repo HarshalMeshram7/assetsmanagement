@@ -56,6 +56,9 @@ namespace VerifyWebApp.Controllers
                     item.Srno = srno;
                     item.str_fromdate = item.FromDate.ToString("dd/MM/yyyy");
                     item.str_todate = item.ToDate.ToString("dd/MM/yyyy");
+                    item.Min_Value = item.Minimum_Value;
+                    item.Max_Value = item.Maximum_Value;
+
                     srno++;
                 }
             }
@@ -285,22 +288,24 @@ namespace VerifyWebApp.Controllers
                     batchobj.ToDate = batchViewmodel.ToDate;
                     batchobj.BatchDescription = batchViewmodel.BatchDescription;
                     batchobj.IsBatchOpen = batchViewmodel.IsBatchOpen;
+                    batchobj.IsRangeSelect = batchViewmodel.IsRangeSelect;
+                    batchobj.Minimum_Value = batchViewmodel.Minimum_value;
+                    batchobj.Maximum_Value = batchViewmodel.Maximum_value;
                     batchobj.CreatedUserId = userid;
                     batchobj.CreatedDate = istDate;
                     batchobj.Companyid = companyid;
                     batchobj.ClientID = 1; // Mandar 09 APR 2022
-
+                    
+                  
+                    
                     db.Batchs.Add(batchobj);
                     db.SaveChanges();
 
                     //var batchid = db.Batchs.Max(x => x.ID);
                     var batchid = batchobj.ID;
-
                     
                     String sLocation = null;
                   
-
-
                     if (batchViewmodel.locationlist.Count() != 0)
                     {
                         foreach (var item in batchViewmodel.locationlist)
@@ -360,6 +365,7 @@ namespace VerifyWebApp.Controllers
                     {
 
                         //string SQL = "select * from tblassets where companyid = " + companyid;
+                       // string SQL = "select AssetID,assetno from tblassets where companyid = " + companyid;
                         //List<Assets> lstTempAssets = db.Database.SqlQuery<Assets>(SQL).ToList();
 
                         //foreach (Assets objAsset in lstTempAssets)
