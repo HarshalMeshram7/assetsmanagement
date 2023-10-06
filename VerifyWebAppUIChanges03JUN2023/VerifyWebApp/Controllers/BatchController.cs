@@ -56,8 +56,8 @@ namespace VerifyWebApp.Controllers
                     item.Srno = srno;
                     item.str_fromdate = item.FromDate.ToString("dd/MM/yyyy");
                     item.str_todate = item.ToDate.ToString("dd/MM/yyyy");
-                    item.Min_Value = item.Minimum_Value;
-                    item.Max_Value = item.Maximum_Value;
+                    item.Min_Value = item.MinimumValue;
+                    item.Max_Value = item.MaximumValue;
 
                     srno++;
                 }
@@ -284,30 +284,45 @@ namespace VerifyWebApp.Controllers
             {
                 try
                 {
+                    
                     batchobj.FromDate = batchViewmodel.FromDate;
                     batchobj.ToDate = batchViewmodel.ToDate;
                     batchobj.BatchDescription = batchViewmodel.BatchDescription;
                     batchobj.IsBatchOpen = batchViewmodel.IsBatchOpen;
-                    batchobj.IsRangeSelect = batchViewmodel.IsRangeSelect;
-                    batchobj.Minimum_Value = batchViewmodel.Minimum_value;
-                    batchobj.Maximum_Value = batchViewmodel.Maximum_value;
+                   // batchobj.IsRangeSelect = batchViewmodel.IsRangeSelect;
+                    batchobj.MinimumValue = batchViewmodel.MinimumValue;
+                    batchobj.MaximumValue = batchViewmodel.MaximumValue;
                     batchobj.CreatedUserId = userid;
                     batchobj.CreatedDate = istDate;
                     batchobj.Companyid = companyid;
                     batchobj.ClientID = 1; // Mandar 09 APR 2022
-                    
-                  
-                    
+
+
+
+
                     db.Batchs.Add(batchobj);
                     db.SaveChanges();
 
+                    String sMinMaxValueQuery = null;
+
+                    if (sMinMaxValueQuery == null)
+                    {
+  
+                        sMinMaxValueQuery = "AmountCapitalised > " + batchViewmodel.MinimumValue + " AND AmountCapitalised < " + batchViewmodel.MaximumValue;
+                    }
+
+
                     //var batchid = db.Batchs.Max(x => x.ID);
                     var batchid = batchobj.ID;
-                    
-                    String sLocation = null;
-                  
+
+                    String aLocation = null;
+                    String bLocation = null;
+                    String cLocation = null;
+
+
                     if (batchViewmodel.locationlist.Count() != 0)
                     {
+
                         foreach (var item in batchViewmodel.locationlist)
                         {
                             Subbatch subbatch = new Subbatch();
@@ -326,23 +341,31 @@ namespace VerifyWebApp.Controllers
                             {
                                 subbatch.LocAName = db.ALocations.Where(x => x.ID == item.LocAId && x.Companyid == companyid).FirstOrDefault().ALocationName;
                                 filterLocAID = item.LocAId;
-
-                                if (sLocation == null)
+                                
+                                if(aLocation == null)
                                 {
-                                    sLocation = "( LocAID = " + item.LocAId;
+                                    aLocation = "( LocAID = "+ item.LocAId + " )";
                                 }
                                 else
                                 {
-                                    sLocation = sLocation + " OR (LocAID = " + item.LocAId;
-
+                                    aLocation = aLocation + " or ( LocAID = "+ item.LocAId + " )";
                                 }
+
                             }
 
                             if (item.LocBId != 0)
                             {
                                 subbatch.LocBName = db.BLocations.Where(x => x.ID == item.LocBId && x.Companyid == companyid).FirstOrDefault().BLocationName;
                                 filterLocBID = item.LocBId;
-                                sLocation = sLocation + " AND LocBID = " + item.LocBId;
+                             
+                                if (bLocation == null)
+                                {
+                                    bLocation = "( LocBID = " + item.LocBId + " )";
+                                }
+                                else
+                                {
+                                    bLocation = bLocation + " or ( LocBID = " + item.LocBId + " )";
+                                }
 
                             }
 
@@ -350,15 +373,21 @@ namespace VerifyWebApp.Controllers
                             {
                                 subbatch.LocCName = db.CLocations.Where(x => x.ID == item.LocCId && x.Companyid == companyid).FirstOrDefault().CLocationName;
                                 filterLocCID = item.LocCId;
-                                sLocation = sLocation + " AND LocCID = " + item.LocCId ;
+                               
+                                if (cLocation == null)
+                                {
+                                    cLocation = " ( LocCID = " + item.LocCId + " )";
+                                }
+                                else
+                                {
+                                    cLocation = cLocation + " or ( LocCID = " + item.LocCId + " )";
+                                }
                             }
-                          
-                            sLocation = sLocation + ")";
 
                             db.SubBatchs.Add(subbatch);
 
                         }
-                        sLocation = "(" + sLocation + ")";
+ 
                         db.SaveChanges();
                     }
                     else // alll assets selected 
@@ -384,9 +413,8 @@ namespace VerifyWebApp.Controllers
                     }
 
                     //------------------------costcenterlist by mayuri--------------------------
-
-                    String sCostcenter = null;
-
+                    String aCostcenterr = null;
+                    String bCostcenterr = null;
 
                     if (batchViewmodel.costcenterlist.Count() != 0)
                     {
@@ -407,15 +435,15 @@ namespace VerifyWebApp.Controllers
                                 subbatch.CCDescription = db.ACostCenters.Where(x => x.ID == item.CCId && x.Companyid == companyid).FirstOrDefault().CCDescription;
                                 filterCCId = item.CCId;
 
-                                if(sCostcenter == null)
+                                if (aCostcenterr == null)
                                 {
-                                    sCostcenter = "( CCId = " + item.CCId;
+                                    aCostcenterr = "( CostCenterAID = " + item.CCId + " )";
                                 }
                                 else
                                 {
-                                    sCostcenter = sCostcenter + " OR ( CCId = " + item.CCId;
+                                    aCostcenterr = aCostcenterr + " or ( CostCenterAID = " + item.CCId + " )";
                                 }
-                                
+
                             }
                             
 
@@ -424,55 +452,83 @@ namespace VerifyWebApp.Controllers
                                 //both SCCDescription are not comming from same table.1st from subbatch.cs(tblsubbatch) and 2nd from ACostCenter.cs(tblacostcenter) 
                                 subbatch.SCCDescription = db.BCostCenters.Where(x => x.ID == item.SCCId && x.Companyid == companyid).FirstOrDefault().SCCDescription;
                                 filterSCCId = item.SCCId;
-                                sCostcenter = sCostcenter + " AND SCCId = " + item.SCCId + ")";
+                                //sCostcenter = sCostcenter + " AND SCCId = " + item.SCCId + ")";
+                                if (bCostcenterr == null)
+                                {
+                                    bCostcenterr = "( CostCenterBID = " + item.SCCId + " )";
+                                }
+                                else
+                                {
+                                    bCostcenterr = bCostcenterr + " or ( CostCenterBID = " + item.SCCId + " )";
+                                }
                             }
                             else
                             {
-                                sCostcenter = sCostcenter + ")";
+                             
                             }
 
                             db.SubBatchs.Add(subbatch);
 
                         }
-                        sCostcenter = "(" + sCostcenter + ")";
                         db.SaveChanges();
                     }
 
                   
-                    string SQL = "select AssetID,assetno from tblassets where companyid = " + companyid;
-
-                    if (sLocation != null)
+                    string SQL = "select * from tblassets where companyid = " + companyid;
+                    if (sMinMaxValueQuery != null)
                     {
-                        SQL = SQL + " AND " + sLocation;
+                        SQL = SQL + " AND " + sMinMaxValueQuery;
+
                     }
 
-                    if (sCostcenter != null)
+                    if (aLocation != null)
                     {
-                        SQL = SQL + " AND " + sCostcenter;
-
-                    }  
-                    //List<Assets> lstTempAssets = db.Database.SqlQuery<Assets>(SQL).ToList();
-
-                        //foreach (Assets objAsset in lstTempAssets)
-                        //{
-                        //    BatchAsset batchAssets = new BatchAsset();
-
-                        //    batchAssets.AssetID = objAsset.ID;
-                        //    batchAssets.assetno = objAsset.AssetNo;
-                        //    batchAssets.Companyid = companyid;
-                        //    batchAssets.BatchID = batchid;
-                        //    db.BatchAssets.Add(batchAssets);
-
-                        //}
-                        // db.SaveChanges();
+                        SQL = SQL + " AND (" + aLocation + ")";
+                    }
+                    if (bLocation != null)
+                    {
+                        SQL = SQL + " AND (" + bLocation + ")";
+                    }
+                    if (cLocation != null)
+                    {
+                        SQL = SQL + " AND (" + cLocation + ")";
+                    }
                     
 
-                     transaction.Commit();
+                    if (aCostcenterr != null)
+                    {
+                        SQL = SQL + " AND (" + aCostcenterr + ")";
+                    }
+                    if (bCostcenterr != null)
+                    {
+                        SQL = SQL + " AND (" + bCostcenterr + ")";
+                    }
+
+                   
+                    List<Assets> lstTempAssets = db.Database.SqlQuery<Assets>(SQL).ToList();
+
+                    foreach (Assets objAsset in lstTempAssets)
+                    {
+                        BatchAsset batchAssets = new BatchAsset();
+
+                        batchAssets.AssetID = objAsset.ID;
+                        batchAssets.assetno = objAsset.AssetNo;
+                        batchAssets.Companyid = companyid;
+                        batchAssets.BatchID = batchid;
+                        db.BatchAssets.Add(batchAssets);
+
+                    }
+                    db.SaveChanges();
+
+
+                    transaction.Commit();
                     return RedirectToAction("Index", "Batch");
                     //res.Data = "Success";
                     //return res;
 
                 }
+
+
                 catch (Exception ex)
                 {
                     string strError;
@@ -489,7 +545,9 @@ namespace VerifyWebApp.Controllers
 
 
         }
-
+        //At the time of creation of batch we filter the assets according to range of amountcapitalization ,
+        //list of location,list of costcenter and by groups where companyid=1.
+        //(range is from tblbatch and locationlist,costcenterlist and group from tblsubbatch)
         private DateTime ParseExact(string str_fromdate, string v, CultureInfo invariantCulture)
         {
             throw new NotImplementedException();
@@ -715,7 +773,7 @@ namespace VerifyWebApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateJsonAntiForgeryToken]
-        [ValidateJsonXssAttribute]
+        [ValidateJsonXssAttribute] 
         public ActionResult Edit(BatchViewmodel batchViewmodel)
         {
             int userid = 0;

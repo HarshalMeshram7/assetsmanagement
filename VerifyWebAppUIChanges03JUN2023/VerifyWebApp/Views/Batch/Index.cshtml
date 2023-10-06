@@ -96,9 +96,9 @@
 
                             <td>@Html.DisplayFor(modelitem => item.BatchDescription)</td>
                             <td>@Html.DisplayFor(modelitem => item.IsBatchOpen)</td>
-                            <td>@Html.DisplayFor(modelitem => item.IsRangeSelect)</td>
-                            <td>@Html.DisplayFor(modelitem => item.Min_Value)</td>
-                            <td>@Html.DisplayFor(modelitem => item.Max_Value)</td>
+                            @*<td>@Html.DisplayFor(modelitem => item.IsRangeSelect)</td>*@
+                            <td>@Html.DisplayFor(modelitem => item.MinimumValue)</td>
+                            <td>@Html.DisplayFor(modelitem => item.MaximumValue)</td>
 
                             <td align="center">
                                 <button type="button" class="btn modBtn btn-sm"
@@ -210,7 +210,5 @@
             }
         });
 
-        }
-
-
-    </script>
+    }
+ </script>

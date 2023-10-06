@@ -26,9 +26,9 @@ namespace VerifyWebApp.ViewModel
         public int ID { get; set; }
         public string str_FromDate { get; set; }
         public string str_ToDate { get; set; }
-        public string IsRangeSelect { get; set; }
-        public int Minimum_value{ get; set; }
-        public int Maximum_value { get; set; }
+        //public string IsRangeSelect { get; set; }
+        public int MinimumValue{ get; set; }
+        public int MaximumValue { get; set; }
 
         public int min_value { get; set; }
         public int max_value { get; set; }
