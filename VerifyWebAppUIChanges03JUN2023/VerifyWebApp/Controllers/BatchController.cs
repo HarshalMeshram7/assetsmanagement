@@ -44,8 +44,8 @@ namespace VerifyWebApp.Controllers
                 return RedirectToAction("CompanySelection", "Company");
             }
 
-            List<Batch> lstbatch = new List<Batch>();
             int srno = 1;
+            List<Batch> lstbatch = new List<Batch>();
             try
             {
 
@@ -290,8 +290,8 @@ namespace VerifyWebApp.Controllers
                     batchobj.BatchDescription = batchViewmodel.BatchDescription;
                     batchobj.IsBatchOpen = batchViewmodel.IsBatchOpen;
                    // batchobj.IsRangeSelect = batchViewmodel.IsRangeSelect;
-                    batchobj.MinimumValue = batchViewmodel.MinimumValue;
-                    batchobj.MaximumValue = batchViewmodel.MaximumValue;
+                    batchobj.MinimumValue = batchViewmodel.MinimumValue.ToString();
+                    batchobj.MaximumValue = batchViewmodel.MaximumValue.ToString();
                     batchobj.CreatedUserId = userid;
                     batchobj.CreatedDate = istDate;
                     batchobj.Companyid = companyid;

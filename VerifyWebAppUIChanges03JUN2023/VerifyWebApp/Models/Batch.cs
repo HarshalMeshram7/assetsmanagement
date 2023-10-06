@@ -22,9 +22,9 @@ namespace VerifyWebApp.Models
         public DateTime ToDate { get; set; }
         public string IsBatchOpen { get; set; } //(Flag Y/N)
         public int ClientID { get; set; }
-        //public string IsRangeSelect { get; set; }//(flag y/n)
-        public int MinimumValue { get; set; }
-        public int MaximumValue { get; set; }
+        
+        public string MinimumValue { get; set; }
+        public string MaximumValue { get; set; }
 
 
         [NotMapped]
@@ -33,9 +33,9 @@ namespace VerifyWebApp.Models
         public string str_todate { get; set; }
 
         [NotMapped]
-        public int Min_Value { get; set; }
+        public string Min_Value { get; set; }
         [NotMapped]
-        public int Max_Value { get; set; }
+        public string Max_Value { get; set; }
 
         [NotMapped]
         public int Srno { get; set; }

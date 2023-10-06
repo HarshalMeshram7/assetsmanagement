@@ -30,8 +30,7 @@ namespace VerifyWebApp.ViewModel
         public int MinimumValue{ get; set; }
         public int MaximumValue { get; set; }
 
-        public int min_value { get; set; }
-        public int max_value { get; set; }
+
 
         public IEnumerable<Subbatch> locationlist { get; set; }
         // public IEnumerable<SubbatchTable> BatchViewModellist { get; set; }
