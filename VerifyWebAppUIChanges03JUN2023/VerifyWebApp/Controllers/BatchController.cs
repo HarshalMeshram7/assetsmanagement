@@ -825,6 +825,8 @@ namespace VerifyWebApp.Controllers
                     batchobj.ToDate = batchViewmodel.ToDate;
                     batchobj.BatchDescription = batchViewmodel.BatchDescription;
                     batchobj.IsBatchOpen = batchViewmodel.IsBatchOpen;
+                    batchobj.MinimumValue = batchViewmodel.MinimumValue.ToString();
+                    batchobj.MaximumValue = batchViewmodel.MaximumValue.ToString();
                     batchobj.Modified_Userid = userid;
                     batchobj.ModifiedDate = istDate;
                     batchobj.Companyid = companyid;
@@ -832,6 +834,12 @@ namespace VerifyWebApp.Controllers
                     db.Entry(batchobj).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
 
+                    String sMinMaxValueQuery = null;
+
+                    if (sMinMaxValueQuery == null)
+                    {
+                        sMinMaxValueQuery = "AmountCapitalised > " + batchViewmodel.MinimumValue + " AND AmountCapitalised < " + batchViewmodel.MaximumValue;
+                    }
 
                     List<Subbatch> slist = new List<Subbatch>();
                     //List<Subbatch> clistt = new List<Subbatch>();
@@ -842,14 +850,16 @@ namespace VerifyWebApp.Controllers
                     db.SaveChanges();
 
                     // var batchid = batchobj.ID;
-                    String sLocation = null;
+                   // String sLocation = null;
+                    String aLocation = null;
+                    String bLocation = null;
+                    String cLocation = null;
 
                     if (batchViewmodel.locationlist.Count() != 0)
                     {
                         Subbatch subbatch = new Subbatch();
                         foreach (var item in batchViewmodel.locationlist)
                         {
-
                             subbatch.BatchId = batchViewmodel.ID;
                           //  subbatch.Srno = item.Srno;
                             subbatch.LocAId = item.LocAId;
@@ -869,39 +879,51 @@ namespace VerifyWebApp.Controllers
                             {
                                 subbatch.LocAName = db.ALocations.Where(x => x.ID == item.LocAId && x.Companyid == companyid).FirstOrDefault().ALocationName;
                                 filterLocAID = item.LocAId;
-                                if (sLocation == null)
+                                if (aLocation == null)
                                 {
-                                    sLocation = "( LocAID = " + item.LocAId;
+                                    aLocation = "( LocAID = " + item.LocAId + " )";
                                 }
                                 else
                                 {
-                                    sLocation = sLocation + " OR (LocAID = " + item.LocAId;
-
+                                    aLocation = aLocation + " or ( LocAID = " + item.LocAId + " )";
                                 }
                             }
                             if (item.LocBId != 0)
                             {
                                 subbatch.LocBName = db.BLocations.Where(x => x.ID == item.LocBId && x.Companyid == companyid).FirstOrDefault().BLocationName;
                                 filterLocBID = item.LocBId;
-                                sLocation = sLocation + " AND LocBID = " + item.LocBId;
+                                if (bLocation == null)
+                                {
+                                    bLocation = "( LocBID = " + item.LocBId + " )";
+                                }
+                                else
+                                {
+                                    bLocation = bLocation + " or ( LocBID = " + item.LocBId + " )";
+                                }
                             }
                             if (item.LocCId != 0)
                             {
                                 subbatch.LocCName = db.CLocations.Where(x => x.ID == item.LocCId && x.Companyid == companyid).FirstOrDefault().CLocationName;
                                 filterLocCID = item.LocCId;
-                                sLocation = sLocation + " AND LocCID = " + item.LocCId;
-                            }
-                            sLocation = sLocation + " )";
 
+                                if (cLocation == null)
+                                {
+                                    cLocation = " ( LocCID = " + item.LocCId + " )";
+                                }
+                                else
+                                {
+                                    cLocation = cLocation + " or ( LocCID = " + item.LocCId + " )";
+                                }
+                            }                          
                             db.SubBatchs.Add(subbatch); 
-                        }
-                        sLocation = "(" + sLocation + ")";
+                        }                       
                         db.SaveChanges();
                     }
 
 
                     // ---------------------------------------------edit save by mayuri
-                    String sCostcenter = null;
+                    String aCostcenterr = null;
+                    String bCostcenterr = null;
 
                     if (batchViewmodel.costcenterlist.Count() != 0)
                     {
@@ -924,13 +946,13 @@ namespace VerifyWebApp.Controllers
                             {
                                 subbatch2.CCDescription = db.ACostCenters.Where(x => x.ID == item.CCId && x.Companyid == companyid).FirstOrDefault().CCDescription;
                                 filterCCId = item.CCId;
-                                if (sCostcenter == null)
+                                if (aCostcenterr == null)
                                 {
-                                    sCostcenter = "( CCId = " + item.CCId;
+                                    aCostcenterr = "( CostCenterAID = " + item.CCId + " )";
                                 }
                                 else
                                 {
-                                    sCostcenter = sCostcenter + " OR ( CCId = " + item.CCId;
+                                    aCostcenterr = aCostcenterr + " or ( CostCenterAID = " + item.CCId + " )";
                                 }
                             }
                             if (item.SCCId != 0)
@@ -938,29 +960,52 @@ namespace VerifyWebApp.Controllers
                                 //both SCCDescription are not comming from same table.1st from subbatch.cs(tblsubbatch) and 2nd from ACostCenter.cs(tblacostcenter) 
                                 subbatch2.SCCDescription = db.BCostCenters.Where(x => x.ID == item.SCCId && x.Companyid == companyid).FirstOrDefault().SCCDescription;
                                 filterSCCId = item.SCCId;
-                                sCostcenter = sCostcenter + " AND SCCId = " + item.SCCId + " )";
+                                if (bCostcenterr == null)
+                                {
+                                    bCostcenterr = "( CostCenterBID = " + item.SCCId + " )";
+                                }
+                                else
+                                {
+                                    bCostcenterr = bCostcenterr + " or ( CostCenterBID = " + item.SCCId + " )";
+                                }
                             }
                             else
                             {
-                                sCostcenter = sCostcenter + " )";
+                               
                             }
 
                             db.SubBatchs.Add(subbatch2);
                         }
-                        sCostcenter = "(" + sCostcenter + ")";
+                      
                         db.SaveChanges();
                     }
-                    string SQL = "select AssetID,assetno from tblassets where companyid = " + companyid;
-
-                    if (sLocation != null)
+                    string SQL = "select * from tblassets where companyid = " + companyid;
+                    if (sMinMaxValueQuery != null)
                     {
-                        SQL = SQL + " AND " + sLocation;
+                        SQL = SQL + " AND " + sMinMaxValueQuery;
                     }
 
-                    if (sCostcenter != null)
+                    if (aLocation != null)
                     {
-                        SQL = SQL + " AND " + sCostcenter;
+                        SQL = SQL + " AND (" + aLocation + ")";
+                    }
+                    if (bLocation != null)
+                    {
+                        SQL = SQL + " AND (" + bLocation + ")";
+                    }
+                    if (cLocation != null)
+                    {
+                        SQL = SQL + " AND (" + cLocation + ")";
+                    }
 
+
+                    if (aCostcenterr != null)
+                    {
+                        SQL = SQL + " AND (" + aCostcenterr + ")";
+                    }
+                    if (bCostcenterr != null)
+                    {
+                        SQL = SQL + " AND (" + bCostcenterr + ")";
                     }
 
                     transaction.Commit();

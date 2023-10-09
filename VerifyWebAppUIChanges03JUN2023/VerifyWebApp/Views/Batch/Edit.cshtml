@@ -29,11 +29,7 @@
                     <div class="row">
                         <div class="d-sm-flex justify-content-between hborder">
                             <div class="htitle"> <b>Edit Batch</b> </div>
-                            @*<div class="col-lg-12">
-                                    <div class="row justify-content-md-center title">
-                                        <strong> <h4>Edit Batch</h4></strong>
-                                    </div>
-                                </div>*@
+                            
                         </div>
                     </div>
 
@@ -42,19 +38,15 @@
                             <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for="praticesname">From Date</label>
-                                    <!--<div class='input-group date' id='dtStartDate'>
-                <input type="date" id="txtStartDate" class="form-control" required />-->
-                                    @*<div class="input-group-addon">
-                          <span class="input-group-text"><span class="fa fa-calendar"></span></span>
-                    </div>*@
+                                
                                     @Html.TextBoxFor(m => m.FromDate, "{0:yyyy-MM-dd}", new
-                               {
-                                   @class = "form-control form-control-sm",
-                                   @tabindex = "5",
-                                   required = "required",
-                                   type = "date",
-                                   id = "txtStartDate"
-                               })
+                                    {
+                                       @class = "form-control form-control-sm",
+                                       @tabindex = "5",
+                                       required = "required",
+                                       type = "date",
+                                       id = "txtStartDate"
+                                   })
                                 </div>
                             </div>
                             @*<div style="color:#CC0000;font-weight:400" id="startdateerror">Select Date</div>*@
@@ -63,22 +55,15 @@
 
                                     <label for="praticesname">To Date</label>
 
-                                    <!--<div class='input-group date' id='dtEndDate'>
-                <input type='date' id="txtEndDate" class="form-control" required />-->
-                                    @*<div class="input-group-addon">
-                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
-                    </div>*@
-
-
 
                                     @Html.TextBoxFor(m => m.ToDate, "{0:yyyy-MM-dd}", new
-                         {
-                             @class = "form-control form-control-sm",
-                             @tabindex = "5",
-                             required = "required",
-                             type = "date",
-                             id = "txtEndDate"
-                         })
+                                     {
+                                         @class = "form-control form-control-sm",
+                                         @tabindex = "5",
+                                         required = "required",
+                                         type = "date",
+                                         id = "txtEndDate"
+                                     })
                                     @*<div style="color:#CC0000;font-weight:400" id="enddateerror">Select Date</div>*@
                                 </div>
                             </div>
@@ -87,14 +72,13 @@
                             <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for="praticesname">Batch Description</label>
-                                    <!--<div class='input-group date'>
-                <input id="BatchDescription" class="form-control" type="text"/>-->
+                                   
                                     @Html.TextBoxFor(m => m.BatchDescription, new
-                               {
-                                        @class = "form-control",
-                                   required = "required",
-                                   id = "BatchDescription"
-                               })
+                                    {
+                                       @class = "form-control",
+                                       required = "required",
+                                       id = "BatchDescription"
+                                    })
 
                                 </div>
                             </div>
@@ -104,13 +88,7 @@
                                     <label for="praticesname" class="form-group">Isbatchopen </label>&nbsp;&nbsp;
 
                                     <input id="IsBatchOpen" type="checkbox" class="largerCheckbox" />
-                                    @*@Html.TextBoxFor(m => m.IsBatchOpen, new
-                    {
-                        @class = "form-control",
-                        required = "required",
-                        id = "IsBatchOpen"
-                     })*@
-
+                                                      
                                 </div>
                             </div>
                         </div>
@@ -224,11 +202,7 @@
                                                             <button type="button" class="btn btn-sm delBtn" aria-label="Left Align" onclick="deleteloc(this);">
                                                                 <i class="fa fa-remove"></i>Delete
                                                             </button>
-                                                            @*<button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" onclick="Delete(@item.ID);">
-                                                <i class="fa fa-remove"></i>Delete
-                                            </button>*@
-
-                                                        </td>
+                                                                                        </td>
                                                     </tr>
 
 
@@ -249,7 +223,7 @@
                         <div class="row my-1">
                             <div class="col-md-12">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-sm nBtn" onclick="addcostcenter()" id="btnAddCC"
+                                    <button type="button" class="btn btn-sm nBtn" id="btnAddCC"
                                             data-toggle="modal">
                                         Add CostCenter
                                     </button>
@@ -319,13 +293,9 @@
                                                             <button type="button" class="btn btn-sm delBtn" aria-label="Left Align" onclick="deletecc(this);">
                                                                 <i class="fa fa-remove"></i>Delete
                                                             </button>
-                                                            @*<button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" onclick="Delete(@item.ID);">
-                                                <i class="fa fa-remove"></i>Delete
-                                            </button>*@
-
+                                                          
                                                         </td>
                                                     </tr>
-
 
                                                 }
                                             }
@@ -663,8 +633,10 @@
     $(document).ready(function () {
 
         var checkbox = $("#IsRangeSelect");
-        if ('@ViewBag.MaxmumValue' != null ) {
+        if ('@ViewBag.MaxmumValue' != null) {
+
             $("#IsRangeSelect").prop("checked", true);
+            israngeselectflag = "yes";
             $("#minvalue").val(@ViewBag.MinmumValue);
             $("#maxvalue").val(@ViewBag.MaxmumValue);
             $("#minvalue").prop("disabled", false);
@@ -677,10 +649,8 @@
         }
         else {
             $("#IsRangeSelect").prop("checked", false);
+            israngeselectflag = "no";
         }
-
-
-
 
         //function enableOrDisableFunctionality() {
         //    if ($(this).prop("checked")) {
@@ -734,16 +704,18 @@
 
         $('#IsRangeSelect').change(function () {
 
-            let IsRangeSelect = $("#IsRangeSelect").val
+            let IsRangeSelect = $("#IsRangeSelect").val();
 
 
             if (IsRangeSelect == "yes") {
+                israngeselectflag = "yes";
                 $("#minvalue").prop("disabled", false);
                 $("#maxvalue").prop("disabled", false);
                 $("#selectMinValue").prop("disabled", false);
                 $("#selectMaxValue").prop("disabled", false);
 
             } else {
+                israngeselectflag = "no";
                 $("#minvalue").prop("disabled", true);
                 $("#maxvalue").prop("disabled", true);
                 $("#selectMinValue").prop("disabled", true);
@@ -822,10 +794,6 @@
         });
 
     });
-
-
-
-
 
 
 //-------------------
@@ -993,214 +961,227 @@
     }
 
      function SaveData()
- {
-     var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-     var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
-     //var startdate = $('#txtStartDate').val();
-     //var enddate = $('#txtEndDate').val();
-     //var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
-     //var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
+     {
+             var startdate = moment($("#txtStartDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+             var enddate = moment($("#txtEndDate").val(), 'DD/MM/YYYY').format('YYYY-MM-DD');
+             //var startdate = $('#txtStartDate').val();
+             //var enddate = $('#txtEndDate').val();
+             //var startdate = moment($("#txtStartDate").val()).format('YYYY-MM-DD');
+             //var enddate = moment($("#txtEndDate").val()).format('YYYY-MM-DD');
 
-     if (new Date(startdate) >= new Date(enddate)) {
-         swal("Alert", "To Date must be greater than From Date", "warning");
-     }
-     else {
+             if (new Date(startdate) >= new Date(enddate)) {
+                 swal("Alert", "To Date must be greater than From Date", "warning");
+             }
+             else {
 
-         //var tbllocation = $('#tbllocation tbody tr:has(td)').map(function (i, v) {
-         //    var $td = $('td', this);
-         //    var Tablelocationa = $td.eq(1).html();
-         //    alert(Tablelocationa)
+                 //var tbllocation = $('#tbllocation tbody tr:has(td)').map(function (i, v) {
+                 //    var $td = $('td', this);
+                 //    var Tablelocationa = $td.eq(1).html();
+                 //    alert(Tablelocationa)
 
-         //    var Tablelocationb = $td.eq(2).html();
-         //    alert(Tablelocationb)
-         //    var Tablelocationc = $td.eq(3).html();
+                 //    var Tablelocationb = $td.eq(2).html();
+                 //    alert(Tablelocationb)
+                 //    var Tablelocationc = $td.eq(3).html();
 
-         //    return {
+                 //    return {
 
-         //        LocAid: Tablelocationa,
-         //        LocBid: Tablelocationb,
-         //        LocCid: Tablelocationc
-         //    }
-         //}).get();
-         //alert(tbllocation)
-
-
-         var StartDate = $('#txtStartDate').val();
-         var EndDate = $('#txtEndDate').val();
-         var BatchDescription = $('#BatchDescription').val();
-         var IsBatchOpen = isbatchopenflag;
+                 //        LocAid: Tablelocationa,
+                 //        LocBid: Tablelocationb,
+                 //        LocCid: Tablelocationc
+                 //    }
+                 //}).get();
+                 //alert(tbllocation)
 
 
-         if (StartDate == '') {
-             StartDateStatus = false;
-         }
-         else {
-             //$('#assignError').hide();
-             StartDateStatus = true;
-         }
-         if (EndDate == '') {
-             EndDateStatus = false;
-         }
-         else {
-             //$('#assignError').hide();
-             EndDateStatus = true;
-         }
+                 var StartDate = $('#txtStartDate').val();
+                 var EndDate = $('#txtEndDate').val();
+                 var Minval = $('#selectMinValue').val();
+                 var Maxval = $('#selectMaxValue').val();
+                 var BatchDescription = $('#BatchDescription').val();
+                 var IsBatchOpen = isbatchopenflag;
+                // var IsRangeSelect = israngeselectflag;
 
-         debugger;
+                // debugger;
 
-         if (StartDateStatus == true && EndDateStatus == true)
-         {
-             $("#startdateerror,#enddateerror").hide();
 
-             var tbllocation = $('#tbllocation tbody tr:has(td)').map(function (i, v) {
-                 var $td = $('td', this);
-                 var Tablelocationa = $td.eq(1).html();
-                 //alert(Tablelocationa)
-
-                 var Tablelocationb = $td.eq(2).html();
-                 //alert(Tablelocationb)
-                 var Tablelocationc = $td.eq(3).html();
-
-                 return {
-
-                     LocAid: Tablelocationa,
-                     LocBid: Tablelocationb,
-                     LocCid: Tablelocationc
+                 if (StartDate == '') {
+                     StartDateStatus = false;
                  }
-             }).get();
-
-             //debugger;
-
-             var tblcostcenter = $('#tblcostcenter tbody tr:has(td)').map(function (i, v) {
-                 var $td = $('td', this);
-                 var Tablecostcentera = $td.eq(1).html();
-                 //alert(Tablelocationa)
-
-                 var Tablecostcenterb = $td.eq(2).html();
-                 //alert(Tablelocationb)
-
-
-                 return {
-
-                     CCid: Tablecostcentera,
-                     SCCid: Tablecostcenterb
-
+                 else {
+                     //$('#assignError').hide();
+                     StartDateStatus = true;
                  }
-             }).get();
+                 if (EndDate == '') {
+                     EndDateStatus = false;
+                 }
+                 else {
+                     //$('#assignError').hide();
+                     EndDateStatus = true;
+                 }
 
-             //var Strstartdate = moment(StartDate, "DD/MM/YYYY").format("YYYY-MM-DD");
-             //var StrEnddate = moment(EndDate, "DD/MM/YYYY").format("YYYY-MM-DD");
-             var Strstartdate = moment($('#txtStartDate').val()).format("YYYY-MM-DD");
-             var StrEnddate = moment($('#txtEndDate').val()).format("YYYY-MM-DD");
+              
 
-           //  debugger;
+                 if (StartDateStatus == true && EndDateStatus == true)
+                 {
+                     $("#startdateerror,#enddateerror").hide();
 
-             var StartDate = $('#txtStartDate').val();
-             var EndDate = $('#txtEndDate').val();
-         var Editid = '@ViewBag.ID';
-         var postdata =
-             {
-                 "FromDate": Strstartdate,
-                 "ToDate": StrEnddate,
-                 "BatchDescription": BatchDescription,
-                 "IsBatchOpen": IsBatchOpen,
-                 "locationlist": tbllocation,
-                 "costcenterlist": tblcostcenter,
-                 "ID": Editid
+                     var tbllocation = $('#tbllocation tbody tr:has(td)').map(function (i, v) {
+                         var $td = $('td', this);
+                         var Tablelocationa = $td.eq(1).html();
+                         //alert(Tablelocationa)
 
-                 //"LoanViewModellist": tbl
-             };
+                         var Tablelocationb = $td.eq(2).html();
+                         //alert(Tablelocationb)
+                         var Tablelocationc = $td.eq(3).html();
 
-         var form = $('#frmNewEmp');
-         var token = $('input[name="__RequestVerificationToken"]', form).val();
-         var headers = {};
-         headers['__RequestVerificationToken'] = token;
-         swal({
-             title: "Are You Sure?", text: "You won't be able to revert this!",
-             icon: "warning", buttons: true, dangerMode: true
-         }).then((result) => {
-             if (result == true) {
+                         return {
 
-                 var ControllerURL = '@Url.Action("Edit", "Batch")';
-
-                 //alert(ControllerURL);
-                 var returnURL = '@Url.Action("Index", "Batch")';
-                 $.ajax({
-                     type: 'POST',
-                     url: ControllerURL,
-                     contentType: "application/json",
-                     headers: headers,
-                     data: JSON.stringify(postdata),
-                     success: function (res) {
-                         if (res == "Failed") {
-                             swal("Alert", "You Cannot Add this Record", "warning");
+                             LocAid: Tablelocationa,
+                             LocBid: Tablelocationb,
+                             LocCid: Tablelocationc
                          }
-                         else {
-                             swal({ title: "Successfully Edited!", icon: "success" }).then((result) => {
-                                 if (result == true) {
-                                     window.location.replace(returnURL);
+                     }).get();
+
+
+                     var tblcostcenter = $('#tblcostcenter tbody tr:has(td)').map(function (i, v) {
+                         var $td = $('td', this);
+                         var Tablecostcentera = $td.eq(1).html();
+                         //alert(Tablelocationa)
+
+                         var Tablecostcenterb = $td.eq(2).html();
+                         //alert(Tablelocationb)
+
+
+                         return {
+
+                             CCid: Tablecostcentera,
+                             SCCid: Tablecostcenterb
+
+                         }
+                     }).get();
+
+                     //var Strstartdate = moment(StartDate, "DD/MM/YYYY").format("YYYY-MM-DD");
+                     //var StrEnddate = moment(EndDate, "DD/MM/YYYY").format("YYYY-MM-DD");
+                     var Strstartdate = moment($('#txtStartDate').val()).format("YYYY-MM-DD");
+                     var StrEnddate = moment($('#txtEndDate').val()).format("YYYY-MM-DD");
+
+                   //  debugger;
+
+                     var StartDate = $('#txtStartDate').val();
+                     var EndDate = $('#txtEndDate').val();
+                     var minvalue = $('#minvalue').val();
+                     var maxvalue = $("#maxvalue").val();
+
+                   //  debugger;
+
+                 var Editid = '@ViewBag.ID';
+                 var postdata =
+                     {
+                         "FromDate": Strstartdate,
+                         "ToDate": StrEnddate,
+                         "BatchDescription": BatchDescription,
+                         "IsBatchOpen": IsBatchOpen,
+                         "MinimumValue": minvalue,
+                         "MaximumValue": maxvalue,
+                         "locationlist": tbllocation,
+                         "costcenterlist": tblcostcenter,
+                         "ID": Editid
+
+                         //"LoanViewModellist": tbl
+                     };
+
+                   //  debugger;
+
+                 var form = $('#frmNewEmp');
+                 var token = $('input[name="__RequestVerificationToken"]', form).val();
+                 var headers = {};
+                 headers['__RequestVerificationToken'] = token;
+                 swal({
+                     title: "Are You Sure?", text: "You won't be able to revert this!",
+                     icon: "warning", buttons: true, dangerMode: true
+                 }).then((result) => {
+                     if (result == true) {
+
+                         var ControllerURL = '@Url.Action("Edit", "Batch")';
+
+                         //alert(ControllerURL);
+                         var returnURL = '@Url.Action("Index", "Batch")';
+                         $.ajax({
+                             type: 'POST',
+                             url: ControllerURL,
+                             contentType: "application/json",
+                             headers: headers,
+                             data: JSON.stringify(postdata),
+                             success: function (res) {
+                                 if (res == "Failed") {
+                                     swal("Alert", "You Cannot Add this Record", "warning");
                                  }
-                             });
-                         }
+                                 else {
+                                     swal({ title: "Successfully Edited!", icon: "success" }).then((result) => {
+                                         if (result == true) {
+                                             window.location.replace(returnURL);
+                                         }
+                                     });
+                                 }
 
-                     },
+                             },
 
-                     failure: function () { alert("Error"); }
+                             failure: function () { alert("Error"); }
 
-                 });
-             }
-             });
-             ////////////------------------
-             @*var ControllerURL = '@Url.Action("Edit", "Batch")';
+                         });
+                     }
+                     });
+                     ////////////------------------
+                     @*var ControllerURL = '@Url.Action("Edit", "Batch")';
 
-                   //  alert(ControllerURL);
-                    var returnURL = '@Url.Action("Index", "Batch")';
-                    $.ajax({
-                        type: 'POST',
-                        url: ControllerURL,
-                        contentType: "application/json",
-                        data: JSON.stringify(postdata),
-                        success: function (res) {
-                            if (res == "Failed") {
-                               // swal("Alert", "You Cannot Add this Record", "warning");
-                            }
-                            else {
-                               // swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
-                                    if (result == true) {
-                                        window.location.replace(returnURL);
+                           //  alert(ControllerURL);
+                            var returnURL = '@Url.Action("Index", "Batch")';
+                            $.ajax({
+                                type: 'POST',
+                                url: ControllerURL,
+                                contentType: "application/json",
+                                data: JSON.stringify(postdata),
+                                success: function (res) {
+                                    if (res == "Failed") {
+                                       // swal("Alert", "You Cannot Add this Record", "warning");
                                     }
-                               // });
-                            }
+                                    else {
+                                       // swal({ title: "Successfully Added!", icon: "success" }).then((result) => {
+                                            if (result == true) {
+                                                window.location.replace(returnURL);
+                                            }
+                                       // });
+                                    }
 
-                        },
+                                },
 
-                        failure: function () { alert("Error"); }
+                                failure: function () { alert("Error"); }
 
-                    });*@
+                            });*@
 
-         }//----------------------if ----
-         else
-         {
-             if (StartDateStatus == true && EndDateStatus == false) {
-                 $('#enddateerror').show();
-                 $('#startdateerror').hide();
+                 }
+                 else
+                 {
+                     if (StartDateStatus == true && EndDateStatus == false) {
+                         $('#enddateerror').show();
+                         $('#startdateerror').hide();
 
-             } else if (EndDateStatus == true && StartDateStatus == false) {
-                 $('#enddateerror').hide();
+                     } else if (EndDateStatus == true && StartDateStatus == false) {
+                         $('#enddateerror').hide();
 
-                 $('#startdateerror').show();
-             } else {
-                 $('#enddateerror').show();
+                         $('#startdateerror').show();
+                     } else {
+                         $('#enddateerror').show();
 
-                 $('#startdateerror').show();
+                         $('#startdateerror').show();
+
+                     }
+
+                     return false;
+                 }
 
              }
-
-             return false;
-         }///--------------------else---------------------------------
-
      }
-    }
 
      function closeloc() {
             var url = '@Url.Action("index", "Batch")';
@@ -1208,8 +1189,6 @@
 
     $('#locationmodal').modal('hide');
 }
-
-
 
     //---------------------------------------------Edit Loc--------------
 
@@ -1413,13 +1392,7 @@
         }
 
 
-
-
-
-
         //-------------------------------------------------------------------------------
-
-
 
 
     $("#btnAddCC").click(function () {
