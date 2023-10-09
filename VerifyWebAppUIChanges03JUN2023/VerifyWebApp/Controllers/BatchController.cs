@@ -602,6 +602,11 @@ namespace VerifyWebApp.Controllers
                 ViewBag.IsBatchOpen = batch.IsBatchOpen;
                 ViewBag.ID = id;
                 ViewBag.Assestlist = new SelectList(db.Assetss.Where(x => x.DisposalFlag == 0 && x.Companyid == companyid).OrderBy(e => e.AssetNo), "AssetNo", "AssetNo");
+                ViewBag.MinmumValue = batch.MinimumValue;
+                ViewBag.MaxmumValue = batch.MaximumValue;
+
+
+
                 int srno = 1;
                 foreach (Subbatch item in splist)
                 {

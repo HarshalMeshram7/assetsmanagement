@@ -43,10 +43,10 @@
                                 <div class="form-group">
                                     <label for="praticesname">From Date</label>
                                     <!--<div class='input-group date' id='dtStartDate'>
-                                    <input type="date" id="txtStartDate" class="form-control" required />-->
+                <input type="date" id="txtStartDate" class="form-control" required />-->
                                     @*<div class="input-group-addon">
-                                              <span class="input-group-text"><span class="fa fa-calendar"></span></span>
-                                        </div>*@
+                          <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                    </div>*@
                                     @Html.TextBoxFor(m => m.FromDate, "{0:yyyy-MM-dd}", new
                                {
                                    @class = "form-control form-control-sm",
@@ -64,10 +64,10 @@
                                     <label for="praticesname">To Date</label>
 
                                     <!--<div class='input-group date' id='dtEndDate'>
-                                    <input type='date' id="txtEndDate" class="form-control" required />-->
+                <input type='date' id="txtEndDate" class="form-control" required />-->
                                     @*<div class="input-group-addon">
-                                        <span class="input-group-text"><span class="fa fa-calendar"></span></span>
-                                        </div>*@
+                    <span class="input-group-text"><span class="fa fa-calendar"></span></span>
+                    </div>*@
 
 
 
@@ -88,7 +88,7 @@
                                 <div class="form-group">
                                     <label for="praticesname">Batch Description</label>
                                     <!--<div class='input-group date'>
-                                    <input id="BatchDescription" class="form-control" type="text"/>-->
+                <input id="BatchDescription" class="form-control" type="text"/>-->
                                     @Html.TextBoxFor(m => m.BatchDescription, new
                                {
                                         @class = "form-control",
@@ -105,15 +105,40 @@
 
                                     <input id="IsBatchOpen" type="checkbox" class="largerCheckbox" />
                                     @*@Html.TextBoxFor(m => m.IsBatchOpen, new
-                                        {
-                                            @class = "form-control",
-                                            required = "required",
-                                            id = "IsBatchOpen"
-                                         })*@
+                    {
+                        @class = "form-control",
+                        required = "required",
+                        id = "IsBatchOpen"
+                     })*@
 
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <input id="IsRangeSelect" type="checkbox" class="largerCheckbox" />
+                                    @*<input type="checkbox" />*@
+                                    <label class="form-check-label" for="IsRangeSelect">Select Range</label>
+                                    @*@Html.CheckBoxFor(model => model.IsEnabled, new { id = "IsRangeSelect" })*@
+
+                                </div>
+                            </div>
+                        </div>
+                        <input type="range" class="custom-range" id="minvalue" style="width: 19%; color: #935757" min="0" max="100000000" value="0" />
+
+                        <input type="range" class="custom-range" id="maxvalue" style="width:19%" min="0" max="100000000" value="0" />
+
+                        <p>
+                            <input type="number" id="selectMinValue" placeholder="Min Value" />
+                            <input type="number" id="selectMaxValue" placeholder="Max Value" />
+                            <br />
+                            <label for="amount">Price range:</label>
+                            <label id="minvaluelbl"></label>
+                            <label>-</label>
+                            <label id="maxvaluelbl"></label>
+                        </p>
+
 
                         <div class="row">
                             <div class="col-md-12">
@@ -200,8 +225,8 @@
                                                                 <i class="fa fa-remove"></i>Delete
                                                             </button>
                                                             @*<button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" onclick="Delete(@item.ID);">
-                                                                    <i class="fa fa-remove"></i>Delete
-                                                                </button>*@
+                                                <i class="fa fa-remove"></i>Delete
+                                            </button>*@
 
                                                         </td>
                                                     </tr>
@@ -295,8 +320,8 @@
                                                                 <i class="fa fa-remove"></i>Delete
                                                             </button>
                                                             @*<button type="button" class="btn btn-danger btn-sm" aria-label="Left Align" onclick="Delete(@item.ID);">
-                                                                    <i class="fa fa-remove"></i>Delete
-                                                                </button>*@
+                                                <i class="fa fa-remove"></i>Delete
+                                            </button>*@
 
                                                         </td>
                                                     </tr>
@@ -637,6 +662,53 @@
 
     $(document).ready(function () {
 
+        var checkbox = $("#IsRangeSelect");
+        if ('@ViewBag.MaxmumValue' != null ) {
+            $("#IsRangeSelect").prop("checked", true);
+            $("#minvalue").val(@ViewBag.MinmumValue);
+            $("#maxvalue").val(@ViewBag.MaxmumValue);
+            $("#minvalue").prop("disabled", false);
+            $("#maxvalue").prop("disabled", false);
+            $("#selectMinValue").prop("disabled", false);
+            $("#selectMaxValue").prop("disabled", false);
+            $("#selectMinValue").val(@ViewBag.MinmumValue);
+            $("#selectMaxValue").val(@ViewBag.MaxmumValue);
+
+        }
+        else {
+            $("#IsRangeSelect").prop("checked", false);
+        }
+
+
+
+
+        //function enableOrDisableFunctionality() {
+        //    if ($(this).prop("checked")) {
+
+        //        israngeselectflag = "yes";
+        //        $("#minvalue").prop("disabled", false);
+        //        $("#maxvalue").prop("disabled", false);
+        //        $("#selectMinValue").prop("disabled", false);
+        //        $("#selectMaxValue").prop("disabled", false);
+               
+
+        //    } else {
+
+        //        israngeselectflag = "no";
+        //        $("#minvalue").prop("disabled", true);
+        //        $("#maxvalue").prop("disabled", true);
+        //        $("#selectMinValue").prop("disabled", true);
+        //        $("#selectMaxValue").prop("disabled", true);
+        //        //$("#amount").clearQueue();
+        //    }
+        //}
+        //enableOrDisableFunctionality();
+
+        //checkbox.change(enableOrDisableFunctionality);
+
+
+
+
         @* $("#txtStartDate").val('@ViewBag.FromDate');
         $("#txtEndDate").val('@ViewBag.ToDate');*@
         $("#BatchDescription").val('@ViewBag.BatchDescription');
@@ -660,7 +732,87 @@
             }
         });
 
-        //console.log('vvvv');
+        $('#IsRangeSelect').change(function () {
+
+            let IsRangeSelect = $("#IsRangeSelect").val
+
+
+            if (IsRangeSelect == "yes") {
+                $("#minvalue").prop("disabled", false);
+                $("#maxvalue").prop("disabled", false);
+                $("#selectMinValue").prop("disabled", false);
+                $("#selectMaxValue").prop("disabled", false);
+
+            } else {
+                $("#minvalue").prop("disabled", true);
+                $("#maxvalue").prop("disabled", true);
+                $("#selectMinValue").prop("disabled", true);
+                $("#selectMaxValue").prop("disabled", true);
+            }
+
+        });
+
+        $('#minvalue').change(function () {
+            let minvalue = $('#minvalue').val();
+            let maxvalue = $('#maxvalue').val();
+
+            $('#minvaluelbl').text(minvalue);
+            $('#selectMinValue').val(minvalue);
+
+
+            if (minvalue > maxvalue) {
+                $('#maxvalue').val(minvalue);
+                $('#maxvaluelbl').text(minvalue);
+                $('#selectMaxValue').val(minvalue);
+            }
+
+        });
+        $('#maxvalue').change(function () {
+            let minvalue = $('#minvalue').val();
+            let maxvalue = $('#maxvalue').val();
+
+            $('#maxvaluelbl').text(maxvalue);
+            $('#selectMaxValue').val(maxvalue);
+
+            if (minvalue > maxvalue) {
+                $('#minvalue').val(maxvalue);
+                $('#minvaluelbl').text(maxvalue);
+                $('#selectMinValue').val(maxvalue);
+            }
+        });
+
+
+        $('#selectMinValue').change(function () {
+            let selectminvalue = $('#selectMinValue').val();
+            let selectmaxvalue = $('#selectMaxValue').val();
+
+            $('#minvaluelbl').text(selectminvalue);
+            $('#minvalue').val(selectminvalue);
+
+
+            if (selectminvalue > selectmaxvalue) {
+                $('#selectMaxValue').val(selectminvalue);
+                $('#maxvaluelbl').text(selectminvalue);
+                $('#maxvalue').val(selectminvalue);
+            }
+        });
+
+        $('#selectMaxValue').change(function () {
+            let selectminvalue = $('#selectMinValue').val();
+            let selectmaxvalue = $('#selectMaxValue').val();
+
+            $('#maxvaluelbl').text(selectmaxvalue);
+            $('#maxvalue').val(selectmaxvalue);
+
+            if (selectminvalue > selectmaxvalue) {
+                $('#minvalue').val(selectmaxvalue);
+                $('#minvaluelbl').text(selectmaxvalue);
+                $('#selectMinValue').val(selectmaxvalue);
+            }
+        });
+
+
+
 
         $("#btnAddloc").click(function () {
             $('#locationmodal').modal('show');
