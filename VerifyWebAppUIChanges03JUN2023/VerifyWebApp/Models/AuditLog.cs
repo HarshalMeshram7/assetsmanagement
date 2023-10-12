@@ -23,11 +23,21 @@ namespace VerifyWebApp.Models
         public string oldvalue { get; set; }
         public string newvalue { get; set; }
 
+        [NotMapped]
+        public string str_fromdate { get; set; }
+        [NotMapped]
+        public string str_todate { get; set; }
+
+        [NotMapped]
+        public string Fromdatetodate { get { return str_fromdate + " -To- " + str_todate; } }
+
+
     }
 
     public class AuditRecord {
         public string column { get; set; }
         public string oldvalue { get; set; }
         public string newvalue { get; set; }
+       
     }
 }
