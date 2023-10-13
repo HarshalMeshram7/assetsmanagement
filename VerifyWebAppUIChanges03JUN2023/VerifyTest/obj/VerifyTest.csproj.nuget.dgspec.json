@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\AssetManagement\\AssetManagementLatest_3\\assetmanagement_latest\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj": {}
+    "D:\\AssetManagement\\AssetmanagementLatest_1\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj": {}
   },
   "projects": {
-    "D:\\AssetManagement\\AssetManagementLatest_3\\assetmanagement_latest\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj": {
+    "D:\\AssetManagement\\AssetmanagementLatest_1\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\AssetManagement\\AssetManagementLatest_3\\assetmanagement_latest\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj",
+        "projectUniqueName": "D:\\AssetManagement\\AssetmanagementLatest_1\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj",
         "projectName": "VerifyTest",
-        "projectPath": "D:\\AssetManagement\\AssetManagementLatest_3\\assetmanagement_latest\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj",
+        "projectPath": "D:\\AssetManagement\\AssetmanagementLatest_1\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj",
         "packagesPath": "C:\\Users\\Micro_Soft\\.nuget\\packages\\",
-        "outputPath": "D:\\AssetManagement\\AssetManagementLatest_3\\assetmanagement_latest\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\obj\\",
+        "outputPath": "D:\\AssetManagement\\AssetmanagementLatest_1\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

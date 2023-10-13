@@ -421,6 +421,7 @@
     <Compile Include="Validators\BGroupValidator.cs" />
     <Compile Include="Validators\CGroupValidator.cs" />
     <Compile Include="Validators\DGroupValidator.cs" />
+    <Compile Include="ViewModel\ActivityLogViewmodel.cs" />
     <Compile Include="ViewModel\AmcViewmodel.cs" />
     <Compile Include="DTO\AssetDTO.cs" />
     <Compile Include="ViewModel\AssetGroupViewmodel.cs" />
