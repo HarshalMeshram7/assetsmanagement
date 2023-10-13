@@ -270,6 +270,7 @@
     <Compile Include="BusinessLogic\LocationRepository.cs" />
     <Compile Include="BusinessLogic\SecurityToken.cs" />
     <Compile Include="Common\DateUtil.cs" />
+    <Compile Include="Controllers\ActivityLogController.cs" />
     <Compile Include="Controllers\AdminReportController.cs" />
     <Compile Include="Controllers\API\AccountsController.cs" />
     <Compile Include="Controllers\API\AppUserController.cs" />
@@ -1014,6 +1015,7 @@
     <Content Include="Views\Login\ResetUserPassword.cshtml" />
     <Content Include="Views\Asset\Partial_AssetList.cshtml" />
     <Content Include="Views\Shared\_LayoutSelectCompany.cshtml" />
+    <Content Include="Views\ActivityLog\ActivityLog_Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

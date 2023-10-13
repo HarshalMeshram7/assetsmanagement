@@ -1,9 +1,9 @@
-﻿
+﻿@model VerifyWebApp.BusinessLogic.AuditLog
+
 @{
     ViewBag.Title = "ActivityLog_Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 
 <div class="container-fluid py-4">
     <div class="row my-1">
@@ -12,7 +12,7 @@
                 <div class="card-header pb-0">
                     <div class="row">
                         <div class="d-sm-flex justify-content-between" style="border-bottom:groove">
-                            <div class="text-2xl"><b>Activity Log Report</b></div>
+                            <div class="text-2xl"><b>ActivityLog Report</b></div>
                         </div>
                     </div>
                 </div>
@@ -38,6 +38,7 @@
                         <div class="modal-footer">
                             @*<button type="button" class="btn btn-sm saveBtn" id="btngetreport">Show Report</button>*@
                             <button type="button" class="btn btn-sm saveBtn" style="margin-right:5px" id="btnGetExcelReport">Export Spreadsheet</button>
+                            <button type="button" class="btn btn-sm saveBtn" id="btnGetPdfReport">Export PDF</button>
                         </div>
                     }
                 </div>
@@ -71,17 +72,86 @@
             getExcelReport(fromdate, todate);
         });
 
-        //$('#btnGetPdfReport').click(function (e) {
-        //    e.preventDefault();
-        //    var fromdate = $('#Fromdate').val();
-        //    var todate = $('#Todate').val();
-        //    getPdfReport(fromdate, todate);
-        //});
+        $('#btnGetPdfReport').click(function (e) {
+            e.preventDefault();
+            var fromdate = $('#Fromdate').val();
+            var todate = $('#Todate').val();
+            getPdfReport(fromdate, todate);
+        });
     });
 
 
 
-  
-   
-    
+    function getExcelReport(fromdate, todate) {
+        fromdate = moment(fromdate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+        todate = moment(todate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+        var data = {
+            fromdate: fromdate,
+            todate: todate
+        };
+        var form = $('#frmNewEmp');
+        var token = $('input[name="__RequestVerificationToken"]', form).val();
+        var headers = {};
+        headers['__RequestVerificationToken'] = token;
+        var ControllerURL = '@Url.Action("ActivityLog_Index", "ActivityLog")';
+        var DownloadURL = '@Url.Action("Download", "ActivityLog")';
+
+        $.ajax({
+            type: 'POST',
+            url: ControllerURL,
+            contentType: 'application/json',
+            headers: headers,
+            data: JSON.stringify(data),
+            beforeSend: function() {
+                /*$('#progressbar').modal('show');*/
+            },
+            success: function(data) {
+                var fileurl = DownloadURL + '?fileGuid=' + data.FileGuid + '&filename=' + data.FileName;
+                window.location.href = fileurl;
+            },
+            error: function() {
+                alert('Error occurred during report generation.');
+            },
+            complete: function() {
+                $('#progressbar').modal('hide');
+            }
+        });
+    }
+
+    function getPdfReport(fromdate, todate) {
+        fromdate = moment(fromdate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+        todate = moment(todate, 'DD/MM/YYYY').format('YYYY-MM-DD');
+        var data = {
+            fromdate: fromdate,
+            todate: todate
+        };
+        var form = $('#frmNewEmp');
+        var token = $('input[name="__RequestVerificationToken"]', form).val();
+        var headers = {};
+        headers['__RequestVerificationToken'] = token;
+        var ControllerURL = '@Url.Action("ActivityLog_Index", "ActivityLog")';
+        var ControllerURL = '@Url.Action("GetPdfReport", "ActivityLog")';
+        var DownloadURL = '@Url.Action("Download", "ActivityLog")';
+
+        $.ajax({
+            type: 'POST',
+            url: ControllerURL,
+            contentType: 'application/json',
+            headers: headers,
+            data: JSON.stringify(data),
+            //beforeSend: function () {
+            //    $('#progressbar').modal('show');
+            //},
+            success: function (data) {
+                var fileurl = DownloadURL + '?fileGuid=' + data.FileGuid + '&filename=' + data.FileName;
+                window.location.href = fileurl;
+            },
+            error: function () {
+                alert('Error occurred during report generation.');
+            },
+            complete: function () {
+                $('#progressbar').modal('hide');
+            }
+        });
+    }
 </script>

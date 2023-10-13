@@ -166,24 +166,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Dell\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\Micro_Soft\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Asset_Management_New_21_08_2023\\assetmanagement_latest\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj",
+      "projectUniqueName": "D:\\AssetManagement\\AssetManagementLatest_3\\assetmanagement_latest\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj",
       "projectName": "VerifyTest",
-      "projectPath": "D:\\Asset_Management_New_21_08_2023\\assetmanagement_latest\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj",
-      "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-      "outputPath": "D:\\Asset_Management_New_21_08_2023\\assetmanagement_latest\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\obj\\",
+      "projectPath": "D:\\AssetManagement\\AssetManagementLatest_3\\assetmanagement_latest\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj",
+      "packagesPath": "C:\\Users\\Micro_Soft\\.nuget\\packages\\",
+      "outputPath": "D:\\AssetManagement\\AssetManagementLatest_3\\assetmanagement_latest\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\Micro_Soft\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -221,8 +220,7 @@
             "target": "Package",
             "version": "[3.16.1, )"
           }
-        },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.411\\RuntimeIdentifierGraph.json"
+        }
       }
     }
   }
