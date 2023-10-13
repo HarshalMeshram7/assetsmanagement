@@ -78,15 +78,18 @@ namespace VerifyWebApp.Controllers
                 string fromDate = FromDate.ToString("yyyy-MM-dd");
                 string todate = ToDate.ToString("yyyy-MM-dd");
 
-                
-                strSQL = " SELECT  `userid`, `eventid`, `trandate`, `recordtype`, `column`, `oldvalue`, `newvalue` FROM tblauditlog WHERE ";
-                strSQL = strSQL + " `trandate` >= " + "'" + fromDate + "'" + " AND `trandate` <= " + "'" + todate + "'";
+
+                //strSQL = " SELECT  `userid`, `eventid`, `trandate`, `recordtype`, `column`, `oldvalue`, `newvalue` FROM tblauditlog WHERE ";
+                //strSQL = strSQL + " `trandate` >= " + "'" + fromDate + "'" + " AND `trandate` <= " + "'" + todate + "'";
+
+                strSQL = "SELECT l.`Username`, al.`eventid`, al.`trandate`, al.`recordtype`, al.`column`, al.`oldvalue`, al.`newvalue`";
+                strSQL = strSQL + "FROM tblauditlog al";
+                strSQL = strSQL + " INNER JOIN tbllogin l ON al.`userid` = l.`ID` ";
+                strSQL = strSQL + "WHERE al.`trandate` >= '" + fromDate + "' AND al.`trandate` <= '" + todate + "'";
 
                 db.Database.CommandTimeout = 180;
 
                 ALogList = db.Database.SqlQuery<ActivityLogViewmodel>(strSQL).ToList();
-
-
 
 
                 var memoryStream = new MemoryStream();
@@ -100,7 +103,7 @@ namespace VerifyWebApp.Controllers
                     //excel.Workbook.Worksheets.Add("Worksheet2");
 
 
-                    string[] headerRow = {"UserId", "EventId", "TranDate", "RecordType", "Column", "Oldvalue", "Newvalue",};
+                    string[] headerRow = {"Username", "EventId", "TranDate", "RecordType", "Column", "Oldvalue", "Newvalue",};
 
 
 
@@ -132,11 +135,9 @@ namespace VerifyWebApp.Controllers
                     int rowIterator = 5;
 
 
-
-
                     foreach (var item in ALogList)
-                    {
-                        worksheet.Cells[rowIterator, 1].Value = item.UserId;
+                    {       
+                        worksheet.Cells[rowIterator, 1].Value = item.UserName;
                         worksheet.Cells[rowIterator, 2].Value = item.EventId;
                         worksheet.Cells[rowIterator, 3].Value = item.TranDate;
                         worksheet.Cells[rowIterator, 3].Style.Numberformat.Format = "dd-MM-yyyy";
@@ -146,10 +147,7 @@ namespace VerifyWebApp.Controllers
                         worksheet.Cells[rowIterator, 6].Value = item.Oldvalue;
                         worksheet.Cells[rowIterator, 7].Value = item.Newvalue;
 
-
-
                         rowIterator = rowIterator + 1;
-
                     }
 
 
@@ -181,146 +179,146 @@ namespace VerifyWebApp.Controllers
 
         }
 
-        [HttpPost]
-        [AllowAnonymous]
-        public ActionResult GetPdfReport(DateTime FromDate, DateTime ToDate)
-        {
+        //[HttpPost]
+        //[AllowAnonymous]
+        //public ActionResult GetPdfReport(DateTime FromDate, DateTime ToDate)
+        //{
 
-            try
-            {
-                DateTime asondate = DateTime.Now;
-
-
-                // DateTime Asondate = Convert.ToDateTime(asondate);
-
-                int userid = 0;
-                Login user = (Login)(Session["PUser"]);
-
-                if (user != null)
-                {
-                    ViewBag.LogonUser = user.UserName;
-                    userid = user.ID;
-                }
-                else
-                {
-                    return RedirectToAction("Login", "Login");
-                }
-                int companyid = 0;
-                Company company = (Company)(Session["Cid"]);
-
-                if (company != null)
-                {
-                    ViewBag.LoggedCompany = company.CompanyName;
-                    companyid = company.ID;
-                    ViewBag.companyid = companyid;
-                    //ViewBag.LoggedCompany = company.CompanyName;
-                }
-                else
-                {
-                    return RedirectToAction("CompanySelection", "Company");
-                }
-
-                List<Assets> alist = new List<Assets>();
-                List<FARReportViewmodel> FARList = new List<FARReportViewmodel>();
+        //    try
+        //    {
+        //        DateTime asondate = DateTime.Now;
 
 
-                BusinessLogic.FARReportRepository reportRepository = new BusinessLogic.FARReportRepository();
+        //        // DateTime Asondate = Convert.ToDateTime(asondate);
 
-                FARList = reportRepository.getFAR_New(companyid, FromDate, ToDate);
+        //        int userid = 0;
+        //        Login user = (Login)(Session["PUser"]);
+
+        //        if (user != null)
+        //        {
+        //            ViewBag.LogonUser = user.UserName;
+        //            userid = user.ID;
+        //        }
+        //        else
+        //        {
+        //            return RedirectToAction("Login", "Login");
+        //        }
+        //        int companyid = 0;
+        //        Company company = (Company)(Session["Cid"]);
+
+        //        if (company != null)
+        //        {
+        //            ViewBag.LoggedCompany = company.CompanyName;
+        //            companyid = company.ID;
+        //            ViewBag.companyid = companyid;
+        //            //ViewBag.LoggedCompany = company.CompanyName;
+        //        }
+        //        else
+        //        {
+        //            return RedirectToAction("CompanySelection", "Company");
+        //        }
+
+        //        List<Assets> alist = new List<Assets>();
+        //        List<FARReportViewmodel> FARList = new List<FARReportViewmodel>();
 
 
-                MemoryStream memoryStream = new MemoryStream();
-                Document document = new Document(new Rectangle(PageSize.A4.Width * 6, PageSize.A4.Height));
-                PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
-                document.Open();
+        //        BusinessLogic.FARReportRepository reportRepository = new BusinessLogic.FARReportRepository();
 
-                document.Add(new Paragraph("Fixed Asset Register Report"));
-                document.Add(new Paragraph("FromDate: " + FromDate.ToString("dd/MM/yyyy") + " ToDate: " + ToDate.ToString("dd/MM/yyyy")));
-                document.Add(new Paragraph(" "));
+        //        FARList = reportRepository.getFAR_New(companyid, FromDate, ToDate);
 
-                string[] headerRow = { "AGroupName", "BGroupName", "CGroupName ", "DGroupName","AssetNo", "AssetIdentificationNo ", "AssetName ", "VoucherDate ",
-                    "OpGross","Addition ","Disposal","ClGross","OpDep","DepForPeriod","DispoDep","TotDep","NetBalance",
-                    "ResidualVal",
-                    "VoucherNo","VoucherDate", "BillNo","PONo","BillDate","DtPutUse(Company)","DepRate","DepMethod",
-                    "Opening Qty","DisposedQtyTillFromDate", "Disposed Qty", "Closing Qty", "Product Serial No","Model","Remarks",
-                    "ALocName ","BLocName","CLocName","SupplierName",};
 
-                float[] columnWidths = { 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f };
+        //        MemoryStream memoryStream = new MemoryStream();
+        //        Document document = new Document(new Rectangle(PageSize.A4.Width * 6, PageSize.A4.Height));
+        //        PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
+        //        document.Open();
 
-                PdfPTable table = new PdfPTable(columnWidths);
-                table.WidthPercentage = 100;
+        //        document.Add(new Paragraph("Fixed Asset Register Report"));
+        //        document.Add(new Paragraph("FromDate: " + FromDate.ToString("dd/MM/yyyy") + " ToDate: " + ToDate.ToString("dd/MM/yyyy")));
+        //        document.Add(new Paragraph(" "));
 
-                foreach (string header in headerRow)
-                {
-                    PdfPCell cell = new PdfPCell(new Phrase(header));
-                    table.AddCell(cell);
-                }
+        //        string[] headerRow = { "AGroupName", "BGroupName", "CGroupName ", "DGroupName","AssetNo", "AssetIdentificationNo ", "AssetName ", "VoucherDate ",
+        //            "OpGross","Addition ","Disposal","ClGross","OpDep","DepForPeriod","DispoDep","TotDep","NetBalance",
+        //            "ResidualVal",
+        //            "VoucherNo","VoucherDate", "BillNo","PONo","BillDate","DtPutUse(Company)","DepRate","DepMethod",
+        //            "Opening Qty","DisposedQtyTillFromDate", "Disposed Qty", "Closing Qty", "Product Serial No","Model","Remarks",
+        //            "ALocName ","BLocName","CLocName","SupplierName",};
 
-                foreach (var item in FARList)
-                {
-                    table.AddCell(item.AGroupName);
-                    table.AddCell(item.BGroupName);
-                    table.AddCell(item.CGroupName);
-                    table.AddCell(item.DGroupName);
-                    table.AddCell(item.AssetNo);
-                    table.AddCell(item.AssetIdentificationNo);
-                    table.AddCell(item.AssetName);
-                    table.AddCell(item.str_voucherdate);
-                    table.AddCell(item.OpGross.ToString());
-                    table.AddCell(item.Addition.ToString());
-                    table.AddCell(item.Disposal.ToString());
-                    table.AddCell(item.ClGross.ToString());
-                    table.AddCell(item.OpDep.ToString());
-                    table.AddCell(item.UpToDep.ToString());
-                    table.AddCell(item.DispoDep.ToString());
-                    table.AddCell(item.TotDep.ToString());
-                    table.AddCell(item.NetBalance.ToString());
-                    table.AddCell(item.ResidualVal.ToString());
-                    table.AddCell(item.VoucherNo);
-                    table.AddCell(item.voucherDate.ToString());
-                    table.AddCell(item.BillNo);
-                    table.AddCell(item.PONo);
-                    table.AddCell(item.BillDate.ToString());
-                    table.AddCell(item.DTPutUse.ToString());
-                    table.AddCell(item.DepRate.ToString());
-                    table.AddCell(item.DepMethod);
-                    table.AddCell(item.OpeningQty.ToString());
-                    table.AddCell(item.OpeningQty.ToString());
-                    table.AddCell(item.DisposedQty.ToString());
-                    table.AddCell(item.ClosingQty.ToString());
-                    table.AddCell(item.SrNo);
-                    table.AddCell(item.Model);
-                    table.AddCell(item.Remarks);
-                    table.AddCell(item.ALocName);
-                    table.AddCell(item.BLocName);
-                    table.AddCell(item.CLocName);
-                    table.AddCell(item.SupplierName);
+        //        float[] columnWidths = { 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f };
 
-                    table.CompleteRow();
-                }
+        //        PdfPTable table = new PdfPTable(columnWidths);
+        //        table.WidthPercentage = 100;
 
-                document.Add(table);
-                document.Close();
+        //        foreach (string header in headerRow)
+        //        {
+        //            PdfPCell cell = new PdfPCell(new Phrase(header));
+        //            table.AddCell(cell);
+        //        }
 
-                string pdfName = "FARReport.pdf";
+        //        foreach (var item in FARList)
+        //        {
+        //            table.AddCell(item.AGroupName);
+        //            table.AddCell(item.BGroupName);
+        //            table.AddCell(item.CGroupName);
+        //            table.AddCell(item.DGroupName);
+        //            table.AddCell(item.AssetNo);
+        //            table.AddCell(item.AssetIdentificationNo);
+        //            table.AddCell(item.AssetName);
+        //            table.AddCell(item.str_voucherdate);
+        //            table.AddCell(item.OpGross.ToString());
+        //            table.AddCell(item.Addition.ToString());
+        //            table.AddCell(item.Disposal.ToString());
+        //            table.AddCell(item.ClGross.ToString());
+        //            table.AddCell(item.OpDep.ToString());
+        //            table.AddCell(item.UpToDep.ToString());
+        //            table.AddCell(item.DispoDep.ToString());
+        //            table.AddCell(item.TotDep.ToString());
+        //            table.AddCell(item.NetBalance.ToString());
+        //            table.AddCell(item.ResidualVal.ToString());
+        //            table.AddCell(item.VoucherNo);
+        //            table.AddCell(item.voucherDate.ToString());
+        //            table.AddCell(item.BillNo);
+        //            table.AddCell(item.PONo);
+        //            table.AddCell(item.BillDate.ToString());
+        //            table.AddCell(item.DTPutUse.ToString());
+        //            table.AddCell(item.DepRate.ToString());
+        //            table.AddCell(item.DepMethod);
+        //            table.AddCell(item.OpeningQty.ToString());
+        //            table.AddCell(item.OpeningQty.ToString());
+        //            table.AddCell(item.DisposedQty.ToString());
+        //            table.AddCell(item.ClosingQty.ToString());
+        //            table.AddCell(item.SrNo);
+        //            table.AddCell(item.Model);
+        //            table.AddCell(item.Remarks);
+        //            table.AddCell(item.ALocName);
+        //            table.AddCell(item.BLocName);
+        //            table.AddCell(item.CLocName);
+        //            table.AddCell(item.SupplierName);
 
-                string handle = Guid.NewGuid().ToString();
-                TempData[handle] = memoryStream.ToArray();
+        //            table.CompleteRow();
+        //        }
 
-                return new JsonResult()
-                {
-                    Data = new { FileGuid = handle, FileName = pdfName }
-                };
-            }
-            catch (Exception ex)
-            {
-                int i = 0;
+        //        document.Add(table);
+        //        document.Close();
 
-                return View("~/Views/Shared/Error.cshtm");
+        //        string pdfName = "FARReport.pdf";
 
-            }
+        //        string handle = Guid.NewGuid().ToString();
+        //        TempData[handle] = memoryStream.ToArray();
 
-        }
+        //        return new JsonResult()
+        //        {
+        //            Data = new { FileGuid = handle, FileName = pdfName }
+        //        };
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        int i = 0;
+
+        //        return View("~/Views/Shared/Error.cshtm");
+
+        //    }
+
+        //}
 
 
         [HttpGet]

@@ -72,12 +72,12 @@
             getExcelReport(fromdate, todate);
         });
 
-        $('#btnGetPdfReport').click(function (e) {
-            e.preventDefault();
-            var fromdate = $('#Fromdate').val();
-            var todate = $('#Todate').val();
-            getPdfReport(fromdate, todate);
-        });
+        //$('#btnGetPdfReport').click(function (e) {
+        //    e.preventDefault();
+        //    var fromdate = $('#Fromdate').val();
+        //    var todate = $('#Todate').val();
+        //    getPdfReport(fromdate, todate);
+        //});
     });
 
 
@@ -118,7 +118,7 @@
         });
     }
 
-    function getPdfReport(fromdate, todate) {
+    @*function getPdfReport(fromdate, todate) {
         fromdate = moment(fromdate, 'DD/MM/YYYY').format('YYYY-MM-DD');
         todate = moment(todate, 'DD/MM/YYYY').format('YYYY-MM-DD');
         var data = {
@@ -153,5 +153,5 @@
                 $('#progressbar').modal('hide');
             }
         });
-    }
+    }*@
 </script>
