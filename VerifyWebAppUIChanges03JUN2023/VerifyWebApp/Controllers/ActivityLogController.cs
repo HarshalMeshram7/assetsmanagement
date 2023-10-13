@@ -79,8 +79,8 @@ namespace VerifyWebApp.Controllers
                 string todate = ToDate.ToString("yyyy-MM-dd");
 
                 
-                strSQL = " SELECT `id`, `userid`, `eventid`, `recordtype`, `column`, `oldvalue`, `newvalue` FROM tblauditlog WHERE ";
-                strSQL = strSQL + " trandate >= " + "'" + fromDate + "'" + " AND trandate <= " + "'" + todate + "'";
+                strSQL = " SELECT  `userid`, `eventid`, `trandate`, `recordtype`, `column`, `oldvalue`, `newvalue` FROM tblauditlog WHERE ";
+                strSQL = strSQL + " `trandate` >= " + "'" + fromDate + "'" + " AND `trandate` <= " + "'" + todate + "'";
 
                 db.Database.CommandTimeout = 180;
 
@@ -100,7 +100,7 @@ namespace VerifyWebApp.Controllers
                     //excel.Workbook.Worksheets.Add("Worksheet2");
 
 
-                    string[] headerRow = {"UserId", "EventId", "RecordType", "TranDate", "Column", "Oldvalue", "Newvalue",};
+                    string[] headerRow = {"UserId", "EventId", "TranDate", "RecordType", "Column", "Oldvalue", "Newvalue",};
 
 
 
@@ -137,14 +137,16 @@ namespace VerifyWebApp.Controllers
                     foreach (var item in ALogList)
                     {
                         worksheet.Cells[rowIterator, 1].Value = item.UserId;
-                        worksheet.Cells[rowIterator, 2].Value = item.RecordType;
-                        worksheet.Cells[rowIterator, 3].Value = item.EventId;
-                        worksheet.Cells[rowIterator, 4].Value = item.TranDate;
+                        worksheet.Cells[rowIterator, 2].Value = item.EventId;
+                        worksheet.Cells[rowIterator, 3].Value = item.TranDate;
+                        worksheet.Cells[rowIterator, 3].Style.Numberformat.Format = "dd-MM-yyyy";
+                        worksheet.Cells[rowIterator, 4].Value = item.RecordType;
 
                         worksheet.Cells[rowIterator, 5].Value = item.Column;
                         worksheet.Cells[rowIterator, 6].Value = item.Oldvalue;
                         worksheet.Cells[rowIterator, 7].Value = item.Newvalue;
-                      
+
+
 
                         rowIterator = rowIterator + 1;
 
