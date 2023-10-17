@@ -53,6 +53,11 @@
                             onclick="Importexcel();" data-bs-toggle="tooltip" data-bs-placement="top" title="Import Spreadsheet File">
                         <i class="fa fa-upload"></i>
                     </button>
+                    <button type="button" value="New Practice"
+                            class="btn btn-sm xtraBtn pull-right m-1 order-3"
+                            onclick="downloadpdf();" data-bs-toggle="tooltip" data-bs-placement="top" title="PDf Download">
+                        <i class="fa fa-download"></i>
+                    </button>
 
 
                 </div>
@@ -169,15 +174,23 @@
                        
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
-                            $(document).ready(function () {
+        $(document).ready(function () {
 
-                                $('#tblemployee').DataTable({
-                                    "paging": true,
-                                    "info": false,
-                                    "searching": true,
-                                    "pagingType": 'numbers',
-                                    });
-    });
+            $('#tblemployee').DataTable({
+               "paging": true,
+               "info": false,
+               "searching": true,
+               "pagingType": 'numbers',
+            });
+
+            $('#btnGetPdfReport').click(function (e)
+            {
+                e.preventDefault();
+                //var fromdate = $('#Fromdate').val();
+                //var todate = $('#Todate').val();
+                getPdf();
+            });
+        });
 
 
     if (typeof jQuery !== 'undefined') {
@@ -279,7 +292,13 @@
                 $('#divUpload').modal('show')
             });
 
-     }
+    }
+    function PDFdownload()
+    {
+
+         window.location.href = '@Url.Action("DownloadEmployeeAssetPDF", "EmployeeAsset")';
+
+    }
      function EmployeeAssetimportdate() {
 
       var url = '@Url.Action("ImportExcelRecievedDate", "EmployeeAsset")';

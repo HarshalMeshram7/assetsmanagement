@@ -1,4 +1,6 @@
-﻿using NLog;
+﻿using iTextSharp.text;
+using iTextSharp.text.pdf;
+using NLog;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
@@ -8,6 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using VerifyWebApp.Filter;
 using VerifyWebApp.Models;
+using VerifyWebApp.ViewModel;
 
 namespace VerifyWebApp.Controllers
 {
@@ -16,6 +19,7 @@ namespace VerifyWebApp.Controllers
         // GET: EmployeeAsset
         public VerifyDB db = new VerifyDB();
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         [AuthUser]
         public ActionResult Index()
         {
@@ -168,6 +172,8 @@ namespace VerifyWebApp.Controllers
             return PartialView();
 
         }
+
+
         [HttpGet]
         public ActionResult CheckAssetalreadyassigned(string assetid)
         {
@@ -223,6 +229,7 @@ namespace VerifyWebApp.Controllers
             }
             return Content(res);
         }
+
 
         [AuthUser]
         [HttpPost]
@@ -317,6 +324,8 @@ namespace VerifyWebApp.Controllers
             }
             return Content(res);
         }
+
+
         [AuthUser]
         [HttpGet]
         public ActionResult Edit(int id)
@@ -398,12 +407,13 @@ namespace VerifyWebApp.Controllers
 
             return PartialView(employee);
         }
+
+
         [AuthUser]
         [HttpPost]
         [AllowAnonymous]
         [ValidateJsonAntiForgeryToken]
         [ValidateJsonXssAttribute]
-
         public ActionResult Edit(EmployeeAsset employee)
         {
             JsonResult res;
@@ -474,7 +484,6 @@ namespace VerifyWebApp.Controllers
         // GET: Employee/Delete/5
         [HttpPost]
         [AllowAnonymous]
-        
         public ActionResult Delete(int id)
         {
             JsonResult res;
@@ -531,9 +540,11 @@ namespace VerifyWebApp.Controllers
             // POST: Employee/Delete/5
 
         }
+
+
         [HttpGet]
         [AuthUser]
-        public ActionResult EmployeeAssetExport()
+        public ActionResult EmployeeAssetExport()            //...1
         {
             int userid = 0;
             Login user = (Login)(Session["PUser"]);
@@ -571,7 +582,7 @@ namespace VerifyWebApp.Controllers
             return RedirectToAction("Index", "Supplier");
 
         }
-        public byte[] generateemployeeassetexcel(int companyid)
+        public byte[] generateemployeeassetexcel(int companyid)        //...2
         {
             List<EmployeeAsset> lstemp = new List<EmployeeAsset>();
             int srno = 1;
@@ -643,9 +654,139 @@ namespace VerifyWebApp.Controllers
 
             }
         }
-        [HttpGet]
 
-        public ActionResult DownloadEmployeeAssetExcel()
+        [HttpGet]
+        [AuthUser]
+        public ActionResult EmployeeAssetPDF()            
+        {
+            int userid = 0;
+            Login user = (Login)(Session["PUser"]);
+
+            if (user != null)
+            {
+                ViewBag.LogonUser = user.UserName;
+                userid = user.ID;
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            int companyid = 0;
+            Company company = (Company)(Session["Cid"]);
+
+            if (company != null)
+            {
+                ViewBag.LoggedCompany = company.CompanyName;
+                companyid = company.ID;
+                ViewBag.companyid = companyid;
+            }
+            else
+            {
+                return RedirectToAction("CompanySelection", "Company");
+            }
+
+            Response.ClearContent();
+           // Response.BinaryWrite(generateemployeeassetPDF(companyid));
+            string pdflName = "EmployeeAssetIssue";
+            Response.AddHeader("content-dispostion", "attachment;filename=" + pdflName + ".pdf");
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.Flush();
+            Response.End();
+            return RedirectToAction("Index", "Supplier");
+
+        }
+
+        //public byte[] generateemployeeassetPDF(int companyid)        
+        //{
+        //    List<EmployeeAssetIssue> lstemp = new List<EmployeeAssetIssue>();
+        //    int srno = 1;
+
+
+        //    lstemp = db.EmployeeAsset.Where(x => x.Companyid == companyid).ToList();
+        //    foreach (EmployeeAsset item in lstemp)
+        //    {
+        //        item.str_assetname = db.Assetss.Where(x => x.Companyid == companyid && x.ID == item.AssetId).FirstOrDefault().AssetName;
+        //        item.str_assetno = db.Assetss.Where(x => x.Companyid == companyid && x.ID == item.AssetId).FirstOrDefault().AssetNo;
+        //        item.str_empname = db.Employee.Where(x => x.Companyid == companyid && x.ID == item.EmpId).FirstOrDefault().FullName;
+        //        item.empno = db.Employee.Where(x => x.Companyid == companyid && x.ID == item.EmpId).FirstOrDefault().EmpId;
+        //        item.str_IssueDate = item.IssueDate.ToString("dd/MM/yyyy");
+        //        if (item.RecievedDate != null)
+        //        {
+        //            item.str_RecievedDate = Convert.ToDateTime(item.RecievedDate).ToString("dd/MM/yyyy");
+        //        }
+        //        else
+        //        {
+        //            item.str_RecievedDate = "";
+        //        }
+        //    }
+
+        //    List<EmployeeAssetIssue> vemp = new List<EmployeeAssetIssue>();
+
+        //    MemoryStream memoryStream = new MemoryStream();
+        //    Document document = new Document(new Rectangle(PageSize.A4.Width * 6, PageSize.A4.Height));
+        //    PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
+        //    document.Open();
+
+        //    document.Add(new Paragraph("EmployeeAssetIssues"));
+        //    document.Add(new Paragraph("IssueDate: " + IssueDate.ToString("dd/MM/yyyy") + " AssetReturnDate: " + RecievedDate.ToString("dd/MM/yyyy")));
+        //    document.Add(new Paragraph(" "));
+
+        //    /*string[] headerRow ,new string[]= { "AGroupName", "BGroupName", "CGroupName ", "DGroupName","AssetNo", "AssetIdentificationNo ",*/
+        //    string[] headerRow ={ "EmployeeId", "Employee Name", "AssetNo", "AssetName", "IssueDate ", "Asset return(Y/N) ", "Asset return date", };
+           
+        //    float[] columnWidths = { 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f };
+
+        //    PdfPTable table = new PdfPTable(7);
+        //    table.WidthPercentage = 100;
+
+        //    foreach (string header in headerRow)
+        //    {
+        //        PdfPCell cell = new PdfPCell(new Phrase(header));
+        //        table.AddCell(cell);
+        //    }
+
+
+        //    foreach (var item in vemp)
+        //    {
+        //        table.AddCell(item.EmpName);
+        //        table.AddCell(item.AssetNo);
+        //        table.AddCell(item.AssetName);
+        //        table.AddCell(item.IssueDate);
+        //        table.AddCell(item.AssetReturn);
+        //        table.AddCell(item.AssetReturnDate);
+
+        //        table.CompleteRow();
+        //    }
+
+        //    document.Add(table);
+        //    document.Close();
+
+        //    string pdfName = "EmployeeAssetIssues.pdf";
+
+        //    return vemp;
+
+        //    string handle = Guid.NewGuid().ToString();
+        //    TempData[handle] = memoryStream.ToArray();
+        //    catch (Exception ex)
+        //    {
+        //        int i = 0;
+
+        //        return View("~/Views/Shared/Error.cshtm");
+
+        //    }
+
+        //}//in progress
+            //-----------------------------------------------------
+
+
+
+        
+
+       
+
+
+        [HttpGet]
+        public ActionResult DownloadEmployeeAssetExcel()                        
         {
             int userid = 0;
             Login user = (Login)(Session["PUser"]);
@@ -759,10 +900,10 @@ namespace VerifyWebApp.Controllers
             return PartialView();
         }
 
+
         [HttpPost]
         [ValidateAjax]
         [AllowAnonymous]
-        
         public ActionResult UploadEmployeeAsset()
         {
             int userid = 0;
@@ -1057,6 +1198,7 @@ namespace VerifyWebApp.Controllers
 
         }
 
+
         [AuthUser]
         [HttpGet]
         public ActionResult ImportExcelRecievedDate()
@@ -1089,10 +1231,11 @@ namespace VerifyWebApp.Controllers
 
             return PartialView();
         }
+
+
         [HttpPost]
         [ValidateAjax]
         [AllowAnonymous]
-        
         public ActionResult UploadEmployeeAssetRecievedDate()
         {
             int userid = 0;
@@ -1360,5 +1503,10 @@ namespace VerifyWebApp.Controllers
                 return res;
             }
         }
+
+       
+
+
+
     }
 }
