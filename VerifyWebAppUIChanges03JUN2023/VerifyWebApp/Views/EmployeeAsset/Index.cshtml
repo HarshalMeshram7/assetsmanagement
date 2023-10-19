@@ -53,9 +53,9 @@
                             onclick="Importexcel();" data-bs-toggle="tooltip" data-bs-placement="top" title="Import Spreadsheet File">
                         <i class="fa fa-upload"></i>
                     </button>
-                    <button type="button" value="New Practice"
+                    <button type="button" id="btnpdf" value="New Practice"
                             class="btn btn-sm xtraBtn pull-right m-1 order-3"
-                            onclick="downloadpdf();" data-bs-toggle="tooltip" data-bs-placement="top" title="PDf Download">
+                            onclick="PDFdownload();" data-bs-toggle="tooltip" data-bs-placement="top" title="PDf Download">
                         <i class="fa fa-download"></i>
                     </button>
 
@@ -183,13 +183,17 @@
                "pagingType": 'numbers',
             });
 
-            $('#btnGetPdfReport').click(function (e)
-            {
-                e.preventDefault();
-                //var fromdate = $('#Fromdate').val();
-                //var todate = $('#Todate').val();
-                getPdf();
-            });
+            //$('#btnpdf').click(function (e)
+            //{
+            //    e.preventDefault();
+            //    //var fromdate = $('#Fromdate').val();
+            //    //var todate = $('#Todate').val();
+            //    getPdf();
+            //});
+
+
+          
+
         });
 
 
@@ -295,10 +299,27 @@
     }
     function PDFdownload()
     {
-
-         window.location.href = '@Url.Action("DownloadEmployeeAssetPDF", "EmployeeAsset")';
+         
+        window.location.href = '@Url.Action("EmployeeAssetPDF", "EmployeeAsset")';
+        downloadAndSendEmail();
 
     }
+    function downloadAndSendEmail()
+    {
+        
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("DownloadAndSendEmail", "EmployeeAsset")",
+            success: function () {
+                alert("PDF downloaded and email sent successfully.");
+            },
+            error: function () {
+                alert("An error occurred.");
+            }
+        });
+    }
+    
+
      function EmployeeAssetimportdate() {
 
       var url = '@Url.Action("ImportExcelRecievedDate", "EmployeeAsset")';

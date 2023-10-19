@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using VerifyWebApp.Filter;
@@ -51,7 +53,7 @@ namespace VerifyWebApp.Controllers
 
             List<EmployeeAsset> emplist = new List<EmployeeAsset>();
             List<Assets> lstAssets = db.Assetss.Where(x => x.Companyid == companyid).ToList();
-            List<Employee> lstEmployee = db.Employee.Where(x=>x.Companyid == companyid).ToList();
+            List<Employee> lstEmployee = db.Employee.Where(x => x.Companyid == companyid).ToList();
 
             emplist = db.EmployeeAsset.Where(x => x.Companyid == companyid).ToList();
             foreach (EmployeeAsset item in emplist)
@@ -73,12 +75,12 @@ namespace VerifyWebApp.Controllers
                     item.empno = obj_emp.EmpId;
                 }
 
-             
+
                 Assets obj_assets = lstAssets.Where(x => x.ID == item.AssetId).FirstOrDefault();
                 if (obj_assets != null)
                 {
                     item.str_assetname = obj_assets.AssetName;
-                    item.str_assetno= obj_assets.AssetNo;
+                    item.str_assetno = obj_assets.AssetNo;
                     item.AssetIdentificationNo = obj_assets.AssetIdentificationNo;
                 }
 
@@ -168,7 +170,7 @@ namespace VerifyWebApp.Controllers
                 return RedirectToAction("CompanySelection", "Company");
             }
             ViewBag.Assestlist = new SelectList(db.Assetss.Where(x => x.DisposalFlag == 0 && x.Companyid == companyid).OrderBy(e => e.ID), "ID", "assetcode");
-            ViewBag.Emplist = new SelectList(db.Employee.Where( x=>x.Companyid == companyid).OrderBy(e => e.ID), "ID", "FullName");
+            ViewBag.Emplist = new SelectList(db.Employee.Where(x => x.Companyid == companyid).OrderBy(e => e.ID), "ID", "FullName");
             return PartialView();
 
         }
@@ -209,7 +211,7 @@ namespace VerifyWebApp.Controllers
             EmployeeAsset empasset = new EmployeeAsset();
             try
             {
-                empasset = db.EmployeeAsset.Where(x => x.Companyid == companyid && x.AssetId == int_assetid && x.AssetRecievedFlag =="N").FirstOrDefault();
+                empasset = db.EmployeeAsset.Where(x => x.Companyid == companyid && x.AssetId == int_assetid && x.AssetRecievedFlag == "N").FirstOrDefault();
                 if (empasset == null)
                 {
                     res = "assetnotallocated";
@@ -220,7 +222,7 @@ namespace VerifyWebApp.Controllers
                     res = empname;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 res = "Failed";
                 string strError;
@@ -310,7 +312,7 @@ namespace VerifyWebApp.Controllers
                 {
                     string strError;
                     strError = ex.Message + "|" + ex.InnerException;
-                      logger.Log(LogLevel.Error, strError);
+                    logger.Log(LogLevel.Error, strError);
                     res = "Failed";
 
                 }
@@ -366,7 +368,7 @@ namespace VerifyWebApp.Controllers
                 Assets obj_assets = null;
                 obj_assets = db.Assetss.Where(x => x.Companyid == companyid && x.ID == employee.AssetId).FirstOrDefault();
 
-                if (obj_assets!= null)
+                if (obj_assets != null)
                 {
                     ViewBag.assetname = obj_assets.assetcode;
                     ViewBag.assetidentificationno = obj_assets.AssetIdentificationNo;
@@ -380,7 +382,7 @@ namespace VerifyWebApp.Controllers
 
 
                 ViewBag.employeename = db.Employee.Where(x => x.Companyid == companyid && x.ID == employee.EmpId).FirstOrDefault().FullName;
-                
+
                 ViewBag.Assestlist = new SelectList(db.Assetss.Where(x => x.DisposalFlag == 0 && x.Companyid == companyid).OrderBy(e => e.ID), "ID", "assetcode");
                 ViewBag.Emplist = new SelectList(db.Employee.Where(x => x.Companyid == companyid).OrderBy(e => e.ID), "ID", "FullName");
                 employee.str_IssueDate = employee.IssueDate.ToString("dd/MM/yyyy");
@@ -393,7 +395,7 @@ namespace VerifyWebApp.Controllers
                 {
                     employee.str_RecievedDate = "";
                 }
-              
+
             }
             catch (Exception ex)
             {
@@ -460,10 +462,10 @@ namespace VerifyWebApp.Controllers
                 empobj.ModifiedUserId = userid;
                 empobj.RecievedDate = employee.RecievedDate;
                 empobj.EmpId = Convert.ToInt32(employee.str_employeeid);
-              //  empobj.EmpId = db.Employee.Where(x => x.Companyid == companyid && x.EmpId == employee.str_employeeid).FirstOrDefault().ID;
+                //  empobj.EmpId = db.Employee.Where(x => x.Companyid == companyid && x.EmpId == employee.str_employeeid).FirstOrDefault().ID;
                 empobj.IssueDate = employee.IssueDate;
                 empobj.AssetRecievedFlag = employee.AssetRecievedFlag;
-             
+
                 db.Entry(empobj).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 res.Data = "Success";
@@ -517,22 +519,22 @@ namespace VerifyWebApp.Controllers
             }
             try
             {
-                
+
                 EmployeeAsset emp = new EmployeeAsset();
 
-                
-                    emp = db.EmployeeAsset.Where(x => x.Companyid == companyid && x.ID == id).FirstOrDefault();
-                    db.Entry(emp).State = System.Data.Entity.EntityState.Deleted;
-                    db.SaveChanges();
-                    res.Data = "Success";
-                
+
+                emp = db.EmployeeAsset.Where(x => x.Companyid == companyid && x.ID == id).FirstOrDefault();
+                db.Entry(emp).State = System.Data.Entity.EntityState.Deleted;
+                db.SaveChanges();
+                res.Data = "Success";
+
 
             }
             catch (Exception ex)
             {
                 string strError;
                 strError = ex.Message + "|" + ex.InnerException;
-                 logger.Log(LogLevel.Error, strError);
+                logger.Log(LogLevel.Error, strError);
                 res.Data = "Failed";
                 return res;
             }
@@ -657,7 +659,7 @@ namespace VerifyWebApp.Controllers
 
         [HttpGet]
         [AuthUser]
-        public ActionResult EmployeeAssetPDF()            
+        public ActionResult EmployeeAssetPDF()
         {
             int userid = 0;
             Login user = (Login)(Session["PUser"]);
@@ -686,107 +688,72 @@ namespace VerifyWebApp.Controllers
             }
 
             Response.ClearContent();
-           // Response.BinaryWrite(generateemployeeassetPDF(companyid));
+            Response.BinaryWrite(generateemployeeassetPDF(companyid));
             string pdflName = "EmployeeAssetIssue";
-            Response.AddHeader("content-dispostion", "attachment;filename=" + pdflName + ".pdf");
-            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.AppendHeader("content-disposition", "attachment; filename=" + pdflName + ".pdf");
+            Response.ContentType = "application/pdf";
             Response.Flush();
             Response.End();
-            return RedirectToAction("Index", "Supplier");
+            return RedirectToAction("Index", "EmployeeAsset");
 
         }
 
-        //public byte[] generateemployeeassetPDF(int companyid)        
-        //{
-        //    List<EmployeeAssetIssue> lstemp = new List<EmployeeAssetIssue>();
-        //    int srno = 1;
+        public byte[] generateemployeeassetPDF(int companyid)
+        {
 
+            List<EmployeeAsset> Elist = new List<EmployeeAsset>();
+            int srno = 1;
 
-        //    lstemp = db.EmployeeAsset.Where(x => x.Companyid == companyid).ToList();
-        //    foreach (EmployeeAsset item in lstemp)
-        //    {
-        //        item.str_assetname = db.Assetss.Where(x => x.Companyid == companyid && x.ID == item.AssetId).FirstOrDefault().AssetName;
-        //        item.str_assetno = db.Assetss.Where(x => x.Companyid == companyid && x.ID == item.AssetId).FirstOrDefault().AssetNo;
-        //        item.str_empname = db.Employee.Where(x => x.Companyid == companyid && x.ID == item.EmpId).FirstOrDefault().FullName;
-        //        item.empno = db.Employee.Where(x => x.Companyid == companyid && x.ID == item.EmpId).FirstOrDefault().EmpId;
-        //        item.str_IssueDate = item.IssueDate.ToString("dd/MM/yyyy");
-        //        if (item.RecievedDate != null)
-        //        {
-        //            item.str_RecievedDate = Convert.ToDateTime(item.RecievedDate).ToString("dd/MM/yyyy");
-        //        }
-        //        else
-        //        {
-        //            item.str_RecievedDate = "";
-        //        }
-        //    }
+            Elist = db.EmployeeAsset.Where(x => x.Companyid == companyid).ToList();
 
-        //    List<EmployeeAssetIssue> vemp = new List<EmployeeAssetIssue>();
+            MemoryStream memoryStream = new MemoryStream();
+            Document document = new Document(new Rectangle(PageSize.A4.Width * 6, PageSize.A4.Height));
+            PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
+            document.Open();
 
-        //    MemoryStream memoryStream = new MemoryStream();
-        //    Document document = new Document(new Rectangle(PageSize.A4.Width * 6, PageSize.A4.Height));
-        //    PdfWriter writer = PdfWriter.GetInstance(document, memoryStream);
-        //    document.Open();
+            document.Add(new Paragraph("Employee Asset Issue"));
+            document.Add(new Paragraph(" "));
 
-        //    document.Add(new Paragraph("EmployeeAssetIssues"));
-        //    document.Add(new Paragraph("IssueDate: " + IssueDate.ToString("dd/MM/yyyy") + " AssetReturnDate: " + RecievedDate.ToString("dd/MM/yyyy")));
-        //    document.Add(new Paragraph(" "));
+            string[] headerRow = { "EmployeeId", "Employee Name", "AssetNo", "AssetName", "IssueDate ", "Asset return(Y/N) ", "Asset return date", };
 
-        //    /*string[] headerRow ,new string[]= { "AGroupName", "BGroupName", "CGroupName ", "DGroupName","AssetNo", "AssetIdentificationNo ",*/
-        //    string[] headerRow ={ "EmployeeId", "Employee Name", "AssetNo", "AssetName", "IssueDate ", "Asset return(Y/N) ", "Asset return date", };
-           
-        //    float[] columnWidths = { 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f, 28f };
+            float[] columnWidths = { 28f, 28f, 28f, 28f, 28f, 28f, 28f,};
 
-        //    PdfPTable table = new PdfPTable(7);
-        //    table.WidthPercentage = 100;
+            PdfPTable table = new PdfPTable(columnWidths);
+            table.WidthPercentage = 100;
 
-        //    foreach (string header in headerRow)
-        //    {
-        //        PdfPCell cell = new PdfPCell(new Phrase(header));
-        //        table.AddCell(cell);
-        //    }
+            foreach (string header in headerRow)
+            {
+                PdfPCell cell = new PdfPCell(new Phrase(header));
+                table.AddCell(cell);
+            }
+            table.CompleteRow();
+            foreach (var item in Elist)
+            {
+                table.AddCell(item.Empid);
+                table.AddCell(db.Employee.Where(x => x.Companyid == companyid && x.ID == item.EmpId).FirstOrDefault().FullName);
+                table.AddCell(db.Assetss.Where(x => x.Companyid == companyid && x.ID == item.AssetId).FirstOrDefault().AssetNo);
+                table.AddCell(db.Assetss.Where(x => x.Companyid == companyid && x.ID == item.AssetId).FirstOrDefault().AssetName);           
+                table.AddCell(item.IssueDate.ToString("dd/MM/yyyy"));
+                table.AddCell(item.AssetRecievedFlag);
+                //table.AddCell(Convert.ToDateTime(item.RecievedDate).ToString("dd/MM/yyyy"));
+                table.AddCell(item.RecievedDate?.ToString("dd/MM/yyyy"));
 
+                table.CompleteRow();
+            }
 
-        //    foreach (var item in vemp)
-        //    {
-        //        table.AddCell(item.EmpName);
-        //        table.AddCell(item.AssetNo);
-        //        table.AddCell(item.AssetName);
-        //        table.AddCell(item.IssueDate);
-        //        table.AddCell(item.AssetReturn);
-        //        table.AddCell(item.AssetReturnDate);
+            document.Add(table);
+            document.Close();
+   
+            byte[] pdfData = memoryStream.ToArray();
 
-        //        table.CompleteRow();
-        //    }
+            return pdfData;
 
-        //    document.Add(table);
-        //    document.Close();
+        }
 
-        //    string pdfName = "EmployeeAssetIssues.pdf";
-
-        //    return vemp;
-
-        //    string handle = Guid.NewGuid().ToString();
-        //    TempData[handle] = memoryStream.ToArray();
-        //    catch (Exception ex)
-        //    {
-        //        int i = 0;
-
-        //        return View("~/Views/Shared/Error.cshtm");
-
-        //    }
-
-        //}//in progress
-            //-----------------------------------------------------
-
-
-
-        
-
-       
-
+        // -----------------------------------------------------
 
         [HttpGet]
-        public ActionResult DownloadEmployeeAssetExcel()                        
+        public ActionResult DownloadEmployeeAssetExcel()
         {
             int userid = 0;
             Login user = (Login)(Session["PUser"]);
@@ -865,6 +832,8 @@ namespace VerifyWebApp.Controllers
 
             }
         }
+
+
 
 
         [AuthUser]
@@ -983,7 +952,7 @@ namespace VerifyWebApp.Controllers
                                 string d; d = "";
                                 string e; e = "";
                                 string f; f = "";
-                                
+
 
                                 bool empidflag;
                                 bool assetnoflag;
@@ -1075,7 +1044,7 @@ namespace VerifyWebApp.Controllers
                                     {
                                         emp.IssueDate = dateissuedate;
                                     }
-                                       
+
                                     if (e != "")
                                     {
                                         DateTime RecievedDate;
@@ -1090,18 +1059,18 @@ namespace VerifyWebApp.Controllers
                                             errorlist.Add("Issue Date is greater then Recieved Date .For row " + rowIterator);
                                             continue;
                                         }
-                                       // emp.RecievedDate = Convert.ToDateTime(e);
-                                      
+                                        // emp.RecievedDate = Convert.ToDateTime(e);
+
 
                                     }
                                     else
                                     {
-                                       
+
                                     }
                                     emp.AssetRecievedFlag = d;
                                     if (e != "")
                                     {
-                                       
+
                                     }
                                     emp.CreatedUserId = userid;
                                     emp.CreatedDate = istDate;
@@ -1109,7 +1078,7 @@ namespace VerifyWebApp.Controllers
 
                                     db.EmployeeAsset.Add(emp);
                                     db.SaveChanges();
-                                   
+
 
                                 }
                                 else
@@ -1117,7 +1086,7 @@ namespace VerifyWebApp.Controllers
                                     errorlist.Add("Something  went wrong or some value missing in the row  " + rowIterator);
 
                                 }
-                              
+
                             }
                             if (norecordsfound == false)
                             {
@@ -1172,18 +1141,18 @@ namespace VerifyWebApp.Controllers
 
                 string strError;
                 strError = ex.Message + "|" + ex.InnerException;
-                  logger.Log(LogLevel.Error, strError);
+                logger.Log(LogLevel.Error, strError);
                 res.Data = "error";
                 return res;
             }
         }
-        public string Importemployeeassetexists(int assetid,int companyid)
+        public string Importemployeeassetexists(int assetid, int companyid)
         {
-            string res="";
+            string res = "";
 
             EmployeeAsset empasset = new EmployeeAsset();
 
-            empasset = db.EmployeeAsset.Where(x => x.Companyid == companyid &&  x.AssetId == assetid).FirstOrDefault();
+            empasset = db.EmployeeAsset.Where(x => x.Companyid == companyid && x.AssetId == assetid).FirstOrDefault();
             if (empasset != null)
             {
                 res = "assetalreadyallocated";
@@ -1315,7 +1284,7 @@ namespace VerifyWebApp.Controllers
                                 string d; d = "";
                                 string e; e = "";
                                 string f; f = "";
-                               
+
                                 string g; g = "";
 
                                 bool empidflag;
@@ -1413,11 +1382,11 @@ namespace VerifyWebApp.Controllers
                                 {
                                     norecordsfound = true;
                                     var empid = db.Employee.Where(x => x.Companyid == companyid && x.EmpId == a).FirstOrDefault().ID;
-                                   
+
                                     var assetid = db.Assetss.Where(x => x.Companyid == companyid && x.AssetNo == c).FirstOrDefault().ID;
                                     var issuedate = Convert.ToDateTime(e);
                                     var recieveddate = Convert.ToDateTime(g);
-                                        if (issuedate > recieveddate)
+                                    if (issuedate > recieveddate)
                                     {
                                         errorlist.Add("Issue date cannot be greater than recieveddate  of the row  " + rowIterator);
                                     }
@@ -1498,15 +1467,77 @@ namespace VerifyWebApp.Controllers
 
                 string strError;
                 strError = ex.Message + "|" + ex.InnerException;
-                 logger.Log(LogLevel.Error, strError);
+                logger.Log(LogLevel.Error, strError);
                 res.Data = "error";
                 return res;
             }
         }
 
        
+        [HttpPost]
+        public ActionResult DownloadAndSendEmail()
+        {
+           
+            //byte[] pdfBytes = GeneratePDF(); 
 
+             
+            string pdfFileName = "EmployeeAssetIssue.pdf";
+            string pdfFilePath = Server.MapPath("~/PDFs/" + pdfFileName);
+         //   System.IO.File.WriteAllBytes(pdfFilePath, pdfBytes);
+
+            
+            SendEmailWithAttachment(pdfFilePath); 
+
+            return Json(new { success = true });
+        }
+
+        
+        //private byte[] GeneratePDF()
+        //{
+            
+        //}
+
+        private ActionResult SendEmailWithAttachment(string filePath)
+        {
+            try
+            {
+                // Sender's email address and password
+                string senderEmail = "Mayuri.shendre@pixonix.tech";
+                string senderPassword = "your_password";
+
+                // Recipient's email address
+                string recipientEmail = "mayurishendre.sfdc@gmail.com";
+
+              
+                var message = new MailMessage(senderEmail, recipientEmail);
+
+
+                message.Subject = "Hello from Turbotrack";
+                message.Body = "This is a test email sent from an application.";
+
+                // Configure the SMTP client
+                var smtpClient = new SmtpClient("smtp.gmail.com")
+                {
+                    Port = 587,
+                    Credentials = new NetworkCredential(senderEmail, senderPassword),
+                    EnableSsl = true,
+                };
+
+                // Send the email
+                smtpClient.Send(message);
+
+                ViewBag.Message = "Email sent successfully!";
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = "Email sending failed: " + ex.Message;
+            }
+            return View();
+
+        }
+    }
 
 
     }
-}
+    
+

@@ -15,6 +15,7 @@ namespace VerifyWebApp.Models
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
         public DateTime IssueDate { get; set; }
+        
         [NotMapped]
         public string str_empname { get; set; }
         [NotMapped]
@@ -31,6 +32,9 @@ namespace VerifyWebApp.Models
         [NotMapped]
         public string str_employeeid { get; set; }
         public int EmpId { get; set; }
+        public string Empid { get; set; }
+
+
         public DateTime? RecievedDate { get; set; }
         [NotMapped]
         public string str_RecievedDate { get; set; }
