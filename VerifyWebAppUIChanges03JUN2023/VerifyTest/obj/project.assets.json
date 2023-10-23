@@ -172,11 +172,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\AssetManagement\\AssetmanagementLatest_1\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj",
+      "projectUniqueName": "D:\\AssetManagement\\Assetmanagement_5\\assetmanagement_latest\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj",
       "projectName": "VerifyTest",
-      "projectPath": "D:\\AssetManagement\\AssetmanagementLatest_1\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj",
+      "projectPath": "D:\\AssetManagement\\Assetmanagement_5\\assetmanagement_latest\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\VerifyTest.csproj",
       "packagesPath": "C:\\Users\\Micro_Soft\\.nuget\\packages\\",
-      "outputPath": "D:\\AssetManagement\\AssetmanagementLatest_1\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\obj\\",
+      "outputPath": "D:\\AssetManagement\\Assetmanagement_5\\assetmanagement_latest\\VerifyWebAppUIChanges03JUN2023\\VerifyTest\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

@@ -13,6 +13,11 @@ using System.Web.Mvc;
 using VerifyWebApp.Filter;
 using VerifyWebApp.Models;
 using VerifyWebApp.ViewModel;
+using System.Net.Mime;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+
 
 namespace VerifyWebApp.Controllers
 {
@@ -32,6 +37,7 @@ namespace VerifyWebApp.Controllers
             {
                 ViewBag.LogonUser = user.UserName;
                 userid = user.ID;
+                ViewBag.EmailId = user.EmailId;
             }
             else
             {
@@ -546,7 +552,7 @@ namespace VerifyWebApp.Controllers
 
         [HttpGet]
         [AuthUser]
-        public ActionResult EmployeeAssetExport()            //...1
+        public ActionResult EmployeeAssetExport()
         {
             int userid = 0;
             Login user = (Login)(Session["PUser"]);
@@ -584,7 +590,7 @@ namespace VerifyWebApp.Controllers
             return RedirectToAction("Index", "Supplier");
 
         }
-        public byte[] generateemployeeassetexcel(int companyid)        //...2
+        public byte[] generateemployeeassetexcel(int companyid)
         {
             List<EmployeeAsset> lstemp = new List<EmployeeAsset>();
             int srno = 1;
@@ -701,7 +707,7 @@ namespace VerifyWebApp.Controllers
         public byte[] generateemployeeassetPDF(int companyid)
         {
 
-            List<EmployeeAsset> Elist = new List<EmployeeAsset>();
+            List<EmployeeAsset> Elist = new List<EmployeeAsset>();                                   //...step3
             int srno = 1;
 
             Elist = db.EmployeeAsset.Where(x => x.Companyid == companyid).ToList();
@@ -716,7 +722,7 @@ namespace VerifyWebApp.Controllers
 
             string[] headerRow = { "EmployeeId", "Employee Name", "AssetNo", "AssetName", "IssueDate ", "Asset return(Y/N) ", "Asset return date", };
 
-            float[] columnWidths = { 28f, 28f, 28f, 28f, 28f, 28f, 28f,};
+            float[] columnWidths = { 28f, 28f, 28f, 28f, 28f, 28f, 28f, };
 
             PdfPTable table = new PdfPTable(columnWidths);
             table.WidthPercentage = 100;
@@ -732,7 +738,7 @@ namespace VerifyWebApp.Controllers
                 table.AddCell(item.Empid);
                 table.AddCell(db.Employee.Where(x => x.Companyid == companyid && x.ID == item.EmpId).FirstOrDefault().FullName);
                 table.AddCell(db.Assetss.Where(x => x.Companyid == companyid && x.ID == item.AssetId).FirstOrDefault().AssetNo);
-                table.AddCell(db.Assetss.Where(x => x.Companyid == companyid && x.ID == item.AssetId).FirstOrDefault().AssetName);           
+                table.AddCell(db.Assetss.Where(x => x.Companyid == companyid && x.ID == item.AssetId).FirstOrDefault().AssetName);
                 table.AddCell(item.IssueDate.ToString("dd/MM/yyyy"));
                 table.AddCell(item.AssetRecievedFlag);
                 //table.AddCell(Convert.ToDateTime(item.RecievedDate).ToString("dd/MM/yyyy"));
@@ -743,8 +749,9 @@ namespace VerifyWebApp.Controllers
 
             document.Add(table);
             document.Close();
-   
+
             byte[] pdfData = memoryStream.ToArray();
+            // pdfData = memoryStream.ToArray();
 
             return pdfData;
 
@@ -1473,42 +1480,38 @@ namespace VerifyWebApp.Controllers
             }
         }
 
-       
+
         [HttpPost]
         public ActionResult DownloadAndSendEmail()
         {
-           
-            //byte[] pdfBytes = GeneratePDF(); 
+            int companyId = 1;
+            byte[] pdfBytes = generateemployeeassetPDF(companyId);
 
-             
             string pdfFileName = "EmployeeAssetIssue.pdf";
-            string pdfFilePath = Server.MapPath("~/PDFs/" + pdfFileName);
-         //   System.IO.File.WriteAllBytes(pdfFilePath, pdfBytes);
+            string pdfFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads", pdfFileName);
 
-            
-            SendEmailWithAttachment(pdfFilePath); 
+            System.IO.File.WriteAllBytes(pdfFilePath, pdfBytes);
+
+            SendEmailWithAttachment(pdfFilePath);
 
             return Json(new { success = true });
         }
 
-        
-        //private byte[] GeneratePDF()
-        //{
-            
-        //}
+       
 
-        private ActionResult SendEmailWithAttachment(string filePath)
+        private ActionResult SendEmailWithAttachment(string pdfFilePath)
         {
             try
             {
+
                 // Sender's email address and password
-                string senderEmail = "Mayuri.shendre@pixonix.tech";
-                string senderPassword = "your_password";
+                string senderEmail = "mayuri.shendre@pixonix.tech";
+                string senderPassword = "Tulsi@99";
 
                 // Recipient's email address
                 string recipientEmail = "mayurishendre.sfdc@gmail.com";
 
-              
+
                 var message = new MailMessage(senderEmail, recipientEmail);
 
 
@@ -1516,7 +1519,8 @@ namespace VerifyWebApp.Controllers
                 message.Body = "This is a test email sent from an application.";
 
                 // Configure the SMTP client
-                var smtpClient = new SmtpClient("smtp.gmail.com")
+                // var smtpClient = new SmtpClient("smtp.gmail.com")
+                var smtpClient = new SmtpClient("smtp-relay.brevo.com")
                 {
                     Port = 587,
                     Credentials = new NetworkCredential(senderEmail, senderPassword),
@@ -1535,9 +1539,9 @@ namespace VerifyWebApp.Controllers
             return View();
 
         }
+      
+       
     }
-
-
-    }
+}
     
 

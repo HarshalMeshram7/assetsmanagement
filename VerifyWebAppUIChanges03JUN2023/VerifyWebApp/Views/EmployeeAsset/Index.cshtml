@@ -192,7 +192,7 @@
             //});
 
 
-          
+
 
         });
 
@@ -299,26 +299,43 @@
     }
     function PDFdownload()
     {
-         
-        window.location.href = '@Url.Action("EmployeeAssetPDF", "EmployeeAsset")';
-        downloadAndSendEmail();
+
+          window.location.href = '@Url.Action("EmployeeAssetPDF", "EmployeeAsset")';
+          downloadAndSendEmail();     
+        
 
     }
     function downloadAndSendEmail()
     {
-        
-        $.ajax({
-            type: "POST",
-            url: "@Url.Action("DownloadAndSendEmail", "EmployeeAsset")",
-            success: function () {
-                alert("PDF downloaded and email sent successfully.");
+        var settings = {
+            "url": "https://api.brevo.com/v3/smtp/email",
+            "method": "POST",
+            "headers": {
+                "api-key": "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",
+                "accept": "application/json",
+                "content-type": "application/json",
             },
-            error: function () {
-                alert("An error occurred.");
-            }
+            "data": JSON.stringify({
+                "sender": {
+                    "name": "VSoft Demo Co Ltd",
+                    "email": "test@vsoftsolutions.net"
+                },
+                "to": [
+                    {
+                        "email": '@ViewBag.EmailId'
+                    }
+                ],
+                "textContent": "Hello!!!",
+                "subject": "PDF downloaded Successfully."
+            }),
+        };
+
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+            alert("Email sent Successfully.");
         });
     }
-    
+
 
      function EmployeeAssetimportdate() {
 
