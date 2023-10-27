@@ -4,96 +4,120 @@
     ViewBag.Title = "Dgroup_Index";
 }
 
-<div id="page-wrapper" class="container-fluid rounded page border shadow text-center">
-    <div class="row border-bottom">
+
+<div class="container-fluid">
+    @*<div class="row border-bottom">
         <div class="col-lg-12">
-            <div class="row title">
-                <strong> <h4>D Group List</h4></strong>
+
+            <div class="row justify-content-md-center title">
+                <strong> <h4>Batch Master</h4></strong>
             </div>
-        </div>
-        <!-- /.col-lg-12 -->
-    </div>
-    <div class="pageconent">
-        <div class="row d-flex justify-content-center align-items-center">
-            <div class="col-md-12 my-1 ">
-                <div class="pull-right">
-                    <button type="button" id="btnnew" value="New Practice" class="btn btn-sm btn-secondary pull-right m-1 order-3"
-                            onclick="downloadexcel();">
-                        <i class="fa fa-download"></i> Download Excel
-                    </button>
+        </div>*@
+    <div class="row my-0">
+        <div class="card">
+            <div class="card-header pb-0">
+                <div class="row">
+                    <div class="d-sm-flex justify-content-between hborder">
+                        <div class="htitle"> <b>D Group List</b> </div>
+                    </div>
 
 
-                    <button type="button" id="btnnew" value="New Practice" class="btn btn-sm btn-success pull-right m-1 order-4"
-                            onclick="importexcel();">
-                        <i class="fa fa-upload"></i>  Import Excel
-                    </button>
 
-                    <button type="button" id="btnnew" value="New Practice" class="btn btn-sm btn-secondary pull-right m-1 order-2"
-                            onclick="exportexcel();">
-                        <i class="fa fa-file-excel-o"></i>   Export Excel
-                    </button>
-
+                    <!-- /.col-lg-12 -->
                 </div>
-                </div>
-            </div>
-                <div class="row" style="padding-top:3px">
-                    <div class="col-lg-12">
-                        <table class="table table-bordered table-striped table-hover" id="tblcgroup">
-                            <thead>
-                                <tr>
-                                    <td align="left">
-                                        AGroup No
-                                    </td>
+                @using (@Html.BeginForm(null, null, FormMethod.Get, new { id = "frmNewEmp", name = "frmNewEmp" }))
+                {@Html.AntiForgeryToken()}
+                <div class="pagecontent" style="padding-top:10px;">
+                    <div class="row">
+                        <div class="col-lg-12 ">
+                            <button type="button" d="btndownloadexcel" value="New Practice"
+                                    class="btn btn-sm xtraBtn pull-right m-1 order-3"
+                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Download Excel"
+                                    onclick="downloadexcel();">
+                                <i class="fa fa-download" aria-hidden="true"></i>
 
-                                    <td align="left">
-                                        BGroup No
-                                    </td>
-                                    <td align="left">
-                                        CGroup No
-                                    </td>
-                                    <td align="left">
-                                        DGroup No
-                                    </td>
-                                    <td align="left">
-                                        DGroup Name
-                                    </td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (Model.Count() == 0)
-                                {
+                            </button>
+                            <button type="button" id="btnimport" value="New Practice"
+                                    class="btn btn-sm xtraBtn pull-right m-1 order-4"
+                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Import Excel"
+                                    onclick="importexcel();">
+                                <i class="fa fa-upload" aria-hidden="true"></i>
+
+                            </button>
+                            <button type="button" id="btnexport" value="New Practice"
+                                    class="btn btn-sm modBtn pull-right  m-1 order-2"
+                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Export Excel"
+                                    onclick="exportexcel();">
+                                <i class="fa fa-file-excel-o" aria-hidden="true"></i>
+
+                            </button>
+
+                        </div>
+                    </div>
+
+                    <div class="row" style="padding-top:3px">
+                        <div class="col-lg-12">
+                            <table width="100%" class="table table-striped table-bordered table-hover" id="tblcgroup">
+                                <thead>
                                     <tr>
-                                        <td colspan="5">No Rows Found</td>
+                                        <td align="left">
+                                            AGroup No
+                                        </td>
+
+                                        <td align="left">
+                                            BGroup No
+                                        </td>
+                                        <td align="left">
+                                            CGroup No
+                                        </td>
+                                        <td align="left">
+                                            DGroup No
+                                        </td>
+                                        <td align="left">
+                                            DGroup Name
+                                        </td>
                                     </tr>
-                                }
-                                else
-                                {
-                                    foreach (var item in Model)
+                                </thead>
+                                <tbody>
+                                    @if (Model.Count() == 0)
                                     {
                                         <tr>
-                                            <td align="left">@Html.DisplayFor(modelitem => item.AGrpID)</td>
-
-                                            <td align="left">@Html.DisplayFor(modelitem => item.BGrpID)</td>
-                                            <td align="left">@Html.DisplayFor(modelitem => item.CGrpID)</td>
-                                            <td align="left">@Html.DisplayFor(modelitem => item.ID)</td>
-                                            <td align="left">@Html.DisplayFor(modelitem => item.DGroupName)</td>
+                                            <td colspan="5">No Rows Found</td>
                                         </tr>
-
-
                                     }
-                                }
-                            </tbody>
-                        </table>
+                                    else
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td align="left">@Html.DisplayFor(modelitem => item.AGrpID)</td>
 
+                                                <td align="left">@Html.DisplayFor(modelitem => item.BGrpID)</td>
+                                                <td align="left">@Html.DisplayFor(modelitem => item.CGrpID)</td>
+                                                <td align="left">@Html.DisplayFor(modelitem => item.ID)</td>
+                                                <td align="left">@Html.DisplayFor(modelitem => item.DGroupName)</td>
+                                            </tr>
+
+
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-<div class="modal fade" tabindex="-1" role="dialog" id="divNew">
-    <div class="modal-dialog modal-lg" role="document" id="divNewContent">
+    </div>
 
+
+    <div class="modal Fade" tabindex="-1" role="dialog" id="divUpload" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-xl" role="document" id="divUploadContent">
+        </div>
     </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+</div>
+
 
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
