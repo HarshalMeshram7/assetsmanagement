@@ -39,4 +39,23 @@ namespace VerifyWebApp.Models
         public string image_string { get; set; }
 
     }
+    public class ChildAssetAttachment2
+    {
+        [Key]
+        public int ID { get; set; }
+        public string Filename { get; set; }
+        public long? FileSize { get; set; }
+        public int assetno { get; set; } // asset number assgiend by client users
+        public byte[] File_Bytes { get; set; }
+        public string assetname { get; set; }
+        [NotMapped]
+        public string image_string { get; set; }
+        
+        //[AllowFileSize(FileSize = 5 * 1024 * 1024, ErrorMessage = "Maximum allowed file size is 5 MB")]
+
+
+
+
+
+    }
 }

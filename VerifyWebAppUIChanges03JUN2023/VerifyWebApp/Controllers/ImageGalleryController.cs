@@ -1,16 +1,24 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using VerifyWebApp.BusinessLogic;
 using VerifyWebApp.Models;
+using VerifyWebApp.ViewModel;
 
 namespace VerifyWebApp.Controllers
 {
+  
     public class ImageGalleryController : Controller
     {
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         public VerifyDB db = new VerifyDB();
+        //private object logger;
+
         // GET: ImageGallery
         public ActionResult Index()
         {
@@ -182,7 +190,7 @@ namespace VerifyWebApp.Controllers
             int startRec = Convert.ToInt32(Request.Form.GetValues("start")[0]);
             int pageSize = Convert.ToInt32(Request.Form.GetValues("length")[0]);
 
-            pageSize = 3;
+            pageSize = 9;
 
             JsonResult result = new JsonResult();
 
@@ -191,66 +199,69 @@ namespace VerifyWebApp.Controllers
 
                 int totalRecords = db.Child_Asset_Attachments.Where(x => x.Companyid == companyid).Count();
 
+
                 List<Child_Asset_Attachment> list = new List<Child_Asset_Attachment>();
 
-                if (search.Length == 0)
-                {
+                List<ChildAssetAttachment2> list2 = new List<ChildAssetAttachment2>();
+
+                //if (search.Length == 0)
+                //{
+
 
                     //list = db.Child_Asset_Attachments.Where(x => x.Companyid == companyid).ToList().Skip(startRec).Take(pageSize).ToList();
 
-                    list = (from a  in db.Assetss
-                                          join img_asset in db.Child_Asset_Attachments
-                                          on a.ID equals img_asset.AssetID
-                                          where a.Companyid == companyid
-                                          && img_asset.Ext == "image/jpg" || img_asset.Ext == "image/jpeg" || img_asset.Ext == "image/png" || img_asset.Ext == "jpg"
-                                          select new { a, img_asset }).AsEnumerable()
-                                          .Select (e=> new Child_Asset_Attachment
-                                          {
-                                              assetno = e.a.AssetNo,
-                                              assetname = e.a.AssetName,
-                                              image_string = Convert.ToBase64String(e.img_asset.File_Bytes)
-                                          }).ToList().Skip(startRec).Take(pageSize).ToList();
-
-                    
-                }
-                else
-                {
-                    list = (from a in db.Assetss
-                            join img_asset in db.Child_Asset_Attachments
-                            on a.ID equals img_asset.AssetID
-                            where a.Companyid == companyid && (a.AssetName.StartsWith(search) || a.AssetNo.StartsWith(search))
-                            && img_asset.Ext == "image/jpg" || img_asset.Ext == "image/jpeg" || img_asset.Ext == "image/png" || img_asset.Ext == "jpg"
-                            select new { a, img_asset }).AsEnumerable()
-                                         .Select(e => new Child_Asset_Attachment
-                                         {
-                                             assetno = e.a.AssetNo,
-                                             assetname = e.a.AssetName,
-                                             image_string = Convert.ToBase64String(e.img_asset.File_Bytes)
-                                         }).ToList().Skip(startRec).Take(pageSize).ToList();
-                }
-                
+                    //list = (from a in db.Assetss
+                    //        join img_asset in db.Child_Asset_Attachments
+                    //        on a.ID equals img_asset.AssetID
+                    //        where a.Companyid == companyid
+                    //        && img_asset.Ext == "image/jpg" || img_asset.Ext == "image/jpeg" || img_asset.Ext == "image/png" || img_asset.Ext == "jpg"
+                    //        select new { a, img_asset }).AsEnumerable()
+                    //                      .Select(e => new Child_Asset_Attachment
+                    //                      {
+                    //                          assetno = e.a.AssetNo,
+                    //                          assetname = e.a.AssetName,
+                    //                          image_string = Convert.ToBase64String(e.img_asset.File_Bytes)
+                    //                      }).ToList().Skip(startRec).Take(pageSize).ToList();
 
 
-                //foreach (var item in list)
-                //{
-                //    item.image_string = Convert.ToBase64String(item.File_Bytes);
-                //    Assets objAsset =  lstAssts.Where(x => x.ID == item.AssetID).FirstOrDefault();
-                //    if (objAsset != null)
-                //    {
-                //        item.assetname = objAsset.AssetName;
-                //        item.assetno = objAsset.AssetNo;
-                //    }
-                    
+                    String ssql = "SELECT TAA.ID,TAA.Filename,TAA.FileSize,TAA.AssetNumber as assetno,TAA.File_Bytes,A.Assetname as assetname";
+                    ssql += " FROM tblchild_asset_attachment TAA ,tblassets A";
+                    ssql += " where TAA.AssetNumber = A.AssetNo";
+                    if (search != "")
+                    {
+                        ssql += " AND(A.Assetname LIKE CONCAT('"+ search + "', '%') OR A.AssetNo = '"+search + "')";
+                    }
+                    ssql += " ORDER BY ID desc LIMIT " + pageSize + " OFFSET " + startRec;
+
+
+                    list2 = db.Database.SqlQuery<ChildAssetAttachment2>(ssql).ToList();
+
+                    foreach (ChildAssetAttachment2 item in list2)
+                    {
+                        item.image_string = Convert.ToBase64String(item.File_Bytes);
+                    }
+                  
 
                 //}
-
-
-                int recFilter = list.Count;
-                // Apply pagination.   
+                //else
+                //{
+                    //list = (from a in db.Assetss
+                    //        join img_asset in db.Child_Asset_Attachments
+                    //        on a.ID equals img_asset.AssetID
+                    //        where a.Companyid == companyid && (a.AssetName.StartsWith(search) || a.AssetNo.StartsWith(search))
+                    //        && img_asset.Ext == "image/jpg" || img_asset.Ext == "image/jpeg" || img_asset.Ext == "image/png" || img_asset.Ext == "jpg"
+                    //        select new { a, img_asset }).AsEnumerable()
+                    //                     .Select(e => new Child_Asset_Attachment
+                    //                     {
+                    //                         assetno = e.a.AssetNo,
+                    //                         assetname = e.a.AssetName,
+                    //                         image_string = Convert.ToBase64String(e.img_asset.File_Bytes)
+                    //                     }).ToList().Skip(startRec).Take(pageSize).ToList();
+                //}
                 
 
-             //   var lstAssets = alist.Select(x => new { x.AssetNo, x.AssetIdentificationNo, x.AssetName, x.str_VoucherDate, x.AmountCapitalisedCompany, x.BillNo, x.Qty }).ToList();
-              //  totalResultsCount = lstAssets.Count;
+                int recFilter = list2.Count;
+          
 
                 filteredResultsCount = recFilter;
     
@@ -259,7 +270,7 @@ namespace VerifyWebApp.Controllers
                     draw = Convert.ToInt32(draw),
                     recordsTotal = totalRecords,
                     recordsFiltered = totalRecords,
-                    data = list
+                    data = list2
                 }, JsonRequestBehavior.AllowGet);
 
 
@@ -347,9 +358,10 @@ namespace VerifyWebApp.Controllers
                 return View();
             }
         }
+
         static readonly string[] suffixes =
               { "Bytes", "KB", "MB", "GB", "TB", "PB" };
-                    public static string FormatSize(Int64 bytes)
+        public static string FormatSize(Int64 bytes)
                     {
                         int counter = 0;
                         decimal number = (decimal)bytes;
@@ -360,5 +372,136 @@ namespace VerifyWebApp.Controllers
                         }
                         return string.Format("{0:n1}{1}", number, suffixes[counter]);
                     }
+
+
+        //.........for search
+        public ActionResult GetAssetData(string id, string searchby = "", string searchstring = "")
+        {
+
+            int userid = 0;
+            Login user = (Login)(Session["PUser"]);
+
+            if (user != null)
+            {
+                ViewBag.LogonUser = user.UserName;
+                userid = user.ID;
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            int companyid = 0;
+            Company company = (Company)(Session["Cid"]);
+
+            if (company != null)
+            {
+                ViewBag.LoggedCompany = company.CompanyName;
+                companyid = company.ID;
+                ViewBag.companyid = companyid;
+            }
+            else
+            {
+                return RedirectToAction("CompanySelection", "Company");
+            }
+            int totalResultsCount;
+            int filteredResultsCount;
+
+            List<Assets> alist = new List<Assets>();
+
+            string search = Request.Form.GetValues("search[value]")[0];
+            string draw = Request.Form.GetValues("draw")[0];
+            string order = Request.Form.GetValues("order[0][column]")[0];
+            string orderDir = Request.Form.GetValues("order[0][dir]")[0];
+            int startRec = Convert.ToInt32(Request.Form.GetValues("start")[0]);
+            int pageSize = Convert.ToInt32(Request.Form.GetValues("length")[0]);
+
+            JsonResult result = new JsonResult();
+
+            try
+            {
+                string Level = "";
+                Level = id.Substring(0, 2);
+                int tempLength = id.Length;
+                string strr_id = id.Substring(3, tempLength - 3);
+                int int_id = Convert.ToInt32(strr_id);
+
+
+                AssetRepository assetRepository = new AssetRepository();
+                if (search.Length > 0)
+                {
+                    searchstring = search;
+                }
+
+
+                if (searchstring.Length > 0)
+                {
+                    alist = assetRepository.GetAssetDataSearch(companyid, Level, int_id, startRec, pageSize, searchby, searchstring);
+
+                    int totalRecords = db.Assetss.Count(x => x.Companyid == companyid);
+                    int recFilter = totalRecords;
+
+                    var lstAssets = alist.Select(x => new
+                    {
+                        x.AssetNo,
+                        x.AssetIdentificationNo,
+                        x.AssetName,
+                        x.str_VoucherDate,
+                        x.AmountCapitalisedCompany,
+                        x.BillNo,
+                        x.Qty
+                    }).ToList();
+
+                    filteredResultsCount = lstAssets.Count;
+
+                    result = this.Json(new
+                    {
+                        draw = Convert.ToInt32(draw),
+                        recordsTotal = totalRecords,
+                        recordsFiltered = recFilter,
+                        data = alist,
+
+                    }, JsonRequestBehavior.AllowGet);
+
+                    result.MaxJsonLength = int.MaxValue;
+                }
+                else
+                {
+                    alist = assetRepository.GetAssetData(companyid, Level, int_id, startRec, pageSize);
+
+                    int totalRecords = db.Assetss.Count(x => x.Companyid == companyid);
+                    int recFilter = totalRecords;
+
+
+                    var lstAssets = alist.Select(x => new
+                    {
+                        x.AssetNo,
+                        x.AssetIdentificationNo,
+                        x.AssetName,
+                        x.str_VoucherDate,
+                        x.AmountCapitalisedCompany,
+                        x.BillNo,
+                        x.Qty
+                    }).ToList();
+
+                    filteredResultsCount = lstAssets.Count;
+
+                    result = this.Json(new
+                    {
+                        draw = Convert.ToInt32(draw),
+                        recordsTotal = totalRecords,
+                        recordsFiltered = totalRecords,
+                        data = alist,
+
+                    }, JsonRequestBehavior.AllowGet);
+
+                    result.MaxJsonLength = int.MaxValue;
+                }
+            }
+            catch (Exception ex)
+            { 
+                logger.Log(LogLevel.Error, ex);
+            }
+            return result;
+        }
     }
 }

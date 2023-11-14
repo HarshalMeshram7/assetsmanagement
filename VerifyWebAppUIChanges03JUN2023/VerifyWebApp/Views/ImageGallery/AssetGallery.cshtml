@@ -46,10 +46,28 @@
                 </div>
 
 
+                <form class="row" style="display:none">
+                    
+                    <div class="col-sm-3 p-1" >
+                        <input type="text" class="form-control form-control-sm"
+                               style="margin-left:40px;"
+                               id="txtsearch" placeholder="Enter Asset No ..">
+                    </div>
+                    <div class="col-sm-1 p-1" >
+                        <button type="button" id="btnsearch" value="Search"
+                                class="btn btn-xs addBtn" style="margin-left:50px;">
+
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                    
+
+                </form>
+
+
 
 
                 <div class="card-body" id="divTableData">
-                    <div style="display: flex" id="Imagecontainer"></div>
                     <table style="display: none" class="table table-flush" id="tblattachment" align="center">
                         <thead>
                             <tr>
@@ -65,15 +83,22 @@
                                 <td hidden>
                                     Image
                                 </td>
+                                <td ></td>
                             </tr>
                         </thead>
+                        
                         <tbody>
                             <tr>
                                 <td></td>
                             </tr>
                         </tbody>
+                  
                     </table>
+                    <div style="display: flex;flex-wrap: wrap;gap:30px" id="Imagecontainer"></div>
+
                 </div>
+
+
             </div>
         </div>
     </div>
@@ -106,13 +131,21 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+
+        //$('#tblattachment').DataTable({
+        //        pagingType: 'numbers'
+        //});
+        
+
+       let searchstring = $("#txtsearch").val();
+
         $('#tblattachment').DataTable({
             "destroy": true,
             "processing": true,
-            "pageLength": 3,
+            "pageLength": 9,
             "lengthChange": false,
             "pagingType": 'numbers',
-            "searching": false,
+            "searching": true,
             'language': {
                 "loadingRecords": "&nbsp;",
                 "processing": "Loading...",
@@ -124,6 +157,7 @@
             "ajax": {
                 url: '@Url.Action("GetImageData", "ImageGallery")',
                 type: 'POST',
+                
             },
             "columns": [
                 { "data": "assetno", "autoWidth": true },
@@ -157,18 +191,18 @@
 
     function getCard(assetname, assetno, imgdata) {
         let card = document.createElement('div');
-
+        card.style.width = "30%";
         let img = document.createElement('img');
         img.style.width = "250px";
         img.style.height = "250px";
         img.style.objectFit = "cover";
-        img.style.marginRight = "80px";
+        //img.style.marginRight = "80px";
         let str = "data:image/jpg;base64," + imgdata;
         img.src = str;
 
         let eH4 = document.createElement('h6');
         eH4.innerText = "Asset Name: " + assetname;
-        eH4.style.marginRight = "80px";
+        //eH4.style.marginRight = "80px";
 
         let eH5 = document.createElement('h6');
         eH5.innerText = "Asset No: " + assetno;
@@ -188,7 +222,11 @@
             cardcontainer.appendChild($(card)[0]);
         });
     }
+
+   
+
 </script>
+
 
 
 
